@@ -1728,4 +1728,10 @@
     <string name="local_network_permission_continue">Continue</string>
     <string name="local_network_permission_not_now">Not now</string>
     <string name="webdav_error_local_network_permission">Local network permission is missing. Allow Lumi to access your configured NAS or LAN WebDAV server.</string>
+    <string name="label_app_accent_preset">Color preset</string>
+    <string name="accent_preset_coral">Coral</string>
+    <string name="accent_preset_indigo">Indigo</string>
+    <string name="accent_preset_teal">Teal</string>
+    <string name="accent_preset_amber">Amber</string>
+    <string name="accent_preset_violet">Violet</string>
 </resources>

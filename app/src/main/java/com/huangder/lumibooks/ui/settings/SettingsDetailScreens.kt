@@ -1132,6 +1132,11 @@ fun DisplayDetail(viewModel: SettingsViewModel) {
             onSelect = viewModel::saveAppTheme)
         if (uiState.appTheme != "material3" && !uiState.eInkModeEnabled) {
             SettingsDivider()
+            AppAccentPresetRow(
+                selectedHex = uiState.appAccentColor,
+                onSelect = viewModel::saveAppAccentColor
+            )
+            SettingsDivider()
             ThemeColorSettingRow(colorHex = uiState.appAccentColor, onClick = { showAccentColorDialog = true })
         }
         SettingsDivider()
@@ -1348,6 +1353,62 @@ private fun ThemeColorSettingRow(
             tint = AppColors.TextSecondary,
             modifier = Modifier.size(20.dp)
         )
+    }
+}
+
+/**
+ * 预设配色选择行。
+ *
+ * 与下方的 [ThemeColorSettingRow] 是"快捷预设 / 精确自定义"两种入口，共用同一个
+ * `app_accent_color` 存储键，因此切换预设后立即与自定义拾色器保持同步。
+ */
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+@Composable
+private fun AppAccentPresetRow(
+    selectedHex: String,
+    onSelect: (String) -> Unit
+) {
+    val current = normalizeAppAccentHex(selectedHex)
+    Column(Modifier.padding(AppSpace.md)) {
+        Text(
+            stringResource(R.string.label_app_accent_preset),
+            fontSize = AppType.Body,
+            color = AppColors.TextPrimary
+        )
+        Spacer(Modifier.height(AppSpace.sm))
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(AppSpace.sm),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
+        ) {
+            APP_ACCENT_PRESETS.forEach { preset ->
+                val isSelected = current == normalizeAppAccentHex(preset.accentHex)
+                Row(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable { onSelect(preset.accentHex) }
+                        .padding(horizontal = AppSpace.sm, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clip(CircleShape)
+                            .background(Color(parseAppAccentArgb(preset.accentHex)))
+                            .border(
+                                width = if (isSelected) 2.dp else 1.dp,
+                                color = if (isSelected) AppColors.TextPrimary else AppColors.Divider,
+                                shape = CircleShape
+                            )
+                    )
+                    Spacer(Modifier.width(AppSpace.xs))
+                    Text(
+                        stringResource(preset.labelRes),
+                        fontSize = AppType.BodySmall,
+                        color = if (isSelected) AppColors.TextPrimary else AppColors.TextSecondary
+                    )
+                }
+            }
+        }
     }
 }
 

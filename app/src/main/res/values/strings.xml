@@ -1751,4 +1751,10 @@
     <string name="local_network_permission_continue">继续</string>
     <string name="local_network_permission_not_now">暂不</string>
     <string name="webdav_error_local_network_permission">缺少本地网络权限：请允许 Lumi 访问你配置的 NAS 或局域网 WebDAV 服务器</string>
+    <string name="label_app_accent_preset">配色方案</string>
+    <string name="accent_preset_coral">珊瑚</string>
+    <string name="accent_preset_indigo">靛蓝</string>
+    <string name="accent_preset_teal">墨青</string>
+    <string name="accent_preset_amber">琥珀</string>
+    <string name="accent_preset_violet">紫罗兰</string>
 </resources>
