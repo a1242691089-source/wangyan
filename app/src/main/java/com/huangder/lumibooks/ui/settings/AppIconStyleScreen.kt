@@ -71,7 +71,7 @@ internal fun AppIconStyleOptions(
         AppIconStyleOption(
             style = AppIconStyle.LUMI_2,
             label = stringResource(R.string.icon_style_lumi2),
-            imageRes = R.mipmap.ic_launcher_lumi2,
+            imageRes = R.drawable.ic_preview_style_lumi2,
             selected = selectedStyle == AppIconStyle.LUMI_2.storedValue,
             onSelect = onSelect,
             modifier = Modifier.weight(1f)
@@ -80,7 +80,7 @@ internal fun AppIconStyleOptions(
             AppIconStyleOption(
                 style = AppIconStyle.LUMI_CHAN,
                 label = stringResource(R.string.icon_style_lumi_chan),
-                imageRes = R.mipmap.ic_launcher_lumi_chan,
+                imageRes = R.drawable.ic_preview_style_night,
                 selected = selectedStyle == AppIconStyle.LUMI_CHAN.storedValue,
                 onSelect = onSelect,
                 modifier = Modifier.weight(1f)
@@ -89,7 +89,7 @@ internal fun AppIconStyleOptions(
         AppIconStyleOption(
             style = AppIconStyle.CLASSIC,
             label = stringResource(R.string.icon_style_classic),
-            imageRes = R.mipmap.ic_launcher,
+            imageRes = R.drawable.ic_preview_style_classic,
             selected = selectedStyle == AppIconStyle.CLASSIC.storedValue,
             onSelect = onSelect,
             modifier = Modifier.weight(1f)

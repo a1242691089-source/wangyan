@@ -2,6 +2,10 @@
 <resources>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <!-- 忘言品牌三套 launcher 图标的底色（adaptive icon background） -->
+    <color name="brand_ink">#FF1A6840</color>
+    <color name="brand_night">#FF14120F</color>
+    <color name="brand_paper">#FFF6F1E4</color>
     <color name="primary">#FF007AFF</color>
     <color name="primary_dark">#FF0A84FF</color>
     <color name="launch_background">#FFFFF5F5</color>
