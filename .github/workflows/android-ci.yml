@@ -37,10 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: 安装 JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -71,7 +71,7 @@ jobs:
           ls "$SDK_ROOT/platforms" "$SDK_ROOT/build-tools"
 
       - name: 配置 Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       # 这句 10 秒的打印是「JDK 迁移是否生效」的第一手证据。
       # backdrop 1.0.6 的 classes.jar 是 Java 21 字节码，JDK 17 加载即 UnsupportedClassVersionError，
@@ -156,10 +156,10 @@ jobs:
           - shard: util
             tests: "com.huangder.lumibooks.util.**,com.huangder.lumibooks.tts.**,com.huangder.lumibooks.translation.**,com.huangder.lumibooks.highlight.**,com.huangder.lumibooks.mineru.**,com.huangder.lumibooks.pdfconversion.**"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: 安装 JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -182,7 +182,7 @@ jobs:
           "$SDKMGR" --install "platforms;android-37.0" "build-tools;37.0.0" "platform-tools"
 
       - name: 配置 Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       # Gradle 的 --tests 不接受逗号分隔的多个模式（会被当成一个非法模式），
       # 必须展开成多个 --tests 参数。
@@ -211,7 +211,7 @@ jobs:
 
       - name: 上传测试报告
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: unit-test-report-${{ matrix.shard }}
           # XML 是机器可读的那份：类名/方法名/system-out/system-err 都在里面。
