@@ -20,10 +20,30 @@ workflow 里给「单元测试」步骤加 continue-on-error，让它们不阻�
 """
 
 import glob
+import os
 import sys
 import xml.etree.ElementTree as ET
 
 RESULT_GLOB = "app/build/test-results/testDebugUnitTest/**/*.xml"
+
+# 判定结论要留痕。job 日志和 artifact 下载都需要仓库 admin/认证权限，fork 上拿不到，
+# 于是这里同时写两处公开可见的地方：
+#   - GITHUB_STEP_SUMMARY：运行页面直接看得到；
+#   - ::notice:: 注解：check-runs/annotations API 匿名可读，便于脚本对账。
+SUMMARY_ENV = "GITHUB_STEP_SUMMARY"
+
+
+def publish(line: str, markdown: str) -> None:
+    """把结论发布到 step summary 与注解，失败也不影响退出码。"""
+    print(f"::notice title=基线比对::{line}")
+    path = os.environ.get(SUMMARY_ENV)
+    if not path:
+        return
+    try:
+        with open(path, "a", encoding="utf-8") as handle:
+            handle.write(markdown + "\n")
+    except OSError as exc:
+        print(f"::warning::写入 step summary 失败：{exc}")
 
 # 键是 "全限定类名.方法名"，参数化用例的 [33] / [35] 后缀在比对前会被去掉。
 KNOWN_FAILURES = {
@@ -55,6 +75,7 @@ def main() -> int:
 
     failed = set()
     total = 0
+    skipped = 0
     for path in paths:
         try:
             root = ET.parse(path).getroot()
@@ -63,17 +84,36 @@ def main() -> int:
             return 1
         for case in root.iter("testcase"):
             total += 1
+            if case.find("skipped") is not None:
+                skipped += 1
             if case.find("failure") is not None or case.find("error") is not None:
                 failed.add(normalize(case.get("classname", ""), case.get("name", "")))
 
     unknown = sorted(failed - KNOWN_FAILURES)
+    known = sorted(failed & KNOWN_FAILURES)
+    passed = total - skipped - len(failed)
+    line = (
+        f"共 {total} 个用例：通过 {passed}，跳过 {skipped}，"
+        f"失败 {len(failed)}（已知 {len(known)}，新增 {len(unknown)}）"
+    )
+
     if failed:
-        print(f"共 {total} 个用例，失败 {len(failed)} 条（已知基线 {len(failed) - len(unknown)} 条）")
+        print(line)
         for key in sorted(failed):
             mark = "已知" if key in KNOWN_FAILURES else "新增"
             print(f"  [{mark}] {key}")
     else:
-        print(f"共 {total} 个用例，全部通过")
+        print(line)
+
+    rows = "\n".join(
+        ["| 状态 | 用例 |", "| --- | --- |"]
+        + [f"| 新增 | `{key}` |" for key in unknown]
+        + [f"| 已知 | `{key}` |" for key in known]
+    ) if failed else "| 状态 | 用例 |\n| --- | --- |\n| 全部通过 | — |"
+    publish(
+        line,
+        f"### 单元测试基线比对\n\n{line}\n\n{rows}\n",
+    )
 
     if unknown:
         print(f"::error::出现 {len(unknown)} 条不在基线内的新失败，请修掉或说明后加入基线")
