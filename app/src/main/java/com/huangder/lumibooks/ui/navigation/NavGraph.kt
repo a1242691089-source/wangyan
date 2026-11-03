@@ -914,8 +914,17 @@ fun MainNavGraph(
                                             requestOpenBook(book, sourceBounds)
                                         },
                                         onTabBarVisibleChange = { visible -> tabBarVisible = visible },
-                                        onNavigateToStatistics = { selectTab(2) },
-                                        onNavigateToBookshelf = { selectTab(1) },
+                                        // 统计与书库管理已是二级 destination，不能再用 Tab 下标跳转
+                                        onNavigateToStatistics = {
+                                            navController.navigate(Screen.Statistics.route) {
+                                                launchSingleTop = true
+                                            }
+                                        },
+                                        onNavigateToBookshelf = {
+                                            navController.navigate(Screen.Bookshelf.route) {
+                                                launchSingleTop = true
+                                            }
+                                        },
                                         onImportClick = {
                                             importRequestFolderId = null
                                             selectedImportBooks = emptyList()
