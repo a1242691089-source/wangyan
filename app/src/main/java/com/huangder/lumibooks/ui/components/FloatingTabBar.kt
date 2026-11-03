@@ -40,6 +40,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
@@ -165,7 +167,18 @@ fun Material3BottomNavigationBar(
                         contentDescription = stringResource(tab.titleRes)
                     )
                 },
-                label = { Text(stringResource(tab.titleRes), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis) },
+                label = {
+                    // softWrap=false 时 paragraph 沿用父级给的有限槽宽，省略号不生效，
+                    // 系统大字号下墨迹会画出节点。requiredWidth 让它按单行固有宽测量，
+                    // 节点宽 >= 墨迹宽；常规字号下固有宽小于槽位，渲染与原来逐像素一致。
+                    Text(
+                        stringResource(tab.titleRes),
+                        modifier = Modifier.requiredWidth(IntrinsicSize.Max),
+                        maxLines = 1,
+                        softWrap = false,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                },
                 alwaysShowLabel = true
             )
         }
@@ -761,6 +774,7 @@ private fun TabItemView(
             Spacer(Modifier.height(2.dp))
             androidx.compose.material3.Text(
                 text = stringResource(tab.titleRes),
+                modifier = Modifier.requiredWidth(IntrinsicSize.Max),
                 color = if (isSelected) selectedContentColor else contentColor,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Medium,

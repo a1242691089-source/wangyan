@@ -873,7 +873,10 @@ private fun WelcomeActionButton(
                         text = text,
                         color = contentColor,
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        softWrap = false,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                     )
                 }
             }
@@ -889,10 +892,15 @@ private fun WelcomeActionButton(
                 contentColor = contentColor
             )
         ) {
+            // 大字号下「下一步」三字恰好在可用宽度的边界上，压线换行会把按钮高度
+            // 翻倍；与上方 liquid glass 分支保持同一约束。
             Text(
                 text = text,
                 fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                softWrap = false,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
             )
         }
     }
@@ -1075,7 +1083,17 @@ private fun WelcomeIntroductionPage(
                 .padding(bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(1f))
+            // 系统大字号下 hero 与隐私文本会撑爆固定高度，把开始按钮挤到屏幕外
+            // （两个 weight 空隙先被压到 0，内容继续溢出）。改为向导其余页面的
+            // 同一结构：中间内容可滚动，开始按钮固定在底部，任意 fontScale 都在屏内。
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(48.dp))
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -1109,7 +1127,7 @@ private fun WelcomeIntroductionPage(
                 )
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(28.dp))
 
             Column(modifier = Modifier.padding(horizontal = 32.dp)) {
                 val privacyText = stringResource(R.string.welcome_privacy)
@@ -1170,6 +1188,7 @@ private fun WelcomeIntroductionPage(
                         }
                     }
                 )
+            }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
