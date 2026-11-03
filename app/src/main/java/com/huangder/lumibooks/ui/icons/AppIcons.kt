@@ -36,6 +36,12 @@ object AppIcons {
     val HomeTab = IconPair(FluentIcons.Filled.Home, FluentIcons.Filled.Home)
     val BookshelfTab = IconPair(FluentIcons.Filled.Library, FluentIcons.Filled.Library)
     val StatisticsTab = IconPair(FluentIcons.Filled.DataBarVertical, FluentIcons.Filled.DataBarVertical)
+    // 五栏的四个新图标。本地 fluent 包是裁剪过的，DocumentText 与 PersonCircle 没有 filled 变体，
+    // 只能退回 regular；视觉上比其余三栏细一档，如需统一要换完整图标包。
+    val NotesTab = IconPair(FluentIcons.Regular.DocumentText, FluentIcons.Regular.DocumentText)
+    val KnowledgeTab = IconPair(FluentIcons.Filled.BookOpen, FluentIcons.Filled.BookOpen)
+    val SkillsTab = IconPair(FluentIcons.Filled.Flash, FluentIcons.Filled.Flash)
+    val ProfileTab = IconPair(FluentIcons.Regular.PersonCircle, FluentIcons.Regular.PersonCircle)
     val UserCircle = FluentIcons.Regular.PersonCircle
     val Book = FluentIcons.Regular.Book
     val BookOpen = FluentIcons.Regular.BookOpen

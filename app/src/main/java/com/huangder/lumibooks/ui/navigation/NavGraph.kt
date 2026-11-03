@@ -66,6 +66,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.bookshelf.BookshelfScreen
+import com.huangder.lumibooks.ui.bookshelf.AnnotationFeedScreen
+import com.huangder.lumibooks.ui.knowledge.KnowledgePlaceholderScreen
+import com.huangder.lumibooks.ui.profile.ProfileScreen
+import com.huangder.lumibooks.ui.skills.SkillsPlaceholderScreen
 import com.huangder.lumibooks.ui.components.BookTransitionOverlay
 import com.huangder.lumibooks.ui.components.FloatingTabBar
 import com.huangder.lumibooks.ui.components.Material3BottomNavigationBar
@@ -306,13 +310,21 @@ fun MainNavGraph(
     onOpenBookRequestConsumed: () -> Unit = {},
     onOpenBookshelfRequestConsumed: () -> Unit = {}
 ) {
-    val mainStartDestination = when (startDestination) {
+    // 五栏之后，书库管理与统计都是二级 destination：NavHost 永远从 pager 页起步，
+    // 若用户在设置里把启动页设成这两个，首帧后再推送过去。
+    // 若仍把二者之一当作 startDestination，返回栈为空，返回键会直接退出应用。
+    val secondaryStartDestination = when (startDestination) {
         Screen.Bookshelf.route -> Screen.Bookshelf.route
         Screen.Statistics.route -> Screen.Statistics.route
-        else -> Screen.Home.route
+        else -> null
     }
+    val mainStartDestination = Screen.Home.route
     val mainPagerState = rememberPagerState(
-        initialPage = if (requestedOpenBookshelf) 1 else mainTabRoutes.indexOf(mainStartDestination)
+        initialPage = if (requestedOpenBookshelf) {
+            0
+        } else {
+            mainTabRoutes.indexOf(mainStartDestination).coerceAtLeast(0)
+        }
     ) { mainTabRoutes.size }
     val selectedTab by remember { derivedStateOf { mainPagerState.settledPage } }
     val tabNavigationScope = rememberCoroutineScope()
@@ -671,9 +683,8 @@ fun MainNavGraph(
         if (!requestedOpenBookshelf) return@LaunchedEffect
         onBeforeOpenDifferentBook()
         tabNavigationJob?.cancel()
-        mainPagerState.scrollToPage(1)
-        if (navController.currentDestination?.route != mainStartDestination) {
-            navController.popBackStack(mainStartDestination, inclusive = false)
+        if (navController.currentDestination?.route != Screen.Bookshelf.route) {
+            navController.navigate(Screen.Bookshelf.route) { launchSingleTop = true }
         }
         if (requestedOpenFolderId == null) onOpenBookshelfRequestConsumed()
     }
@@ -681,6 +692,16 @@ fun MainNavGraph(
     // 监听路由变化，从阅读页/设置页返回时延迟显示 TabBar
     val currentEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentEntry?.destination?.route
+
+    // 启动页设置成「书库管理」或「统计」时，等 pager 页落地后再推过去。
+    var secondaryStartHandled by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(currentRoute, secondaryStartDestination) {
+        val target = secondaryStartDestination ?: return@LaunchedEffect
+        if (!secondaryStartHandled && currentRoute == mainStartDestination) {
+            secondaryStartHandled = true
+            navController.navigate(target) { launchSingleTop = true }
+        }
+    }
     LaunchedEffect(bookReaderTransition.closeNavigationReady) {
         if (bookReaderTransition.consumeCloseNavigation()) {
             navController.popBackStack()
@@ -706,8 +727,16 @@ fun MainNavGraph(
         mutableFloatStateOf(0f)
     }
     val activeMainRoute = mainTabRoutes[selectedTab]
-    val backgroundRoute = if (requestedOpenBookshelf) Screen.Bookshelf.route
-        else if (currentRoute == mainStartDestination) activeMainRoute else lastMainRoute
+    val backgroundRoute = if (requestedOpenBookshelf) {
+        Screen.Bookshelf.route
+    } else if (currentRoute == mainStartDestination) {
+        activeMainRoute
+    } else if (currentRoute == Screen.Bookshelf.route || currentRoute == Screen.Statistics.route) {
+        // 书库管理与统计已是二级页，背景要跟着当前页走，而不是退回上一次的 Tab。
+        currentRoute
+    } else {
+        lastMainRoute
+    }
     androidx.compose.runtime.SideEffect { lastMainRoute = backgroundRoute }
     val backgroundScene = when {
         backgroundRoute != Screen.Bookshelf.route -> LumiBackgroundScene.HOME
@@ -728,7 +757,7 @@ fun MainNavGraph(
         if (currentRoute != mainStartDestination || selectedTab != 0) {
             homeGoalSheetVisible = false
         }
-        if (currentRoute != mainStartDestination || selectedTab != 1) {
+        if (currentRoute != Screen.Bookshelf.route) {
             bookshelfOverlayProgress = 0f
             bookshelfContextMenuVisible = false
         }
@@ -783,7 +812,7 @@ fun MainNavGraph(
             bridgeEnabled = currentRoute != null && (
                 navController.previousBackStackEntry != null ||
                     selectedTab != mainTabRoutes.indexOf(mainStartDestination) ||
-                    (selectedTab == 1 && bookshelfFolderOpen)
+                    (currentRoute == Screen.Bookshelf.route && bookshelfFolderOpen)
                 )
         ) {
             ConfigurableBackHandler(
@@ -905,11 +934,56 @@ fun MainNavGraph(
                                     )
                                 }
                                 1 -> {
+                                    AnnotationFeedScreen(
+                                        onNavigateBack = {},
+                                        showBackButton = false
+                                    )
+                                }
+                                2 -> {
+                                    KnowledgePlaceholderScreen()
+                                }
+                                3 -> {
+                                    SkillsPlaceholderScreen()
+                                }
+                                4 -> {
+                                    ProfileScreen(
+                                        onOpenStatistics = {
+                                            navController.navigate(Screen.Statistics.route) {
+                                                launchSingleTop = true
+                                            }
+                                        },
+                                        onOpenLibrary = {
+                                            navController.navigate(Screen.Bookshelf.route) {
+                                                launchSingleTop = true
+                                            }
+                                        },
+                                        homeViewModel = homeViewModel
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            composable(route = Screen.Bookshelf.route) {
+                BookReaderLibraryLayer(
+                    transition = bookReaderTransition,
+                    blurEnabled = !eInkMode
+                ) {
+                    val destinationAnchorScope = remember(bookReaderTransition) {
+                        BookReaderAnchorScope(transitionState = bookReaderTransition)
+                    }
+                    CompositionLocalProvider(
+                        LocalBookReaderAnchorScope provides destinationAnchorScope.takeIf {
+                            entranceAnimationsEnabled && !eInkMode
+                        }
+                    ) {
                                     BookshelfScreen(
                                         onFolderOpenChange = { bookshelfFolderOpen = it },
                                         onHeaderBottomChange = { bookshelfHeaderBottom = it },
                                         initialLayoutMode = initialBookshelfLayoutMode,
-                                        playEntranceAnimation = playEntranceAnimation,
+                                        playEntranceAnimation = entranceAnimationsEnabled,
                                         onNavigateToReader = { book, sourceBounds ->
                                             requestOpenBook(book, sourceBounds)
                                         },
@@ -942,17 +1016,15 @@ fun MainNavGraph(
                                         },
                                         viewModel = homeViewModel
                                     )
-                                }
-                                else -> {
-                                    StatisticsScreen(
-                                        playEntranceAnimation = playEntranceAnimation,
-                                        onMessage = { transientMessage = it }
-                                    )
-                                }
-                            }
-                        }
+                                
                     }
                 }
+            }
+
+            composable(route = Screen.Statistics.route) {
+                StatisticsScreen(
+                    onMessage = { transientMessage = it }
+                )
             }
 
             composable(
@@ -1142,7 +1214,8 @@ fun MainNavGraph(
         // Keep the transition host composed so the bar animates out for context menus
         // and animates back in after the menu returns to Idle.
         AnimatedVisibility(
-            visible = (heroBackdropVisible || tabBarVisible) &&
+            visible = currentRoute == mainStartDestination &&
+                (heroBackdropVisible || tabBarVisible) &&
                 !bookshelfContextMenuVisible && bookshelfOverlayProgress <= 0.01f,
             enter = if (eInkMode || heroTabTransition) {
                 EnterTransition.None

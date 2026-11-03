@@ -11,7 +11,7 @@ val SecondaryLight = Color(0xFF5856D6)
 val SecondaryDark = Color(0xFF5E5CE6)
 
 // 背景色
-val BackgroundLight = Color(0xFFF2F2F7)
+val BackgroundLight = Color(0xFFFBFAF6)
 val BackgroundDark = Color(0xFF000000)
 
 // 表面色

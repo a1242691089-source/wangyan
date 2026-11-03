@@ -6,7 +6,7 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-const val DEFAULT_APP_ACCENT_HEX = "#E85D5D"
+const val DEFAULT_APP_ACCENT_HEX = "#1A6840"
 
 private const val DARK_CARD_ARGB = 0xFF1C1C1E.toInt()
 private const val DARK_ACCENT_MIN_CONTRAST = 7.0

@@ -124,8 +124,10 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-internal fun AnnotationFeedScreen(
+fun AnnotationFeedScreen(
     onNavigateBack: () -> Unit,
+    /** 作为底部栏的一页嵌入时没有上一级可返回，隐藏返回键。 */
+    showBackButton: Boolean = true,
     viewModel: AnnotationFeedViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -255,17 +257,19 @@ internal fun AnnotationFeedScreen(
                         .fillMaxWidth()
                         .padding(horizontal = if (isLiquidGlass) AppSpace.sm else AppSpace.lg, vertical = AppSpace.sm)
                 ) {
-                    LiquidGlassIconButton(
-                        imageVector = directionalIcon(AppIcons.ArrowLeft, AppIcons.ArrowRight),
-                        contentDescription = stringResource(R.string.back),
-                        onClick = onNavigateBack,
-                        size = if (isLiquidGlass) 48.dp else 36.dp,
-                        iconSize = if (isLiquidGlass) 20.dp else 18.dp,
-                        contentColor = AppColors.TextPrimary,
-                        normalContainerColor = AppColors.BgGray,
-                        settingsBackButton = true
-                    )
-                    Spacer(Modifier.width(AppSpace.md))
+                    if (showBackButton) {
+                        LiquidGlassIconButton(
+                            imageVector = directionalIcon(AppIcons.ArrowLeft, AppIcons.ArrowRight),
+                            contentDescription = stringResource(R.string.back),
+                            onClick = onNavigateBack,
+                            size = if (isLiquidGlass) 48.dp else 36.dp,
+                            iconSize = if (isLiquidGlass) 20.dp else 18.dp,
+                            contentColor = AppColors.TextPrimary,
+                            normalContainerColor = AppColors.BgGray,
+                            settingsBackButton = true
+                        )
+                        Spacer(Modifier.width(AppSpace.md))
+                    }
                     SearchMorph(
                         open = searchOpen,
                         text = searchText,

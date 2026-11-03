@@ -7,7 +7,7 @@
     <string name="remote_library_empty">아직 추가한 서재가 없습니다</string>
     <string name="remote_library_empty_detail_webdav">NAS, Jianguoyun, Nextcloud 등 WebDAV 저장소에 연결해 폴더의 책을 둘러보고 다운로드할 수 있습니다.</string>
     <string name="remote_library_empty_detail_opds">Calibre, Kavita, Komga 등 OPDS 카탈로그를 제공하는 자체 서재에 연결해 둘러보고 검색하고 다운로드할 수 있습니다.</string>
-    <string name="remote_library_legal_notice">접근 권한이 있는 서재만 추가하세요. Lumi는 어떤 서원도 제공하거나 추천하지 않습니다.</string>
+    <string name="remote_library_legal_notice">접근 권한이 있는 서재만 추가하세요. 忘言는 어떤 서원도 제공하거나 추천하지 않습니다.</string>
     <string name="remote_library_add">서재 추가</string>
     <string name="remote_library_edit">서재 편집</string>
     <string name="remote_library_delete">서재 삭제</string>
@@ -83,7 +83,7 @@
     <string name="remote_error_opds2">OPDS 2.0(JSON) 카탈로그는 아직 지원하지 않습니다. 서버에서 제공하는 OPDS 1.x 주소를 사용하세요</string>
     <string name="remote_error_too_large">서버가 반환한 내용이 너무 큽니다</string>
     <string name="remote_error_no_space">저장 공간이 부족합니다</string>
-    <string name="remote_error_local_network">로컬 네트워크 권한이 없습니다: Lumi가 LAN 서재에 접근하도록 허용하세요</string>
+    <string name="remote_error_local_network">로컬 네트워크 권한이 없습니다: 忘言가 LAN 서재에 접근하도록 허용하세요</string>
     <string name="remote_error_unsupported_format">지원하지 않는 책 형식입니다</string>
     <string name="remote_error_invalid_file">다운로드한 파일이 올바르지 않습니다: 로그인이 만료되었거나 파일이 손상되었을 수 있습니다</string>
     <string name="remote_error_destination">선택한 폴더에 쓸 수 없습니다. 이 폴더에 다시 권한을 부여해 주세요</string>

@@ -14,13 +14,13 @@
     <string name="app_accent_color_dialog_title">テーマカラーを設定</string>
     <string name="app_accent_color_hex">カラーコード (#RRGGBB)</string>
     <string name="app_accent_color_invalid">6桁の有効なカラーコードを入力してください</string>
-    <string name="app_accent_color_reset">Lumi ピンクに戻す</string>
+    <string name="app_accent_color_reset">忘言 ピンクに戻す</string>
     <string name="liquid_glass_style">ガラススタイル</string>
     <string name="liquid_glass_style_default">デフォルト</string>
     <string name="liquid_glass_style_original">オリジナル</string>
     <string name="liquid_glass_transparency">ガラスの透明度</string>
     <string name="liquid_glass_hdr_highlight">HDR タッチハイライト</string>
-    <string name="app_name">LUMI</string>
+    <string name="app_name">忘言</string>
 
     <!-- ホーム -->
     <string name="home_title">ホーム</string>
@@ -111,7 +111,7 @@
     <string name="category_backup">バックアップと復元</string>
     <string name="category_about">アプリについて</string>
     <string name="category_sponsor">スポンサー</string>
-    <string name="settings_sponsor_note">LUMI の開発とメンテナンスには、多くの時間と労力がかかっています。LUMI を気に入っていただけたら、開発をご支援ください。支援は任意であり、機能には一切影響しません。支援するかどうかは、あなたの自由です~</string>
+    <string name="settings_sponsor_note">忘言 の開発とメンテナンスには、多くの時間と労力がかかっています。忘言 を気に入っていただけたら、開発をご支援ください。支援は任意であり、機能には一切影響しません。支援するかどうかは、あなたの自由です~</string>
     <string name="category_feedback">フィードバック</string>
     <string name="edit_nickname">ニックネーム変更</string>
     <string name="nickname_label">ニックネーム</string>
@@ -170,7 +170,7 @@
 
     <!-- ストレージ -->
     <string name="label_total_size">合計容量</string>
-    <string name="storage_total_footprint">Lumi の使用容量 %1$s</string>
+    <string name="storage_total_footprint">忘言 の使用容量 %1$s</string>
     <string name="storage_app">アプリ本体</string>
     <string name="storage_cache">キャッシュ</string>
     <string name="storage_tts_short">TTS オーディオ</string>
@@ -245,7 +245,7 @@
     <string name="feedback_title">フィードバック</string>
     <string name="feedback_desc">バグ報告や機能提案をお寄せください</string>
     <string name="feedback_qr_desc">フィードバックフォームQRコード</string>
-    <string name="feedback_thanks">Lumi の開発をサポートしていただきありがとうございます！</string>
+    <string name="feedback_thanks">忘言 の開発をサポートしていただきありがとうございます！</string>
     <string name="feedback_website">ウェブサイト</string>
     <string name="feedback_github_issues">GitHub Issues</string>
     <string name="feedback_github_issues_desc">問題や提案を送信</string>
@@ -548,7 +548,7 @@
     <!-- ウェルカム -->
     <string name="welcome_title">ようこそ</string>
     <string name="welcome_update_title">新しいバージョンに更新されました</string>
-    <string name="welcome_desc">Lumi はオープンソースでローカル優先のブックリーダーです。読書データは既定で端末に保存されます。WebDAV 同期、MinerU クラウド解析、第三者 TTS は任意のネットワーク機能で、設定または有効化した場合にのみ書籍、読書データ、読み上げテキストが対応サービスへ送信されます。Lumi は分析や広告トラッカーを使用しません。「続行」をタップすると、以下に同意したものとみなされます：</string>
+    <string name="welcome_desc">忘言 はオープンソースでローカル優先のブックリーダーです。読書データは既定で端末に保存されます。WebDAV 同期、MinerU クラウド解析、第三者 TTS は任意のネットワーク機能で、設定または有効化した場合にのみ書籍、読書データ、読み上げテキストが対応サービスへ送信されます。忘言 は分析や広告トラッカーを使用しません。「続行」をタップすると、以下に同意したものとみなされます：</string>
     <string name="welcome_privacy">プライバシーポリシー</string>
     <string name="welcome_and">と</string>
     <string name="welcome_terms">利用規約</string>
@@ -556,8 +556,8 @@
     <string name="welcome_continue">続行</string>
     <string name="welcome_privacy_title">プライバシーポリシー</string>
     <string name="welcome_terms_title">利用規約</string>
-    <string name="welcome_support_title">Lumi を気に入っていただけましたか？</string>
-    <string name="welcome_support_message">「設定 > スポンサー」から応援していただけるとうれしいです。いただいた寄付はすべて Lumi の継続的な開発と改善に活用します。</string>
+    <string name="welcome_support_title">忘言 を気に入っていただけましたか？</string>
+    <string name="welcome_support_message">「設定 > スポンサー」から応援していただけるとうれしいです。いただいた寄付はすべて 忘言 の継続的な開発と改善に活用します。</string>
     <string name="welcome_start_using">使い始める</string>
     <string name="welcome_language_title">言語</string>
     <string name="welcome_language_subtitle">使用する言語を選択</string>
@@ -565,7 +565,7 @@
     <string name="welcome_open_sponsor">支援ページを開く</string>
     <string name="welcome_next">次へ</string>
     <string name="welcome_liquid_glass_title">リキッドグラス · すべてを一新</string>
-    <string name="welcome_liquid_glass_subtitle">丁寧に設計したリキッドグラステーマで、Lumi のあらゆる場面がより洗練された操作感になります。</string>
+    <string name="welcome_liquid_glass_subtitle">丁寧に設計したリキッドグラステーマで、忘言 のあらゆる場面がより洗練された操作感になります。</string>
     <string name="welcome_mineru_preview_title">MinerU 解析を内蔵</string>
     <string name="welcome_mineru_preview_subtitle">MinerU により PDF OCR 解析がより正確になります。</string>
     <string name="welcome_bookshelf_preview_title">本棚機能を改善</string>
@@ -579,11 +579,11 @@
     <string name="welcome_liquid_glass_reader_description">リキッドグラス · すべてを一新</string>
     <string name="welcome_mineru_preview_description">MinerU 解析を内蔵</string>
     <string name="welcome_bookshelf_preview_description">本棚機能を改善</string>
-    <string name="welcome_privacy_summary">Lumi はローカル優先のブックリーダーです。読書データは既定で端末に保存され、更新確認、貢献者ページ、表紙検索、リモートフォント、WebDAV、MinerU、第三者 TTS は利用時にのみ通信します。NAS または LAN の WebDAV では、ローカルネットワーク権限は設定したサーバーにのみ使用し、公開 WebDAV では不要です。Lumi は分析や広告トラッキングを使用しません。「続行」をタップすると、以下に同意したものとみなされます：</string>
+    <string name="welcome_privacy_summary">忘言 はローカル優先のブックリーダーです。読書データは既定で端末に保存され、更新確認、貢献者ページ、表紙検索、リモートフォント、WebDAV、MinerU、第三者 TTS は利用時にのみ通信します。NAS または LAN の WebDAV では、ローカルネットワーク権限は設定したサーバーにのみ使用し、公開 WebDAV では不要です。忘言 は分析や広告トラッキングを使用しません。「続行」をタップすると、以下に同意したものとみなされます：</string>
     <string name="welcome_policy_punctuation"></string>
-    <string name="welcome_app_icon_description">Lumi アプリアイコン</string>
-    <string name="welcome_privacy_content">Lumi プライバシーポリシー\nポリシーバージョン：3\n施行日：2026年6月29日\n最終更新日：2026年10月1日\nアプリ名：Lumi\nパッケージ名：com.huangder.lumibooks\n開発者：huangder\n連絡先：huangder0104@126.com\n1. 基本方針\nLumi はオープンソースでローカル優先の電子書籍リーダーです。書庫、読書進捗、ブックマーク、ノート、設定の多くは既定で端末に保存されます。表紙検索、貢献者やアバターの表示、リモートフォントのダウンロード、更新確認、または WebDAV、MinerU、外部 TTS、外部リンクなどの利用時にはネットワーク通信が発生します。\n2. 権限\n- READ_EXTERNAL_STORAGE（Android 12 以下）：選択した EPUB、TXT、PDF などを読み取ります。\n- READ_MEDIA_IMAGES（Android 13 以上）：表紙、書き出し画像、選択した画像を読み取ります。\n- INTERNET / ACCESS_NETWORK_STATE：更新・ポリシー確認、リモートフォント、WebDAV、MinerU、外部 TTS、表紙検索、外部ページに使用します。\n- WRITE_SETTINGS：カスタム画面消灯時間を有効にした場合のみ変更します。\n- フォアグラウンドサービスと通知権限：TTS 再生や解析・同期の進捗通知に使用します。\n- WAKE_LOCK：バックグラウンド TTS 再生中に端末をスリープさせないために使用します。\n- SYSTEM_ALERT_WINDOW：フローティング字幕を有効にした場合のみ他のアプリ上に字幕を表示します。\n最低対応 Android は 11 であり、対応端末では Android 9 以下の旧式書き込みストレージ権限を使用しません。位置情報、カメラ/マイク、連絡先、電話状態、SMS、カレンダーの権限は要求しません。\n3. 端末に保存されるデータ\n書籍ファイル、読書進捗、ブックマーク、ノートと選択テキスト、読書時間、設定、ファイル・フォルダー URI、編集 TXT、MinerU・WebDAV・外部 TTS 設定、TTS 音声キャッシュが端末に保存される場合があります。MinerU Token、WebDAV パスワード、外部 TTS API Key は Android Keystore で暗号化し、バックアップと端末移行から除外します。\n4. データが送信される場面\n- 更新・お知らせ・規約やポリシーの確認で、プロジェクトのリリースまたは文書 URL にアクセスします。\n- 仿宋フォントを選択・復元すると GitHub Raw または jsDelivr からフォントをダウンロードします。書籍内容は送信しません。\n- WebDAV 同期では、書籍、マニフェスト、進捗、ブックマーク、ノート、選択テキストを設定したサーバーへ送受信します。\n- MinerU のクラウド解析では、選択 PDF、解析パラメータ、タスク識別子、必要な個人 Token を OpenDataLab/MinerU に送信します。\n- 外部 TTS では朗読テキスト、モデル/音声、スタイル指示、認証情報を選択したサービスへ送信します。HTTP を有効にすると API Key と朗読テキストが暗号化されず傍受される可能性があります。\n- 表紙検索では書名と検索語を WebView 経由で Bing、百度、Google などへ送信します。サービスが IP、時刻、ブラウザーやネットワーク情報を記録する場合があります。\n- 貢献者ページを開くと GitHub contributors API にアクセスし、GitHub アバターを読み込みます。\n- 外部リンクはタップした場合のみ開きます。\n5. Lumi が行わないこと\n氏名、電話番号、連絡先、正確な位置情報、端末識別子を追跡目的で収集しません。分析、広告、プロファイリング、第三者プッシュ、クラッシュ報告 SDK、Lumi アカウント、開発者運営のクラウド書庫は提供しません。上記以外で書籍や読書内容を自主的にアップロードしません。\n6. 第三者サービス\nOpenDataLab/MinerU、WebDAV、外部 TTS、GitHub と CDN、Bing、百度、Google は Lumi と独立して運営されます。ログ、可用性、料金、保存、削除、法令遵守は各サービスの規約とプライバシーポリシーに従います。\n7. データ管理と児童のプライバシー\n履歴、キャッシュ、設定を削除し、いつでもアンインストールできます。アプリ専用データは削除されますが、元ファイル、WebDAV コピー、第三者が処理済みのデータは削除されません。Lumi は 13 歳未満の児童を対象とせず、児童の個人情報を故意に収集しません。\n8. 変更と連絡先\n機能、法律、第三者サービスの変更に応じて本ポリシーを更新する場合があります。重要な変更はアプリ内のバージョン通知で再読・確認を求めます。質問は huangder（huangder0104@126.com）までご連絡ください。\n9. 適用範囲\n本ポリシーは Android 上の Lumi（com.huangder.lumibooks）に適用され、第三者サービス自身のデータ処理には適用されません。\n本プライバシーポリシーの最終更新日：2026年10月1日\n10. 今回の更新に関する補足\n- Android 17 以降では、設定した NAS または LAN WebDAV に接続する場合にのみローカルネットワーク権限を求めます。公開 WebDAV では不要です。\n- AI 翻訳を有効化または手動実行すると、選択テキスト、対象言語、モデル設定、認証情報が Xiaomi MiMo、DeepSeek、OpenAI または設定した互換サービスへ送信されます。API キーは Android Keystore で端末内に暗号化保存されます。HTTP を許可した場合は平文で送信される可能性があります。\n- ローカル辞書は確認後にのみダウンロードされ、検索はオフラインで行われます。抜粋カードは端末内で生成され、共有を選んだ場合のみ受信アプリへ渡されます。</string>
-    <string name="welcome_terms_content">Lumi 利用規約\n規約バージョン：2\n施行日：2026年6月29日\n最終更新日：2026年10月1日\nアプリ名：Lumi\nパッケージ名：com.huangder.lumibooks\n開発者：huangder\n連絡先：huangder0104@126.com\n1. 同意\nLumi をダウンロード、インストール、起動または利用すると、本規約に同意したものとみなされます。同意しない場合は利用を中止してください。\n2. アプリの機能\nLumi は EPUB、TXT、PDF に対応するオープンソースのローカル優先電子書籍リーダーです。ローカル書庫、進捗、ブックマーク、ノート、統計、システム TTS、TXT 編集、ファイル権限、MinerU クラウド解析、WebDAV 同期、外部 TTS、ネットワーク表紙検索、オンデマンドのリモートフォントを提供します。Lumi アカウントや開発者運営のクラウド書庫はありません。\nWebDAV、MinerU、外部 TTS、表紙検索、リモートフォントは設定・有効化・利用した場合に通信します。\nスポンサー/コントリビューターページを開くと、GitHub contributors API にアクセスしてアバター画像を読み込みます。GitHub と CDN には通常のネットワーク要求メタデータが送信されます。\n3. 利用者の権利と義務\n- 利用可能な機能を使い、ローカルデータを管理し、任意のネットワーク機能をいつでも停止できます。\n- 適用されるオープンソースライセンスに従ってソースコードを閲覧、変更、配布できます。\n- 読む、取り込む、編集、解析、読み上げ、同期する書籍やテキストについて権利侵害や違法行為がないことを確認してください。\n- 処理する権利のあるファイルとテキストだけを送信し、DRM コンテンツ、他人の機微情報、営業秘密、違法コンテンツを送信しないでください。\n- WebDAV パスワード、MinerU Token、TTS API Key を保護し、各サービスの規約、プライバシーポリシー、料金、制限に従ってください。\n- TXT 保存前に内容を確認してバックアップし、違法、侵害、乱用目的で Lumi を使わないでください。\n4. 知的財産\nLumi のオリジナルソースコード、UI、アイコン、ブランドに関する権利は該当する範囲で huangder に帰属し、オリジナルコードは GNU GPLv3 で公開されています。カールページめくりは GPLv3 の legado-E を改変しています。第三者コンポーネントと改変部分は各ライセンスに従い、名称、アイコン、ブランドに商標ライセンスを付与するものではありません。\n本アプリで読む、編集、解析、読み上げ、同期する書籍と内容の権利は原著作者に帰属します。\n5. 免責事項\nLumi は現状のまま提供され、すべてのファイル、端末、Android バージョン、第三者 API との互換性を保証しません。端末障害、誤操作、権限取消、ファイル破損、同期競合、第三者障害、料金、ポリシー変更による損失は利用者が負担します。WebDAV、MinerU、TTS、検索、フォントサービスは独立したサービスであり、可用性、完全性、保存、削除、解析、音声品質を保証しません。TXT 編集では元ファイルが変更されるためバックアップしてください。\n6. プライバシー\n読書データは既定で端末に保存されます。表紙検索、貢献者やアバター、リモートフォント、更新確認、WebDAV、MinerU、外部 TTS、外部リンクでは通信が発生する場合があります。詳細はプライバシーポリシーをご覧ください。\n7. 第三者サービス\nOpenDataLab/MinerU、WebDAV、外部 TTS、GitHub と CDN、Bing、百度、Google は独立して運営されます。各サービスの規約、プライバシーポリシー、料金、制限に従ってください。HTTP TTS を有効にすると API Key と朗読テキストが暗号化されない場合があります。\n8. 変更\n機能、法律、第三者サービスの変更に応じて本規約を更新する場合があります。プライバシー、データ送信、主要機能、利用者の義務に関する重要な変更は、アプリ内のバージョン通知で再読・確認を求めます。その他の変更は公開時に発効します。\n9. 終了\nいつでも利用を停止してアンインストールできます。アプリ専用データは削除されますが、元のファイル、WebDAV のコピー、第三者が処理済みのデータは削除されません。\n10. 準拠法\n本規約は中華人民共和国法に準拠します。紛争はまず協議で解決し、解決できない場合は開発者所在地の管轄裁判所に提起できます。\n11. その他\nいずれかの条項が無効または執行不能となっても、その他の条項は有効に存続します。本規約は Lumi の利用に関する完全な合意です。\n12. 連絡先\n質問は huangder（huangder0104@126.com）またはプロジェクトの GitHub リポジトリへお送りください。\n本利用規約の最終更新日：2026年10月1日\n13. 今回の更新に関する補足\nAI 翻訳、ローカル辞書、抜粋カードは任意機能です。AI 翻訳は選択テキストを設定したサービスへ送信し、精度、料金、制限、データ処理はそのサービスに従います。辞書検索とカード生成は端末内で行われ、共有後のカードは受信アプリの規約に従います。</string>
+    <string name="welcome_app_icon_description">忘言 アプリアイコン</string>
+    <string name="welcome_privacy_content">忘言 プライバシーポリシー\nポリシーバージョン：3\n施行日：2026年6月29日\n最終更新日：2026年10月1日\nアプリ名：忘言\nパッケージ名：com.huangder.lumibooks\n開発者：huangder\n連絡先：huangder0104@126.com\n1. 基本方針\n忘言 はオープンソースでローカル優先の電子書籍リーダーです。書庫、読書進捗、ブックマーク、ノート、設定の多くは既定で端末に保存されます。表紙検索、貢献者やアバターの表示、リモートフォントのダウンロード、更新確認、または WebDAV、MinerU、外部 TTS、外部リンクなどの利用時にはネットワーク通信が発生します。\n2. 権限\n- READ_EXTERNAL_STORAGE（Android 12 以下）：選択した EPUB、TXT、PDF などを読み取ります。\n- READ_MEDIA_IMAGES（Android 13 以上）：表紙、書き出し画像、選択した画像を読み取ります。\n- INTERNET / ACCESS_NETWORK_STATE：更新・ポリシー確認、リモートフォント、WebDAV、MinerU、外部 TTS、表紙検索、外部ページに使用します。\n- WRITE_SETTINGS：カスタム画面消灯時間を有効にした場合のみ変更します。\n- フォアグラウンドサービスと通知権限：TTS 再生や解析・同期の進捗通知に使用します。\n- WAKE_LOCK：バックグラウンド TTS 再生中に端末をスリープさせないために使用します。\n- SYSTEM_ALERT_WINDOW：フローティング字幕を有効にした場合のみ他のアプリ上に字幕を表示します。\n最低対応 Android は 11 であり、対応端末では Android 9 以下の旧式書き込みストレージ権限を使用しません。位置情報、カメラ/マイク、連絡先、電話状態、SMS、カレンダーの権限は要求しません。\n3. 端末に保存されるデータ\n書籍ファイル、読書進捗、ブックマーク、ノートと選択テキスト、読書時間、設定、ファイル・フォルダー URI、編集 TXT、MinerU・WebDAV・外部 TTS 設定、TTS 音声キャッシュが端末に保存される場合があります。MinerU Token、WebDAV パスワード、外部 TTS API Key は Android Keystore で暗号化し、バックアップと端末移行から除外します。\n4. データが送信される場面\n- 更新・お知らせ・規約やポリシーの確認で、プロジェクトのリリースまたは文書 URL にアクセスします。\n- 仿宋フォントを選択・復元すると GitHub Raw または jsDelivr からフォントをダウンロードします。書籍内容は送信しません。\n- WebDAV 同期では、書籍、マニフェスト、進捗、ブックマーク、ノート、選択テキストを設定したサーバーへ送受信します。\n- MinerU のクラウド解析では、選択 PDF、解析パラメータ、タスク識別子、必要な個人 Token を OpenDataLab/MinerU に送信します。\n- 外部 TTS では朗読テキスト、モデル/音声、スタイル指示、認証情報を選択したサービスへ送信します。HTTP を有効にすると API Key と朗読テキストが暗号化されず傍受される可能性があります。\n- 表紙検索では書名と検索語を WebView 経由で Bing、百度、Google などへ送信します。サービスが IP、時刻、ブラウザーやネットワーク情報を記録する場合があります。\n- 貢献者ページを開くと GitHub contributors API にアクセスし、GitHub アバターを読み込みます。\n- 外部リンクはタップした場合のみ開きます。\n5. 忘言 が行わないこと\n氏名、電話番号、連絡先、正確な位置情報、端末識別子を追跡目的で収集しません。分析、広告、プロファイリング、第三者プッシュ、クラッシュ報告 SDK、忘言 アカウント、開発者運営のクラウド書庫は提供しません。上記以外で書籍や読書内容を自主的にアップロードしません。\n6. 第三者サービス\nOpenDataLab/MinerU、WebDAV、外部 TTS、GitHub と CDN、Bing、百度、Google は 忘言 と独立して運営されます。ログ、可用性、料金、保存、削除、法令遵守は各サービスの規約とプライバシーポリシーに従います。\n7. データ管理と児童のプライバシー\n履歴、キャッシュ、設定を削除し、いつでもアンインストールできます。アプリ専用データは削除されますが、元ファイル、WebDAV コピー、第三者が処理済みのデータは削除されません。忘言 は 13 歳未満の児童を対象とせず、児童の個人情報を故意に収集しません。\n8. 変更と連絡先\n機能、法律、第三者サービスの変更に応じて本ポリシーを更新する場合があります。重要な変更はアプリ内のバージョン通知で再読・確認を求めます。質問は huangder（huangder0104@126.com）までご連絡ください。\n9. 適用範囲\n本ポリシーは Android 上の 忘言（com.huangder.lumibooks）に適用され、第三者サービス自身のデータ処理には適用されません。\n本プライバシーポリシーの最終更新日：2026年10月1日\n10. 今回の更新に関する補足\n- Android 17 以降では、設定した NAS または LAN WebDAV に接続する場合にのみローカルネットワーク権限を求めます。公開 WebDAV では不要です。\n- AI 翻訳を有効化または手動実行すると、選択テキスト、対象言語、モデル設定、認証情報が Xiaomi MiMo、DeepSeek、OpenAI または設定した互換サービスへ送信されます。API キーは Android Keystore で端末内に暗号化保存されます。HTTP を許可した場合は平文で送信される可能性があります。\n- ローカル辞書は確認後にのみダウンロードされ、検索はオフラインで行われます。抜粋カードは端末内で生成され、共有を選んだ場合のみ受信アプリへ渡されます。</string>
+    <string name="welcome_terms_content">忘言 利用規約\n規約バージョン：2\n施行日：2026年6月29日\n最終更新日：2026年10月1日\nアプリ名：忘言\nパッケージ名：com.huangder.lumibooks\n開発者：huangder\n連絡先：huangder0104@126.com\n1. 同意\n忘言 をダウンロード、インストール、起動または利用すると、本規約に同意したものとみなされます。同意しない場合は利用を中止してください。\n2. アプリの機能\n忘言 は EPUB、TXT、PDF に対応するオープンソースのローカル優先電子書籍リーダーです。ローカル書庫、進捗、ブックマーク、ノート、統計、システム TTS、TXT 編集、ファイル権限、MinerU クラウド解析、WebDAV 同期、外部 TTS、ネットワーク表紙検索、オンデマンドのリモートフォントを提供します。忘言 アカウントや開発者運営のクラウド書庫はありません。\nWebDAV、MinerU、外部 TTS、表紙検索、リモートフォントは設定・有効化・利用した場合に通信します。\nスポンサー/コントリビューターページを開くと、GitHub contributors API にアクセスしてアバター画像を読み込みます。GitHub と CDN には通常のネットワーク要求メタデータが送信されます。\n3. 利用者の権利と義務\n- 利用可能な機能を使い、ローカルデータを管理し、任意のネットワーク機能をいつでも停止できます。\n- 適用されるオープンソースライセンスに従ってソースコードを閲覧、変更、配布できます。\n- 読む、取り込む、編集、解析、読み上げ、同期する書籍やテキストについて権利侵害や違法行為がないことを確認してください。\n- 処理する権利のあるファイルとテキストだけを送信し、DRM コンテンツ、他人の機微情報、営業秘密、違法コンテンツを送信しないでください。\n- WebDAV パスワード、MinerU Token、TTS API Key を保護し、各サービスの規約、プライバシーポリシー、料金、制限に従ってください。\n- TXT 保存前に内容を確認してバックアップし、違法、侵害、乱用目的で 忘言 を使わないでください。\n4. 知的財産\n忘言 のオリジナルソースコード、UI、アイコン、ブランドに関する権利は該当する範囲で huangder に帰属し、オリジナルコードは GNU GPLv3 で公開されています。カールページめくりは GPLv3 の legado-E を改変しています。第三者コンポーネントと改変部分は各ライセンスに従い、名称、アイコン、ブランドに商標ライセンスを付与するものではありません。\n本アプリで読む、編集、解析、読み上げ、同期する書籍と内容の権利は原著作者に帰属します。\n5. 免責事項\n忘言 は現状のまま提供され、すべてのファイル、端末、Android バージョン、第三者 API との互換性を保証しません。端末障害、誤操作、権限取消、ファイル破損、同期競合、第三者障害、料金、ポリシー変更による損失は利用者が負担します。WebDAV、MinerU、TTS、検索、フォントサービスは独立したサービスであり、可用性、完全性、保存、削除、解析、音声品質を保証しません。TXT 編集では元ファイルが変更されるためバックアップしてください。\n6. プライバシー\n読書データは既定で端末に保存されます。表紙検索、貢献者やアバター、リモートフォント、更新確認、WebDAV、MinerU、外部 TTS、外部リンクでは通信が発生する場合があります。詳細はプライバシーポリシーをご覧ください。\n7. 第三者サービス\nOpenDataLab/MinerU、WebDAV、外部 TTS、GitHub と CDN、Bing、百度、Google は独立して運営されます。各サービスの規約、プライバシーポリシー、料金、制限に従ってください。HTTP TTS を有効にすると API Key と朗読テキストが暗号化されない場合があります。\n8. 変更\n機能、法律、第三者サービスの変更に応じて本規約を更新する場合があります。プライバシー、データ送信、主要機能、利用者の義務に関する重要な変更は、アプリ内のバージョン通知で再読・確認を求めます。その他の変更は公開時に発効します。\n9. 終了\nいつでも利用を停止してアンインストールできます。アプリ専用データは削除されますが、元のファイル、WebDAV のコピー、第三者が処理済みのデータは削除されません。\n10. 準拠法\n本規約は中華人民共和国法に準拠します。紛争はまず協議で解決し、解決できない場合は開発者所在地の管轄裁判所に提起できます。\n11. その他\nいずれかの条項が無効または執行不能となっても、その他の条項は有効に存続します。本規約は 忘言 の利用に関する完全な合意です。\n12. 連絡先\n質問は huangder（huangder0104@126.com）またはプロジェクトの GitHub リポジトリへお送りください。\n本利用規約の最終更新日：2026年10月1日\n13. 今回の更新に関する補足\nAI 翻訳、ローカル辞書、抜粋カードは任意機能です。AI 翻訳は選択テキストを設定したサービスへ送信し、精度、料金、制限、データ処理はそのサービスに従います。辞書検索とカード生成は端末内で行われ、共有後のカードは受信アプリの規約に従います。</string>
 
     <!-- PDFリーダー -->
     <string name="pdf_back">戻る</string>
@@ -652,7 +652,7 @@
     <string name="splash_screen_description">アプリ起動時にブランド画面を表示します</string>
     <string name="splash_setting_next_launch">次回の起動時に適用されます</string>
     <string name="icon_style_title">アイコンスタイル</string>
-    <string name="icon_style_lumi2">Lumi 2</string>
+    <string name="icon_style_lumi2">忘言 2</string>
     <string name="icon_style_classic">クラシック</string>
     <string name="icon_style_change_failed">ホーム画面のアイコンを変更できませんでした。しばらくしてからもう一度お試しください。</string>
     <!-- MinerU third-party cloud parsing -->
@@ -662,7 +662,7 @@
     <string name="title_mineru">MinerU クラウド解析</string>
     <string name="mineru_powered_by">Powered by MinerU</string>
     <string name="mineru_manual_title">手動解析（API不要）</string>
-    <string name="mineru_manual_description">MinerUサイトでファイルをアップロードして解析し、ダウンロードしたZIPまたはMarkdownの結果をLumiBooksに読み込みます。</string>
+    <string name="mineru_manual_description">MinerUサイトでファイルをアップロードして解析し、ダウンロードしたZIPまたはMarkdownの結果を忘言Booksに読み込みます。</string>
     <string name="mineru_manual_open_website">MinerUサイトを開く</string>
     <string name="mineru_manual_import_result">MinerUの結果を読み込む</string>
     <string name="mineru_manual_importing">結果を読み込み中…</string>
@@ -684,14 +684,14 @@
     <string name="mineru_token_placeholder">個人トークンを入力</string>
     <string name="mineru_token_saved">安全に保存済み。空欄のまま継続使用できます</string>
     <string name="mineru_token_required">先に個人トークンを入力してください</string>
-    <string name="mineru_token_storage_notice">トークンは端末内で暗号化され、LumiBooksには送信されません。</string>
+    <string name="mineru_token_storage_notice">トークンは端末内で暗号化され、忘言Booksには送信されません。</string>
     <string name="mineru_get_token">MinerU API管理を開く</string>
     <string name="mineru_enable_agent">軽量解析を有効にする</string>
     <string name="mineru_enable_precise">保存して高精度解析を有効にする</string>
     <string name="mineru_disable">MinerUを無効にする</string>
     <string name="mineru_clear_token">個人トークンを削除</string>
     <string name="mineru_third_party_title">第三者サービスについて</string>
-    <string name="mineru_third_party_notice">MinerUは第三者が独立して運営しています。選択したPDFはMinerUおよびそのストレージにアップロードされます。LumiBooksは同サービスを運営・管理せず、可用性、解析精度、処理時間、方針変更を保証しません。この説明は法令上の利用者の権利やLumiBooksが負うべき責任を制限しません。</string>
+    <string name="mineru_third_party_notice">MinerUは第三者が独立して運営しています。選択したPDFはMinerUおよびそのストレージにアップロードされます。忘言Booksは同サービスを運営・管理せず、可用性、解析精度、処理時間、方針変更を保証しません。この説明は法令上の利用者の権利や忘言Booksが負うべき責任を制限しません。</string>
     <string name="mineru_service_terms">OpenDataLab サービス規約</string>
     <string name="mineru_privacy_policy">OpenDataLab プライバシーポリシー</string>
     <string name="mineru_api_limits">MinerU API制限</string>
@@ -699,7 +699,7 @@
     <string name="mineru_consent_subtitle">以下のリスクと第三者規約を最後までお読みください。確認は30秒後に有効になります。</string>
     <string name="mineru_risk_upload">選択したPDFの本文、画像、ファイル名、文書情報は端末外へ送信され、MinerUとOSS/CDNストレージにアップロードされます。</string>
     <string name="mineru_risk_third_party">MinerUは独立した第三者サービスであり、保存、削除、制限、料金、サービス変更は運営者が決定します。</string>
-    <string name="mineru_risk_accuracy">クラウド解析では欠落、誤認識、レイアウト変更が生じる場合があります。LumiBooksは精度や継続提供を保証しません。</string>
+    <string name="mineru_risk_accuracy">クラウド解析では欠落、誤認識、レイアウト変更が生じる場合があります。忘言Booksは精度や継続提供を保証しません。</string>
     <string name="mineru_risk_rights">処理権限のないファイル、DRM保護、機微な個人情報、営業秘密、厳格な機密情報を含むファイルは送信しないでください。</string>
     <string name="mineru_consent_checkbox">第三者規約を読み、ファイル送信を理解し、選択したファイルを処理する権限があることを確認します。</string>
     <string name="mineru_consent_countdown">引き続きお読みください（%1$d秒）</string>
@@ -792,11 +792,11 @@
     <string name="external_tts_insecure_endpoint">HTTPS 接続のみ許可されます。HTTP を許可する場合はスイッチを有効にしてください</string>
     <string name="external_tts_invalid_url">サービス URL の形式が無効です</string>
     <string name="external_tts_third_party_title">サードパーティ TTS サービスについて</string>
-    <string name="external_tts_third_party_notice">サードパーティ TTS サービスは、あなたが選択した事業者によって運営されています。有効にすると、現在朗読しているテキストと任意のスタイル指示がその事業者へ送信されます。LumiBooks はテキストを自社サーバーへ送信せず、第三者サービスの品質、可用性、料金、ポリシー変更を管理しません。この説明は法的権利に影響しません。</string>
+    <string name="external_tts_third_party_notice">サードパーティ TTS サービスは、あなたが選択した事業者によって運営されています。有効にすると、現在朗読しているテキストと任意のスタイル指示がその事業者へ送信されます。忘言Books はテキストを自社サーバーへ送信せず、第三者サービスの品質、可用性、料金、ポリシー変更を管理しません。この説明は法的権利に影響しません。</string>
     <string name="external_tts_consent_title">サードパーティ TTS サービスを有効にする</string>
     <string name="external_tts_consent_subtitle">以下のリスク情報を最後までお読みください。確認ボタンは 30 秒後に有効になります。</string>
     <string name="external_tts_risk_send">朗読中のテキストとスタイル指示は端末を離れ、指定したサードパーティ TTS サービスへ送信されます。</string>
-    <string name="external_tts_risk_key">API キーはこの端末の Android KeyStore にのみ暗号化して保存され、LumiBooks に送信されません。</string>
+    <string name="external_tts_risk_key">API キーはこの端末の Android KeyStore にのみ暗号化して保存され、忘言Books に送信されません。</string>
     <string name="external_tts_risk_third_party">選択した TTS サービスは第三者によって独立して運営されます。その可用性、料金、データ保持、ポリシー変更は当該事業者が決定します。</string>
     <string name="external_tts_risk_costs">サードパーティ TTS サービスの利用には API 利用料がかかる場合があります。事前に事業者の料金体系を確認してください。</string>
     <string name="external_tts_consent_checkbox">上記の説明を読み、テキストが第三者サービスへ送信されること、および関連する費用とリスクを理解しました。</string>
@@ -856,10 +856,10 @@
     <string name="webdav_save_configuration">設定を保存</string>
     <string name="webdav_last_sync_time">前回の同期：%1$s</string>
     <string name="webdav_status_card_title">接続状態</string>
-    <string name="webdav_sync_path_hint">同期ディレクトリ（任意、デフォルト LumiBooks）</string>
+    <string name="webdav_sync_path_hint">同期ディレクトリ（任意、デフォルト 忘言Books）</string>
     <string name="webdav_required_fields">サーバーアドレスとユーザー名を入力してください</string>
     <string name="webdav_third_party_title">WebDAV 同期について</string>
-    <string name="webdav_third_party_notice">WebDAV 同期はお客様ご自身の WebDAV サーバーを利用します。選択した書籍ファイルと読書データがそのサーバーにアップロードされます。NAS または LAN サーバーの場合、ローカルネットワーク権限はそのアドレスへの接続にのみ使用され、公開 WebDAV では不要です。LumiBooks は自社サーバーにデータを送信せず、第三者サーバーの可用性やセキュリティについて管理しません。</string>
+    <string name="webdav_third_party_notice">WebDAV 同期はお客様ご自身の WebDAV サーバーを利用します。選択した書籍ファイルと読書データがそのサーバーにアップロードされます。NAS または LAN サーバーの場合、ローカルネットワーク権限はそのアドレスへの接続にのみ使用され、公開 WebDAV では不要です。忘言Books は自社サーバーにデータを送信せず、第三者サーバーの可用性やセキュリティについて管理しません。</string>
     <string name="epub_render_mode">EPUB レイアウト</string>
     <string name="epub_book_layout">書籍の元レイアウト</string>
     <string name="epub_reader_layout">リーダーレイアウト</string>
@@ -869,7 +869,7 @@
     <string name="reader_external_link_message">この EPUB は外部アプリまたはウェブサイトを開こうとしています：\n%1$s</string>
     <string name="reader_external_link_open">開く</string>
     <string name="preserve_epub_background">原書の背景を保持</string>
-    <string name="preserve_epub_background_hint">本の画像背景があるページは本の背景を保持し、それ以外のページは Lumi の読書背景を使います。オフにすると全ページで Lumi の背景を使います</string>
+    <string name="preserve_epub_background_hint">本の画像背景があるページは本の背景を保持し、それ以外のページは 忘言 の読書背景を使います。オフにすると全ページで 忘言 の背景を使います</string>
     <string name="reader_image_page_crop">全ページ画像を切り抜いて表示</string>
     <string name="reader_image_page_crop_hint">本の元レイアウトで全ページ画像を画面比率に合わせて切り抜いて表示します。オフにすると余白を残して全体を表示します</string>
     <string name="reader_theme_publisher">原本レイアウト</string>
@@ -962,7 +962,7 @@
     <string name="txt_toc_rule_symbol_example_regex">章の正規表現：^[☆★◆]\s*[、：:]\s*.+$</string>
     <string name="txt_toc_rule_help">ルールのヘルプ</string>
     <string name="txt_toc_help_intro_title">TXT 目次ルールとは？</string>
-    <string name="txt_toc_help_intro_body">Lumi は TXT を1行ずつ読み込みます。ルールは巻名や章名の行を判定して目次に表示します。本文の内容は書き換えません。</string>
+    <string name="txt_toc_help_intro_body">忘言 は TXT を1行ずつ読み込みます。ルールは巻名や章名の行を判定して目次に表示します。本文の内容は書き換えません。</string>
     <string name="txt_toc_help_step_one_title">手順1：「自動選択」を試す</string>
     <string name="txt_toc_help_step_one_body">自動選択は一致数と番号の連続性を比較します。多くの TXT ではこれで十分です。合わない場合は下の4つを手動で試してください。</string>
     <string name="txt_toc_help_step_two_title">手順2：見出しの形式で選ぶ</string>
@@ -976,7 +976,7 @@
     <string name="txt_toc_help_notes_title">巻と章が両方ある場合</string>
     <string name="txt_toc_help_notes_body">巻の正規表現を入力すると、章より先に巻を判定します。例：^第\\s*[0-9０-９]+巻.*$。巻がない TXT は章の正規表現だけで構いません。保存して適用すると目次と読書位置が更新されます。</string>
     <string name="txt_toc_help_compat_title">互換ルールとは？</string>
-    <string name="txt_toc_help_compat_body">互換ルールは他社リーダーアプリの目次ルールファイルから取り込みます。Lumi はその中の正規表現だけを使い、ファイル全体に一致させる方式で実行します。各行は前後の行と一緒に照合されるため、先読み・後読みの記法は使えますが、後方参照には対応しません。ルール内のスクリプトは保存も実行もされません。Lumi は書籍コンテンツもオンライン書源も提供・取り込みしません。互換ルールは、あなたが閲覧権限を持つローカル TXT ファイルの解析だけに使われます。</string>
+    <string name="txt_toc_help_compat_body">互換ルールは他社リーダーアプリの目次ルールファイルから取り込みます。忘言 はその中の正規表現だけを使い、ファイル全体に一致させる方式で実行します。各行は前後の行と一緒に照合されるため、先読み・後読みの記法は使えますが、後方参照には対応しません。ルール内のスクリプトは保存も実行もされません。忘言 は書籍コンテンツもオンライン書源も提供・取り込みしません。互換ルールは、あなたが閲覧権限を持つローカル TXT ファイルの解析だけに使われます。</string>
     <string name="txt_toc_library_summary">カスタムルール %1$d 件、互換ルール %2$d 件</string>
     <string name="txt_toc_compat_section_title">互換ルール（他社リーダーアプリ形式）</string>
     <string name="txt_toc_compat_description">ファイル全体の一致方式で、ルール内の正規表現だけを使用します。スクリプトによる置換は実行しません。</string>
@@ -987,7 +987,7 @@
     <string name="txt_toc_compat_clear">互換ルールを消去</string>
     <string name="txt_toc_compat_cleared">互換ルールを消去しました</string>
     <string name="txt_toc_compat_notice_title">他社ルールの利用前にご確認ください</string>
-    <string name="txt_toc_compat_notice_body">Lumi は書籍コンテンツもオンライン書源も提供・取り込みしません。互換ルールは、あなたが閲覧権限を持つローカル TXT ファイルの解析のみに使用され、ルール内のスクリプトは実行されません。</string>
+    <string name="txt_toc_compat_notice_body">忘言 は書籍コンテンツもオンライン書源も提供・取り込みしません。互換ルールは、あなたが閲覧権限を持つローカル TXT ファイルの解析のみに使用され、ルール内のスクリプトは実行されません。</string>
     <string name="txt_toc_compat_notice_confirm">了解しました</string>
     <string name="txt_toc_rule_compat_prefix">互換：%1$s</string>
     <string name="txt_toc_import_empty">ルールファイルが空です</string>
@@ -995,7 +995,7 @@
     <string name="txt_toc_import_unknown_format">判別できないルールファイル形式です。TXT 目次ルールのみ対応します</string>
     <string name="txt_toc_import_book_source_unsupported">本アプリは書源形式に対応していません。TXT 目次ルールのみ対応します</string>
     <string name="txt_toc_import_builtin_reserved">取り込んだルールで内蔵ルールを上書きできません</string>
-    <string name="txt_toc_import_result">Lumi ルール %1$d 件、互換ルール %2$d 件を読み込み、%3$d 件をスキップしました（うち %4$d 件は未実行のスクリプトを含みます）</string>
+    <string name="txt_toc_import_result">忘言 ルール %1$d 件、互換ルール %2$d 件を読み込み、%3$d 件をスキップしました（うち %4$d 件は未実行のスクリプトを含みます）</string>
 
     <string name="reader_writing_mode">組み方向</string>
     <string name="reader_writing_horizontal">横組み</string>
@@ -1365,7 +1365,7 @@
     <string name="font_import_name_count">%1$d/12</string>
     <string name="font_import_default_name">カスタムフォント</string>
     <string name="page_transition_label">ページめくり効果</string>
-    <string name="welcome_brand_name">Lumi Books</string>
+    <string name="welcome_brand_name">忘言</string>
     <string name="welcome_major_version">2</string>
     <string name="pdf_text_selection_unavailable">この PDF では現在テキストを選択できません</string>
     <string name="pdf_notes_hint">PDF のテキストを長押しすると、コピー、ハイライト、下線を追加できます</string>
@@ -1410,7 +1410,7 @@
     <string name="policy_update_both_title">利用規約とプライバシーポリシーを更新しました</string>
     <string name="policy_update_terms_title">利用規約を更新しました</string>
     <string name="policy_update_privacy_title">プライバシーポリシーを更新しました</string>
-    <string name="policy_update_prompt">変更内容を確認し、Lumi の利用を続けるか選択してください。</string>
+    <string name="policy_update_prompt">変更内容を確認し、忘言 の利用を続けるか選択してください。</string>
     <string name="policy_update_terms_subtitle">更新されたサービス規則を確認</string>
     <string name="policy_update_privacy_subtitle">更新された個人情報保護内容を確認</string>
     <string name="policy_update_accept">同意して続行</string>
@@ -1495,7 +1495,7 @@
     <string name="epub_comic_page_retry">%1$d ページを読み込めませんでした。タップして再試行。</string>
     <string name="epub_comic_switch_failed">リーダーを切り替えられませんでした。もう一度お試しください。</string>
     <string name="local_network_permission_title">ローカルネットワークへのアクセスを許可</string>
-    <string name="local_network_permission_message">設定した NAS または LAN 内の WebDAV サーバーへ接続するには、ローカルネットワーク権限が必要です。Lumi はそのサーバーへの接続時にのみ使用し、公開 WebDAV サーバーでは要求しません。</string>
+    <string name="local_network_permission_message">設定した NAS または LAN 内の WebDAV サーバーへ接続するには、ローカルネットワーク権限が必要です。忘言 はそのサーバーへの接続時にのみ使用し、公開 WebDAV サーバーでは要求しません。</string>
     <string name="local_network_permission_continue">続行</string>
     <string name="local_network_permission_not_now">後で</string>
     <string name="webdav_error_local_network_permission">ローカルネットワーク権限がありません。設定した NAS または LAN 内の WebDAV サーバーへのアクセスを許可してください。</string>

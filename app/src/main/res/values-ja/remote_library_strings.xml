@@ -7,7 +7,7 @@
     <string name="remote_library_empty">ライブラリがまだ追加されていません</string>
     <string name="remote_library_empty_detail_webdav">NAS、Jianguoyun、Nextcloud などの WebDAV ストレージに接続し、フォルダ内の書籍を閲覧してダウンロードできます。</string>
     <string name="remote_library_empty_detail_opds">Calibre、Kavita、Komga など OPDS カタログを提供する自前のライブラリに接続し、閲覧・検索・ダウンロードできます。</string>
-    <string name="remote_library_legal_notice">アクセス権限のあるライブラリのみ追加してください。Lumi は書源を提供・推奨しません。</string>
+    <string name="remote_library_legal_notice">アクセス権限のあるライブラリのみ追加してください。忘言 は書源を提供・推奨しません。</string>
     <string name="remote_library_add">ライブラリを追加</string>
     <string name="remote_library_edit">ライブラリを編集</string>
     <string name="remote_library_delete">ライブラリを削除</string>
@@ -83,7 +83,7 @@
     <string name="remote_error_opds2">OPDS 2.0（JSON）カタログにはまだ対応していません。サーバーが提供する OPDS 1.x のアドレスを使用してください</string>
     <string name="remote_error_too_large">サーバーから返された内容が大きすぎます</string>
     <string name="remote_error_no_space">ストレージの空き容量が不足しています</string>
-    <string name="remote_error_local_network">ローカルネットワーク権限がありません：Lumi に LAN 内のライブラリへのアクセスを許可してください</string>
+    <string name="remote_error_local_network">ローカルネットワーク権限がありません：忘言 に LAN 内のライブラリへのアクセスを許可してください</string>
     <string name="remote_error_unsupported_format">対応していない書籍形式です</string>
     <string name="remote_error_invalid_file">ダウンロードしたファイルが無効です：ログインの有効期限が切れているか、ファイルが破損している可能性があります</string>
     <string name="remote_error_destination">選択したフォルダに書き込めません。フォルダへのアクセスを再許可してください</string>

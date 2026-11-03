@@ -7,7 +7,7 @@
     <string name="remote_library_empty">還沒有新增書庫</string>
     <string name="remote_library_empty_detail_webdav">連接 NAS、堅果雲、Nextcloud 等 WebDAV 雲端硬碟，瀏覽資料夾中的書並下載匯入。</string>
     <string name="remote_library_empty_detail_opds">連接 Calibre、Kavita、Komga 等提供 OPDS 書目的自架書庫，瀏覽、搜尋並下載匯入。</string>
-    <string name="remote_library_legal_notice">僅新增你有權存取的書庫。Lumi 不提供、不推薦任何書源。</string>
+    <string name="remote_library_legal_notice">僅新增你有權存取的書庫。忘言 不提供、不推薦任何書源。</string>
     <string name="remote_library_add">新增書庫</string>
     <string name="remote_library_edit">編輯書庫</string>
     <string name="remote_library_delete">刪除書庫</string>
@@ -83,7 +83,7 @@
     <string name="remote_error_opds2">暫不支援 OPDS 2.0（JSON）書目，請改用伺服器提供的 OPDS 1.x 位址</string>
     <string name="remote_error_too_large">伺服器回傳的內容過大</string>
     <string name="remote_error_no_space">儲存空間不足</string>
-    <string name="remote_error_local_network">缺少本機網路權限：請允許 Lumi 存取區域網路書庫</string>
+    <string name="remote_error_local_network">缺少本機網路權限：請允許 忘言 存取區域網路書庫</string>
     <string name="remote_error_unsupported_format">不支援的書籍格式</string>
     <string name="remote_error_invalid_file">下載的檔案無效：可能是登入已過期或檔案已損壞</string>
     <string name="remote_error_destination">無法寫入所選資料夾，請重新授權該資料夾</string>

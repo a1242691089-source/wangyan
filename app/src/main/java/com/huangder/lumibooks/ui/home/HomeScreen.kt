@@ -209,7 +209,8 @@ fun HomeScreen(
                                 context.startActivity(
                                     android.content.Intent(context, com.huangder.lumibooks.ui.settings.SettingsActivity::class.java)
                                 )
-                            }
+                            },
+                            onLibraryClick = onNavigateToBookshelf
                         )
                     }
                     Spacer(Modifier.height(AppSpace.lg))
@@ -354,7 +355,8 @@ fun HomeScreen(
 @Composable
 private fun HomeHeader(
     avatarUri: String? = null,
-    onAvatarClick: () -> Unit = {}
+    onAvatarClick: () -> Unit = {},
+    onLibraryClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -363,7 +365,7 @@ private fun HomeHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = stringResource(R.string.home_page),
+            text = stringResource(R.string.nav_shelf),
             fontSize = AppType.Display,
             fontWeight = FontWeight.Bold,
             fontFamily = resolveAppFontFamily(KaiTi),
@@ -371,6 +373,9 @@ private fun HomeHeader(
             color = AppColors.TextPrimary
         )
         Spacer(Modifier.weight(1f))
+        // 书库管理（文件夹/CoverFlow/分类），五栏之后不再占底部 Tab
+        LibraryEntryButton(onClick = onLibraryClick)
+        Spacer(Modifier.size(AppSpace.sm))
         // 头像（点击进入设置页）
         Box(
             modifier = Modifier
@@ -401,6 +406,28 @@ private fun HomeHeader(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun LibraryEntryButton(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .size(36.dp)
+            .clip(CircleShape)
+            .background(AppColors.BgGray)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = AppIcons.Books,
+            contentDescription = stringResource(R.string.bookshelf_manage),
+            tint = AppColors.TextSecondary,
+            modifier = Modifier.size(18.dp)
+        )
     }
 }
 

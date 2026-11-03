@@ -128,10 +128,15 @@ private val LiquidTabHorizontalPadding = 36.dp
 private val LiquidImportButtonReserve = 100.dp
 private val LiquidImportIconSize = 28.dp
 
+/**
+ * 底部五个 Tab。数量必须与 `mainTabRoutes` 一致（见 `FloatingTabBarTabsTest`）。
+ */
 val tabs = listOf(
-    TabItem(AppIcons.HomeTab, R.string.home_title, "home_tab"),
-    TabItem(AppIcons.BookshelfTab, R.string.bookshelf_title, "bookshelf_tab"),
-    TabItem(AppIcons.StatisticsTab, R.string.statistics_title, "statistics_tab")
+    TabItem(AppIcons.BookshelfTab, R.string.nav_shelf, "shelf_tab"),
+    TabItem(AppIcons.NotesTab, R.string.nav_notes, "notes_tab"),
+    TabItem(AppIcons.KnowledgeTab, R.string.nav_knowledge, "knowledge_tab"),
+    TabItem(AppIcons.SkillsTab, R.string.nav_skills, "skills_tab"),
+    TabItem(AppIcons.ProfileTab, R.string.nav_profile, "profile_tab")
 )
 
 @Composable

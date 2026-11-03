@@ -103,7 +103,7 @@ fun resolveAppFontFamily(defaultFontFamily: FontFamily): FontFamily =
 // ─── 颜色（自动适配深色模式）───
 object AppColors {
     // 浅色
-    private val LightWindowBg = Color(0xFFFBFBFC)
+    private val LightWindowBg = Color(0xFFFBFAF6)
     private val LightCardBg = Color.White
     private val LightTextPrimary = Color(0xFF000000)
     private val LightTextSecondary = Color(0xFF6E6E73)

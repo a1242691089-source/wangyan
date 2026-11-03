@@ -1364,7 +1364,7 @@ private fun ThemeColorSettingRow(
  */
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-private fun AppAccentPresetRow(
+internal fun AppAccentPresetRow(
     selectedHex: String,
     onSelect: (String) -> Unit
 ) {

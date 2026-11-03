@@ -69,9 +69,9 @@ class MainTabsPagerTest {
     private lateinit var state: PagerState
     private lateinit var backDispatcher: OnBackPressedDispatcher
     private val backEvents = mutableListOf<Int>()
-    private val compositions = IntArray(3)
-    private val placements = IntArray(3)
-    private val rowStates = arrayOfNulls<LazyListState>(3)
+    private val compositions = IntArray(mainTabRoutes.size)
+    private val placements = IntArray(mainTabRoutes.size)
+    private val rowStates = arrayOfNulls<LazyListState>(mainTabRoutes.size)
     private lateinit var selection: MainTabSelection
 
     @Composable
@@ -150,7 +150,7 @@ class MainTabsPagerTest {
         lateinit var initialCompositions: IntArray
         lateinit var initialPlacements: IntArray
         compose.runOnIdle {
-            assertTrue("All three pages must be ready before dragging", compositions.all { it > 0 })
+            assertTrue("All pages must be ready before dragging", compositions.all { it > 0 })
             initialCompositions = compositions.copyOf()
             initialPlacements = placements.copyOf()
         }
@@ -211,10 +211,14 @@ class MainTabsPagerTest {
         compose.runOnIdle { assertEquals(0, state.settledPage) }
         compose.onNodeWithTag("pager").performTouchInput { swipeLeft() }
         compose.runOnIdle { assertEquals(1, state.settledPage) }
+        // 一路滑到最后一页：五栏之后页数由 mainTabRoutes 决定，不再写死 2。
+        repeat(mainTabRoutes.lastIndex - 1) {
+            compose.onNodeWithTag("pager").performTouchInput { swipeLeft() }
+        }
+        compose.runOnIdle { assertEquals(mainTabRoutes.lastIndex, state.settledPage) }
+        // 到右端后继续滑，必须钳住而不是溢出。
         compose.onNodeWithTag("pager").performTouchInput { swipeLeft() }
-        compose.runOnIdle { assertEquals(2, state.settledPage) }
-        compose.onNodeWithTag("pager").performTouchInput { swipeLeft() }
-        compose.runOnIdle { assertEquals(2, state.settledPage) }
+        compose.runOnIdle { assertEquals(mainTabRoutes.lastIndex, state.settledPage) }
         compose.onNodeWithTag("tab-0").performClick()
         compose.runOnIdle { assertEquals(0, state.settledPage) }
         compose.onNodeWithTag("tab-2").performClick()

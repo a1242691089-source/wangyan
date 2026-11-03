@@ -21,12 +21,23 @@ data class AppAccentPreset(
 )
 
 /**
- * 内置预设配色。首个为上游默认色，保证不改变现有用户的观感基线。
+ * 内置预设配色。首个为品牌默认色，与 [DEFAULT_APP_ACCENT_HEX] 保持一致。
+ *
+ * 每个 hex 都实测过「白字 onPrimary」对比度 ≥ 4.5:1（WCAG AA），由
+ * `AppAccentColorTest` 锁定：墨绿 6.78 / 沙青 7.00 / 绀青 8.92 / 蟹青 5.05 /
+ * 赭石 5.70 / 鹿皮棕 5.41 / 霁青 4.89 / 青瓷 4.90。
+ *
+ * 传统釉色本身偏亮（霁青 #63BBD0、青瓷 #B1C5B4、赭石 #C37E5F、鹿皮棕 #BB9755、
+ * 蟹青 #7A988E 配白字只有 1.75–3.25:1），因此这里统一存压深后的交互级色值，
+ * 原始釉色仅作设计参考，不进代码，避免 onPrimary 文字低于 AA。
  */
 val APP_ACCENT_PRESETS: List<AppAccentPreset> = listOf(
-    AppAccentPreset("coral", R.string.accent_preset_coral, DEFAULT_APP_ACCENT_HEX),
-    AppAccentPreset("indigo", R.string.accent_preset_indigo, "#4F5BD5"),
-    AppAccentPreset("teal", R.string.accent_preset_teal, "#0E7C7B"),
-    AppAccentPreset("amber", R.string.accent_preset_amber, "#B87333"),
-    AppAccentPreset("violet", R.string.accent_preset_violet, "#7C4DFF")
+    AppAccentPreset("ink_green", R.string.accent_preset_ink_green, DEFAULT_APP_ACCENT_HEX),
+    AppAccentPreset("sand_blue", R.string.accent_preset_sand_blue, "#2B5E7D"),
+    AppAccentPreset("navy", R.string.accent_preset_navy, "#3F486C"),
+    AppAccentPreset("crab_green", R.string.accent_preset_crab_green, "#587568"),
+    AppAccentPreset("ochre", R.string.accent_preset_ochre, "#965639"),
+    AppAccentPreset("deer_brown", R.string.accent_preset_deer_brown, "#84652D"),
+    AppAccentPreset("mist_blue", R.string.accent_preset_mist_blue, "#2E7A8F"),
+    AppAccentPreset("celadon", R.string.accent_preset_celadon, "#5C7767")
 )

@@ -11,9 +11,9 @@
     <string name="remote_library_empty">还没有添加书库</string>
     <string name="remote_library_empty_detail_webdav">连接 NAS、坚果云、Nextcloud 等 WebDAV 网盘，浏览文件夹里的书并下载导入。</string>
     <string name="remote_library_empty_detail_opds">连接 Calibre、Kavita、Komga 等提供 OPDS 书目的自建书库，浏览、搜索并下载导入。</string>
-    <string name="remote_library_legal_notice">仅添加你有权访问的书库。Lumi 不提供、不推荐任何书源。</string>
+    <string name="remote_library_legal_notice">仅添加你有权访问的书库。忘言 不提供、不推荐任何书源。</string>
     <string name="remote_library_legal_title">远程书库使用声明</string>
-    <string name="remote_library_legal_message">请确保你有权访问此书库，并有权浏览、下载和导入其中的作品。你应遵守适用法律法规、作品版权及服务条款，不得导入或传播侵权、违法或未经授权的内容。书库地址和内容由你自行提供与管理，Lumi 不提供或审核书源，也不对其合法性、准确性或可用性负责。继续操作即表示你确认书库及相关使用行为合法，并愿意承担相应责任。</string>
+    <string name="remote_library_legal_message">请确保你有权访问此书库，并有权浏览、下载和导入其中的作品。你应遵守适用法律法规、作品版权及服务条款，不得导入或传播侵权、违法或未经授权的内容。书库地址和内容由你自行提供与管理，忘言 不提供或审核书源，也不对其合法性、准确性或可用性负责。继续操作即表示你确认书库及相关使用行为合法，并愿意承担相应责任。</string>
     <string name="remote_library_legal_confirm_wait">请阅读声明（%1$d 秒）</string>
     <string name="remote_library_legal_confirm">我已阅读并确认</string>
     <string name="remote_library_feedback">问题反馈与举报</string>
@@ -95,7 +95,7 @@
     <string name="remote_error_opds2">暂不支持 OPDS 2.0（JSON）书目，请改用服务器提供的 OPDS 1.x 地址</string>
     <string name="remote_error_too_large">服务器返回的内容过大</string>
     <string name="remote_error_no_space">存储空间不足</string>
-    <string name="remote_error_local_network">缺少本地网络权限：请允许 Lumi 访问局域网书库</string>
+    <string name="remote_error_local_network">缺少本地网络权限：请允许 忘言 访问局域网书库</string>
     <string name="remote_error_unsupported_format">不支持的书籍格式</string>
     <string name="remote_error_invalid_file">下载的文件无效：可能是登录已过期或文件已损坏</string>
     <string name="remote_error_destination">无法写入所选文件夹，请重新授权该文件夹</string>

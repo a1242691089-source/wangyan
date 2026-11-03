@@ -52,7 +52,22 @@ import com.huangder.lumibooks.ui.animation.MainTabMotion
 import com.huangder.lumibooks.ui.animation.MAIN_TAB_SETTLE_LIMIT_MS
 import com.huangder.lumibooks.ui.theme.LocalMotionEnabled
 
-internal val mainTabRoutes = listOf(Screen.Home.route, Screen.Bookshelf.route, Screen.Statistics.route)
+/**
+ * 五个 Tab 的页序。
+ *
+ * 必须与 [com.huangder.lumibooks.ui.components.tabs] 一一对应、数量一致：
+ * 底部栏的点击下标会直接当作 pager 页下标使用，两者不同步会越界。
+ * `FloatingTabBarTabsTest` 守着这条约束。
+ *
+ * 书库管理与统计已移出 Tab，改为二级 destination，从「书架」和「我的」进入。
+ */
+internal val mainTabRoutes = listOf(
+    Screen.Home.route,
+    Screen.Annotations.route,
+    Screen.Knowledge.route,
+    Screen.Skills.route,
+    Screen.Profile.route
+)
 
 @Composable
 internal fun MainTabsPager(
