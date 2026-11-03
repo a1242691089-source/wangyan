@@ -2,9 +2,11 @@ package com.huangder.lumibooks.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// 主色调 - iOS风格蓝色
-val PrimaryLight = Color(0xFF007AFF)
-val PrimaryDark = Color(0xFF0A84FF)
+// 主色调 - 忘言墨绿
+// 仅作为 Material3 分支里 accent 未派生到时的兜底值；用户选了中国传统色预设后，
+// Theme.kt 会用 accent 覆盖 primary，这两个常量不参与。
+val PrimaryLight = Color(0xFF1A6840)
+val PrimaryDark = Color(0xFF3E9268)
 
 // 次要色
 val SecondaryLight = Color(0xFF5856D6)
