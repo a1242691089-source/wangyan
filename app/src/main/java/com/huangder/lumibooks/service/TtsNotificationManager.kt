@@ -68,7 +68,7 @@ class TtsNotificationManager @Inject constructor(
         }
 
         return builder
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_wangyan)
             .apply { largeIcon?.let(::setLargeIcon) }
             .setContentTitle(bookTitle.ifBlank { context.getString(R.string.app_name) })
             .setContentText(context.getString(R.string.tts_notification_chapter, chapterIndex + 1))

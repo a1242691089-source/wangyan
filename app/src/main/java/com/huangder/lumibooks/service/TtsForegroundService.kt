@@ -327,7 +327,7 @@ class TtsForegroundService : Service() {
         val decoded = decodeWidgetCover(book?.coverPath, target)
         decoded?.let { return scaleToFit(it, target) }
         return placeholderBitmap ?: runCatching {
-            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_lumi2)
+            BitmapFactory.decodeResource(resources, R.drawable.ic_media_placeholder)
         }.getOrNull()?.also { placeholderBitmap = it }
     }
 
