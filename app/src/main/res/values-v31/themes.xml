@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android 12+ 系统开屏属性。
+    注意：v31 的同名 style 是「整体替换」values/themes.xml 的定义（不合并），
+    parent 与 windowBackground 必须原样重写，否则 12+ 冷启动会丢背景。
+    故意不设 windowSplashScreenIconBackgroundColor：设了系统会按「带底图标」布局
+    （240dp 画布/160dp 圆），与窗口背景层的 288dp 标记产生尺寸跳变；
+    不设则走「无底图标」288dp 画布/192dp 圆，与 splash_background 的 288dp 标记同构。
+-->
+<resources>
+    <style name="Theme.EBookReader.Launch" parent="Theme.EBookReader">
+        <item name="android:windowBackground">@drawable/splash_background_lumi2</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowSplashScreenBackground">@color/launch_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_splash_mark</item>
+    </style>
+
+    <style name="Theme.EBookReader.Launch.Classic" parent="Theme.EBookReader">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowSplashScreenBackground">@color/launch_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_splash_mark</item>
+    </style>
+</resources>

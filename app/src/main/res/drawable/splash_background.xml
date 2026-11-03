@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 经典槽位的开屏：与 lumi2 同构（纯色底 + 288dp 标记），日夜差异在
+     @color/launch_background 与 drawable-night/splash_mark，这里不再放位图。 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <bitmap
-            android:src="@drawable/splash_light"
-            android:gravity="fill"
-            android:filter="true" />
-    </item>
+    <item android:drawable="@color/launch_background" />
+    <item
+        android:width="288dp"
+        android:height="288dp"
+        android:gravity="center"
+        android:drawable="@drawable/splash_mark" />
 </layer-list>
