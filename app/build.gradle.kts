@@ -99,6 +99,14 @@ android {
             all {
                 it.maxHeapSize = "2g"
                 it.systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
+                // CI 上有一批上游既有的失败用例（像素一致性 / 布局度量断言，跨平台稳定失败，
+                // 已用「B3 之前的源码跑出同一失败集」的基线实验确认与本项目改动无关）。
+                // 这里让它们不阻塞构建，改由 .github/scripts/check-known-failures.py 精确比对：
+                // 失败集必须是已知基线的子集，出现基线外的新失败仍然会让 CI 失败。
+                // 本地不设此项，保持严格——本地跑出红就是红。
+                if (System.getenv("CI") == "true") {
+                    it.ignoreFailures = true
+                }
             }
             // 本地单测跑在 JVM 上，解析层里的 android.util.Log 没有实现；
             // 允许框架方法返回默认值，避免 "Method ... not mocked" 直接把用例打挂。

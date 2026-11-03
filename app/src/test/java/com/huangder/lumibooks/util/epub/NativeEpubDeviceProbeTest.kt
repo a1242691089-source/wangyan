@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.*
 import com.huangder.lumibooks.ui.reader.engine.*
 import org.junit.Assert.*
+import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,7 +17,11 @@ import java.io.File
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class NativeEpubDeviceProbeTest {
     @Test fun actualDeviceBookChaptersCompileAndDraw() {
-        val session = EpubRenderSession.open(File("build/device-epubs/mao.epub").absolutePath)
+        // 样本 epub 放在 app/build/device-epubs/ 下，被 .gitignore 的 **/build/ 排除，不入库。
+        // 这条是「有样本就跑」的本地台架探针，不是可重复的回归测试，缺样本时跳过而非失败。
+        val probe = File("build/device-epubs/mao.epub")
+        assumeTrue("缺少样本 $probe；放入该书后本用例才执行", probe.isFile)
+        val session = EpubRenderSession.open(probe.absolutePath)
         try {
             for (chapter in 184..186) {
                 val source = session.nativeChapterSource(chapter)!!

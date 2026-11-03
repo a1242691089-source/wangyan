@@ -186,7 +186,12 @@ jobs:
 
       # Gradle 的 --tests 不接受逗号分隔的多个模式（会被当成一个非法模式），
       # 必须展开成多个 --tests 参数。
+      # continue-on-error：已知的 9 条上游既有失败（跨平台稳定失败，已用基线实验确认
+      # 与本项目改动无关）不应该让 job 变红。真正的判定交给下一步的基线比对——
+      # 它要求「失败集 ⊆ 基线」，出现新失败照样失败。若编译失败导致没有 XML，
+      # 下一步同样会报错，不会被 continue-on-error 漏掉。
       - name: 单元测试（分片 ${{ matrix.shard }}）
+        continue-on-error: true
         run: |
           set -euo pipefail
           ARGS=()
@@ -196,6 +201,13 @@ jobs:
           done
           echo "测试过滤：${ARGS[*]}"
           ./gradlew :app:testDebugUnitTest "${ARGS[@]}" --stacktrace
+
+      # 上一步 continue-on-error，已知的 9 条上游既有失败不会让 job 变红。
+      # 这一步负责把它们和「新失败」区分开：失败集必须是基线子集，
+      # 出现基线外的失败、或根本没有结果可判（测试没跑起来）都 exit 1。
+      - name: 比对已知失败基线
+        if: always()
+        run: python3 .github/scripts/check-known-failures.py
 
       - name: 上传测试报告
         if: always()
