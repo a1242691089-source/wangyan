@@ -39,11 +39,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 安装 JDK 17
+      - name: 安装 JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
 
       # 不用 android-actions/setup-android@v3：它默认装 "tools platform-tools"，
       # 而遗留的 tools 包已从 SDK 仓库移除，sdkmanager 会 "Failed to find package 'tools'"
@@ -72,6 +72,14 @@ jobs:
 
       - name: 配置 Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      # 这句 10 秒的打印是「JDK 迁移是否生效」的第一手证据。
+      # backdrop 1.0.6 的 classes.jar 是 Java 21 字节码，JDK 17 加载即 UnsupportedClassVersionError，
+      # 而这类错误在 8000 行日志里完全看不出真正的 JVM 版本。
+      - name: 打印工具链版本
+        run: |
+          java -version
+          ./gradlew --version | grep -E "Gradle|JVM" || true
 
       - name: 编译 debug APK
         run: ./gradlew :app:assembleDebug --stacktrace
@@ -150,11 +158,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 安装 JDK 17
+      - name: 安装 JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: '21'
 
       - name: 安装 SDK 平台与构建工具
         run: |
@@ -194,5 +202,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-report-${{ matrix.shard }}
-          path: app/build/reports/tests/testDebugUnitTest
+          # XML 是机器可读的那份：类名/方法名/system-out/system-err 都在里面。
+          # 只传 HTML 时，失败信息只剩日志里被截断的一行 "XxxTest.kt:NN"，定位全靠猜。
+          path: |
+            app/build/reports/tests/testDebugUnitTest
+            app/build/test-results/testDebugUnitTest
           retention-days: 14
