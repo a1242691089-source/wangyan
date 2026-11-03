@@ -70,6 +70,12 @@ jobs:
           echo "已安装版本："
           ls "$SDK_ROOT/platforms" "$SDK_ROOT/build-tools"
 
+      # setup-gradle v6 默认 cache-provider=enhanced，会把**失败的 build** 也存成
+      # `gradle-home-v2|<os>|build[<hash>]-<sha>` 缓存（实测只有 18KB）。Gradle 解析
+      # 失败时会把「找不到该插件/构件」写进 modules-2 元数据，于是下一次重跑精确命中
+      # 这条缓存后直接报 `Plugin [id: 'com.google.dagger.hilt.android'...] was not found`，
+      # 60 秒内失败且完全不走网络——看起来像版本升级的锅，其实是中毒缓存。
+      # 处理：删掉对应 caches 后重跑，别急着回退 action 版本。
       - name: 配置 Gradle
         uses: gradle/actions/setup-gradle@v6
 
