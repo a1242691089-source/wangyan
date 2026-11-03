@@ -3,6 +3,12 @@
 # 这个仓库原来只有部署 docs/ 的 Pages 工作流，没有任何编译或测试 CI。
 # 二开之后改动频繁，靠本地手动 assembleDebug（首次全量 20 分钟以上）不现实，
 # 所以这里补一条最小链路：编译 debug 包 + 跑单元测试 + 上传测试报告。
+#
+# 为什么拆成两个 job：
+# 原本 build + test 挤在一个 job 里，timeout 90 分钟。实测在 2 核 runner 上
+# testDebugUnitTest 单步 25 分钟还没结束（Robolectric 要下 android-all jar），
+# 加上 assembleDebug 已逼近 90 分钟悬崖。拆开后编译与测试各有独立预算，
+# 测试再按包分片并行，墙钟取最长片而不是全量累加。
 name: Android CI
 
 on:
@@ -20,9 +26,10 @@ permissions:
   contents: read
 
 jobs:
+  # ── 1. 编译 ────────────────────────────────────────────────
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
 
@@ -63,13 +70,70 @@ jobs:
       - name: 编译 debug APK
         run: ./gradlew :app:assembleDebug --stacktrace
 
-      - name: 单元测试
-        run: ./gradlew :app:testDebugUnitTest --stacktrace
+  # ── 2. 单元测试（按包分片并行）──────────────────────────────
+  unit-tests:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      # 一片挂了不要取消其他片，否则只看得到第一个失败
+      fail-fast: false
+      matrix:
+        include:
+          - shard: data
+            tests: "com.huangder.lumibooks.data.*,com.huangder.lumibooks.dictionary.*"
+          - shard: ui
+            tests: "com.huangder.lumibooks.ui.*,com.huangder.lumibooks.widget.*"
+          # 兜底片：用 ** 覆盖 highlight / pdfconversion / sync / util 等顶层包，
+          # 以后新增的包也不会漏跑。代价是该片与其他片有重叠，重复跑一部分测试。
+          - shard: core
+            tests: "com.huangder.lumibooks.**"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 安装 SDK 平台与构建工具
+        run: |
+          set -euo pipefail
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          SDKMGR="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMGR" ]; then
+            SDKMGR="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "$SDKMGR" ] || [ ! -x "$SDKMGR" ]; then
+            echo "::error::找不到 sdkmanager，检查 runner 镜像"
+            exit 1
+          fi
+          yes | "$SDKMGR" --licenses > /dev/null || true
+          "$SDKMGR" --install "platforms;android-37.0" "build-tools;37.0.0" "platform-tools"
+
+      - name: 配置 Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # Gradle 的 --tests 不接受逗号分隔的多个模式（会被当成一个非法模式），
+      # 必须展开成多个 --tests 参数。
+      - name: 单元测试（分片 ${{ matrix.shard }}）
+        run: |
+          set -euo pipefail
+          ARGS=()
+          IFS=',' read -ra PATS <<< "${{ matrix.tests }}"
+          for p in "${PATS[@]}"; do
+            ARGS+=(--tests "$p")
+          done
+          echo "测试过滤：${ARGS[*]}"
+          ./gradlew :app:testDebugUnitTest "${ARGS[@]}" --stacktrace
 
       - name: 上传测试报告
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: unit-test-report
+          name: unit-test-report-${{ matrix.shard }}
           path: app/build/reports/tests/testDebugUnitTest
           retention-days: 14
