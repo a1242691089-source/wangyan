@@ -23,11 +23,14 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.huangder.lumibooks"
+        // 忘言自己的安装身份：与官方 Lumi 共存、独立签名、独立上架都依赖这一行。
+        // namespace 仍保留上游的 com.huangder.lumibooks（源码目录即按此组织，改它是全仓库目录迁移，
+        // 且会牵连 LauncherComponentSelection 的 6 个 activity-alias 全限定名与 proguard keep 规则）。
+        applicationId = "com.wangyan.reader"
         minSdk = 26
         targetSdk = 37
-        versionCode = 17
-        versionName = "2.3.10"
+        versionCode = 1
+        versionName = "1.0.0"
 
         buildConfigField("boolean", "DIAGNOSTIC_BUILD", "false")
         buildConfigField("boolean", "STARTUP_TRACE_ENABLED", "false")
