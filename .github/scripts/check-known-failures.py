@@ -6,7 +6,7 @@
 与本项目的品牌/导航/视觉改动无关。它们分两类：
 
   - 真实可用性缺陷：大字号下文本横向溢出、欢迎页导航按钮被挤出屏幕。
-    已登记为待修，不在这里沉默处理。
+    曾登记为待修，2026-11-04 由 682962b 修复后从基线移除。
   - 脆断言：断言两条渲染路径逐像素完全一致、像素捕获比对，跨平台稳定失败。
 
 处理方式不是排除这些类（那会连带丢掉同类里正常用例的覆盖），而是：
@@ -47,9 +47,6 @@ def publish(line: str, markdown: str) -> None:
 
 # 键是 "全限定类名.方法名"，参数化用例的 [33] / [35] 后缀在比对前会被去掉。
 KNOWN_FAILURES = {
-    # 真实可用性缺陷 —— 待修，修复后从本清单移除并放开
-    "com.huangder.lumibooks.ui.theme.AppFontSizeLayoutTest.largestTextWorksAcrossThemesAndDialogActions",
-    "com.huangder.lumibooks.ui.welcome.WelcomeThemeRenderTest.largeTextKeepsNavigationAccessible",
     # 脆断言：两条渲染路径逐像素一致性 / 像素捕获
     "com.huangder.lumibooks.ui.reader.engine.ReaderPunctuationLayoutTest.continuousAndPagedInkAreIdenticalWithOneLayout",
     "com.huangder.lumibooks.ui.reader.engine.ReaderPunctuationLayoutTest.indentedParagraphsKeepBothModeInkInsideReaderMargins",
