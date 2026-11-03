@@ -32,12 +32,30 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: 安装 Android SDK
-        uses: android-actions/setup-android@v3
-
+      # 不用 android-actions/setup-android@v3：它默认装 "tools platform-tools"，
+      # 而遗留的 tools 包已从 SDK 仓库移除，sdkmanager 会 "Failed to find package 'tools'"
+      # 并 exit 1，把整个 action 带崩。ubuntu-latest 镜像本身已带 cmdline-tools，直接用。
       # compileSdk 是 37，包名是 platforms;android-37.0（不是 android-37）
       - name: 安装 SDK 平台与构建工具
-        run: sdkmanager "platforms;android-37.0" "build-tools;37.0.0" "platform-tools"
+        run: |
+          set -uo pipefail
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          SDKMGR="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMGR" ]; then
+            SDKMGR="$(command -v sdkmanager || true)"
+          fi
+          if [ -z "$SDKMGR" ] || [ ! -x "$SDKMGR" ]; then
+            echo "::error::找不到 sdkmanager，检查 runner 镜像"
+            exit 1
+          fi
+          echo "使用 sdkmanager: $SDKMGR"
+          # yes 在 --licenses 结束时会被 SIGPIPE，别让它把整个 step 带崩
+          yes | "$SDKMGR" --licenses > /dev/null || true
+          "$SDKMGR" --install "platforms;android-37.0" "build-tools;37.0.0" "platform-tools"
+          echo "已安装版本："
+          ls "$SDK_ROOT/platforms" "$SDK_ROOT/build-tools"
 
       - name: 配置 Gradle
         uses: gradle/actions/setup-gradle@v4
