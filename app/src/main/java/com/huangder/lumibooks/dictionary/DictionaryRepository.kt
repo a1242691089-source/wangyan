@@ -451,7 +451,7 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
             OneTimeWorkRequestBuilder<DictionaryReconcileWorker>().build())
     }
     companion object {
-        const val CATALOG_URL = "https://raw.githubusercontent.com/huangder/Lumi_Books/main/docs/dictionaries/catalog.json"
+        const val CATALOG_URL = "https://raw.githubusercontent.com/a1242691089-source/wangyan/main/docs/dictionaries/catalog.json"
     }
 }
 

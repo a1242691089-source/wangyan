@@ -61,7 +61,7 @@ class GitHubContributorsClient @Inject constructor() {
     }
 
     companion object {
-        const val DEFAULT_OWNER = "huangder"
-        const val DEFAULT_REPO = "Lumi_Books"
+        const val DEFAULT_OWNER = "a1242691089-source"
+        const val DEFAULT_REPO = "wangyan"
     }
 }

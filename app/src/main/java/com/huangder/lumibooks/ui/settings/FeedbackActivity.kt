@@ -162,25 +162,17 @@ private fun FeedbackOverviewPage(onBack: () -> Unit) {
             onClick = { context.startActivity(Intent(context, DiagnosticActivity::class.java)) }
         )
         Spacer(Modifier.height(AppSpace.lg))
-        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = AppSpace.lg).shadow(12.dp, AppRoundedCornerShape(AppRadius.lg), ambientColor = Color(0x06000000), spotColor = Color(0x06000000)).clip(AppRoundedCornerShape(AppRadius.lg)).lumiCardSurface(shape = AppRoundedCornerShape(AppRadius.lg)).padding(AppSpace.lg), horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(painterResource(R.drawable.feedback_qr), stringResource(R.string.feedback_qr_desc), Modifier.size(220.dp).clip(AppRoundedCornerShape(AppRadius.md)), contentScale = ContentScale.Fit)
-            Spacer(Modifier.height(AppSpace.md))
-            Text(stringResource(R.string.feedback_thanks), fontSize = AppType.Body, fontWeight = FontWeight.Medium, color = AppColors.TextPrimary, textAlign = TextAlign.Center)
-        }
-        Spacer(Modifier.height(AppSpace.lg))
         FeedbackLinksCard(
             links = listOf(
-                stringResource(R.string.feedback_website) to "huangder.top",
-                stringResource(R.string.feedback_github_issues) to stringResource(R.string.feedback_github_issues_desc),
-                stringResource(R.string.feedback_qq_channel) to stringResource(R.string.feedback_qq_channel_desc)
+                stringResource(R.string.github_repository) to stringResource(R.string.feedback_github_repo_desc),
+                stringResource(R.string.feedback_github_issues) to stringResource(R.string.feedback_github_issues_desc)
             ),
             onClick = { index ->
                 openFeedbackUrl(
                     context,
                     listOf(
-                        "https://huangder.top",
-                        "https://github.com/huangder/Lumi_Books/issues",
-                        "https://pd.qq.com/s/29t6pms4a?b=9"
+                        "https://github.com/a1242691089-source/wangyan",
+                        "https://github.com/a1242691089-source/wangyan/issues"
                     )[index]
                 )
             }

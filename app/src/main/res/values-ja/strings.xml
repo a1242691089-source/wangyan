@@ -128,6 +128,7 @@
     <string name="official_qq_group">公式QQグループ</string>
     <string name="github_discussions">GitHub Discussions</string>
     <string name="github_repository">GitHub リポジトリ</string>
+    <string name="feedback_github_repo_desc">ソースコードとリリース情報</string>
 
     <!-- 読書設定 -->
     <string name="label_font_size">フォントサイズ</string>

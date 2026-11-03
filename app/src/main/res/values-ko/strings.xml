@@ -128,6 +128,7 @@
     <string name="official_qq_group">공식 QQ 그룹</string>
     <string name="github_discussions">GitHub Discussions</string>
     <string name="github_repository">GitHub 저장소</string>
+    <string name="feedback_github_repo_desc">소스 코드 및 릴리스 정보</string>
 
     <!-- 읽기 설정 -->
     <string name="label_font_size">글꼴 크기</string>

@@ -136,6 +136,7 @@
     <string name="official_qq_group">官方QQ群</string>
     <string name="github_discussions">GitHub Discussions</string>
     <string name="github_repository">GitHub 儲存庫</string>
+    <string name="feedback_github_repo_desc">查看原始碼與版本更新</string>
 
     <!-- 閱讀設定 -->
     <string name="label_font_size">字級</string>

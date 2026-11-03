@@ -70,4 +70,17 @@ class DictionaryFilterPolicyTest {
         assertFalse(isDictionaryDownloadUrl("http://github.com/huangder/Lumi_Books/releases/download/v1/book.zip"))
         assertFalse(isDictionaryDownloadUrl("https://github.com.attacker.test/huangder/Lumi_Books/releases/download/v1/book.zip"))
     }
+
+    /** 忘言 fork 的 release（词库包迁过来之后使用）。 */
+    @Test fun forkReleasePathIsAllowed() {
+        assertTrue(isDictionaryDownloadUrl("https://github.com/a1242691089-source/wangyan/releases/download/v1/book.zip"))
+        assertFalse(isDictionaryDownloadUrl("https://github.com/a1242691089-source/other/releases/download/v1/book.zip"))
+        assertFalse(isDictionaryDownloadUrl("http://github.com/a1242691089-source/wangyan/releases/download/v1/book.zip"))
+    }
+
+    /** 前缀必须精确到 releases/download/ 之后，不能被路径中间的同名片段骗过。 */
+    @Test fun prefixMatchIsAnchoredAtPathStart() {
+        assertFalse(isDictionaryDownloadUrl("https://github.com/foo/bar/huangder/Lumi_Books/releases/download/v1/x.zip"))
+        assertFalse(isDictionaryDownloadUrl("https://github.com/eval/Lumi_Books/releases/download/v1/x.zip"))
+    }
 }

@@ -112,10 +112,17 @@ data class DictionaryDescriptor(
 }
 
 // Catalog data may select versions, but cannot redirect downloads to arbitrary hosts/repositories.
+// 上游 Lumi_Books 的 release 仍承载 4 个词库包（共约 143MB），fork 目前没有 release；
+// 待 fork 发布自己的词库包后，删掉上游那条前缀即可。
+private val DICTIONARY_DOWNLOAD_PATH_PREFIXES = listOf(
+    "/huangder/Lumi_Books/releases/download/",
+    "/a1242691089-source/wangyan/releases/download/"
+)
+
 internal fun isDictionaryDownloadUrl(url: String): Boolean = runCatching {
     val uri = URI(url)
     uri.scheme == "https" && uri.host == "github.com" && uri.userInfo == null &&
-        uri.port == -1 && uri.path.startsWith("/huangder/Lumi_Books/releases/download/")
+        uri.port == -1 && DICTIONARY_DOWNLOAD_PATH_PREFIXES.any { uri.path.startsWith(it) }
 }.getOrDefault(false)
 
 enum class DictionaryDownloadPhase { DOWNLOADING, PAUSED, INSTALLING, FAILED }

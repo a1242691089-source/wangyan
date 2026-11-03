@@ -168,6 +168,7 @@
     <string name="official_qq_group">Official QQ Group</string>
     <string name="github_discussions">GitHub Discussions</string>
     <string name="github_repository">GitHub Repository</string>
+    <string name="feedback_github_repo_desc">Source code and release notes</string>
 
     <!-- Reading Settings -->
     <string name="label_font_size">Font Size</string>
