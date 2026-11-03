@@ -7,8 +7,14 @@
 # 为什么拆成两个 job：
 # 原本 build + test 挤在一个 job 里，timeout 90 分钟。实测在 2 核 runner 上
 # testDebugUnitTest 单步 25 分钟还没结束（Robolectric 要下 android-all jar），
-# 加上 assembleDebug 已逼近 90 分钟悬崖。拆开后编译与测试各有独立预算，
-# 测试再按包分片并行，墙钟取最长片而不是全量累加。
+# 加上 assembleDebug 已逼近 90 分钟悬崖。拆开后编译与测试各有独立预算。
+#
+# 为什么测试要分四片：
+# 全量 349 个测试类，其中 ui.reader 一个包就 132 个。若用 com.huangder.lumibooks.**
+# 做兜底片，那一片等于跑全量，其余片再快也没用——墙钟仍等于全量。
+# 所以四片互不重叠，规模 61 / 77 / 79 / 132，墙钟≈全量的 38%。
+# 代价是失去「新增包自动进入 CI」的特性，因此 build job 里加了覆盖率守门：
+# 任何测试类若不在下列前缀内，CI 直接失败，逼你把它加进 matrix。
 name: Android CI
 
 on:
@@ -70,7 +76,60 @@ jobs:
       - name: 编译 debug APK
         run: ./gradlew :app:assembleDebug --stacktrace
 
-  # ── 2. 单元测试（按包分片并行）──────────────────────────────
+      # 下面这份前缀表必须与 unit-tests 的 matrix 保持一致。
+      # 改了 matrix 忘了改这里 → 新包被漏跑但不报错；改了这里忘了改 matrix → 重复跑。
+      # 两者都会在下一节的失败信息里暴露。
+      - name: 守门：每个测试类都必须落在某个分片内
+        run: |
+          set -euo pipefail
+          PREFIXES='
+          com.huangder.lumibooks.ui.reader.
+          com.huangder.lumibooks.ui.components.
+          com.huangder.lumibooks.ui.bookshelf.
+          com.huangder.lumibooks.ui.animation.
+          com.huangder.lumibooks.ui.settings.
+          com.huangder.lumibooks.ui.home.
+          com.huangder.lumibooks.ui.theme.
+          com.huangder.lumibooks.ui.welcome.
+          com.huangder.lumibooks.ui.navigation.
+          com.huangder.lumibooks.ui.excerpt.
+          com.huangder.lumibooks.ui.icons.
+          com.huangder.lumibooks.ui.layout.
+          com.huangder.lumibooks.ui.statistics.
+          com.huangder.lumibooks.widget.
+          com.huangder.lumibooks.data.
+          com.huangder.lumibooks.dictionary.
+          com.huangder.lumibooks.domain.
+          com.huangder.lumibooks.service.
+          com.huangder.lumibooks.util.
+          com.huangder.lumibooks.tts.
+          com.huangder.lumibooks.translation.
+          com.huangder.lumibooks.highlight.
+          com.huangder.lumibooks.mineru.
+          com.huangder.lumibooks.pdfconversion.
+          '
+          missing=0
+          total=0
+          while IFS= read -r f; do
+            cls="${f#app/src/test/java/}"
+            cls="${cls%.kt}"
+            cls="${cls//\//.}"
+            total=$((total + 1))
+            ok=0
+            for p in $PREFIXES; do
+              case "$cls" in
+                "$p"*) ok=1; break ;;
+              esac
+            done
+            if [ "$ok" -eq 0 ]; then
+              echo "::error::测试类未被任何分片覆盖：$cls —— 请把所在包加进 unit-tests 的 matrix 和本步骤的前缀表"
+              missing=$((missing + 1))
+            fi
+          done < <(find app/src/test/java -name '*Test.kt')
+          echo "共发现测试类 $total 个，未覆盖 $missing 个"
+          [ "$missing" -eq 0 ] || exit 1
+
+  # ── 2. 单元测试（四片互不重叠，并行）────────────────────────
   unit-tests:
     needs: build
     runs-on: ubuntu-latest
@@ -80,14 +139,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - shard: data
-            tests: "com.huangder.lumibooks.data.*,com.huangder.lumibooks.dictionary.*"
+          - shard: reader
+            tests: "com.huangder.lumibooks.ui.reader.**"
           - shard: ui
-            tests: "com.huangder.lumibooks.ui.*,com.huangder.lumibooks.widget.*"
-          # 兜底片：用 ** 覆盖 highlight / pdfconversion / sync / util 等顶层包，
-          # 以后新增的包也不会漏跑。代价是该片与其他片有重叠，重复跑一部分测试。
-          - shard: core
-            tests: "com.huangder.lumibooks.**"
+            tests: "com.huangder.lumibooks.ui.components.**,com.huangder.lumibooks.ui.bookshelf.**,com.huangder.lumibooks.ui.animation.**,com.huangder.lumibooks.ui.settings.**,com.huangder.lumibooks.ui.home.**,com.huangder.lumibooks.ui.theme.**,com.huangder.lumibooks.ui.welcome.**,com.huangder.lumibooks.ui.navigation.**,com.huangder.lumibooks.ui.excerpt.**,com.huangder.lumibooks.ui.icons.**,com.huangder.lumibooks.ui.layout.**,com.huangder.lumibooks.ui.statistics.**,com.huangder.lumibooks.widget.**"
+          - shard: data
+            tests: "com.huangder.lumibooks.data.**,com.huangder.lumibooks.dictionary.**,com.huangder.lumibooks.domain.**,com.huangder.lumibooks.service.**"
+          - shard: util
+            tests: "com.huangder.lumibooks.util.**,com.huangder.lumibooks.tts.**,com.huangder.lumibooks.translation.**,com.huangder.lumibooks.highlight.**,com.huangder.lumibooks.mineru.**,com.huangder.lumibooks.pdfconversion.**"
     steps:
       - uses: actions/checkout@v4
 
