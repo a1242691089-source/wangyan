@@ -93,6 +93,7 @@ import com.huangder.lumibooks.ui.theme.KaiTi
 import com.huangder.lumibooks.ui.theme.SansSerif
 import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
 import com.huangder.lumibooks.ui.theme.cardOutline
+import com.huangder.lumibooks.ui.theme.SongTi
 import java.util.Calendar
 
 @Composable
@@ -161,7 +162,7 @@ fun StatisticsScreen(
                             text = stringResource(R.string.stats_title),
                             fontSize = AppType.Display,
                             fontWeight = FontWeight.Bold,
-                            fontFamily = resolveAppFontFamily(KaiTi),
+                            fontFamily = resolveAppFontFamily(SongTi),
                             letterSpacing = (-0.02).sp,
                             color = AppColors.TextPrimary,
                             modifier = Modifier.padding(horizontal = AppSpace.lg, vertical = AppSpace.md)

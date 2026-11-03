@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.Spacer
 import com.huangder.lumibooks.ui.theme.AppColors
 import com.huangder.lumibooks.ui.theme.AppSpace
 import com.huangder.lumibooks.ui.theme.AppType
+import com.huangder.lumibooks.ui.theme.SongTi
+import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
 
 /**
  * 尚未实现的功能页统一空状态。
@@ -48,6 +50,7 @@ fun FeaturePlaceholder(
             text = title,
             fontSize = AppType.Display,
             fontWeight = FontWeight.Bold,
+            fontFamily = resolveAppFontFamily(SongTi),
             letterSpacing = (-0.02).sp,
             color = AppColors.TextPrimary,
             modifier = Modifier.padding(horizontal = AppSpace.lg, vertical = AppSpace.md)

@@ -157,6 +157,7 @@ import com.huangder.lumibooks.ui.theme.LocalEInkMode
 import com.huangder.lumibooks.ui.theme.LocalMotionEnabled
 import com.huangder.lumibooks.ui.theme.LocalUseMaterial3Theme
 import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
+import com.huangder.lumibooks.ui.theme.SongTi
 import com.huangder.lumibooks.R
 import androidx.compose.ui.res.stringResource
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -1441,7 +1442,7 @@ fun BookshelfScreen(
                 confirmButton = {
                     LiquidGlassTextButton(
                         text = stringResource(R.string.delete),
-                        tintedColor = Color(0xFFD92D3A),
+                        tintedColor = AppColors.Danger,
                         onClick = {
                             viewModel.deleteFolder(folder.id)
                             deleteFolder = null
@@ -1821,7 +1822,7 @@ private fun BookshelfTitle(
             text = stringResource(R.string.bookshelf_title),
             fontSize = AppType.Display,
             fontWeight = FontWeight.Bold,
-            fontFamily = resolveAppFontFamily(KaiTi),
+            fontFamily = resolveAppFontFamily(SongTi),
             color = if (path.isEmpty()) AppColors.TextPrimary else AppColors.Accent,
             maxLines = 1,
             modifier = Modifier.clickable(
@@ -2167,8 +2168,8 @@ private fun BookshelfCapsuleHeader(
                         size = 46.dp,
                         iconSize = 21.dp,
                         contentColor = Color.White,
-                        normalContainerColor = Color(0xFFD92D3A),
-                        liquidContainerColor = Color(0xFFD92D3A),
+                        normalContainerColor = AppColors.Danger,
+                        liquidContainerColor = AppColors.Danger,
                         liquidScrimColor = Color(0xB8D92D3A)
                     )
                     Spacer(Modifier.width(10.dp))
@@ -2700,7 +2701,7 @@ private fun BookGridItem(
             Text(
                 text = stringResource(R.string.book_file_unavailable),
                 fontSize = AppType.Caption,
-                color = Color(0xFFD92D3A),
+                color = AppColors.Danger,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -2788,7 +2789,7 @@ private fun FolderListItem(
                             Icon(
                                 imageVector = AppIcons.Link,
                                 contentDescription = stringResource(R.string.folder_storage_linked),
-                                tint = if (folder.storageMissing) Color(0xFFD92D3A) else AppColors.Accent,
+                                tint = if (folder.storageMissing) AppColors.Danger else AppColors.Accent,
                                 modifier = Modifier
                                     .padding(start = 5.dp)
                                     .size(16.dp)
@@ -2927,7 +2928,7 @@ private fun FolderGridItem(
                 Icon(
                     imageVector = AppIcons.Link,
                     contentDescription = stringResource(R.string.folder_storage_linked),
-                    tint = if (folder.storageMissing) Color(0xFFD92D3A) else AppColors.Accent,
+                    tint = if (folder.storageMissing) AppColors.Danger else AppColors.Accent,
                     modifier = Modifier
                         .padding(start = 4.dp)
                         .size(15.dp)

@@ -111,6 +111,7 @@ import com.huangder.lumibooks.ui.theme.LocalEInkMode
 import com.huangder.lumibooks.ui.theme.LocalUseMaterial3Theme
 import com.huangder.lumibooks.ui.theme.SansSerif
 import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
+import com.huangder.lumibooks.ui.theme.SongTi
 import com.huangder.lumibooks.ui.animation.PageEntranceItem
 import com.huangder.lumibooks.ui.animation.BookCoverTitleColor
 import com.huangder.lumibooks.ui.animation.BookCoverTitleStyle
@@ -368,7 +369,7 @@ private fun HomeHeader(
             text = stringResource(R.string.nav_shelf),
             fontSize = AppType.Display,
             fontWeight = FontWeight.Bold,
-            fontFamily = resolveAppFontFamily(KaiTi),
+            fontFamily = resolveAppFontFamily(SongTi),
             letterSpacing = (-0.02).sp,
             color = AppColors.TextPrimary
         )
@@ -926,6 +927,8 @@ private fun ReadingGoalCard(
 @Composable
 private fun ArcProgressBar(progress: Float, modifier: Modifier = Modifier) {
     val accentColor = AppColors.Accent
+    // DrawScope 内不能读 @Composable 的 AppColors.Divider，先提升到组合层
+    val trackColor = AppColors.Divider
     Canvas(modifier = modifier) {
         val stroke = 10.dp.toPx()
         val radius = (minOf(size.width, size.height * 2) - stroke) / 2
@@ -936,7 +939,7 @@ private fun ArcProgressBar(progress: Float, modifier: Modifier = Modifier) {
         val topLeft = Offset(cx - radius, cy - radius)
 
         drawArc(
-            color = Color(0xFFE5E5EA),
+            color = trackColor,
             startAngle = 180f,
             sweepAngle = 180f,
             useCenter = false,

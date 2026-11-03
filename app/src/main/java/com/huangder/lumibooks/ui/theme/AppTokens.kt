@@ -90,6 +90,17 @@ val LocalGlobalFontMode = staticCompositionLocalOf { GlobalFontMode.DEFAULT }
 fun fangSongFamily(): FontFamily = DownloadedFonts.familyOrDefault("fangsong")
 
 val KaiTi = FontFamily(Font(R.font.lxgw_wenkai, FontWeight.Normal))
+
+/**
+ * 宋体，用于页面级大标题（首页 / 书架 / 我的 / 统计，以及笔记·知识·技能三个占位页）。
+ * 段落标题（AppType.Section）与书籍名仍用楷体，保持「封面级装饰 vs 内容级标题」的层次差异。
+ * res/font/gen_ryu_min2_light.xml 内已声明 android:ttcIndex="2"（源ノ明朝 Light），
+ * 用 Font(resId) 让系统按 font-family XML 解析，不必手动处理 ttc 索引——
+ * 与同文件 KaiTi 的写法完全一致，不引入新 API。
+ * 已知局限：源ノ明朝是日文骨架，简体常用字覆盖完整，但个别字形偏日式（如「直」「骨」）。
+ */
+val SongTi = FontFamily(Font(R.font.gen_ryu_min2_light, FontWeight.Normal))
+
 val SansSerif = FontFamily.Default
 
 /**
@@ -103,20 +114,24 @@ fun resolveAppFontFamily(defaultFontFamily: FontFamily): FontFamily =
 // ─── 颜色（自动适配深色模式）───
 object AppColors {
     // 浅色
-    private val LightWindowBg = Color(0xFFFBFAF6)
+    // 窗口底色直接复用 Color.kt 的公开常量：同一色值曾在这里重复定义一份，改动易漏
+    private val LightWindowBg = BackgroundLight
     private val LightCardBg = Color.White
     private val LightTextPrimary = Color(0xFF000000)
     private val LightTextSecondary = Color(0xFF6E6E73)
     private val LightBgGray = Color(0xFFF2F2F7)
     private val LightDivider = Color(0xFFE5E5EA)
+    private val LightDanger = Color(0xFFD92D3A)
 
     // 深色
-    private val DarkWindowBg = Color(0xFF000000)
+    private val DarkWindowBg = BackgroundDark
     private val DarkCardBg = Color(0xFF1C1C1E)
     private val DarkTextPrimary = Color(0xFFFFFFFF)
     private val DarkTextSecondary = Color(0xFF98989D)
     private val DarkBgGray = Color(0xFF2C2C2E)
     private val DarkDivider = Color(0xFF38383A)
+    // 0xFFD92D3A 压在深色底上对比度不足，提亮到浅红
+    private val DarkDanger = Color(0xFFFF7A75)
 
     val Accent: Color @Composable get() = LocalAppAccentColor.current
     val OnAccent: Color @Composable get() = LocalOnAppAccentColor.current
@@ -143,6 +158,13 @@ object AppColors {
     val TextSecondary: Color @Composable get() = if (LocalEInkMode.current) Color(0xFF444444) else if (LocalUseMaterial3Theme.current) MaterialTheme.colorScheme.onSurfaceVariant else if (LocalIsDarkTheme.current) DarkTextSecondary else LightTextSecondary
     val BgGray: Color @Composable get() = if (LocalEInkMode.current) Color(0xFFF4F4F4) else if (LocalUseMaterial3Theme.current) MaterialTheme.colorScheme.surfaceVariant else if (LocalIsDarkTheme.current) DarkBgGray else LightBgGray
     val Divider: Color @Composable get() = if (LocalEInkMode.current) Color(0xFFBDBDBD) else if (LocalUseMaterial3Theme.current) MaterialTheme.colorScheme.outlineVariant else if (LocalIsDarkTheme.current) DarkDivider else LightDivider
+
+    /** 危险 / 删除类操作。e-ink 下退化为纯黑，保证墨屏对比度。 */
+    val Danger: Color @Composable get() = when {
+        LocalEInkMode.current -> Color.Black
+        LocalIsDarkTheme.current -> DarkDanger
+        else -> LightDanger
+    }
 }
 
 // ─── 字阶 ───
@@ -174,4 +196,10 @@ object AppRadius {
     val xl = 22.dp
     val full = 999.dp
     val capsule = 28.dp
+}
+
+// ─── 线宽 ───
+object AppStroke {
+    /** 发丝线：分隔线默认粗细，物理半像素，靠 18% 文字色形成层次而不是靠加粗。 */
+    val Hairline = 0.5.dp
 }

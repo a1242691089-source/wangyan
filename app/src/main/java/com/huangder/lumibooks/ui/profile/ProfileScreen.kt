@@ -38,11 +38,14 @@ import coil.compose.AsyncImage
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.data.local.DataStoreManager
 import com.huangder.lumibooks.domain.model.DEFAULT_APP_ACCENT_HEX
+import com.huangder.lumibooks.ui.components.WangyanDivider
 import com.huangder.lumibooks.ui.home.HomeViewModel
 import com.huangder.lumibooks.ui.icons.AppIcons
 import com.huangder.lumibooks.ui.settings.AppAccentPresetRow
 import com.huangder.lumibooks.ui.theme.AppColors
 import com.huangder.lumibooks.ui.theme.AppRadius
+import com.huangder.lumibooks.ui.theme.SongTi
+import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
 import com.huangder.lumibooks.ui.theme.AppSpace
 import com.huangder.lumibooks.ui.theme.AppType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -102,6 +105,7 @@ fun ProfileScreen(
             text = stringResource(R.string.nav_profile),
             fontSize = AppType.Display,
             fontWeight = FontWeight.Bold,
+            fontFamily = resolveAppFontFamily(SongTi),
             letterSpacing = (-0.02).sp,
             color = AppColors.TextPrimary,
             modifier = Modifier.padding(horizontal = AppSpace.lg, vertical = AppSpace.md)
@@ -134,12 +138,15 @@ fun ProfileScreen(
             title = stringResource(R.string.statistics_title),
             onClick = onOpenStatistics
         )
+        // 缩进到文字起点（左内边距 24 + 图标 20 + 间隔 16），与 iOS 分组列表观感一致
+        WangyanDivider(startPadding = 60.dp, endPadding = AppSpace.lg)
         ProfileEntryRow(
             icon = AppIcons.BookshelfTab.resolve(false),
             title = stringResource(R.string.bookshelf_manage),
             subtitle = stringResource(R.string.bookshelf_manage_desc),
             onClick = onOpenLibrary
         )
+        WangyanDivider(startPadding = 60.dp, endPadding = AppSpace.lg)
         ProfileEntryRow(
             icon = AppIcons.Gear,
             title = stringResource(R.string.settings),
