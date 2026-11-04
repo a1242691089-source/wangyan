@@ -63,6 +63,14 @@
     <string name="skills_empty_title">还没有技能</string>
     <string name="skills_empty_body">把重复的整理、摘要、回顾做成一键可跑的流程，之后在这里管理。</string>
     <string name="skills_empty_footnote">技能运行时将在后续版本开放</string>
+    <string name="note_type_excerpt">摘录</string>
+    <string name="note_type_comment">批注</string>
+    <string name="note_type_thought">思考</string>
+    <string name="note_type_question">疑问</string>
+    <string name="note_type_inspiration">灵感</string>
+    <string name="note_type_ai_summary">AI 摘要</string>
+    <string name="note_type_all">全部类型</string>
+    <string name="note_unanchored_chapter">未定位</string>
     <string name="profile_books_count">藏书 %1$d 本</string>
     <string name="profile_daily_goal">每日目标 %1$d 分钟</string>
     <string name="import_book">导入书籍</string>

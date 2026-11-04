@@ -126,4 +126,77 @@ class AnnotationPersistenceTest {
             context.deleteDatabase(name)
         }
     }
+
+    @Test
+    fun newNoteTypesPersistAndRoundTrip() = runBlocking {
+        val context = RuntimeEnvironment.getApplication()
+        val name = "notetypes.db"
+        val preferences = DataStoreManager(context)
+        var db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        fun manager() = PortableSnapshotManager(
+            context, db, preferences, SyncIdentityStore(db.syncStateDao()),
+            MineruTokenStore(context), ExternalTtsTokenStore(context), TranslationTokenStore(context)
+        )
+        fun repository() = ReadingRepositoryImpl(
+            db.readingRecordDao(), db.bookmarkDao(), db.noteDao(), db.syncStateDao(),
+            SyncIdentityStore(db.syncStateDao()), db
+        )
+        try {
+            // Anchored thought (created from a selection).
+            repository().insertNote(com.huangder.lumibooks.domain.model.Note(
+                bookId = "book", chapterIndex = 3, startPosition = 5, endPosition = 9,
+                selectedText = "正文", note = "我的思考", color = "yellow", createdAt = 100, type = "thought"
+            ))
+            // Unanchored question: sentinel -1 positions, empty selection.
+            repository().insertNote(com.huangder.lumibooks.domain.model.Note(
+                bookId = "book", chapterIndex = -1, startPosition = -1, endPosition = -1,
+                selectedText = "", note = "一个疑问", color = "yellow", createdAt = 101, type = "question"
+            ))
+            // Ink strokes must stay excluded from the text-note stream.
+            db.noteDao().insertNote(NoteEntity(
+                bookId = "book", chapterIndex = 0, startPosition = 0, endPosition = 2,
+                selectedText = "", note = "", color = "", createdAt = 102,
+                type = "pdf_ink_pen", syncId = "ink-1", updatedAt = 102
+            ))
+
+            val textNotes = repository().observeTextNotes().first()
+            assertEquals(setOf("thought", "question"), textNotes.map { it.type }.toSet())
+            assertEquals(
+                com.huangder.lumibooks.domain.model.NoteType.THOUGHT,
+                textNotes.single { it.type == "thought" }.noteType
+            )
+            assertEquals(
+                com.huangder.lumibooks.domain.model.NoteType.QUESTION,
+                textNotes.single { it.type == "question" }.noteType
+            )
+
+            // Portable snapshot JSON round-trip preserves the raw type strings and
+            // the sentinel -1 positions (WebDAV shares this serialization path).
+            // The snapshot carries ink strokes too (existing sync behavior).
+            val snapshot = manager().capture(includeBookFiles = false).snapshot
+            val restored = PortableSnapshot.fromJson(snapshot.toJson())
+            assertEquals(
+                setOf("thought", "question", "pdf_ink_pen"),
+                restored.notes.map { it.type }.toSet()
+            )
+            val question = restored.notes.single { it.type == "question" }
+            assertEquals(-1, question.chapterIndex)
+            assertEquals(-1, question.startPosition)
+            assertEquals(-1, question.endPosition)
+
+            // Restore on a fresh database; domain derivation survives the round trip.
+            db.close()
+            db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+            manager().apply(restored, emptyMap(), replace = true, replaceAssetDirectories = false)
+            val reloaded = repository().getNotesByBookId("book").first()
+            assertEquals(
+                com.huangder.lumibooks.domain.model.NoteType.QUESTION,
+                reloaded.single { it.type == "question" }.noteType
+            )
+            assertEquals(-1, reloaded.single { it.type == "question" }.chapterIndex)
+        } finally {
+            db.close()
+            context.deleteDatabase(name)
+        }
+    }
 }

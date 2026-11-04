@@ -32,6 +32,7 @@ import com.huangder.lumibooks.domain.model.Book
 import com.huangder.lumibooks.domain.model.BookFormat
 import com.huangder.lumibooks.domain.model.Bookmark
 import com.huangder.lumibooks.domain.model.Note
+import com.huangder.lumibooks.domain.model.NoteType
 import com.huangder.lumibooks.domain.model.HighlightRule
 import com.huangder.lumibooks.domain.model.RuleStyle
 import com.huangder.lumibooks.domain.model.ReadingRecord
@@ -6013,24 +6014,38 @@ class ReaderViewModel @Inject constructor(
         endLocatorJson: String? = null,
         type: String = "highlight",
         isNote: Boolean = noteText.isNotBlank(),
-        tags: List<String> = emptyList()
+        tags: List<String> = emptyList(),
+        noteType: NoteType = NoteType.COMMENT
     ): String? {
         val state = _uiState.value
         val book = state.book ?: return null
         val syncId = java.util.UUID.randomUUID().toString()
-        val resolvedChapterIndex = if (chapterIndex >= 0) chapterIndex else state.currentChapterIndex
+        // Free-intent notes (thought/question/inspiration/ai_summary) may exist without
+        // any text anchor: no selection → sentinel -1 positions, no locator resolution.
+        val freeIntent = noteType == NoteType.THOUGHT || noteType == NoteType.QUESTION ||
+            noteType == NoteType.INSPIRATION || noteType == NoteType.AI_SUMMARY
+        val anchored = chapterIndex >= 0 || startLocatorJson != null || selectedText.isNotBlank()
+        val unanchored = freeIntent && !anchored
+        val resolvedChapterIndex = when {
+            unanchored -> -1
+            chapterIndex >= 0 -> chapterIndex
+            else -> state.currentChapterIndex
+        }
+        val storedType = if (freeIntent) noteType.value else type
+        val storedStart = if (unanchored) -1 else if (startPosition > 0 || chapterIndex >= 0) startPosition else 0
+        val storedEnd = if (unanchored) -1 else if (endPosition > 0 || chapterIndex >= 0) endPosition else selectedText.length
         val note = Note(
             bookId = book.id,
             chapterIndex = resolvedChapterIndex,
-            startPosition = if (startPosition > 0 || chapterIndex >= 0) startPosition else 0,
-            endPosition = if (endPosition > 0 || chapterIndex >= 0) endPosition else selectedText.length,
+            startPosition = storedStart,
+            endPosition = storedEnd,
             startLocatorJson = startLocatorJson,
             endLocatorJson = endLocatorJson,
             selectedText = selectedText,
             note = noteText,
             color = color,
             createdAt = System.currentTimeMillis(),
-            type = type,
+            type = storedType,
             isNote = isNote,
             syncId = syncId,
             tags = tags
@@ -6043,6 +6058,7 @@ class ReaderViewModel @Inject constructor(
             try {
                 val noteToSave = if (
                     book.format.name == "EPUB" &&
+                    note.startPosition >= 0 &&
                     note.startLocatorJson == null && note.endLocatorJson == null
                 ) {
                     withContext(Dispatchers.IO) {

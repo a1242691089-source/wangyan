@@ -62,6 +62,14 @@
     <string name="skills_empty_title">No skills yet</string>
     <string name="skills_empty_body">Turn recurring sorting, summarising and reviewing into one-tap flows, then manage them here.</string>
     <string name="skills_empty_footnote">The skill runtime arrives in a later version</string>
+    <string name="note_type_excerpt">Excerpt</string>
+    <string name="note_type_comment">Comment</string>
+    <string name="note_type_thought">Thought</string>
+    <string name="note_type_question">Question</string>
+    <string name="note_type_inspiration">Inspiration</string>
+    <string name="note_type_ai_summary">AI summary</string>
+    <string name="note_type_all">All types</string>
+    <string name="note_unanchored_chapter">Unanchored</string>
     <string name="profile_books_count">%1$d books</string>
     <string name="profile_daily_goal">Daily goal %1$d min</string>
     <string name="import_book">Import Book</string>

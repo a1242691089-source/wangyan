@@ -2,6 +2,7 @@ package com.huangder.lumibooks.ui.reader
 
 import com.huangder.lumibooks.ui.theme.LocalReduceTransparency
 import com.huangder.lumibooks.domain.model.SelectionMenuAction
+import com.huangder.lumibooks.domain.model.NoteType
 import com.huangder.lumibooks.domain.model.SelectionMenuSettings
 import com.huangder.lumibooks.ui.components.SelectionMenuSettingsDialog
 import com.huangder.lumibooks.ui.components.labelRes
@@ -118,6 +119,7 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Surface
 import com.huangder.lumibooks.ui.components.AnnotationTagSheet
 import com.huangder.lumibooks.ui.components.AnnotationTagChips
+import com.huangder.lumibooks.ui.components.labelRes
 import com.huangder.lumibooks.ui.components.AnnotationListFilters
 import com.huangder.lumibooks.ui.bookshelf.ReadingMarkFilter
 import androidx.compose.material3.Switch
@@ -5020,6 +5022,10 @@ fun ReaderScreen(
         onNoteClick = noteClick@ { note ->
             if (note.isStale) {
                 Toast.makeText(context, R.string.markdown_original_changed, Toast.LENGTH_SHORT).show()
+                return@noteClick
+            }
+            if (note.chapterIndex < 0 || note.startPosition < 0) {
+                // 无定位笔记（思考/疑问/灵感）：无锚点可跳，仅关闭面板。
                 return@noteClick
             }
             beginManualReaderNavigation()
@@ -10222,6 +10228,7 @@ private fun ReaderSelectionNoteSheet(
     onDismissed: () -> Unit
 ) {
     var tags by remember(visible, editingNote?.syncId) { mutableStateOf(editingNote?.tags.orEmpty()) }
+    var noteType by remember(visible, editingNote?.syncId) { mutableStateOf(NoteType.COMMENT) }
     NoteInputSheet(
         visible = visible,
         requestClose = requestClose,
@@ -10233,6 +10240,11 @@ private fun ReaderSelectionNoteSheet(
         availableTags = availableTags,
         onTagsChange = { tags = it },
         onCreateTag = viewModel::createAnnotationTag,
+        typeOptions = if (editingNote == null) {
+            listOf(NoteType.COMMENT, NoteType.THOUGHT, NoteType.QUESTION, NoteType.INSPIRATION)
+        } else null,
+        selectedType = noteType,
+        onTypeSelected = { noteType = it },
         onConfirm = {
             if (editingNote != null) {
                 if (editingNote.note != noteText) {
@@ -10252,7 +10264,8 @@ private fun ReaderSelectionNoteSheet(
                     startLocatorJson = selection.startLocatorJson,
                     endLocatorJson = selection.endLocatorJson,
                     isNote = true,
-                    tags = tags
+                    tags = tags,
+                    noteType = noteType
                 )
             }
             onConfirmed()
@@ -11546,7 +11559,10 @@ internal fun NoteInputSheet(
     title: String? = null,
     placeholder: String? = null,
     footer: String? = null,
-    onCreateTag: (suspend (String) -> Unit)? = null
+    onCreateTag: (suspend (String) -> Unit)? = null,
+    typeOptions: List<com.huangder.lumibooks.domain.model.NoteType>? = null,
+    selectedType: com.huangder.lumibooks.domain.model.NoteType = com.huangder.lumibooks.domain.model.NoteType.COMMENT,
+    onTypeSelected: (com.huangder.lumibooks.domain.model.NoteType) -> Unit = {}
 ) {
     if (!visible) return
 
@@ -11566,7 +11582,10 @@ internal fun NoteInputSheet(
             title = title,
             placeholder = placeholder,
             footer = footer,
-            onCreateTag = onCreateTag
+            onCreateTag = onCreateTag,
+            typeOptions = typeOptions,
+            selectedType = selectedType,
+            onTypeSelected = onTypeSelected
         )
     }
     if (keepReaderViewport) {
@@ -11593,7 +11612,10 @@ private fun NoteInputSheetContent(
     title: String?,
     placeholder: String?,
     footer: String?,
-    onCreateTag: (suspend (String) -> Unit)?
+    onCreateTag: (suspend (String) -> Unit)?,
+    typeOptions: List<com.huangder.lumibooks.domain.model.NoteType>? = null,
+    selectedType: com.huangder.lumibooks.domain.model.NoteType = com.huangder.lumibooks.domain.model.NoteType.COMMENT,
+    onTypeSelected: (com.huangder.lumibooks.domain.model.NoteType) -> Unit = {}
 ) {
     val sheetOffset = remember { Animatable(1f) }
     val focusRequester = remember { FocusRequester() }
@@ -11695,6 +11717,26 @@ private fun NoteInputSheetContent(
                             .padding(14.dp).focusRequester(focusRequester),
                         maxLines = 10
                     )
+                    if (typeOptions != null && typeOptions.isNotEmpty()) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                        ) {
+                            typeOptions.forEach { option ->
+                                val selected = option == selectedType
+                                Text(
+                                    text = stringResource(option.labelRes()),
+                                    fontSize = 12.sp,
+                                    color = if (selected) AppColors.OnAccent else AppColors.TextPrimary,
+                                    modifier = Modifier
+                                        .clip(AppRoundedCornerShape(16.dp))
+                                        .background(if (selected) AppColors.Accent else AppColors.BgGray)
+                                        .clickable { onTypeSelected(option) }
+                                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                                )
+                            }
+                        }
+                    }
                     AnnotationTagChips(tags, onEdit = { keyboard?.hide(); showTagSheet = true }, modifier = Modifier.padding(top = 8.dp))
                     if (footer != null) {
                         Spacer(Modifier.height(12.dp))
