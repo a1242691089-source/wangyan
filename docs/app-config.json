@@ -1,18 +1,18 @@
 {
   "config_version": 1,
-  "generated_at": "2026-10-17T00:30:00+08:00",
-  "latest_version": "1.0.0",
-  "latest_version_code": 1,
+  "generated_at": "2026-11-04T18:00:00+08:00",
+  "latest_version": "1.0.1",
+  "latest_version_code": 2,
   "release_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
   "terms_version": 2,
   "privacy_version": 3,
   "update": {
-    "latest_version_code": 1,
-    "latest_version_name": "1.0.0",
+    "latest_version_code": 2,
+    "latest_version_name": "1.0.1",
     "download_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
-    "title": "忘言 1.0.0",
-    "message": "忘言 1.0.0 首个自维护版本：品牌与配色改为忘言体系，底部导航扩展为书架、笔记、知识、技能、我的五栏。",
-    "changelog": "· 新增 品牌更名为「忘言」，应用标识、隐私政策与用户协议同步更新\n· 新增 底部导航扩展为五栏：书架、笔记、知识、技能、我的\n· 新增 「我的」页，支持 8 套中国传统色主色预设\n· 新增 书架页书库管理入口，统计功能归入「我的」\n· 优化 默认主色为墨绿（#1A6840），浅色窗口底色调整为暖白",
+    "title": "忘言 1.0.1",
+    "message": "修复词典下载长时间停在 0B 无反应，并新增备用下载源：GitHub 直连不通时词典仍可下载，更新检查也不再静默失效。",
+    "changelog": "· 修复 词典下载长时间停在 0B 无反应：30 秒无进度自动切换下载源并给出明确提示\n· 修复 GitHub 直连失败时词典目录、内容规则与更新检查全部拉不到：新增备用下载源（可用性兜底，不提速）\n· 修复 更新配置的跳转链接缺少校验，可能被中间人导向第三方站点\n· 修复 关于页版本号在异常情况下兜底显示为 1.1.00",
     "force_update_below_version_code": 0
   },
   "notice": {

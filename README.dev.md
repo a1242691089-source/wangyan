@@ -14,7 +14,7 @@
 
 > Android 本地电子书阅读器的技术文档。面向贡献者与二次开发者。
 
-[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.0.1-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -189,8 +189,8 @@ keyPassword=<密码>
 
 **应用版本**
 
-1. 改 `app/build.gradle.kts` 的 `versionCode` / `versionName`，同时同步 `docs/app-config.json` 的 `latest_version` / `latest_version_code` / `title` / `message`（两者版本号必须同一步提交，否则更新弹窗不会出现）。
-2. 三处更新日志首条同步：`app/src/main/assets/changelog.md`、`docs/changelog.html`、`devdocs/CHANGELOG.md`；7 个 README 的 version badge 同步。
+1. 改 `app/build.gradle.kts` 的 `versionCode` / `versionName`，同时同步 `docs/app-config.json` 的 `latest_version` / `latest_version_code` / `title` / `message`（两者版本号必须同一步提交，否则更新弹窗不会出现）。自 1.0.1 起客户端会校验 `update.download_url` / `release_url` 必须落在 `https://github.com/a1242691089-source/wangyan/releases` 下，否则整份配置被拒（换源只做传输兜底，不允许跳转到第三方）。
+2. 三处更新日志首条同步：`app/src/main/assets/changelog.md`、`docs/changelog.html`、`devdocs/CHANGELOG.md`；8 个 README 的 version badge 同步。
 3. 构建（本机 8G 内存需分两段并临时降配，避免 R8 阶段提交内存耗尽；**不要把降配写进 `gradle.properties`**，否则 CI 的 Kotlin daemon 会被饿死而 OOM）：
    ```bash
    export GRADLE_OPTS="-Xmx2560m -XX:MaxMetaspaceSize=768m"

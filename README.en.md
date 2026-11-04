@@ -14,7 +14,7 @@
 
 > A clean, elegant Android local ebook reader. Supports EPUB, PDF, TXT, MOBI and CBZ comics. Privacy-first, local-first.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.0.1-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
