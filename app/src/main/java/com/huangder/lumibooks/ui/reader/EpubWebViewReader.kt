@@ -3495,7 +3495,14 @@ private fun logSubresourceFailure(url: String?, reason: String?) {
     android.util.Log.w("EpubWebViewReader", "subresource failed: $path ($reason)")
 }
 
-private fun configKey(
+/**
+ * 翻页 / 重排 / preload 的唯一缓存键，成员顺序与兜底值都是契约。
+ *
+ * `internal` 只为让 ConfigKeyTest 钉住输出；
+ * 生产调用方仍只有本文件内的三处（preload / active / next）。
+ * 改动这里的顺序、分隔符或 `orEmpty()` / `?: -1` 兜底，等于让所有用户首屏重排一次。
+ */
+internal fun configKey(
     paginationSignature: String,
     viewportSize: Pair<Int, Int> = 0 to 0,
     chapterIndex: Int,
