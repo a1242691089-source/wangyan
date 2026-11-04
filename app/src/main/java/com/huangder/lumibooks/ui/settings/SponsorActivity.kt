@@ -344,7 +344,7 @@ private fun SponsorPaymentTagSwitcher(
                 }
                 .clip(AppRoundedCornerShape(18.dp))
                 .shadow(2.dp, AppRoundedCornerShape(18.dp))
-                .background(if (isDark) AppColors.CardBg else Color.White)
+                .background(AppColors.CardBg)
         )
         Row(Modifier.fillMaxSize()) {
             options.forEach { (payment, labelRes) ->

@@ -8,6 +8,13 @@ import kotlin.math.roundToInt
 
 const val DEFAULT_APP_ACCENT_HEX = "#1A6840"
 
+/** 浅色窗口底色混入主色的比例。够轻，白字/黑字对比度几乎不变，但整页能看出色相。 */
+const val APP_WINDOW_TINT_FRACTION = 0.06f
+
+/** 浅色卡片底色混入主色的比例。卡片必须比窗口更接近白，否则层次会糊。 */
+const val APP_CARD_TINT_FRACTION = 0.03f
+
+
 private const val DARK_CARD_ARGB = 0xFF1C1C1E.toInt()
 private const val DARK_ACCENT_MIN_CONTRAST = 7.0
 
@@ -61,6 +68,15 @@ fun blendAppAccentArgb(backgroundArgb: Int, foregroundArgb: Int, foregroundFract
         (blendChannel(8) shl 8) or
         blendChannel(0)
 }
+
+/** 浅色窗口底色：在中性底色上混入 [APP_WINDOW_TINT_FRACTION] 主色。 */
+fun tintedAppWindowArgb(baseArgb: Int, accentArgb: Int): Int =
+    blendAppAccentArgb(baseArgb, accentArgb, APP_WINDOW_TINT_FRACTION)
+
+/** 浅色卡片底色：在近白底色上混入 [APP_CARD_TINT_FRACTION] 主色。 */
+fun tintedAppCardArgb(baseArgb: Int, accentArgb: Int): Int =
+    blendAppAccentArgb(baseArgb, accentArgb, APP_CARD_TINT_FRACTION)
+
 
 internal fun contrastRatio(firstArgb: Int, secondArgb: Int): Double {
     val first = relativeLuminance(firstArgb)

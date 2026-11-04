@@ -28,6 +28,8 @@ import com.huangder.lumibooks.domain.model.blendAppAccentArgb
 import com.huangder.lumibooks.domain.model.deriveDarkAppAccentArgb
 import com.huangder.lumibooks.domain.model.normalizeAppAccentHex
 import com.huangder.lumibooks.domain.model.parseAppAccentArgb
+import com.huangder.lumibooks.domain.model.tintedAppCardArgb
+import com.huangder.lumibooks.domain.model.tintedAppWindowArgb
 import com.huangder.lumibooks.domain.model.LiquidGlassStyle
 import com.huangder.lumibooks.ui.animation.VisualMotion
 
@@ -120,7 +122,10 @@ private fun lightAppColorScheme(accentArgb: Int, darkAccentArgb: Int) = LightCol
     onPrimary = Color(appAccentContentArgb(accentArgb)),
     primaryContainer = Color(blendAppAccentArgb(0xFFFFFFFF.toInt(), accentArgb, 0.14f)),
     onPrimaryContainer = Color.Black,
-    inversePrimary = Color(darkAccentArgb)
+    inversePrimary = Color(darkAccentArgb),
+    // 与 AppColors.WindowBg / CardBg 同源同比例，避免根 Surface 与主界面出现两种底色
+    background = Color(tintedAppWindowArgb(BackgroundLight.toArgb(), accentArgb)),
+    surface = Color(tintedAppCardArgb(SurfaceLight.toArgb(), accentArgb))
 )
 
 private fun darkAppColorScheme(accentArgb: Int, lightAccentArgb: Int) = DarkColorScheme.copy(

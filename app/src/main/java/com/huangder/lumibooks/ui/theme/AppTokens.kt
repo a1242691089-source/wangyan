@@ -7,6 +7,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.foundation.border
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -16,6 +17,8 @@ import androidx.compose.ui.unit.sp
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.domain.model.DEFAULT_APP_ACCENT_HEX
 import com.huangder.lumibooks.domain.model.parseAppAccentArgb
+import com.huangder.lumibooks.domain.model.tintedAppCardArgb
+import com.huangder.lumibooks.domain.model.tintedAppWindowArgb
 import com.huangder.lumibooks.domain.model.LiquidGlassStyle
 import com.huangder.lumibooks.util.DownloadedFonts
 
@@ -114,9 +117,16 @@ fun resolveAppFontFamily(defaultFontFamily: FontFamily): FontFamily =
 // ─── 颜色（自动适配深色模式）───
 object AppColors {
     // 浅色
-    // 窗口底色直接复用 Color.kt 的公开常量：同一色值曾在这里重复定义一份，改动易漏
-    private val LightWindowBg = BackgroundLight
-    private val LightCardBg = Color.White
+    // 窗口底色直接复用 Color.kt 的公开常量：同一色值曾在这里重复定义一份，改动易漏。
+    // 浅色下窗口与卡片混入用户主色（6% / 3%，见 AppAccentColor），深色与 M3 分支不受影响。
+    private val LightWindowBg: Color @Composable
+        get() = Color(
+            tintedAppWindowArgb(BackgroundLight.toArgb(), LocalAppAccentColor.current.toArgb())
+        )
+    private val LightCardBg: Color @Composable
+        get() = Color(
+            tintedAppCardArgb(Color.White.toArgb(), LocalAppAccentColor.current.toArgb())
+        )
     private val LightTextPrimary = Color(0xFF000000)
     private val LightTextSecondary = Color(0xFF6E6E73)
     private val LightBgGray = Color(0xFFF2F2F7)

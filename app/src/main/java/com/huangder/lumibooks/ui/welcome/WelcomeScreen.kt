@@ -670,7 +670,7 @@ private fun LiquidGlassPreviewTile(
         modifier = modifier
             .fillMaxWidth()
             .clip(AppRoundedCornerShape(24.dp))
-            .background(Color.White),
+            .background(AppColors.CardBg),
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -794,7 +794,7 @@ private fun ThemeSwitchOverlay(
                     .fillMaxSize()
                     .graphicsLayer { alpha = solidCapsuleAlpha }
                     .clip(AppRoundedCornerShape(28.dp))
-                    .background(Color.White)
+                    .background(AppColors.CardBg)
             )
             CompositionLocalProvider(
                 LocalAppTheme provides "liquid_glass",
@@ -803,8 +803,8 @@ private fun ThemeSwitchOverlay(
                 LiquidGlassSurface(
                     controlEdge = true,
                     shape = AppRoundedCornerShape(28.dp),
-                    fallbackColor = Color.White,
-                    contentScrimColor = Color.White.copy(alpha = 0.38f),
+                    fallbackColor = AppColors.CardBg,
+                    contentScrimColor = AppColors.CardBg.copy(alpha = 0.38f),
                     modifier = Modifier
                         .fillMaxSize()
                         .graphicsLayer { alpha = glassCapsuleAlpha }
@@ -1385,7 +1385,7 @@ private fun SupportWelcomeButton(
     val glassColor = when {
         primary -> AccentColor
         isDark -> Color(0xFF2D2D31)
-        else -> Color(0xFFFFFFFF)
+        else -> AppColors.CardBg
     }
     val scrimColor = if (primary) {
         glassColor.copy(alpha = 0.84f)

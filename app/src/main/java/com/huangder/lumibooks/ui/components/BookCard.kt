@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.huangder.lumibooks.domain.model.Book
+import com.huangder.lumibooks.ui.theme.AppColors
 
 @Composable
 fun BookCard(
@@ -32,7 +33,7 @@ fun BookCard(
             .clickable(onClick = onClick),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = AppColors.CardBg
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
