@@ -14,7 +14,7 @@
 
 > WangYan Android 전자책 리더의 기술 문서. 기여자 및 개발자 대상.
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -130,7 +130,7 @@ android_books/
 │   ├── ui-design-spec.md       # UI 디자인 구현
 │   ├── project-status.md       # 프로젝트 현황
 │   ├── development-plan.md     # 개발 계획
-│   └── CHANGELOG.md            # 변경 이력（v1.0.01.124）
+│   └── CHANGELOG.md            # 변경 이력
 │
 ├── docs/                       # 웹사이트 소스 (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # 홈페이지
@@ -179,6 +179,12 @@ cd wangyan
 
 ---
 
+## 🚀 릴리스 절차
+
+릴리스 절차 전체(버전 동기화, 메모리 제한 환경의 2단계 빌드, APK 업로드, 사전 패키지 릴리스 시 `make_latest=false` 규칙)는 중국어 개발자 가이드에 정리되어 있습니다: [발판 절차](README.dev.md#发版流程).
+
+---
+
 ## 🤝 기여
 
 Issue와 Pull Request를 환영합니다.
@@ -199,7 +205,7 @@ Issue와 Pull Request를 환영합니다.
 
 | 문서 | 경로 |
 |------|------|
-| 변경 이력（v1.0.01） | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
+| 변경 이력 | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
 | 온라인 변경 이력 | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | 요구사항 | [devdocs/requirements.md](devdocs/requirements.md) |
 | 기술 명세 | [devdocs/technical-spec.md](devdocs/technical-spec.md) |

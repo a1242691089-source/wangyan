@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 POLICY = ROOT / 'app/src/main/assets/dictionaries/filter-policy.json'
 VERSION = '2026.09.27.1'
 XINHUA_REV = 'fe6d6c2e8baa82187f4c96bbe042e43f96c05666'
-BASE = 'https://github.com/huangder/Lumi_Books/releases/download/dictionaries-' + VERSION
+BASE = 'https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-' + VERSION
 
 
 def canonical(obj):

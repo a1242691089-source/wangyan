@@ -14,7 +14,7 @@
 
 > WangYan Android 電子書籍リーダーの技術ドキュメント。コントリビューターおよび開発者向け。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -130,7 +130,7 @@ android_books/
 │   ├── ui-design-spec.md       # UI デザイン実装
 │   ├── project-status.md       # プロジェクト状況
 │   ├── development-plan.md     # 開発計画
-│   └── CHANGELOG.md            # 変更履歴（v1.0.01.124）
+│   └── CHANGELOG.md            # 変更履歴
 │
 ├── docs/                       # ウェブサイトソース (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # ホームページ
@@ -179,6 +179,12 @@ cd wangyan
 
 ---
 
+## 🚀 リリース手順
+
+リリース手順の詳細（バージョン同期、メモリ制限環境での二段階ビルド、APK アップロード、辞書パッケージリリース時の `make_latest=false` ルール）は中国語版開発者ガイドに記載しています：[发版流程](README.dev.md#发版流程)。
+
+---
+
 ## 🤝 コントリビューション
 
 Issue と Pull Request を歓迎します。
@@ -199,7 +205,7 @@ Issue と Pull Request を歓迎します。
 
 | ドキュメント | パス |
 |-------------|------|
-| 変更履歴（v1.0.01） | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
+| 変更履歴 | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
 | オンライン変更履歴 | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | 要件定義 | [devdocs/requirements.md](devdocs/requirements.md) |
 | 技術仕様 | [devdocs/technical-spec.md](devdocs/technical-spec.md) |

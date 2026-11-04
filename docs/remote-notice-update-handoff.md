@@ -1,13 +1,13 @@
 ﻿# 远程通知与更新弹窗交接文档
 
-本文说明 LumiBooks 如何通过 GitHub 仓库中的静态 JSON 配置，在 App 启动时展示通知、普通更新弹窗、强制更新弹窗。
+本文说明 忘言（WangYan）如何通过 GitHub 仓库中的静态 JSON 配置，在 App 启动时展示通知、普通更新弹窗、强制更新弹窗。
 
 ## 1. 配置文件位置
 
 客户端读取的远程配置地址是：
 
 ```text
-https://raw.githubusercontent.com/huangder/Lumi_Books/main/docs/app-config.json
+https://raw.githubusercontent.com/a1242691089-source/wangyan/main/docs/app-config.json
 ```
 
 对应仓库文件：
@@ -57,15 +57,15 @@ App 更新弹窗 > 通知弹窗 > 用户协议/隐私政策弹窗
 {
   "config_version": 1,
   "generated_at": "2026-07-28T00:00:00Z",
-  "latest_version": "1.1.00",
+  "latest_version": "1.0.0",
   "latest_version_code": 5,
-  "release_url": "https://github.com/huangder/Lumi_Books/releases/latest",
+  "release_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
   "terms_version": 0,
   "privacy_version": 0,
   "update": {
     "latest_version_code": 5,
-    "latest_version_name": "1.1.00",
-    "download_url": "https://github.com/huangder/Lumi_Books/releases/latest",
+    "latest_version_name": "1.0.0",
+    "download_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
     "title": "发现新版本",
     "message": "新版本已经发布，建议前往下载更新。",
     "changelog": "暂无更新日志。",
@@ -115,15 +115,15 @@ App 更新弹窗 > 通知弹窗 > 用户协议/隐私政策弹窗
 假设当前线上 App 是：
 
 ```text
-versionCode = 5
-versionName = 1.1.00
+versionCode = 1
+versionName = 1.0.0
 ```
 
 新版本是：
 
 ```text
-versionCode = 6
-versionName = 1.1.01
+versionCode = 2
+versionName = 1.0.1
 ```
 
 配置：
@@ -131,8 +131,8 @@ versionName = 1.1.01
 ```json
 "update": {
   "latest_version_code": 6,
-  "latest_version_name": "1.1.01",
-  "download_url": "https://github.com/huangder/Lumi_Books/releases/latest",
+  "latest_version_name": "1.0.1",
+  "download_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
   "title": "发现新版本",
   "message": "新版本已经发布，建议前往下载更新。",
   "changelog": "- 修复启动时偶发崩溃\n- 优化阅读页滑动体验\n- 改进部分设置项文案",
@@ -142,19 +142,19 @@ versionName = 1.1.01
 
 效果：
 
-- `versionCode < 6` 的用户打开 App 会看到更新弹窗。
+- `versionCode < 2` 的用户打开 App 会看到更新弹窗。
 - 弹窗有“下载”和“稍后”。
 - 用户点“下载”会打开 `download_url`。
 
 ## 6. 如何发布强制更新
 
-如果旧版本有严重问题，需要所有旧版本必须更新到 `versionCode = 6`，配置：
+如果旧版本有严重问题，需要所有旧版本必须更新到 `versionCode = 2`，配置：
 
 ```json
 "update": {
   "latest_version_code": 6,
-  "latest_version_name": "1.1.01",
-  "download_url": "https://github.com/huangder/Lumi_Books/releases/latest",
+  "latest_version_name": "1.0.1",
+  "download_url": "https://github.com/a1242691089-source/wangyan/releases/latest",
   "title": "必须更新",
   "message": "当前版本存在严重问题，请下载新版本后继续使用。",
   "changelog": "- 修复严重问题\n- 提升应用稳定性",
@@ -164,7 +164,7 @@ versionName = 1.1.01
 
 效果：
 
-- `versionCode < 6` 的用户打开 App 会看到强制更新弹窗。
+- `versionCode < 2` 的用户打开 App 会看到强制更新弹窗。
 - 弹窗只有“下载新版本”。
 - 不能点外部关闭。
 - 不能按返回键关闭。
@@ -215,6 +215,7 @@ app/src/main/java/com/huangder/lumibooks/ui/settings/SettingsViewModel.kt
 3. 判断更新以 `versionCode` 为准，`versionName` 只用于展示。
 4. 紧急强更时，应先发布 GitHub Release，再更新 `docs/app-config.json`。
 5. `docs/app-config.json` 走 GitHub Raw 地址；提交到 `main` 后，客户端下一次启动即可拉取。
+6. `release_url` / `download_url` 统一指向 `.../releases/latest`。GitHub 的 “latest” 取**最近创建的非 draft、非 prerelease Release**，因此发布词典包等非应用资产的 Release 时必须显式关闭 latest 标记（API 传 `"make_latest": "false"`，或 `gh release create ... --latest=false`），否则下载按钮会指向词典包。发版后请校验 `GET /repos/a1242691089-source/wangyan/releases/latest` 返回的是应用 tag。
 ## 10. 远程字体托管（按需下载字体）
 
 仿宋字体已从 APK 移除，改为应用内按需下载。客户端读取 `docs/app-config.json` 的 `fonts` 段（数组，可扩展更多字体），按 `key` 匹配下载。
@@ -231,8 +232,8 @@ app/src/main/java/com/huangder/lumibooks/ui/settings/SettingsViewModel.kt
   "fileName": "fandol_fang.ttf",
   "sizeBytes": 8824084,
   "urls": [
-    "https://raw.githubusercontent.com/huangder/Lumi_Books/main/docs/fonts/fandol_fang.ttf",
-    "https://cdn.jsdelivr.net/gh/huangder/Lumi_Books@main/docs/fonts/fandol_fang.ttf"
+    "https://raw.githubusercontent.com/a1242691089-source/wangyan/main/docs/fonts/fandol_fang.ttf",
+    "https://cdn.jsdelivr.net/gh/a1242691089-source/wangyan@main/docs/fonts/fandol_fang.ttf"
   ]
 }]
 ```

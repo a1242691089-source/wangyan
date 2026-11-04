@@ -14,7 +14,7 @@
 
 > 简洁优雅的 Android 本地电子书阅读器，支持 EPUB、PDF、TXT、MOBI 电子书与 CBZ 漫画。隐私优先，本地优先。
 
-[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -117,7 +117,7 @@
 
 ## 📥 获取应用
 
-从 [GitHub Releases](https://github.com/a1242691089-source/wangyan/releases) 下载最新 APK。
+从 [GitHub Releases](https://github.com/a1242691089-source/wangyan/releases/latest) 下载最新 APK。
 
 
 ---

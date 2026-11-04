@@ -14,7 +14,7 @@
 
 > Android 本地电子书阅读器的技术文档。面向贡献者与二次开发者。
 
-[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -46,8 +46,8 @@
 | 构建工具 | AGP | 8.13.2 |
 | 注解处理 | KSP | 2.3.10 |
 | 最低 SDK | Android 8.0 (API 26) | — |
-| 目标 SDK | Android 15 (API 35) | — |
-| 编译 SDK | Android 16 (API 36) | — |
+| 目标 SDK | Android 17 (API 37) | — |
+| 编译 SDK | Android 17 (API 37) | — |
 | JVM 目标 | Java 17 | — |
 
 ---
@@ -131,7 +131,7 @@ android_books/
 │   ├── lumi-ui-motion-design-system.md # 现行 UI 与动效规范
 │   ├── project-status.md       # 项目状态
 │   ├── development-plan.md     # 开发计划
-│   └── CHANGELOG.md            # 更新日志（v1.0.01.124）
+│   └── CHANGELOG.md            # 更新日志
 │
 ├── docs/                       # 项目网站 (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # 首页
@@ -150,7 +150,7 @@ android_books/
 ### 前置条件
 - **Android Studio**（最新稳定版推荐）
 - **JDK 17**
-- **Android SDK 36**（compileSdk）及 35（targetSdk）build-tools
+- **Android SDK 37**（compileSdk 与 targetSdk 均为 API 37）及 build-tools
 
 ### 步骤
 
@@ -185,6 +185,38 @@ keyPassword=<密码>
 
 `app/build.gradle.kts` 据此自动创建 release signingConfig；文件缺失时（CI/新 clone）release 回落为 debug 签名，保证 assembleRelease 始终可产出可安装的包。release 默认开启 R8 与资源收缩（`isMinifyEnabled = true`）。**keystore 必须永久备份：丢失后已发布版本将永远无法覆盖升级。**
 
+### 发版流程
+
+**应用版本**
+
+1. 改 `app/build.gradle.kts` 的 `versionCode` / `versionName`，同时同步 `docs/app-config.json` 的 `latest_version` / `latest_version_code` / `title` / `message`（两者版本号必须同一步提交，否则更新弹窗不会出现）。
+2. 三处更新日志首条同步：`app/src/main/assets/changelog.md`、`docs/changelog.html`、`devdocs/CHANGELOG.md`；7 个 README 的 version badge 同步。
+3. 构建（本机 8G 内存需分两段，避免 R8 阶段提交内存耗尽）：
+   ```bash
+   gradle :app:compileReleaseKotlin --no-daemon
+   gradle :app:assembleRelease --no-daemon
+   ```
+4. 打 tag 并发布 Release，上传 `app-universal-release.apk` 与 `app-arm64-v8a-release.apk`（`splits.abi` 会额外产出 4 个 per-abi 包）。
+5. push `docs/**` 变更 → `static.yml` 自动部署 GitHub Pages。
+
+**词典包版本（关键）**
+
+站点与 README 的下载按钮统一指向 `/releases/latest`，而 GitHub 取**最近创建的非 draft、非 prerelease Release**。发布词典包时必须显式关闭 latest 标记：
+
+```bash
+gh release create dictionaries-x.y.z <files...> --latest=false --title "词典包 x.y.z"
+# 或 API：POST /repos/a1242691089-source/wangyan/releases，请求体带 "make_latest": "false"
+```
+
+**发版后校验**
+
+```bash
+gh api repos/a1242691089-source/wangyan/releases/latest --jq .tag_name   # 必须是 vX.Y.Z
+# 若被词典包顶掉：
+gh release edit dictionaries-x.y.z --latest=false
+gh release edit vX.Y.Z --latest=true
+```
+
 ---
 
 ## 🤝 贡献
@@ -209,7 +241,7 @@ keyPassword=<密码>
 
 | 文档 | 路径 |
 |------|------|
-| 更新日志 (v1.0.01) | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
+| 更新日志 | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
 | 线上更新日志 | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | 需求文档 | [devdocs/requirements.md](devdocs/requirements.md) |
 | 技术规范 | [devdocs/technical-spec.md](devdocs/technical-spec.md) |

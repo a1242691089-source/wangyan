@@ -14,7 +14,7 @@
 
 > Technical documentation for the WangYan Android ebook reader. For contributors and developers.
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -130,7 +130,7 @@ android_books/
 │   ├── ui-design-spec.md       # UI design implementation
 │   ├── project-status.md       # Project status
 │   ├── development-plan.md     # Development plan
-│   └── CHANGELOG.md            # Changelog (v1.0.01.124)
+│   └── CHANGELOG.md            # Changelog
 │
 ├── docs/                       # Website source (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # Homepage
@@ -175,7 +175,13 @@ cd wangyan
 
 ### Signing
 
-Release builds require a `keystore.properties` file in `app/` or signing configuration in `build.gradle.kts`. The default release buildType has minify disabled (`isMinifyEnabled = false`).
+Release signing is read from `app/keystore.properties` (git-ignored) and points to a keystore outside the repository; when the file is missing (CI / fresh clone) release falls back to debug signing. Release builds enable R8 and resource shrinking (`isMinifyEnabled = true`). **Back up the keystore permanently: losing it makes future over-the-air upgrades impossible.**
+
+---
+
+## 🚀 Release Process
+
+The full release checklist (version bump sync, two-stage build on memory-limited machines, APK upload, and the `make_latest=false` rule for dictionary releases) is documented in the Chinese developer guide: [发版流程](README.dev.md#发版流程).
 
 ---
 
@@ -199,7 +205,7 @@ Issues and pull requests are welcome.
 
 | Document | Path |
 |----------|------|
-| Changelog (v1.0.01) | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
+| Changelog | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
 | Online Changelog | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | Requirements | [devdocs/requirements.md](devdocs/requirements.md) |
 | Technical Spec | [devdocs/technical-spec.md](devdocs/technical-spec.md) |

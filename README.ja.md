@@ -14,7 +14,7 @@
 
 > シンプルでエレガントな Android ローカル電子書籍リーダー。EPUB、PDF、TXT、MOBI 電子書と CBZ 漫画に対応。プライバシー最優先、完全オフライン。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -114,7 +114,7 @@
 
 ## 📥 入手方法
 
-[GitHub Releases](https://github.com/a1242691089-source/wangyan/releases) から最新 APK をダウンロードしてください。
+[GitHub Releases](https://github.com/a1242691089-source/wangyan/releases/latest) から最新 APK をダウンロードしてください。
 
 ---
 
