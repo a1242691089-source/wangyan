@@ -193,10 +193,13 @@ keyPassword=<密码>
 2. 三处更新日志首条同步：`app/src/main/assets/changelog.md`、`docs/changelog.html`、`devdocs/CHANGELOG.md`；8 个 README 的 version badge 同步。
 3. 构建（本机 8G 内存需分两段并临时降配，避免 R8 阶段提交内存耗尽；**不要把降配写进 `gradle.properties`**，否则 CI 的 Kotlin daemon 会被饿死而 OOM）：
    ```bash
-   export GRADLE_OPTS="-Xmx2560m -XX:MaxMetaspaceSize=768m"
-   gradle :app:compileReleaseKotlin --no-daemon --max-workers=2 -Pkotlin.daemon.jvmargs=-Xmx1536m
-   gradle :app:assembleRelease       --no-daemon --max-workers=2
+   ./gradlew :app:compileReleaseKotlin --max-workers=2 \
+     -Dorg.gradle.jvmargs="-Xmx2560m -XX:MaxMetaspaceSize=768m" \
+     -Pkotlin.daemon.jvmargs=-Xmx1536m
+   ./gradlew :app:assembleRelease --max-workers=2 \
+     -Dorg.gradle.jvmargs="-Xmx2560m -XX:MaxMetaspaceSize=768m"
    ```
+   `org.gradle.jvmargs` 必须用 `-D` 覆盖：`GRADLE_OPTS` 只作用于 Gradle 的 client VM，而 `--no-daemon` 在 client JVM 参数与 `org.gradle.jvmargs` 不一致时并不会真的同进程构建，而是 fork 一个仍按 4096m 起的 single-use daemon——等于没降配。Kotlin daemon 的 `-Xmx` 默认继承 Gradle daemon，所以额外用 `-P` 单独压到 1536m。
 4. 打 tag 并发布 Release，上传 `app-universal-release.apk` 与 `app-arm64-v8a-release.apk`（`splits.abi` 会额外产出 4 个 per-abi 包）。
 5. push `docs/**` 变更 → `static.yml` 自动部署 GitHub Pages。
 

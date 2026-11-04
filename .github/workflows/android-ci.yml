@@ -15,6 +15,15 @@
 # 所以四片互不重叠，规模 61 / 77 / 79 / 132，墙钟≈全量的 38%。
 # 代价是失去「新增包自动进入 CI」的特性，因此 build job 里加了覆盖率守门：
 # 任何测试类若不在下列前缀内，CI 直接失败，逼你把它加进 matrix。
+#
+# 唯一一次未修复的偶发红（run 41803422682）不是下载超时，是 Kotlin 编译 OOM：
+#   :app:compileDebugKotlin → OutOfMemoryError: GC overhead limit exceeded
+# 落点是 EpubWebViewReader（89 参数 / 3960 行的单体 Composable）。KGP 的报错原文
+# 指向 kotlin.daemon.jvmargs，且日志里没有 "Using fallback strategy"，说明编译确实
+# 跑在独立 Kotlin daemon 里 —— 而它的 -Xmx 默认继承 Gradle daemon 的 4096m。
+# 处理：只在两处 gradlew 调用后追加 -Pkotlin.daemon.jvmargs=-Xmx6144m。
+# 为什么不改 gradle.properties：那份文件要给 8G 开发机留活路，抬堆只属于 CI。
+# 为什么不顺手抬 org.gradle.jvmargs：它没 OOM 过，多占的内存只会挤同一台 16G runner。
 name: Android CI
 
 on:
@@ -87,8 +96,14 @@ jobs:
           java -version
           ./gradlew --version | grep -E "Gradle|JVM" || true
 
+      # Kotlin daemon 默认从 Gradle daemon 继承 -Xmx（gradle.properties 里是 4096m），
+      # 4g 装不下 EpubWebViewReader，run 41803422682 就在这里偶发 OOM。
+      # 只抬 Kotlin daemon：
+      #  - org.gradle.jvmargs 不动，它没 OOM 过，抬了只会挤占同一台 16G runner；
+      #  - 不写 kotlin.compiler.execution.strategy=daemon，那本来就是 KGP 的默认值；
+      #  - MaxMetaspaceSize / ReservedCodeCacheSize 会自动从 Gradle daemon 继承，不用重复写。
       - name: 编译 debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: ./gradlew :app:assembleDebug --stacktrace -Pkotlin.daemon.jvmargs=-Xmx6144m
 
       # 下面这份前缀表必须与 unit-tests 的 matrix 保持一致。
       # 改了 matrix 忘了改这里 → 新包被漏跑但不报错；改了这里忘了改 matrix → 重复跑。
@@ -190,6 +205,24 @@ jobs:
       - name: 配置 Gradle
         uses: gradle/actions/setup-gradle@v6
 
+      # Robolectric 把 android-all-instrumented jar 下到 ~/.m2，setup-gradle 不管这个目录。
+      # 主用 sdk35 → 15-robolectric-13954326-i7，约 192MB，四个分片各下一遍。
+      # key 带 matrix.shard：四片并发用同一个 key 只会让最先结束的那片独占缓存，
+      # 其余三片照样白下一遍。restore-keys 的第二条不带 shard，让用同一 sdk 的兄弟分片
+      # 能按前缀命中（命中后仍以自己的 primary key 存一份，互不覆盖）。
+      # -v1 是手动版本位：万一下载被 cancel 留下半截 jar 毒化了缓存（文件已存在就不再重下，
+      # 之后每轮都是 ZipException），改成 -v2 即可绕过，旧条目会被 LRU 自然淘汰。
+      # path 只指 android-all-instrumented；整个 ~/.m2 会吃掉仓库 10GB 配额，
+      # 挤掉 setup-gradle 存的 caches，反而让构建变慢。
+      - name: 缓存 Robolectric android-all jar
+        uses: actions/cache@v6
+        with:
+          path: ~/.m2/repository/org/robolectric/android-all-instrumented
+          key: ${{ runner.os }}-robolectric-${{ matrix.shard }}-v1
+          restore-keys: |
+            ${{ runner.os }}-robolectric-${{ matrix.shard }}-
+            ${{ runner.os }}-robolectric-
+
       # Gradle 的 --tests 不接受逗号分隔的多个模式（会被当成一个非法模式），
       # 必须展开成多个 --tests 参数。
       # continue-on-error：已知的 9 条上游既有失败（跨平台稳定失败，已用基线实验确认
@@ -206,7 +239,11 @@ jobs:
             ARGS+=(--tests "$p")
           done
           echo "测试过滤：${ARGS[*]}"
-          ./gradlew :app:testDebugUnitTest "${ARGS[@]}" --stacktrace
+          # testDebugUnitTest 也要先跑 compileDebugKotlin，是同一个炸弹，必须给同一个 6G daemon。
+          # 这里不要再抬 org.gradle.jvmargs：编译期 4G(Gradle)+6G(Kotlin) 已占去大半，
+          # 测试期 Kotlin daemon 还不退、再叠一个 2g 测试 JVM，抬多了会被内核 OOM-killer 杀掉
+          # （那会比现在的偶发 OOM 更难定位：只看到 "Gradle build daemon disappeared"）。
+          ./gradlew :app:testDebugUnitTest "${ARGS[@]}" --stacktrace -Pkotlin.daemon.jvmargs=-Xmx6144m
 
       # 上一步 continue-on-error，已知的 9 条上游既有失败不会让 job 变红。
       # 这一步负责把它们和「新失败」区分开：失败集必须是基线子集，
