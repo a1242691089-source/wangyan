@@ -1,5 +1,6 @@
 package com.huangder.lumibooks.ui.settings
 
+import com.huangder.lumibooks.BuildConfig
 import com.huangder.lumibooks.ui.components.lumiCardSurface
 import com.huangder.lumibooks.ui.components.liquidGlassMenuAnchor
 import com.huangder.lumibooks.ui.icons.AppIcons
@@ -2729,13 +2730,8 @@ fun AboutDetail(viewModel: SettingsViewModel) {
         )
     }
 
-    val currentVersion = remember(context) {
-        try {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "1.1.00"
-        } catch (_: Exception) {
-            "1.1.00"
-        }
-    }
+    // 版本号是编译期常量，直接取 BuildConfig，避免包信息异常时回落到写死的旧版本号
+    val currentVersion = BuildConfig.VERSION_NAME
 
     LumiAboutHeader(
         unlocked = uiState.lumiEasterEggUnlocked,

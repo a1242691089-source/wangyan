@@ -1,5 +1,6 @@
 package com.huangder.lumibooks
 
+import com.huangder.lumibooks.BuildConfig
 import com.huangder.lumibooks.util.diagnostics.StartupTrace
 import android.content.Intent
 import android.content.res.Configuration
@@ -1047,7 +1048,7 @@ class MainActivity : ComponentActivity() {
                 val packageInfo = try {
                     packageManager.getPackageInfo(packageName, 0)
                 } catch (_: Exception) { null }
-                val currentVersion = packageInfo?.versionName ?: "1.0"
+                val currentVersion = BuildConfig.VERSION_NAME
                 val currentVersionCode = packageInfo?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 0L
 
                 val acceptedTerms = dataStoreManager.acceptedTermsVersion.first()

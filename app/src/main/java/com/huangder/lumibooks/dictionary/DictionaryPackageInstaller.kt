@@ -12,7 +12,7 @@ internal object DictionaryPackageInstaller {
     private val files = setOf("dictionary.sqlite", "metadata.json", "licenses.txt", "sources.json")
 
     suspend fun extract(archive: File, stage: File, descriptor: DictionaryDescriptor) {
-        require(archive.length() == descriptor.sizeBytes) { "下载文件大小不一致，请重试" }
+        if (archive.length() != descriptor.sizeBytes) throw DictionaryIntegrityException("下载文件大小不一致，请重试")
         val digest = MessageDigest.getInstance("SHA-256")
         archive.inputStream().buffered().use { input ->
             val buffer = ByteArray(64 * 1024)
@@ -23,7 +23,7 @@ internal object DictionaryPackageInstaller {
                 digest.update(buffer, 0, count)
             }
         }
-        require(digest.digest().joinToString("") { "%02x".format(it) } == descriptor.sha256) { "词库校验失败，请重新下载" }
+        if (digest.digest().joinToString("") { "%02x".format(it) } != descriptor.sha256) throw DictionaryIntegrityException("词库校验失败，请重新下载")
         require(stage.parentFile!!.usableSpace > descriptor.installedBytes + 32L * 1024 * 1024) { "可用存储空间不足" }
         require(stage.mkdirs() || stage.isDirectory)
         var total = 0L
@@ -74,3 +74,9 @@ internal object DictionaryPackageInstaller {
         }
     }
 }
+
+/**
+ * 下载内容的完整性失败（大小不符 / sha256 不符）。
+ * 与「存储不足 / 压缩包结构错误」区分开：只有这一类值得换下载源重试。
+ */
+internal class DictionaryIntegrityException(message: String) : Exception(message)

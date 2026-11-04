@@ -50,7 +50,7 @@ class DictionaryPackageInstallerTest {
     @Test fun rejectsCorruptionAndTraversalWithoutWritingOutsideStage() = runBlocking {
         val (zip,d) = fixture()
         try { DictionaryPackageInstaller.extract(zip,File(temporary.root,"stage-a"),d.copy(sha256="0".repeat(64))); fail("accepted bad hash") }
-        catch (_: IllegalArgumentException) { }
+        catch (_: DictionaryIntegrityException) { }
         val (evil,e) = fixture("../escaped")
         try { DictionaryPackageInstaller.extract(evil,File(temporary.root,"stage-b"),e); fail("accepted traversal") }
         catch (_: IllegalArgumentException) { }

@@ -4,11 +4,13 @@ import android.app.DownloadManager
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
+import android.os.SystemClock
 import android.util.AtomicFile
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.huangder.lumibooks.util.RemoteMirror
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
@@ -55,15 +57,9 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
     val state: StateFlow<DictionaryState> = _state.asStateFlow()
     private var catalog = emptyList<DictionaryDescriptor>()
     private val installed = linkedMapOf<String, InstalledDictionary>()
-    private val tasks = linkedMapOf<String, Task>()
+    private val tasks = linkedMapOf<String, DictionaryTaskState>()
     private val progress = mutableMapOf<String, DictionaryDownload>()
     @Volatile private lateinit var policy: DictionaryFilterPolicy
-
-    private data class Task(val descriptor: DictionaryDescriptor, val downloadId: Long, val path: String,
-        val token: String, val confirmation: String, var error: String? = null) {
-        fun toJson() = JSONObject().put("descriptor", descriptor.toJson()).put("downloadId", downloadId)
-            .put("path", path).put("token", token).put("confirmation", confirmation).put("error", error)
-    }
 
     init {
         scope.launch {
@@ -87,11 +83,10 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
                     }
                     saved?.optJSONArray("tasks")?.objects()?.forEach { obj ->
                         runCatching {
-                            val d = DictionaryDescriptor.fromJson(obj.getJSONObject("descriptor"))
-                            val task = Task(d, obj.getLong("downloadId"), obj.getString("path"), obj.getString("token"), obj.getString("confirmation"), obj.optString("error").takeIf { !obj.isNull("error") && it.isNotBlank() })
-                            require(task.confirmation == d.confirmationKey && task.token.matches(Regex("[a-z0-9-]+")))
+                            val task = DictionaryTaskCodec.fromJson(obj, SystemClock.elapsedRealtime()) ?: return@forEach
+                            require(task.confirmation == task.descriptor.confirmationKey && task.token.matches(Regex("[a-z0-9-]+")))
                             require(File(task.path).canonicalFile.parentFile == downloadDirectory().canonicalFile)
-                            tasks[d.id] = task
+                            tasks[task.descriptor.id] = task
                         }
                     }
                 }
@@ -136,7 +131,7 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
     private fun persist() {
         val json = JSONObject().put("installed", JSONArray(installed.values.map {
             JSONObject().put("descriptor", it.descriptor.toJson()).put("enabled", it.enabled).put("order", it.order).put("directory", it.directory)
-        })).put("tasks", JSONArray(tasks.values.map { it.toJson() }))
+        })).put("tasks", JSONArray(tasks.values.map(DictionaryTaskCodec::toJson)))
         writeAtomic(stateFile, json.toString().toByteArray())
     }
     private fun publish() {
@@ -180,11 +175,15 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
         }
     }
 
-    private fun fetchSmall(url: String, maxBytes: Int): ByteArray {
+    /** catalog 与 filter-policy 的抓取：直连失败时按 RemoteMirror 的候选顺序兜底。 */
+    private fun fetchSmall(url: String, maxBytes: Int): ByteArray =
+        RemoteMirror.firstSuccess(url) { source -> fetchSmallFrom(source, maxBytes) }
+
+    private fun fetchSmallFrom(url: String, maxBytes: Int): ByteArray {
         var next = url
         repeat(6) {
+            require(RemoteMirror.isAllowed(next)) { "Untrusted dictionary source" }
             val uri = java.net.URI(next)
-            require(uri.scheme == "https" && uri.userInfo == null && uri.host in setOf("raw.githubusercontent.com", "github.com", "release-assets.githubusercontent.com", "objects.githubusercontent.com"))
             client.newCall(Request.Builder().url(next).header("User-Agent", "LumiBooks-Dictionaries").build()).execute().use { response ->
                 if (response.code in 300..399) {
                     next = uri.resolve(requireNotNull(response.header("Location"))).toString()
@@ -213,14 +212,16 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
             val directory = downloadDirectory()
             require(directory.usableSpace > descriptor.sizeBytes + 32L * 1024 * 1024) { "下载存储空间不足" }
             tasks.remove(descriptor.id)?.let { downloads.remove(it.downloadId); File(it.path).delete() }
+            val sources = RemoteMirror.candidates(descriptor.downloadUrl)
             val token = UUID.randomUUID().toString()
-            val archive = File(directory, "$token.zip")
-            val request = DownloadManager.Request(Uri.parse(descriptor.downloadUrl))
-                .setTitle(descriptor.name).setDescription("LUMI 本地词典")
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setDestinationUri(Uri.fromFile(archive)).setAllowedOverRoaming(false)
-            val id = downloads.enqueue(request)
-            tasks[descriptor.id] = Task(descriptor, id, archive.path, token, confirmation)
+            val archive = File(directory, "$token-0.zip")
+            val id = downloads.enqueue(requestFor(descriptor, sources.first(), archive))
+            val now = SystemClock.elapsedRealtime()
+            tasks[descriptor.id] = DictionaryTaskState(
+                descriptor = descriptor, downloadId = id, path = archive.path, token = token,
+                confirmation = confirmation, sources = sources, sourceIndex = 0,
+                startedAt = now, lastProgressAt = now
+            )
             try { persist() } catch (error: Exception) { tasks.remove(descriptor.id); downloads.remove(id); throw error }
             progress[descriptor.id] = DictionaryDownload(DictionaryDownloadPhase.DOWNLOADING, total = descriptor.sizeBytes)
             publish()
@@ -376,21 +377,49 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
             try {
                 downloads.query(DownloadManager.Query().setFilterById(task.downloadId)).use { cursor ->
                     if (cursor == null || !cursor.moveToFirst()) { fail(task, "下载任务已失效，请重试"); return@use }
-                    val status = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))
+                    val status = when (cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_STATUS))) {
+                        DownloadManager.STATUS_PENDING -> DownloadStatus.PENDING
+                        DownloadManager.STATUS_RUNNING -> DownloadStatus.RUNNING
+                        DownloadManager.STATUS_PAUSED -> DownloadStatus.PAUSED
+                        DownloadManager.STATUS_SUCCESSFUL -> DownloadStatus.SUCCESSFUL
+                        else -> DownloadStatus.FAILED
+                    }
                     val bytes = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR))
-                    if (bytes > task.descriptor.sizeBytes) { downloads.remove(task.downloadId); fail(task, "下载大小超过预期"); return@use }
-                    when (status) {
-                        DownloadManager.STATUS_SUCCESSFUL -> {
+                    val reason = cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))
+                    val now = SystemClock.elapsedRealtime()
+                    when {
+                        // 反代返回 200 + HTML 错误页时 DownloadManager 会一路写下去：超过声明大小即判该源不可用
+                        status != DownloadStatus.SUCCESSFUL && bytes > task.descriptor.sizeBytes -> {
+                            pending = true
+                            switchOrFail(task, "下载内容异常", "下载内容与词库不符，请稍后重试")
+                        }
+                        status == DownloadStatus.SUCCESSFUL -> {
                             mutex.withLock { if (tasks[task.descriptor.id]?.token == task.token) { progress[task.descriptor.id] = DictionaryDownload(DictionaryDownloadPhase.INSTALLING); publish() } }
                             WorkManager.getInstance(context).enqueueUniqueWork("dictionary-install-${task.token}", ExistingWorkPolicy.KEEP,
                                 OneTimeWorkRequestBuilder<DictionaryInstallWorker>().setInputData(workDataOf("dictionaryId" to task.descriptor.id, "token" to task.token)).build())
                         }
-                        DownloadManager.STATUS_FAILED -> fail(task, "下载失败（${cursor.getInt(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_REASON))}），请重试")
+                        status == DownloadStatus.FAILED -> {
+                            pending = true
+                            switchOrFail(task, "下载失败（$reason）", "下载失败（$reason），所有下载源均不可用，请检查网络后重试")
+                        }
+                        // 1.0.0 的「0B 无反应」：PENDING / 长时间零增长都不再无限挂起
+                        DictionaryDownloadWatchdog.shouldSwitch(
+                            status, bytes, task.descriptor.sizeBytes, task.startedAt, task.lastProgressAt, now
+                        ) -> {
+                            pending = true
+                            switchOrFail(task, "下载源无响应", "所有下载源均不可用，请检查网络后重试")
+                        }
                         else -> {
                             pending = true
                             mutex.withLock {
                                 if (tasks[task.descriptor.id]?.token == task.token) {
-                                    progress[task.descriptor.id] = DictionaryDownload(if (status == DownloadManager.STATUS_PAUSED) DictionaryDownloadPhase.PAUSED else DictionaryDownloadPhase.DOWNLOADING, bytes, task.descriptor.sizeBytes)
+                                    if (bytes > task.progressBytes) { task.progressBytes = bytes; task.lastProgressAt = now }
+                                    progress[task.descriptor.id] = DictionaryDownload(
+                                        if (status == DownloadStatus.PAUSED) DictionaryDownloadPhase.PAUSED else DictionaryDownloadPhase.DOWNLOADING,
+                                        bytes, task.descriptor.sizeBytes,
+                                        // 已在备用源上时持续标注，避免换源后进度归零看起来像没反应
+                                        note = if (task.sourceIndex > 0) "备用源 ${task.sourceIndex + 1}/${task.sources.size}" else null
+                                    )
                                     publish()
                                 }
                             }
@@ -403,6 +432,14 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
             }
         }
         pending
+    }
+
+    /** 换源；没有备用源时清掉系统下载任务与半截文件并给出最终错误。 */
+    private suspend fun switchOrFail(task: DictionaryTaskState, note: String, finalMessage: String) {
+        if (switchSource(task, task.sourceIndex, note)) return
+        downloads.remove(task.downloadId)
+        File(task.path).delete()
+        fail(task, finalMessage)
     }
 
     internal suspend fun install(id: String, token: String): Boolean = withContext(Dispatchers.IO) {
@@ -434,6 +471,13 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
                     File(task.path).delete()
                 }
                 true
+            } catch (error: DictionaryIntegrityException) {
+                // 反代 200 返回 HTML 错误页 / 截断内容时，DownloadManager 眼里是「成功」，
+                // 只有这里的大小与 sha256 校验能识破：还有备用源就换源重下（旧文件由 switchSource 清理）。
+                if (!switchSource(task, task.sourceIndex, "下载内容校验失败")) {
+                    fail(task, "所有下载源返回的文件均校验失败，请稍后重试")
+                }
+                false
             } catch (error: Exception) {
                 if (error is CancellationException) throw error
                 fail(task, error.message?.take(140) ?: "词库安装失败，请重试")
@@ -442,9 +486,51 @@ class DictionaryRepository @Inject constructor(@ApplicationContext private val c
         }
     }
 
-    private suspend fun fail(task: Task, message: String) = mutex.withLock {
+    private suspend fun fail(task: DictionaryTaskState, message: String) = mutex.withLock {
         tasks[task.descriptor.id]?.takeIf { it.token == task.token }?.let { it.error = message; persist(); publish() }
     }
+
+    private fun requestFor(descriptor: DictionaryDescriptor, source: String, destination: File) =
+        DownloadManager.Request(Uri.parse(source))
+            .setTitle(descriptor.name).setDescription("LUMI 本地词典")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationUri(Uri.fromFile(destination)).setAllowedOverRoaming(false)
+            .addRequestHeader("User-Agent", "LumiBooks-Android")
+
+    /**
+     * 把任务推进到下一个下载源：删旧任务与半截文件 → 用新文件名重新入队（token 不变）。
+     * 换文件名是为了彻底规避 DownloadManager 的 ERROR_FILE_ALREADY_EXISTS（旧文件删不掉时也不会卡死）。
+     * @return true 已换源；false 没有备用源了，由调用方给最终错误
+     */
+    private suspend fun switchSource(task: DictionaryTaskState, expectedIndex: Int, note: String): Boolean =
+        mutex.withLock {
+            // 并发防线：scope 轮询与 Worker 可能同时进入，索引已变说明别人已经换过源
+            val current = tasks[task.descriptor.id]
+                ?.takeIf { it.token == task.token && it.sourceIndex == expectedIndex } ?: return@withLock true
+            val next = current.sourceIndex + 1
+            if (next >= current.sources.size) return@withLock false
+            downloads.remove(current.downloadId)
+            File(current.path).delete()
+            val now = SystemClock.elapsedRealtime()
+            val archive = File(downloadDirectory(), "${current.token}-$next.zip")
+            val id = downloads.enqueue(requestFor(current.descriptor, current.sources[next], archive))
+            current.downloadId = id
+            current.path = archive.path
+            current.sourceIndex = next
+            current.progressBytes = 0L
+            current.startedAt = now
+            current.lastProgressAt = now
+            current.error = null
+            progress[current.descriptor.id] = DictionaryDownload(
+                DictionaryDownloadPhase.DOWNLOADING,
+                total = current.descriptor.sizeBytes,
+                note = "$note，正在切换到备用源（${next + 1}/${current.sources.size}）"
+            )
+            runCatching { persist() }
+            publish()
+            enqueueReconcile()
+            true
+        }
     private fun downloadDirectory(): File = File(requireNotNull(context.getExternalFilesDir(null)), "dictionary-downloads").apply { mkdirs() }
     private fun enqueueReconcile() {
         WorkManager.getInstance(context).enqueueUniqueWork("dictionary-reconcile", ExistingWorkPolicy.KEEP,

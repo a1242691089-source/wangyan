@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
+import java.net.URI
 import java.net.URL
 
 /**
@@ -24,6 +25,9 @@ object UpdateChecker {
 
     /** GitHub repository Raw config URL. Do not use a custom domain for mobile reliability. */
     private const val CONFIG_URL = "https://raw.githubusercontent.com/a1242691089-source/wangyan/main/docs/app-config.json"
+
+    /** 更新/提示弹窗允许跳转的唯一归属：本仓库 releases。 */
+    private const val RELEASE_PATH_PREFIX = "/a1242691089-source/wangyan/releases"
 
     /** Network request timeout. */
     private const val TIMEOUT_MS = 10_000
@@ -95,50 +99,81 @@ object UpdateChecker {
     }
 
     private fun fetchConfiguredUpdate(): UpdateConfig? {
-        return try {
-            val cacheBustedUrl = "$CONFIG_URL?t=${System.currentTimeMillis() / (60 * 60 * 1000)}"
-            val json = JSONObject(openJsonConnection(cacheBustedUrl))
-            val updateJson = json.optJSONObject("update")
-            val noticeJson = json.optJSONObject("notice")
-
-            UpdateConfig(
-                latestVersion = updateJson.optStringCompat(
-                    keys = arrayOf("latest_version_name", "latest_version"),
-                    fallback = json.optString("latest_version", "")
-                ),
-                latestVersionCode = updateJson.optLongCompat(
-                    keys = arrayOf("latest_version_code"),
-                    fallback = json.optLong("latest_version_code", 0L)
-                ),
-                releaseUrl = updateJson.optStringCompat(
-                    keys = arrayOf("download_url", "release_url"),
-                    fallback = json.optString("release_url", "")
-                ),
-                updateTitle = updateJson.optStringCompat(
-                    keys = arrayOf("title"),
-                    fallback = json.optString("update_title", "")
-                ),
-                updateMessage = updateJson.optStringCompat(
-                    keys = arrayOf("message"),
-                    fallback = json.optString("update_message", "")
-                ),
-                changelog = updateJson.optChangelog(
-                    fallback = json.optChangelog(fallback = "")
-                ),
-                forceUpdateBelowVersionCode = updateJson.optLongCompat(
-                    keys = arrayOf("force_update_below_version_code", "min_supported_version_code"),
-                    fallback = json.optLong("force_update_below_version_code", 0L)
-                ),
-                termsVersion = json.optInt("terms_version", 0),
-                privacyVersion = json.optInt("privacy_version", 0),
-                notice = parseNotice(noticeJson),
-                remoteFonts = parseRemoteFonts(json.optJSONArray("fonts"))
-            )
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to fetch update config: ${e.message}")
-            null
+        // 破缓存参数必须拼在「原始 URL」后面，最终形态是：
+        // https://gh-proxy.com/https://raw.githubusercontent.com/.../app-config.json?t=594123
+        // 若拼成 "https://gh-proxy.com/?t=..."，t 会变成反代自己的 query，原始文件拿不到。
+        val cacheBustedUrl = "$CONFIG_URL?t=${System.currentTimeMillis() / (60 * 60 * 1000)}"
+        var last: Exception? = null
+        // 直连超时 / 非 200 / 内容不是 JSON / 跳转链接不可信，都继续试下一个源。
+        for (url in RemoteMirror.candidates(cacheBustedUrl)) {
+            try {
+                return parseConfig(JSONObject(openJsonConnection(url)))
+            } catch (e: Exception) {
+                last = e
+                Log.w(TAG, "Config source failed: ${e.message}")
+            }
         }
+        Log.w(TAG, "Failed to fetch update config: ${last?.message}")
+        return null
     }
+
+    /** 解析 app-config.json；拆出来便于单测，并在返回前校验跳转链接归属。 */
+    internal fun parseConfig(json: JSONObject): UpdateConfig {
+        val updateJson = json.optJSONObject("update")
+        val noticeJson = json.optJSONObject("notice")
+
+        val config = UpdateConfig(
+            latestVersion = updateJson.optStringCompat(
+                keys = arrayOf("latest_version_name", "latest_version"),
+                fallback = json.optString("latest_version", "")
+            ),
+            latestVersionCode = updateJson.optLongCompat(
+                keys = arrayOf("latest_version_code"),
+                fallback = json.optLong("latest_version_code", 0L)
+            ),
+            releaseUrl = updateJson.optStringCompat(
+                keys = arrayOf("download_url", "release_url"),
+                fallback = json.optString("release_url", "")
+            ),
+            updateTitle = updateJson.optStringCompat(
+                keys = arrayOf("title"),
+                fallback = json.optString("update_title", "")
+            ),
+            updateMessage = updateJson.optStringCompat(
+                keys = arrayOf("message"),
+                fallback = json.optString("update_message", "")
+            ),
+            changelog = updateJson.optChangelog(
+                fallback = json.optChangelog(fallback = "")
+            ),
+            forceUpdateBelowVersionCode = updateJson.optLongCompat(
+                keys = arrayOf("force_update_below_version_code", "min_supported_version_code"),
+                fallback = json.optLong("force_update_below_version_code", 0L)
+            ),
+            termsVersion = json.optInt("terms_version", 0),
+            privacyVersion = json.optInt("privacy_version", 0),
+            notice = parseNotice(noticeJson),
+            remoteFonts = parseRemoteFonts(json.optJSONArray("fonts"))
+        )
+        // 反代可以做传输兜底，但配置内容仍可能被投毒：弹窗跳转必须落在本仓库 releases 下，
+        // 否则该份配置视为无效（逐源循环会继续试下一个源）。
+        require(isTrustedReleaseUrl(config.releaseUrl)) { "Untrusted release URL" }
+        return config
+    }
+
+    /**
+     * 更新配置里的跳转链接必须落在本仓库 releases 路径下：
+     * 必须是 https://github.com、无 userInfo、无端口、无 query/fragment，路径段不含 "." / ".."。
+     */
+    internal fun isTrustedReleaseUrl(url: String): Boolean = runCatching {
+        val uri = URI(url)
+        val path = uri.rawPath.orEmpty()
+        uri.scheme == "https" && uri.host.equals("github.com", ignoreCase = true) &&
+            uri.userInfo == null && uri.port == -1 &&
+            uri.rawQuery == null && uri.rawFragment == null &&
+            path.split('/').none { it == "." || it == ".." } &&
+            (path == RELEASE_PATH_PREFIX || path.startsWith("$RELEASE_PATH_PREFIX/"))
+    }.getOrDefault(false)
 
     private fun parseNotice(json: JSONObject?): NoticeConfig? {
         if (json == null) return null
@@ -176,6 +211,8 @@ object UpdateChecker {
     }
 
     private fun openJsonConnection(urlString: String): String {
+        // 纵深防御：调用方只会传候选列表里的地址，这里再拦一次任意 URL。
+        require(RemoteMirror.isAllowed(urlString)) { "Untrusted config URL" }
         val conn = URL(urlString).openConnection() as HttpURLConnection
         conn.connectTimeout = TIMEOUT_MS
         conn.readTimeout = TIMEOUT_MS

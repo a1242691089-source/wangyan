@@ -47,7 +47,8 @@ class FontDownloadManager @Inject constructor(
         }
 
         val temporary = File(target.parentFile, "remote_$key.ttf.tmp")
-        for (url in config.urls) {
+        // 直连源先试完，再试各自的反代版本（反代只做兜底，见 RemoteMirror）。
+        for (url in RemoteMirror.candidates(config.urls)) {
             val ok = runCatching { download(url, temporary, config.sizeBytes) }.isSuccess &&
                 temporary.length() == config.sizeBytes
             if (ok) {
@@ -70,7 +71,8 @@ class FontDownloadManager @Inject constructor(
     private fun download(url: String, destination: File, maxBytes: Long) {
         val uri = URI(url)
         val host = uri.host?.lowercase() ?: throw IllegalStateException("下载地址无主机")
-        if (uri.scheme != "https" || host !in allowedHosts) throw IllegalStateException("不信任的下载源")
+        val directAllowed = uri.scheme == "https" && host in allowedHosts
+        if (!directAllowed && !RemoteMirror.isAllowed(url)) throw IllegalStateException("不信任的下载源")
         val connection = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 10_000
             readTimeout = 30_000

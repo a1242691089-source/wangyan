@@ -6,6 +6,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.Coil
+import com.huangder.lumibooks.BuildConfig
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.data.local.DataStoreManager
 import com.huangder.lumibooks.domain.repository.BookRepository
@@ -1280,7 +1281,7 @@ class SettingsViewModel @Inject constructor(
             val packageInfo = try {
                 context.packageManager.getPackageInfo(context.packageName, 0)
             } catch (_: Exception) { null }
-            val currentVersion = packageInfo?.versionName ?: "1.0"
+            val currentVersion = BuildConfig.VERSION_NAME
             val currentVersionCode = packageInfo?.let { PackageInfoCompat.getLongVersionCode(it) } ?: 0L
 
             val state = _uiState.value.updateCheck

@@ -87,7 +87,12 @@ fun LocalDictionarySettings(viewModel: DictionaryViewModel = hiltViewModel()) {
                     when (download.phase) {
                         DictionaryDownloadPhase.DOWNLOADING, DictionaryDownloadPhase.PAUSED -> {
                             LinearProgressIndicator(progress = { if (download.total > 0) (download.bytes.toFloat() / download.total).coerceIn(0f, 1f) else 0f }, modifier = Modifier.fillMaxWidth())
-                            Text(if (download.phase == DictionaryDownloadPhase.PAUSED) stringResource(R.string.dictionary_download_paused) else Formatter.formatFileSize(context, download.bytes), fontSize = AppType.Caption, color = AppColors.TextSecondary)
+                            Text(
+                                if (download.phase == DictionaryDownloadPhase.PAUSED) stringResource(R.string.dictionary_download_paused)
+                                else Formatter.formatFileSize(context, download.bytes)
+                                    .let { size -> download.note?.let { "$it · $size" } ?: size },
+                                fontSize = AppType.Caption, color = AppColors.TextSecondary
+                            )
                         }
                         DictionaryDownloadPhase.INSTALLING -> { LinearProgressIndicator(Modifier.fillMaxWidth()); Text(stringResource(R.string.dictionary_installing), color = AppColors.TextSecondary) }
                         DictionaryDownloadPhase.FAILED -> Text(download.error.orEmpty(), fontSize = AppType.BodySmall, color = AppColors.TextSecondary)

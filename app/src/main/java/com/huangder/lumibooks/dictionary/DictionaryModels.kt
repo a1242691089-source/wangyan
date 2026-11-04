@@ -1,5 +1,6 @@
 package com.huangder.lumibooks.dictionary
 
+import com.huangder.lumibooks.util.RemoteMirror
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URI
@@ -119,15 +120,28 @@ private val DICTIONARY_DOWNLOAD_PATH_PREFIXES = listOf(
     "/a1242691089-source/wangyan/releases/download/"
 )
 
+// 反代只承担传输兜底：外层可以是受信反代，但内层仍然必须收敛到下列 release 路径之一，
+// 因此这里不是「任意 URL 白名单」。
 internal fun isDictionaryDownloadUrl(url: String): Boolean = runCatching {
     val uri = URI(url)
-    uri.scheme == "https" && uri.host == "github.com" && uri.userInfo == null &&
-        uri.port == -1 && DICTIONARY_DOWNLOAD_PATH_PREFIXES.any { uri.path.startsWith(it) }
+    if (uri.scheme != "https" || uri.userInfo != null || uri.port != -1) return@runCatching false
+    val original = if (uri.host.equals("github.com", ignoreCase = true)) {
+        if (uri.rawQuery != null || uri.rawFragment != null) return@runCatching false
+        url
+    } else {
+        RemoteMirror.unwrap(url, allowQuery = false) ?: return@runCatching false
+    }
+    val target = URI(original)
+    val path = target.rawPath.orEmpty()
+    target.scheme == "https" && target.host.equals("github.com", ignoreCase = true) &&
+        target.userInfo == null && target.port == -1 &&
+        path.split('/').none { it == "." || it == ".." } &&
+        DICTIONARY_DOWNLOAD_PATH_PREFIXES.any { path.startsWith(it) }
 }.getOrDefault(false)
 
 enum class DictionaryDownloadPhase { DOWNLOADING, PAUSED, INSTALLING, FAILED }
 data class DictionaryDownload(val phase: DictionaryDownloadPhase, val bytes: Long = 0, val total: Long = 0,
-    val error: String? = null, val canRetry: Boolean = false)
+    val error: String? = null, val canRetry: Boolean = false, val note: String? = null)
 data class InstalledDictionary(val descriptor: DictionaryDescriptor, val enabled: Boolean, val order: Int,
     val directory: String)
 data class DictionaryCatalogItem(val descriptor: DictionaryDescriptor, val installed: InstalledDictionary? = null,
