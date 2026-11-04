@@ -182,7 +182,8 @@ fun AnnotationFeedScreen(
             runCatching {
                 val request = when (entry) {
                     is AnnotationFeedEntry.NoteEntry -> ExcerptRequest.fromNote(entry.book, entry.note,
-                        context.getString(R.string.chapter_number, entry.note.chapterIndex + 1))
+                        if (entry.note.chapterIndex < 0) context.getString(R.string.note_unanchored_chapter)
+                        else context.getString(R.string.chapter_number, entry.note.chapterIndex + 1))
                     is AnnotationFeedEntry.BookmarkEntry -> ExcerptRequest.fromBookmark(entry.book, entry.bookmark,
                         context.getString(R.string.chapter_number, entry.bookmark.chapterIndex + 1))
                 }
@@ -310,6 +311,9 @@ fun AnnotationFeedScreen(
                     selectedLine = uiState.selectedLine,
                     onLineSelected = viewModel::setLine,
                     showLines = uiState.type == AnnotationFeedType.UNDERLINES,
+                    noteTypes = uiState.availableNoteTypes,
+                    selectedNoteType = uiState.selectedNoteType,
+                    onNoteTypeSelected = viewModel::setNoteType,
                     modifier = Modifier.padding(horizontal = AppSpace.lg)
                 )
             }

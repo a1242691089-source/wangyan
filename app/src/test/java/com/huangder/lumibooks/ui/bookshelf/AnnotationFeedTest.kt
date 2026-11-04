@@ -4,6 +4,7 @@ import com.huangder.lumibooks.domain.model.Book
 import com.huangder.lumibooks.domain.model.BookFormat
 import com.huangder.lumibooks.domain.model.Bookmark
 import com.huangder.lumibooks.domain.model.Note
+import com.huangder.lumibooks.domain.model.NoteType
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDate
@@ -77,5 +78,59 @@ class AnnotationFeedTest {
         ).groupedByDay(ZoneOffset.UTC)
         assertEquals(listOf(day, day.minusDays(1)), groups.map { it.first })
         assertEquals(listOf("note-1", "note-2"), keys(groups.first().second))
+    }
+
+    // --- 六类型 noteType 筛选（正交于 tab 维度） ---
+
+    private val intentFeed = buildAnnotationFeed(
+        listOf(first, second),
+        listOf(
+            note(11, "a", 100, text = "原文", note = ""),                                  // EXCERPT
+            note(12, "a", 200, text = "原文", note = "批注文字"),                            // COMMENT
+            note(13, "a", 300, type = "note", text = "旧批注", note = "旧文字"),             // legacy → COMMENT
+            note(14, "b", 400, type = "thought", text = "", note = "一条思考"),             // THOUGHT
+            note(15, "b", 500, type = "question", text = "", note = "一个问题"),            // QUESTION
+            note(16, "b", 600, type = "ai_summary", text = "", note = "AI 生成"),           // AI_SUMMARY
+            note(17, "a", 700, type = "pdf_ink_pen", text = "")                            // ink，不入流
+        ),
+        listOf(Bookmark(id = 9, bookId = "b", chapterIndex = 1, position = 0f, title = "签", createdAt = 650))
+    )
+
+    @Test fun noteTypeFilterMatchesOnlyThatIntent() {
+        fun of(type: NoteType?) = keys(intentFeed.matching(AnnotationFeedQuery(noteType = type)))
+        assertEquals(listOf("note-16"), of(NoteType.AI_SUMMARY))
+        assertEquals(listOf("note-14"), of(NoteType.THOUGHT))
+        assertEquals(listOf("note-15"), of(NoteType.QUESTION))
+        assertEquals(listOf("note-11"), of(NoteType.EXCERPT))
+        // 批注 = legacy "note" + highlight/underline 带文字，两种存储归并到同一意图
+        assertEquals(listOf("note-13", "note-12"), of(NoteType.COMMENT))
+        // null = 不过滤（ink 在建流时已被剔除，书签保留）
+        assertEquals(
+            listOf("bookmark-9", "note-16", "note-15", "note-14", "note-13", "note-12", "note-11"),
+            of(null)
+        )
+    }
+
+    @Test fun noteTypeFilterExcludesBookmarksAndInk() {
+        val query = AnnotationFeedQuery(noteType = NoteType.COMMENT)
+        assertEquals(listOf("note-13", "note-12"), keys(intentFeed.matching(query)))
+        val all = intentFeed.matching(AnnotationFeedQuery())
+        assertTrue(all.none { it is AnnotationFeedEntry.NoteEntry && it.note.type == "pdf_ink_pen" })
+    }
+
+    @Test fun availableNoteTypesDeriveFromFeedNotesOnly() {
+        val types = intentFeed.mapNotNull { (it as? AnnotationFeedEntry.NoteEntry)?.note?.noteType }
+        assertEquals(
+            setOf(NoteType.EXCERPT, NoteType.COMMENT, NoteType.THOUGHT, NoteType.QUESTION, NoteType.AI_SUMMARY),
+            types.toSet()
+        )
+    }
+
+    @Test fun unanchoredIntentNotesShowInFeedAndShareFallbackLabel() {
+        val unanchored = note(21, "a", 800, type = "thought", text = "").copy(
+            chapterIndex = -1, startPosition = -1, endPosition = -1)
+        val feedWith = buildAnnotationFeed(listOf(first), listOf(unanchored), emptyList())
+        assertEquals(listOf("note-21"), keys(feedWith.matching(AnnotationFeedQuery(noteType = NoteType.THOUGHT))))
+        assertEquals(-1, (feedWith.single() as AnnotationFeedEntry.NoteEntry).note.chapterIndex)
     }
 }

@@ -43,6 +43,9 @@ internal fun AnnotationListFilters(
     tags: List<String>, selectedTag: String?, onTagSelected: (String?) -> Unit,
     colors: List<String>, selectedColor: String?, onColorSelected: (String?) -> Unit,
     selectedLine: Int?, onLineSelected: (Int?) -> Unit, showLines: Boolean,
+    noteTypes: List<com.huangder.lumibooks.domain.model.NoteType>? = null,
+    selectedNoteType: com.huangder.lumibooks.domain.model.NoteType? = null,
+    onNoteTypeSelected: (com.huangder.lumibooks.domain.model.NoteType?) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Row(modifier.fillMaxWidth().padding(vertical = 6.dp),
@@ -58,6 +61,18 @@ internal fun AnnotationListFilters(
             choices = listOf(null to stringResource(R.string.annotation_tag_all), "" to stringResource(R.string.annotation_tag_none)) + tags.map { it to it },
             onSelect = onTagSelected
         )
+        if (noteTypes != null && noteTypes.isNotEmpty()) {
+            val typeLabels = noteTypes.map { it to stringResource(it.labelRes()) }
+            AnnotationFilterMenu(
+                modifier = Modifier.weight(1f),
+                label = selectedNoteType?.let { stringResource(it.labelRes()) }
+                    ?: stringResource(R.string.note_type_all),
+                selected = selectedNoteType,
+                choices = listOf(null to stringResource(R.string.note_type_all)) + typeLabels,
+                onSelect = onNoteTypeSelected,
+                colorFor = { value -> value?.let { it.accentColor() } }
+            )
+        }
         if (colors.isNotEmpty()) AnnotationFilterMenu(
             modifier = Modifier.weight(1f),
             label = stringResource(R.string.annotation_tag_color), selected = selectedColor,

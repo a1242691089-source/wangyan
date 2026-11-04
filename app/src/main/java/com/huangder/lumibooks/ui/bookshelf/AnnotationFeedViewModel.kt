@@ -5,16 +5,19 @@ import androidx.lifecycle.viewModelScope
 import com.huangder.lumibooks.data.local.DataStoreManager
 import com.huangder.lumibooks.domain.model.Bookmark
 import com.huangder.lumibooks.domain.model.Note
+import com.huangder.lumibooks.domain.model.NoteType
 import com.huangder.lumibooks.domain.repository.BookRepository
 import com.huangder.lumibooks.domain.repository.ReadingRepository
 import com.huangder.lumibooks.ui.excerpt.ExcerptRequest
 import com.huangder.lumibooks.ui.excerpt.withReaderTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -22,12 +25,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val SEARCH_DEBOUNCE_MS = 250L
+
 data class AnnotationFeedUiState(
     val entries: List<AnnotationFeedEntry> = emptyList(),
     val type: AnnotationFeedType = AnnotationFeedType.ALL,
     val selectedTag: String? = null,
     val selectedColor: String? = null,
     val selectedLine: Int? = null,
+    /** Orthogonal NoteType filter; null = all types. */
+    val selectedNoteType: NoteType? = null,
+    /** Intent types actually present in the feed, for the type filter menu. */
+    val availableNoteTypes: List<NoteType> = emptyList(),
     /** Tags used by any mark, for the filter menu. */
     val tags: List<String> = emptyList(),
     /** The tag catalog, for the tag editor. */
@@ -38,6 +47,7 @@ data class AnnotationFeedUiState(
     val isLoading: Boolean = true
 )
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class AnnotationFeedViewModel @Inject constructor(
     bookRepository: BookRepository,
@@ -46,6 +56,17 @@ class AnnotationFeedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val queryState = MutableStateFlow(AnnotationFeedQuery())
+
+    /** The search field writes here; only debounced text reaches [queryState]. */
+    private val rawSearchText = MutableStateFlow("")
+
+    init {
+        viewModelScope.launch {
+            rawSearchText.debounce(SEARCH_DEBOUNCE_MS).collect { text ->
+                queryState.update { if (it.searchText == text) it else it.copy(searchText = text) }
+            }
+        }
+    }
 
     private val feed = combine(
         bookRepository.getAllBooks(),
@@ -63,6 +84,10 @@ class AnnotationFeedViewModel @Inject constructor(
             selectedTag = query.filter.tag,
             selectedColor = query.filter.color,
             selectedLine = query.filter.underlineMode,
+            selectedNoteType = query.noteType,
+            availableNoteTypes = all.mapNotNull { (it as? AnnotationFeedEntry.NoteEntry)?.note?.noteType }
+                .distinct()
+                .sortedBy { it.ordinal },
             tags = all.flatMap { it.tags }.distinct().sorted(),
             availableTags = catalog,
             colors = if (styleTab) {
@@ -85,7 +110,11 @@ class AnnotationFeedViewModel @Inject constructor(
     fun setTag(tag: String?) = queryState.update { it.copy(filter = it.filter.copy(tag = tag)) }
     fun setColor(color: String?) = queryState.update { it.copy(filter = it.filter.copy(color = color)) }
     fun setLine(line: Int?) = queryState.update { it.copy(filter = it.filter.copy(underlineMode = line)) }
-    fun setSearchText(text: String) = queryState.update { it.copy(searchText = text) }
+    fun setNoteType(type: NoteType?) = queryState.update { it.copy(noteType = type) }
+    fun setSearchText(text: String) {
+        // The field owns the raw text; the debounced value lands in queryState.
+        rawSearchText.value = text
+    }
     fun setIncludeRuleHighlights(include: Boolean) = queryState.update { it.copy(includeRuleHighlights = include) }
 
     fun deleteNote(note: Note) {

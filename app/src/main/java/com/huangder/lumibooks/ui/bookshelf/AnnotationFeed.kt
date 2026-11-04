@@ -3,6 +3,7 @@ package com.huangder.lumibooks.ui.bookshelf
 import com.huangder.lumibooks.domain.model.Book
 import com.huangder.lumibooks.domain.model.Bookmark
 import com.huangder.lumibooks.domain.model.Note
+import com.huangder.lumibooks.domain.model.NoteType
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -48,6 +49,8 @@ internal data class AnnotationFeedQuery(
     val type: AnnotationFeedType = AnnotationFeedType.ALL,
     val filter: ReadingMarkFilter = ReadingMarkFilter(),
     val searchText: String = "",
+    /** Orthogonal intent-type filter over the six NoteType values; null = no filter. */
+    val noteType: NoteType? = null,
     /** Rule highlights are written in batches and would bury manual marks, so they start hidden. */
     val includeRuleHighlights: Boolean = false
 )
@@ -80,6 +83,10 @@ private fun AnnotationFeedEntry.matches(query: AnnotationFeedQuery): Boolean {
     }
     if (!typeMatches) return false
     if (this is AnnotationFeedEntry.NoteEntry && note.isRuleHighlight && !query.includeRuleHighlights) return false
+    if (query.noteType != null) {
+        if (this !is AnnotationFeedEntry.NoteEntry) return false
+        if (note.noteType != query.noteType) return false
+    }
     val filterMatches = when (this) {
         is AnnotationFeedEntry.NoteEntry -> query.filter.matches(note)
         is AnnotationFeedEntry.BookmarkEntry -> query.filter.matches(bookmark)

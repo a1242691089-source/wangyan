@@ -5,6 +5,7 @@ import com.huangder.lumibooks.domain.model.SelectionMenuAction
 import com.huangder.lumibooks.domain.model.NoteType
 import com.huangder.lumibooks.domain.model.SelectionMenuSettings
 import com.huangder.lumibooks.ui.components.SelectionMenuSettingsDialog
+import com.huangder.lumibooks.ui.components.accentColor
 import com.huangder.lumibooks.ui.components.labelRes
 import com.huangder.lumibooks.domain.model.ReaderImageAdjustments
 import com.huangder.lumibooks.domain.model.ReaderPageCorner
@@ -119,7 +120,6 @@ import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Surface
 import com.huangder.lumibooks.ui.components.AnnotationTagSheet
 import com.huangder.lumibooks.ui.components.AnnotationTagChips
-import com.huangder.lumibooks.ui.components.labelRes
 import com.huangder.lumibooks.ui.components.AnnotationListFilters
 import com.huangder.lumibooks.ui.bookshelf.ReadingMarkFilter
 import androidx.compose.material3.Switch
@@ -12087,6 +12087,20 @@ internal fun HighlightNoteItem(
 
             // 内容
             Column(modifier = Modifier.weight(1f)) {
+                item.noteType?.let { noteType ->
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 4.dp)) {
+                        Box(Modifier.size(8.dp).clip(CircleShape).background(noteType.accentColor()))
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            if (noteType == NoteType.AI_SUMMARY) {
+                                "AI · ${stringResource(noteType.labelRes())}"
+                            } else stringResource(noteType.labelRes()),
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = noteType.accentColor()
+                        )
+                    }
+                }
                 Text(
                     item.selectedText.replace('\n', ' '),
                     fontSize = 14.sp,
@@ -12106,7 +12120,11 @@ internal fun HighlightNoteItem(
                 AnnotationTagChips(item.tags, modifier = Modifier.padding(top = 6.dp))
                 Spacer(Modifier.height(4.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(stringResource(R.string.reader_chapter_fallback, item.chapterIndex + 1), fontSize = 12.sp, color = AccentColor)
+                    Text(
+                        if (item.chapterIndex < 0) stringResource(R.string.note_unanchored_chapter)
+                        else stringResource(R.string.reader_chapter_fallback, item.chapterIndex + 1),
+                        fontSize = 12.sp, color = AccentColor
+                    )
                     Text(
                         java.text.SimpleDateFormat("MM/dd", java.util.Locale.getDefault()).format(java.util.Date(item.createdAt)),
                         fontSize = 12.sp,
