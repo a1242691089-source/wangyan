@@ -667,7 +667,7 @@ fun LiquidGlassImportButton(
     LiquidGlassSurface(
         controlEdge = true,
         shape = CircleShape,
-        fallbackColor = if (isDark) Color(0xFF121214) else AppColors.CardBg,
+        fallbackColor = AppColors.CardBg,
         backdrop = liquidGlassBackdrop,
         contentScrimColor = surfaceColor,
         // Match the action button to the tab bar's 64dp glass space and optical rim.

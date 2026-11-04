@@ -19,6 +19,8 @@ import com.huangder.lumibooks.domain.model.DEFAULT_APP_ACCENT_HEX
 import com.huangder.lumibooks.domain.model.parseAppAccentArgb
 import com.huangder.lumibooks.domain.model.tintedAppCardArgb
 import com.huangder.lumibooks.domain.model.tintedAppWindowArgb
+import com.huangder.lumibooks.domain.model.tintedDarkAppCardArgb
+import com.huangder.lumibooks.domain.model.tintedDarkAppWindowArgb
 import com.huangder.lumibooks.domain.model.LiquidGlassStyle
 import com.huangder.lumibooks.util.DownloadedFonts
 
@@ -134,8 +136,15 @@ object AppColors {
     private val LightDanger = Color(0xFFD92D3A)
 
     // 深色
-    private val DarkWindowBg = BackgroundDark
-    private val DarkCardBg = Color(0xFF1C1C1E)
+    // 深色下窗口与卡片混入提亮派生主色（8% / 5%，见 AppAccentColor）；BgGray/Divider 保持中性层次
+    private val DarkWindowBg: Color @Composable
+        get() = Color(
+            tintedDarkAppWindowArgb(BackgroundDark.toArgb(), LocalAppAccentColor.current.toArgb())
+        )
+    private val DarkCardBg: Color @Composable
+        get() = Color(
+            tintedDarkAppCardArgb(SurfaceDark.toArgb(), LocalAppAccentColor.current.toArgb())
+        )
     private val DarkTextPrimary = Color(0xFFFFFFFF)
     private val DarkTextSecondary = Color(0xFF98989D)
     private val DarkBgGray = Color(0xFF2C2C2E)

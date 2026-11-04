@@ -121,18 +121,9 @@ import java.util.Locale
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.delay
 
-// 设计规范颜色 - 浅色模式
+// 设计规范颜色 - 主色随主题下发
 private val AccentColor: Color @Composable get() = AppColors.Accent
-private val LightTextSecondary = Color(0xFF6E6E73)
-private val LightBgGray = Color(0xFFF2F2F7)
-private val LightBackground = Color(0xFFFBFBFC)
-private val LightCardBg = Color.White
 
-// 深色模式颜色
-private val DarkTextSecondary = Color(0xFF98989D)
-private val DarkBgGray = Color(0xFF2C2C2E)
-private val DarkBackground = Color(0xFF000000)
-private val DarkCardBg = Color(0xFF1C1C1E)
 private val WelcomeContentMaxWidth = 560.dp
 
 internal enum class WelcomePage {
@@ -827,7 +818,7 @@ private fun WelcomeActionButton(
     primary: Boolean,
     forceLiquidGlass: Boolean,
     textPrimary: Color,
-    secondaryContainerColor: Color = LightBgGray,
+    secondaryContainerColor: Color = AppColors.BgGray,
     enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
@@ -927,15 +918,15 @@ private fun LanguageAndEInkPage(
     val eInkTitle = selectedLanguageContext.getString(R.string.label_e_ink_mode)
     val eInkDescription = selectedLanguageContext.getString(R.string.e_ink_mode_description)
     val nextLabel = selectedLanguageContext.getString(R.string.welcome_next)
-    val textPrimary = if (isDark) Color.White else Color.Black
-    val textSecondary = if (isDark) DarkTextSecondary else LightTextSecondary
-    val panelColor = if (isDark) DarkBgGray else LightBgGray
-    val selectedRowColor = if (isDark) DarkCardBg else LightCardBg
+    val textPrimary = AppColors.TextPrimary
+    val textSecondary = AppColors.TextSecondary
+    val panelColor = AppColors.BgGray
+    val selectedRowColor = AppColors.CardBg
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(if (isDark) DarkBackground else LightBackground)
+            .background(AppColors.WindowBg)
             .navigationBarsPadding()
     ) {
         Column(
@@ -1256,8 +1247,8 @@ private fun SupportProjectPage(
         entranceStage = 5
     }
 
-    val backgroundColor = if (isDark) DarkBackground else LightBackground
-    val textSecondary = if (isDark) DarkTextSecondary else LightTextSecondary
+    val backgroundColor = AppColors.WindowBg
+    val textSecondary = AppColors.TextSecondary
     val copyProgress by animateFloatAsState(
         targetValue = if (entranceStage >= 3) 1f else 0f,
         animationSpec = tween(420, easing = AppEasing.Decelerate),
@@ -1373,8 +1364,8 @@ private fun SupportWelcomeButton(
             onClick = onClick,
             primary = primary,
             forceLiquidGlass = false,
-            textPrimary = if (isDark) Color.White else Color.Black,
-            secondaryContainerColor = if (isDark) DarkBgGray else LightBgGray,
+            textPrimary = AppColors.TextPrimary,
+            secondaryContainerColor = AppColors.BgGray,
             enabled = enabled,
             modifier = modifier
         )

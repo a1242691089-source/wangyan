@@ -14,6 +14,12 @@ const val APP_WINDOW_TINT_FRACTION = 0.12f
 /** 浅色卡片底色混入主色的比例。卡片必须比窗口更接近白，否则层次会糊。 */
 const val APP_CARD_TINT_FRACTION = 0.06f
 
+/** 深色窗口底色混入主色的比例。纯黑底上白字对比度仍 ≥18:1，整页色相明确可见。 */
+const val APP_WINDOW_TINT_DARK_FRACTION = 0.08f
+
+/** 深色卡片底色混入主色的比例。卡片必须仍比窗口亮，保持深色层次。 */
+const val APP_CARD_TINT_DARK_FRACTION = 0.05f
+
 
 private const val DARK_CARD_ARGB = 0xFF1C1C1E.toInt()
 private const val DARK_ACCENT_MIN_CONTRAST = 7.0
@@ -76,6 +82,19 @@ fun tintedAppWindowArgb(baseArgb: Int, accentArgb: Int): Int =
 /** 浅色卡片底色：在近白底色上混入 [APP_CARD_TINT_FRACTION] 主色。 */
 fun tintedAppCardArgb(baseArgb: Int, accentArgb: Int): Int =
     blendAppAccentArgb(baseArgb, accentArgb, APP_CARD_TINT_FRACTION)
+
+/**
+ * 深色窗口底色：在纯黑底上混入 [APP_WINDOW_TINT_DARK_FRACTION] 主色。
+ * [accentArgb] 期望传深色派生提亮色（[deriveDarkAppAccentArgb] 的结果，即深色模式下
+ * LocalAppAccentColor 持有的值），与深色装饰混色先例（primaryContainer 24%、
+ * Welcome 开始按钮 14%）同源；原始主色混 8% 进纯黑肉眼不可见。
+ */
+fun tintedDarkAppWindowArgb(baseArgb: Int, accentArgb: Int): Int =
+    blendAppAccentArgb(baseArgb, accentArgb, APP_WINDOW_TINT_DARK_FRACTION)
+
+/** 深色卡片底色：在 0xFF1C1C1E 底上混入 [APP_CARD_TINT_DARK_FRACTION] 主色。 */
+fun tintedDarkAppCardArgb(baseArgb: Int, accentArgb: Int): Int =
+    blendAppAccentArgb(baseArgb, accentArgb, APP_CARD_TINT_DARK_FRACTION)
 
 
 internal fun contrastRatio(firstArgb: Int, secondArgb: Int): Double {

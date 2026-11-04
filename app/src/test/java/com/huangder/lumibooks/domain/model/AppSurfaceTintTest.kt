@@ -108,4 +108,126 @@ class AppSurfaceTintTest {
         )
         assertEquals(0xFF, tintedAppWindowArgb(lightWindowBase, translucent) ushr 24 and 0xFF)
     }
+
+    // ---------- 深色组：窗口混 8%、卡片混 5%，accent 用提亮派生色 ----------
+
+    private val darkWindowBase = 0xFF000000.toInt()
+    private val darkCardBase = 0xFF1C1C1E.toInt()
+    private val darkTextPrimary = 0xFFFFFFFF.toInt()
+    private val darkTextSecondary = 0xFF98989D.toInt()
+
+    private fun derived(accent: Int) = deriveDarkAppAccentArgb(accent)
+
+    @Test
+    fun darkFractionConstantsAreLocked() {
+        assertEquals(0.08f, APP_WINDOW_TINT_DARK_FRACTION)
+        assertEquals(0.05f, APP_CARD_TINT_DARK_FRACTION)
+    }
+
+    @Test
+    fun darkWindowTintEqualsRequestedFractionOfAccent() {
+        presets.forEach { (_, accent) ->
+            val darkAccent = derived(accent)
+            assertEquals(
+                blendAppAccentArgb(darkWindowBase, darkAccent, 0.08f),
+                tintedDarkAppWindowArgb(darkWindowBase, darkAccent)
+            )
+        }
+    }
+
+    @Test
+    fun darkCardTintEqualsRequestedFractionOfAccent() {
+        presets.forEach { (_, accent) ->
+            val darkAccent = derived(accent)
+            assertEquals(
+                blendAppAccentArgb(darkCardBase, darkAccent, 0.05f),
+                tintedDarkAppCardArgb(darkCardBase, darkAccent)
+            )
+        }
+    }
+
+    @Test
+    fun darkTintedSurfacesAreNoLongerNeutral() {
+        presets.forEach { (hex, accent) ->
+            val darkAccent = derived(accent)
+            assertNotEquals("深色窗口未着色：$hex", darkWindowBase, tintedDarkAppWindowArgb(darkWindowBase, darkAccent))
+            assertNotEquals("深色卡片未着色：$hex", darkCardBase, tintedDarkAppCardArgb(darkCardBase, darkAccent))
+        }
+    }
+
+    @Test
+    fun darkWindowIsAlwaysTintedMoreThanCard() {
+        presets.forEach { (hex, accent) ->
+            val darkAccent = derived(accent)
+            assertNotEquals(
+                "深色窗口与卡片应分档：$hex",
+                tintedDarkAppWindowArgb(darkWindowBase, darkAccent),
+                tintedDarkAppCardArgb(darkCardBase, darkAccent)
+            )
+        }
+    }
+
+    @Test
+    fun darkTintedWindowKeepsTextContrast() {
+        presets.forEach { (hex, accent) ->
+            val surface = tintedDarkAppWindowArgb(darkWindowBase, derived(accent))
+            assertTrue(
+                "深色正文对比度不足：$hex -> ${contrastRatio(surface, darkTextPrimary)}",
+                contrastRatio(surface, darkTextPrimary) >= 18.0
+            )
+            assertTrue(
+                "深色次要文字对比度不足：$hex -> ${contrastRatio(surface, darkTextSecondary)}",
+                contrastRatio(surface, darkTextSecondary) >= 6.0
+            )
+        }
+    }
+
+    @Test
+    fun darkTintedCardKeepsTextContrast() {
+        presets.forEach { (hex, accent) ->
+            val surface = tintedDarkAppCardArgb(darkCardBase, derived(accent))
+            assertTrue(
+                "深色卡片正文对比度不足：$hex -> ${contrastRatio(surface, darkTextPrimary)}",
+                contrastRatio(surface, darkTextPrimary) >= 15.0
+            )
+            assertTrue(
+                "深色卡片次要文字对比度不足：$hex -> ${contrastRatio(surface, darkTextSecondary)}",
+                contrastRatio(surface, darkTextSecondary) >= 5.0
+            )
+        }
+    }
+
+    @Test
+    fun derivedDarkAccentStaysLegibleOnTintedCard() {
+        presets.forEach { (hex, accent) ->
+            val darkAccent = derived(accent)
+            val card = tintedDarkAppCardArgb(darkCardBase, darkAccent)
+            assertTrue(
+                "提亮色对着色卡片对比度不足：$hex -> ${contrastRatio(darkAccent, card)}",
+                contrastRatio(darkAccent, card) >= 6.0
+            )
+        }
+    }
+
+    @Test
+    fun darkTintedCardStaysNearBase() {
+        presets.forEach { (hex, accent) ->
+            val ratio = contrastRatio(
+                tintedDarkAppCardArgb(darkCardBase, derived(accent)),
+                darkCardBase
+            )
+            assertTrue("深色卡片偏移过大：$hex -> $ratio", ratio < 1.10)
+        }
+    }
+
+    @Test
+    fun darkExtremeAccentsStayOpaqueAndDoNotThrow() {
+        listOf(0xFF000000.toInt(), 0xFFFFFFFF.toInt()).forEach { accent ->
+            val darkAccent = derived(accent)
+            val window = tintedDarkAppWindowArgb(darkWindowBase, darkAccent)
+            val card = tintedDarkAppCardArgb(darkCardBase, darkAccent)
+            assertEquals(0xFF, window ushr 24 and 0xFF)
+            assertEquals(0xFF, card ushr 24 and 0xFF)
+        }
+    }
 }
