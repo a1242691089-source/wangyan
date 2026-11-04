@@ -12,7 +12,7 @@
       "upstreamVersion": "fe6d6c2e8baa82187f4c96bbe042e43f96c05666",
       "optional": false,
       "version": "2026.09.27.1",
-      "downloadUrl": "https://github.com/huangder/Lumi_Books/releases/download/dictionaries-2026.09.27.1/chinese-xinhua-2026.09.27.1.zip",
+      "downloadUrl": "https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-2026.09.27.1/chinese-xinhua-2026.09.27.1.zip",
       "sha256": "71b7bc3996c3ab98490c79bd8219d718332ecbdafafd5f4589e6064d3591a9c8",
       "sizeBytes": 73858752,
       "installedBytes": 249623696,
@@ -33,7 +33,7 @@
       "upstreamVersion": "2025-edition",
       "optional": false,
       "version": "2026.09.27.1",
-      "downloadUrl": "https://github.com/huangder/Lumi_Books/releases/download/dictionaries-2026.09.27.1/wordnet-2026.09.27.1.zip",
+      "downloadUrl": "https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-2026.09.27.1/wordnet-2026.09.27.1.zip",
       "sha256": "f8419ec90e790714e467b4d869e945c34bea4ea5e48ac48bc65354f043f7aa17",
       "sizeBytes": 19662295,
       "installedBytes": 94892244,
@@ -54,7 +54,7 @@
       "upstreamVersion": "zhwiktionary 2026-09-01; Wiktextract 1a05e46",
       "optional": true,
       "version": "2026.09.27.1",
-      "downloadUrl": "https://github.com/huangder/Lumi_Books/releases/download/dictionaries-2026.09.27.1/wiki-zh-2026.09.27.1.zip",
+      "downloadUrl": "https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-2026.09.27.1/wiki-zh-2026.09.27.1.zip",
       "sha256": "36a069c422eef7e03b97967872d0fc6b8e06d41b378bc53fd1980db0f2cddcfa",
       "sizeBytes": 39734354,
       "installedBytes": 137483228,
@@ -75,7 +75,7 @@
       "upstreamVersion": "zhwiktionary 2026-09-01; Wiktextract 1a05e46",
       "optional": true,
       "version": "2026.09.27.1",
-      "downloadUrl": "https://github.com/huangder/Lumi_Books/releases/download/dictionaries-2026.09.27.1/wiki-en-zh-2026.09.27.1.zip",
+      "downloadUrl": "https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-2026.09.27.1/wiki-en-zh-2026.09.27.1.zip",
       "sha256": "a76bbd4e0b527dc24dc3a7da766c801fef68d8f754b251a1b58ed2c58f0488b4",
       "sizeBytes": 16948642,
       "installedBytes": 61436871,
@@ -88,7 +88,7 @@
   ],
   "filter": {
     "version": 2,
-    "url": "https://github.com/huangder/Lumi_Books/releases/download/dictionaries-2026.09.27.1/filter-policy.json",
+    "url": "https://github.com/a1242691089-source/wangyan/releases/download/dictionaries-2026.09.27.1/filter-policy.json",
     "sha256": "a60a0965ac36b3b4c663c7a8a295b20af3558426bf401c984013325cd5925e5e"
   }
 }
