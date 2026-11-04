@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -13,6 +14,15 @@ plugins {
 val releaseStartupTrace = providers.gradleProperty("lumiStartupTrace")
     .map { it.toBooleanStrict() }
     .orElse(false)
+
+// Release signing: read from app/keystore.properties (git-ignored). When the file is
+// absent (e.g. CI or a fresh clone), fall back to debug signing for release so that
+// assembleRelease still produces an installable artifact for smoke testing.
+val keystoreProperties = Properties().apply {
+    val file = rootProject.file("app/keystore.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+val hasReleaseSigning = keystoreProperties.getProperty("storeFile") != null
 
 android {
     namespace = "com.huangder.lumibooks"
@@ -50,8 +60,22 @@ android {
         }
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             buildConfigField("boolean", "STARTUP_TRACE_ENABLED", releaseStartupTrace.get().toString())
             isMinifyEnabled = true
             isShrinkResources = true

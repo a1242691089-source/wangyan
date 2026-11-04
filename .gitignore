@@ -24,6 +24,11 @@ CLAUDE.md
 .cxx
 local.properties
 
+# Signing secrets
+*.jks
+*.keystore
+keystore.properties
+
 # Design assets
 /pagedesign/
 /icon/
@@ -76,3 +81,6 @@ lumi-window.xml
 .DS_Store
 update_config.json
 test1.jpg
+
+# JVM crash logs
+hs_err_pid*.log

@@ -14,7 +14,7 @@
 
 > Android 本地电子书阅读器的技术文档。面向贡献者与二次开发者。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -174,7 +174,16 @@ cd wangyan
 
 ### 签名配置
 
-Release 构建需要在 `app/` 下放置 `keystore.properties` 或在 `build.gradle.kts` 中配置签名信息。默认 release buildType 关闭了 minify（`isMinifyEnabled = false`）。
+Release 签名从 `app/keystore.properties`（已 git-ignore，勿提交）读取，指向仓库外的 keystore 文件：
+
+```properties
+storeFile=D\:\\lumi_ws\\keys\\wangyan-release.jks
+storePassword=<密码>
+keyAlias=wangyan
+keyPassword=<密码>
+```
+
+`app/build.gradle.kts` 据此自动创建 release signingConfig；文件缺失时（CI/新 clone）release 回落为 debug 签名，保证 assembleRelease 始终可产出可安装的包。release 默认开启 R8 与资源收缩（`isMinifyEnabled = true`）。**keystore 必须永久备份：丢失后已发布版本将永远无法覆盖升级。**
 
 ---
 
