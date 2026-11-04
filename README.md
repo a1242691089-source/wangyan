@@ -10,11 +10,11 @@
 
 ---
 
-# Lumi — 为阅读而生
+# 忘言 — 为阅读而生
 
 > 简洁优雅的 Android 本地电子书阅读器，支持 EPUB、PDF、TXT、MOBI 电子书与 CBZ 漫画。隐私优先，本地优先。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -22,7 +22,7 @@
 
 <p align="center">
   <a href="docs/manual.jpg" target="_blank">
-    <img src="docs/manual.jpg" alt="Lumi 使用手册" width="80%">
+    <img src="docs/manual.jpg" alt="忘言使用手册" width="80%">
   </a>
   <br><sub>👆 点击查看完整使用手册</sub>
 </p>
@@ -88,7 +88,7 @@
 - 存储空间可视化
 
 ### 🎨 主题与外观
-- **三套应用主题**：默认（主题色可自定义，初始为 Lumi 粉）、Material 3（动态取色）、Liquid Glass（液态玻璃）
+- **三套应用主题**：默认（主题色可自定义，初始为墨绿）、Material 3（动态取色）、Liquid Glass（液态玻璃）
 - 液态玻璃：可调透明度 + HDR 触摸高亮
 - 深色模式（跟随系统 / 浅色 / 深色）
 - Motion Pro 动效（Beta）
@@ -117,31 +117,30 @@
 
 ## 📥 获取应用
 
-从 [GitHub Releases](https://github.com/huangder/Lumi_Books/releases) 下载最新 APK。
+从 [GitHub Releases](https://github.com/a1242691089-source/wangyan/releases) 下载最新 APK。
 
-备用下载：[百度网盘](https://pan.baidu.com/s/1vDdFsoqQuuZlntUTUjssZw?pwd=lumi)（密码 lumi） · [蓝奏云](https://wwaug.lanzoub.com/b0xxfmxvi)（密码 lumi）
 
 ---
 
 ## 📄 更新日志
 
-详见 [更新日志页](https://huangder.top/changelog.html)
+详见 [更新日志页](https://a1242691089-source.github.io/wangyan/changelog.html)
 
 ---
 
 ## ⭐ Star History
 
 <p align="center">
-  <a href="https://star-history.com/#huangder/Lumi_Books&Date">
-    <img src="https://api.star-history.com/svg?repos=huangder/Lumi_Books&type=Date" alt="Star History Chart" width="600">
+  <a href="https://star-history.com/#a1242691089-source/wangyan&Date">
+    <img src="https://api.star-history.com/svg?repos=a1242691089-source/wangyan&type=Date" alt="Star History Chart" width="600">
   </a>
 </p>
 
 ---
 
-## ❤️ 支持 Lumi
+## ❤️ 支持上游 忘言
 
-Lumi 始终保持免费、开源且无广告。如果它对你有帮助，欢迎通过 [赞助页](https://huangder.top/sponsor.html) 请开发者喝杯咖啡。
+忘言基于上游开源项目 Lumi 二次开发，始终保持免费、开源且无广告。如果它对你有帮助，欢迎通过 [赞助页](https://huangder.top/sponsor.html) 请原作者喝杯咖啡。
 
 GitHub 页面右侧的 **Sponsor** 按钮也会提供可用的赞助入口。赞助完全自愿，不会影响功能使用或问题处理。
 
@@ -149,15 +148,15 @@ GitHub 页面右侧的 **Sponsor** 按钮也会提供可用的赞助入口。赞
 
 ## 📜 许可证
 
-Lumi 原创代码采用 [GNU GPLv3](LICENSE) 开源。第三方依赖及改编代码继续遵循各自许可证；卷曲翻页实现改编自 GPLv3 项目 [legado-E](https://github.com/Luoyacheng/legado-E)，液态玻璃使用并改编自 Apache 2.0 许可的 [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass)。© 2026 Huangder
+忘言基于开源项目 Lumi 二次开发，原项目原创代码采用 [GNU GPLv3](LICENSE) 开源，本项目的修改代码同样以 GNU GPLv3 开放。第三方依赖及改编代码继续遵循各自许可证；卷曲翻页实现改编自 GPLv3 项目 [legado-E](https://github.com/Luoyacheng/legado-E)，液态玻璃使用并改编自 Apache 2.0 许可的 [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass)。原项目 © 2026 Huangder
 
 ---
 
 ## 🔗 链接
 
-- 🌐 官网：[huangder.top](https://huangder.top)
-- 📦 GitHub：[github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 联系邮箱：huangder0104@126.com
+- 🌐 官网：[a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub：[github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 反馈：[GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)
 
 ---
 

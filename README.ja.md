@@ -10,18 +10,18 @@
 
 ---
 
-# Lumi — 読書のために生まれた
+# WangYan — 読書のために生まれた
 
 > シンプルでエレガントな Android ローカル電子書籍リーダー。EPUB、PDF、TXT、MOBI 電子書と CBZ 漫画に対応。プライバシー最優先、完全オフライン。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
 [![Sponsor](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F-%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B5%E3%83%BC-ff385c)](https://huangder.top/sponsor.html)
 
 <p align="center">
-  <img src="docs/hero.png" alt="Lumi 読書画面" width="80%">
+  <img src="docs/hero.png" alt="WangYan 読書画面" width="80%">
 </p>
 
 ---
@@ -85,7 +85,7 @@
 - ストレージ使用量の可視化
 
 ### 🎨 テーマと外観
-- **3つのアプリテーマ**：デフォルト（テーマカラーを変更可能、初期色は Lumi ピンク）、Material 3（ダイナミックカラー）、Liquid Glass（リキッドグラス）
+- **3つのアプリテーマ**：デフォルト（テーマカラーを変更可能、初期色は墨緑）、Material 3（ダイナミックカラー）、Liquid Glass（リキッドグラス）
 - Liquid Glass：透明度調整 + HDR タッチハイライト
 - ダークモード（システム連動 / ライト / ダーク）
 - Motion Pro アニメーション（ベータ）
@@ -114,21 +114,21 @@
 
 ## 📥 入手方法
 
-[GitHub Releases](https://github.com/huangder/Lumi_Books/releases) から最新 APK をダウンロードしてください。
+[GitHub Releases](https://github.com/a1242691089-source/wangyan/releases) から最新 APK をダウンロードしてください。
 
 ---
 
 ## 📄 変更履歴
 
-[変更履歴](https://huangder.top/changelog.html) をご覧ください。
+[変更履歴](https://a1242691089-source.github.io/wangyan/changelog.html) をご覧ください。
 
 ---
 
 ## ⭐ スター履歴
 
 <p align="center">
-  <a href="https://star-history.com/#huangder/Lumi_Books&Date">
-    <img src="https://api.star-history.com/svg?repos=huangder/Lumi_Books&type=Date" alt="Star History Chart" width="600">
+  <a href="https://star-history.com/#a1242691089-source/wangyan&Date">
+    <img src="https://api.star-history.com/svg?repos=a1242691089-source/wangyan&type=Date" alt="Star History Chart" width="600">
   </a>
 </p>
 
@@ -136,15 +136,15 @@
 
 ## 📜 ライセンス
 
-Lumi のオリジナルコードは [GNU GPLv3](LICENSE) の下でオープンソース公開されています。サードパーティ依存ライブラリと改変コードはそれぞれのライセンスに従います。カールページめくりは GPLv3 の [legado-E](https://github.com/Luoyacheng/legado-E) を改変し、Liquid Glass の実装は Apache 2.0 ライセンスの [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass) を改変して使用しています。© 2026 Huangder
+忘言はオープンソースプロジェクト Lumi を二次開発したものであり、原プロジェクトのオリジナルコードは [GNU GPLv3](LICENSE) の下で公開されています。本プロジェクトの改変コードも同様に GPLv3 で公開されます。サードパーティ依存ライブラリと改変コードはそれぞれのライセンスに従います。カールページめくりは GPLv3 の [legado-E](https://github.com/Luoyacheng/legado-E) を改変し、Liquid Glass の実装は Apache 2.0 ライセンスの [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass) を改変して使用しています。原プロジェクト © 2026 Huangder
 
 ---
 
 ## 🔗 リンク
 
-- 🌐 ウェブサイト：[huangder.top](https://huangder.top)
-- 📦 GitHub：[github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 メール：huangder0104@126.com
+- 🌐 ウェブサイト：[a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub：[github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 フィードバック：[GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)
 
 ---
 

@@ -10,11 +10,11 @@
 
 ---
 
-# Lumi — 開発者ガイド
+# WangYan — 開発者ガイド
 
-> Lumi Android 電子書籍リーダーの技術ドキュメント。コントリビューターおよび開発者向け。
+> WangYan Android 電子書籍リーダーの技術ドキュメント。コントリビューターおよび開発者向け。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -54,7 +54,7 @@
 
 ## 🏗 アーキテクチャ概要
 
-Lumi は **MVVM + Repository** アーキテクチャを採用し、Hilt による依存性注入を行っています：
+WangYan は **MVVM + Repository** アーキテクチャを採用し、Hilt による依存性注入を行っています：
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -132,7 +132,7 @@ android_books/
 │   ├── development-plan.md     # 開発計画
 │   └── CHANGELOG.md            # 変更履歴（v1.0.01.124）
 │
-├── docs/                       # ウェブサイトソース (GitHub Pages → huangder.top)
+├── docs/                       # ウェブサイトソース (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # ホームページ
 │   ├── features.html           # 機能紹介
 │   ├── tech.html               # 技術仕様
@@ -157,8 +157,8 @@ android_books/
 
 ```bash
 # 1. リポジトリをクローン
-git clone https://github.com/huangder/Lumi_Books.git
-cd Lumi_Books
+git clone https://github.com/a1242691089-source/wangyan.git
+cd wangyan
 
 # 2. Android Studio で開き、Gradle 同期を待つ
 
@@ -183,7 +183,7 @@ cd Lumi_Books
 
 Issue と Pull Request を歓迎します。
 
-- **バグ報告**：[GitHub Issues](https://github.com/huangder/Lumi_Books/issues) にデバイスモデル、Android バージョン、再現手順を添えて提出してください。
+- **バグ報告**：[GitHub Issues](https://github.com/a1242691089-source/wangyan/issues) にデバイスモデル、Android バージョン、再現手順を添えて提出してください。
 - **機能提案**：Issues でディスカッションを開始してください。
 - **コード貢献**：
   1. リポジトリをフォーク
@@ -200,7 +200,7 @@ Issue と Pull Request を歓迎します。
 | ドキュメント | パス |
 |-------------|------|
 | 変更履歴（v1.0.01） | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
-| オンライン変更履歴 | [huangder.top/changelog](https://huangder.top/changelog.html) |
+| オンライン変更履歴 | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | 要件定義 | [devdocs/requirements.md](devdocs/requirements.md) |
 | 技術仕様 | [devdocs/technical-spec.md](devdocs/technical-spec.md) |
 | デザイン仕様 | [devdocs/design-spec.md](devdocs/design-spec.md) |
@@ -214,7 +214,7 @@ Issue と Pull Request を歓迎します。
 
 ## 📜 ライセンス
 
-Lumi のオリジナルコードは [GNU GPLv3](LICENSE) の下でオープンソース公開されています。
+忘言はオープンソースプロジェクト Lumi を二次開発したものであり、原プロジェクトのコードは [GNU GPLv3](LICENSE)、改変コードも GPLv3 で公開されています。
 
 サードパーティ依存ライブラリと改変コードはそれぞれのライセンスに従います：
 
@@ -238,6 +238,6 @@ Lumi のオリジナルコードは [GNU GPLv3](LICENSE) の下でオープン�
 
 ## 🔗 リンク
 
-- 🌐 ウェブサイト：[huangder.top](https://huangder.top)
-- 📦 GitHub：[github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 メール：huangder0104@126.com
+- 🌐 ウェブサイト：[a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub：[github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 フィードバック：[GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)

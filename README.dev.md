@@ -10,11 +10,11 @@
 
 ---
 
-# Lumi — 开发者指引
+# 忘言 — 开发者指引
 
 > Android 本地电子书阅读器的技术文档。面向贡献者与二次开发者。
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -54,7 +54,7 @@
 
 ## 🏗 架构概览
 
-Lumi 采用 **MVVM + Repository** 架构，结合 Hilt 依赖注入：
+忘言 采用 **MVVM + Repository** 架构，结合 Hilt 依赖注入：
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -133,7 +133,7 @@ android_books/
 │   ├── development-plan.md     # 开发计划
 │   └── CHANGELOG.md            # 更新日志（v1.0.01.124）
 │
-├── docs/                       # 项目网站 (GitHub Pages → huangder.top)
+├── docs/                       # 项目网站 (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # 首页
 │   ├── features.html           # 功能特性
 │   ├── tech.html               # 技术规格
@@ -156,8 +156,8 @@ android_books/
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/huangder/Lumi_Books.git
-cd Lumi_Books
+git clone https://github.com/a1242691089-source/wangyan.git
+cd wangyan
 
 # 2. 用 Android Studio 打开项目，等待 Gradle 同步完成
 
@@ -182,7 +182,7 @@ Release 构建需要在 `app/` 下放置 `keystore.properties` 或在 `build.gra
 
 欢迎提交 Issue 和 Pull Request。
 
-- **Bug 报告**：通过 [GitHub Issues](https://github.com/huangder/Lumi_Books/issues) 提交，附上设备型号、Android 版本和复现步骤。
+- **Bug 报告**：通过 [GitHub Issues](https://github.com/a1242691089-source/wangyan/issues) 提交，附上设备型号、Android 版本和复现步骤。
 - **功能建议**：在 Issues 中发起讨论。
 - **代码贡献**：
   1. Fork 仓库
@@ -201,7 +201,7 @@ Release 构建需要在 `app/` 下放置 `keystore.properties` 或在 `build.gra
 | 文档 | 路径 |
 |------|------|
 | 更新日志 (v1.0.01) | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
-| 线上更新日志 | [huangder.top/changelog](https://huangder.top/changelog.html) |
+| 线上更新日志 | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | 需求文档 | [devdocs/requirements.md](devdocs/requirements.md) |
 | 技术规范 | [devdocs/technical-spec.md](devdocs/technical-spec.md) |
 | 设计规范 | [devdocs/design-spec.md](devdocs/design-spec.md) |
@@ -216,7 +216,7 @@ Release 构建需要在 `app/` 下放置 `keystore.properties` 或在 `build.gra
 
 ## 📜 许可证
 
-Lumi 原创代码采用 [GNU GPLv3](LICENSE) 开源。
+忘言基于开源项目 Lumi 二次开发，原项目原创代码采用 [GNU GPLv3](LICENSE) 开源，修改代码同样以 GNU GPLv3 开放。
 
 第三方依赖及改编代码继续遵循各自许可证：
 
@@ -240,6 +240,6 @@ Lumi 原创代码采用 [GNU GPLv3](LICENSE) 开源。
 
 ## 🔗 链接
 
-- 🌐 官网：[huangder.top](https://huangder.top)
-- 📦 GitHub：[github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 邮箱：huangder0104@126.com
+- 🌐 官网：[a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub：[github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 反馈：[GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)

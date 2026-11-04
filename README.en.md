@@ -10,18 +10,18 @@
 
 ---
 
-# Lumi — Born for Reading
+# WangYan — Born for Reading
 
 > A clean, elegant Android local ebook reader. Supports EPUB, PDF, TXT, MOBI and CBZ comics. Privacy-first, local-first.
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
 [![Sponsor](https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F-Sponsor-ff385c)](https://huangder.top/sponsor.html)
 
 <p align="center">
-  <img src="docs/hero.png" alt="Lumi Reader Screenshot" width="80%">
+  <img src="docs/hero.png" alt="WangYan Reader Screenshot" width="80%">
 </p>
 
 ---
@@ -85,7 +85,7 @@
 - Storage usage visualization
 
 ### 🎨 Themes & Appearance
-- **Three app themes**: Default (customizable, initially Lumi Pink), Material 3 (dynamic color), Liquid Glass
+- **Three app themes**: Default (customizable, initially ink-green), Material 3 (dynamic color), Liquid Glass
 - Liquid Glass: adjustable transparency + HDR touch highlight
 - Dark mode (follow system / light / dark)
 - Motion Pro animations (Beta)
@@ -114,29 +114,29 @@
 
 ## 📥 Get It
 
-Download the latest APK from [GitHub Releases](https://github.com/huangder/Lumi_Books/releases).
+Download the latest APK from [GitHub Releases](https://github.com/a1242691089-source/wangyan/releases).
 
 ---
 
 ## 📄 Changelog
 
-See [Changelog](https://huangder.top/changelog.html)
+See [Changelog](https://a1242691089-source.github.io/wangyan/changelog.html)
 
 ---
 
 ## ⭐ Star History
 
 <p align="center">
-  <a href="https://star-history.com/#huangder/Lumi_Books&Date">
-    <img src="https://api.star-history.com/svg?repos=huangder/Lumi_Books&type=Date" alt="Star History Chart" width="600">
+  <a href="https://star-history.com/#a1242691089-source/wangyan&Date">
+    <img src="https://api.star-history.com/svg?repos=a1242691089-source/wangyan&type=Date" alt="Star History Chart" width="600">
   </a>
 </p>
 
 ---
 
-## ❤️ Support Lumi
+## ❤️ Support upstream WangYan
 
-Lumi will remain free, open source, and ad-free. If it has been useful to you, you can support its continued development through the [sponsorship page](https://huangder.top/sponsor.html).
+WangYan is based on the upstream open-source project Lumi and remains free, open source, and ad-free. If it has been useful to you, you can support the original author through the [sponsorship page](https://huangder.top/sponsor.html).
 
 The **Sponsor** button in the GitHub repository sidebar will also list the available support options. Sponsorship is entirely optional and does not affect feature access or issue handling.
 
@@ -144,15 +144,15 @@ The **Sponsor** button in the GitHub repository sidebar will also list the avail
 
 ## 📜 License
 
-Lumi's original code is open-sourced under the [GNU GPLv3](LICENSE). Third-party dependencies and adaptations follow their respective licenses. The curl page-turn implementation is adapted from the GPLv3 project [legado-E](https://github.com/Luoyacheng/legado-E); the Liquid Glass implementation is adapted from [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass) under Apache 2.0. © 2026 Huangder
+WangYan is based on the open-source project Lumi, whose original code is open-sourced under the [GNU GPLv3](LICENSE); the modifications in this project are licensed under GPLv3 as well. Third-party dependencies and adaptations follow their respective licenses. The curl page-turn implementation is adapted from the GPLv3 project [legado-E](https://github.com/Luoyacheng/legado-E); the Liquid Glass implementation is adapted from [AndroidLiquidGlass / Backdrop](https://github.com/Kyant0/AndroidLiquidGlass) under Apache 2.0. Original project © 2026 Huangder
 
 ---
 
 ## 🔗 Links
 
-- 🌐 Website: [huangder.top](https://huangder.top)
-- 📦 GitHub: [github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 Email: huangder0104@126.com
+- 🌐 Website: [a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub: [github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 Feedback: [GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)
 
 ---
 

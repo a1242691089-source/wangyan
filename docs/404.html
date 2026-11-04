@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>页面未找到 — 忘言</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        /* ═══ 404 专属布局（设计系统见 lumi-immersive.css） ═══ */
+        .nf-wrap {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        .nf-code {
+            font-size: clamp(96px, 18vw, 180px);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--accent, #1A6840), var(--accent-soft, #3E9268));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+        .nf-title { font-size: clamp(20px, 3vw, 28px); font-weight: 600; margin: 20px 0 10px; }
+        .nf-sub { opacity: 0.65; max-width: 460px; line-height: 1.7; margin-bottom: 32px; }
+        .nf-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+        .nf-actions a {
+            display: inline-block;
+            padding: 12px 26px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nf-home { background: var(--accent, #1A6840); color: #fff; }
+        .nf-repo { border: 1px solid currentColor; opacity: 0.8; }
+        .nf-repo:hover, .nf-home:hover { opacity: 1; transform: translateY(-1px); }
+        .nf-actions a { transition: transform .2s ease, opacity .2s ease; }
+    </style>
+    <link rel="stylesheet" href="lumi-immersive.css">
+</head>
+<body>
+    <main class="nf-wrap">
+        <div class="nf-code">404</div>
+        <h1 class="nf-title">页面飘进了书页之间</h1>
+        <p class="nf-sub">你要找的页面不存在，或者已经被移动到别处。回到首页继续阅读，或者到 GitHub 仓库看看。</p>
+        <div class="nf-actions">
+            <a href="index.html" class="nf-home">回到首页</a>
+            <a href="https://github.com/a1242691089-source/wangyan" class="nf-repo" target="_blank" rel="noopener">GitHub 仓库</a>
+        </div>
+    </main>
+    <script src="lumi-nav.js"></script>
+</body>
+</html>

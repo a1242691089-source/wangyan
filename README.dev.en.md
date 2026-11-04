@@ -10,11 +10,11 @@
 
 ---
 
-# Lumi — Developer Guide
+# WangYan — Developer Guide
 
-> Technical documentation for the Lumi Android ebook reader. For contributors and developers.
+> Technical documentation for the WangYan Android ebook reader. For contributors and developers.
 
-[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/huangder/Lumi_Books/releases)
+[![Version](https://img.shields.io/badge/version-2.1.9-coral)](https://github.com/a1242691089-source/wangyan/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)
@@ -54,7 +54,7 @@
 
 ## 🏗 Architecture Overview
 
-Lumi follows **MVVM + Repository** architecture with Hilt dependency injection:
+WangYan follows **MVVM + Repository** architecture with Hilt dependency injection:
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -132,7 +132,7 @@ android_books/
 │   ├── development-plan.md     # Development plan
 │   └── CHANGELOG.md            # Changelog (v1.0.01.124)
 │
-├── docs/                       # Website source (GitHub Pages → huangder.top)
+├── docs/                       # Website source (GitHub Pages → a1242691089-source.github.io/wangyan)
 │   ├── index.html              # Homepage
 │   ├── features.html           # Features
 │   ├── tech.html               # Tech specs
@@ -157,8 +157,8 @@ android_books/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/huangder/Lumi_Books.git
-cd Lumi_Books
+git clone https://github.com/a1242691089-source/wangyan.git
+cd wangyan
 
 # 2. Open in Android Studio, wait for Gradle sync
 
@@ -183,7 +183,7 @@ Release builds require a `keystore.properties` file in `app/` or signing configu
 
 Issues and pull requests are welcome.
 
-- **Bug reports**: Submit via [GitHub Issues](https://github.com/huangder/Lumi_Books/issues) with device model, Android version, and reproduction steps.
+- **Bug reports**: Submit via [GitHub Issues](https://github.com/a1242691089-source/wangyan/issues) with device model, Android version, and reproduction steps.
 - **Feature requests**: Start a discussion in Issues.
 - **Code contributions**:
   1. Fork the repository
@@ -200,7 +200,7 @@ Issues and pull requests are welcome.
 | Document | Path |
 |----------|------|
 | Changelog (v1.0.01) | [devdocs/CHANGELOG.md](devdocs/CHANGELOG.md) |
-| Online Changelog | [huangder.top/changelog](https://huangder.top/changelog.html) |
+| Online Changelog | [wangyan/changelog](https://a1242691089-source.github.io/wangyan/changelog.html) |
 | Requirements | [devdocs/requirements.md](devdocs/requirements.md) |
 | Technical Spec | [devdocs/technical-spec.md](devdocs/technical-spec.md) |
 | Design Spec | [devdocs/design-spec.md](devdocs/design-spec.md) |
@@ -214,7 +214,7 @@ Issues and pull requests are welcome.
 
 ## 📜 License
 
-Lumi's original code is open-sourced under the [GNU GPLv3](LICENSE).
+WangYan is based on the open-source project Lumi, whose original code is licensed under [GNU GPLv3](LICENSE); modifications are licensed under GPLv3 as well.
 
 Third-party dependencies and adaptations follow their respective licenses:
 
@@ -238,6 +238,6 @@ Full third-party license texts are in [app/src/main/assets/licenses/](app/src/ma
 
 ## 🔗 Links
 
-- 🌐 Website: [huangder.top](https://huangder.top)
-- 📦 GitHub: [github.com/huangder/Lumi_Books](https://github.com/huangder/Lumi_Books)
-- 📧 Email: huangder0104@126.com
+- 🌐 Website: [a1242691089-source.github.io/wangyan](https://a1242691089-source.github.io/wangyan/)
+- 📦 GitHub: [github.com/a1242691089-source/wangyan](https://github.com/a1242691089-source/wangyan)
+- 💬 Feedback: [GitHub Issues](https://github.com/a1242691089-source/wangyan/issues)
