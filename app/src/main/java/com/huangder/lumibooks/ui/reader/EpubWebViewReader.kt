@@ -489,8 +489,9 @@ internal data class EpubTextSpacing(
 /**
  * [EpubWebViewReader] 向外抛的全部事件。
  *
- * 收成一个对象而不是 23 个独立参数，是为了压住这个 Composable 的签名规模（77 → 54）：
- * 每加一个事件不必再同步改签名、两个调用点和函数体。字段名与调用点参数名保持一致，
+ * 收成一个对象而不是 23 个独立参数，是为了压住这个 Composable 的签名规模：
+ * 77 个参数 → 55（23 个回调）→ 24（再收掉 32 个渲染配置，见 [EpubRenderConfig]）。
+ * 每加一个事件或选项不必再同步改签名、两个调用点和函数体。字段名与调用点参数名保持一致，
  * 所以两个调用点只是把 `onXxx = {...}` 搬进构造器，不需要改名。
  *
  * 用 class 而非 data class：字段全是函数类型，`equals` 只会退化成引用比较，
@@ -533,52 +534,13 @@ internal class EpubReaderCallbacks(
 internal fun EpubWebViewReader(
     session: BookRenderSession,
     layoutPreviewActive: Boolean = false,
-    imageAdjustments: com.huangder.lumibooks.domain.model.ReaderImageAdjustments = com.huangder.lumibooks.domain.model.ReaderImageAdjustments(),
+    config: EpubRenderConfig,
     chapterIndex: Int,
-    nativeCssEnabled: Boolean = false,
-    fontSizeSp: Float,
-    letterSpacingDp: Float = 0f,
-    textSpacing: EpubTextSpacing = EpubTextSpacing(),
-    fontType: String,
-    fontFilePath: String?,
-    customFonts: List<com.huangder.lumibooks.domain.model.CustomFontPreset> = emptyList(),
-    bodyFontWeight: Int = 400,
-    textColorOverride: Int?,
-    theme: String,
-    coverBackgroundColor: Int?,
-    /**
-     * Base color under the pages when the reader uses its own background
-     * (custom preset or custom image). Null keeps the built-in theme colors so
-     * day/night/sepia/green stay pixel-identical to before.
-     */
-    readerBackgroundColorOverride: Int? = null,
-    readerBackgroundImagePath: String? = null,
-    readerBackgroundImageOpacity: Float = 1f,
-    readerBackgroundImageBlurDp: Float = 0f,
-    /** Auto-derived text color, applied only where the reader background shows. */
-    autoTextColor: Int? = null,
-    textAlignment: ReaderTextAlignment = ReaderTextAlignment.NATURAL,
-    preservePublisherBackground: Boolean = true,
-    /** 整页图片按屏幕比例裁切铺满（默认等比留白）。 */
-    imagePageCrop: Boolean = false,
-    /** 「原排版」套装：阅读器不参与配色，底色与文字颜色完全交给书籍自己。 */
-    publisherPaintOnly: Boolean = false,
-    bionicReadingEnabled: Boolean = false,
-    chineseMode: String = "original",
     restoreLocatorJson: String?,
     restoreProgression: Float,
     /** 恢复分数是否为"页尾"语义（书籍原排版按 (pageIndex+1)/totalPages 存档）。 */
     restoreProgressionInclusive: Boolean = false,
     initialFragment: String? = null,
-    continuousScroll: Boolean = false,
-    pageTransition: String = "slide",
-    pageTransitionDurationMs: Int = 260,
-    marginTopDp: Float = 0f,
-    marginRightDp: Float = 0f,
-    marginBottomDp: Float = 0f,
-    marginLeftDp: Float = 0f,
-    edgeTapMode: ReaderEdgeTapMode = ReaderEdgeTapMode.LEFT_PREVIOUS_RIGHT_NEXT,
-    longPressSelectionRange: LongPressSelectionRange = LongPressSelectionRange.DEFAULT,
     notes: List<Note> = emptyList(),
     ttsCurrentSentence: TtsSentencePosition? = null,
     ttsFollowEnabled: Boolean = true,
@@ -622,34 +584,54 @@ internal fun EpubWebViewReader(
     val onRenderUnavailable = callbacks.onRenderUnavailable
     val onRendererEngineResolved = callbacks.onRendererEngineResolved
 
+    // 同样逐个取回局部名：函数体 2800 行、33 个 rememberUpdatedState 镜像、
+    // 3 处 configKey、4 处 configureReader 全都继续读这些名字，
+    // 所以把 32 个渲染参数收进 [EpubRenderConfig] 对函数体是零改动。
+    val imageAdjustments = config.imageAdjustments
+    val fontSizeSp = config.fontSizeSp
+    val fontType = config.fontType
+    val fontFilePath = config.fontFilePath
+    val customFonts = config.customFonts
+    val bodyFontWeight = config.bodyFontWeight
+    val letterSpacingDp = config.letterSpacingDp
+    val textSpacing = config.textSpacing
+    val textAlignment = config.textAlignment
+    val bionicReadingEnabled = config.bionicReadingEnabled
+    val chineseMode = config.chineseMode
+    val textColorOverride = config.textColorOverride
+    val theme = config.theme
+    val coverBackgroundColor = config.coverBackgroundColor
+    val readerBackgroundColorOverride = config.readerBackgroundColorOverride
+    val readerBackgroundImagePath = config.readerBackgroundImagePath
+    val readerBackgroundImageOpacity = config.readerBackgroundImageOpacity
+    val readerBackgroundImageBlurDp = config.readerBackgroundImageBlurDp
+    val autoTextColor = config.autoTextColor
+    val imagePageCrop = config.imagePageCrop
+    val publisherPaintOnly = config.publisherPaintOnly
+    val preservePublisherBackground = config.preservePublisherBackground
+    val marginTopDp = config.marginTopDp
+    val marginRightDp = config.marginRightDp
+    val marginBottomDp = config.marginBottomDp
+    val marginLeftDp = config.marginLeftDp
+    val continuousScroll = config.continuousScroll
+    val pageTransition = config.pageTransition
+    val pageTransitionDurationMs = config.pageTransitionDurationMs
+    val edgeTapMode = config.edgeTapMode
+    val longPressSelectionRange = config.longPressSelectionRange
+    val nativeCssEnabled = config.nativeCssEnabled
+
     val nativeSession = session as? com.huangder.lumibooks.util.epub.EpubRenderSession
     // A single-media page must use the same WebView geometry on both sides of the crop toggle.
     val mediaOnlyPage by produceState<Boolean?>(null, session, chapterIndex) {
         value = withContext(Dispatchers.IO) { session.isMediaOnlyPage(chapterIndex) }
     }
-    val nativeSettingsSupported = nativeCssEnabled && nativeSession != null && bookFormat == "EPUB" &&
-        mediaOnlyPage == false &&
-        !continuousScroll && pageTransition in setOf("slide", "curl", "none") &&
-        readerBackgroundImagePath == null && !bionicReadingEnabled && chineseMode == "original" &&
-        textAlignment == ReaderTextAlignment.NATURAL && letterSpacingDp == 0f &&
-        !imagePageCrop && imageAdjustments == com.huangder.lumibooks.domain.model.ReaderImageAdjustments()
+    // 判定与日志原因共用同一份列表，避免「条件改了、文案没改」的漂移。
+    val nativeSettingsBlockers = config.nativeSettingsBlockers(nativeSession != null, bookFormat, mediaOnlyPage)
+    val nativeSettingsSupported = nativeSettingsBlockers.isEmpty()
     LaunchedEffect(session, chapterIndex, nativeCssEnabled, nativeSettingsSupported, continuousScroll, pageTransition,
         readerBackgroundImagePath, bionicReadingEnabled, chineseMode, textAlignment, letterSpacingDp, imagePageCrop, imageAdjustments) {
         if (!nativeSettingsSupported) {
-            val reasons = buildList {
-                if (!nativeCssEnabled) add("experiment disabled")
-                if (nativeSession == null || bookFormat != "EPUB") add("format $bookFormat")
-                if (continuousScroll) add("continuous scroll")
-                if (pageTransition !in setOf("slide", "curl", "none")) add("transition $pageTransition")
-                if (readerBackgroundImagePath != null) add("background image")
-                if (bionicReadingEnabled) add("bionic reading")
-                if (chineseMode != "original") add("Chinese conversion $chineseMode")
-                if (textAlignment != ReaderTextAlignment.NATURAL) add("alignment $textAlignment")
-                if (letterSpacingDp != 0f) add("letter spacing")
-                if (imagePageCrop) add("image crop")
-                if (!imageAdjustments.isNeutral) add("image adjustments")
-            }
-            android.util.Log.i("NativeEpub", "chapter=$chapterIndex engine=WEBVIEW reason=${reasons.joinToString()}")
+            android.util.Log.i("NativeEpub", "chapter=$chapterIndex engine=WEBVIEW reason=${nativeSettingsBlockers.joinToString()}")
         }
     }
     val nativeCompilationState by produceState<Pair<Pair<BookRenderSession, Int>, com.huangder.lumibooks.util.epub.NativeEpubCompilation>?>(

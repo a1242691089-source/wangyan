@@ -118,12 +118,15 @@ class EpubPerformanceActivity : ComponentActivity() {
                 }, modifier = Modifier.fillMaxSize())
             } else renderSession?.let { book ->
                 EpubWebViewReader(
-                    session = book, chapterIndex = chapter, nativeCssEnabled = engine == "native_css", fontSizeSp = 18f, fontType = "system",
-                    fontFilePath = null, textColorOverride = null, theme = activeTheme, coverBackgroundColor = null,
-                    publisherPaintOnly = publisherPaint, restoreLocatorJson = null, restoreProgression = 0f,
-                    pageTransition = transition, pageTransitionDurationMs = 260,
-                    marginLeftDp = 20f, marginRightDp = 20f, marginTopDp = 24f, marginBottomDp = 24f,
-                    continuousScroll = intent.getBooleanExtra("continuous", false),
+                    session = book, chapterIndex = chapter, restoreLocatorJson = null, restoreProgression = 0f,
+                    config = EpubRenderConfig(
+                        fontSizeSp = 18f, fontType = "system", fontFilePath = null,
+                        textColorOverride = null, theme = activeTheme, coverBackgroundColor = null,
+                        nativeCssEnabled = engine == "native_css", publisherPaintOnly = publisherPaint,
+                        pageTransition = transition, pageTransitionDurationMs = 260,
+                        marginLeftDp = 20f, marginRightDp = 20f, marginTopDp = 24f, marginBottomDp = 24f,
+                        continuousScroll = intent.getBooleanExtra("continuous", false),
+                    ),
                     callbacks = EpubReaderCallbacks(
                         onPageTextProviderReady = {}, onPageTurnHandlerReady = { turn = it },
                         onReleaseHandlerReady = { releaseReader = it }, onPageChanged = { c, p, n, _ -> position(c, p, n) },

@@ -2971,60 +2971,62 @@ fun ReaderScreen(
                 EpubWebViewReader(
                     session = activeEpubSession,
                     layoutPreviewActive = epubLayoutPreviewActive,
-                    imageAdjustments = uiState.imageAdjustments.forDisplay(eInkMode),
                     chapterIndex = uiState.currentChapterIndex,
-                    fontSizeSp = uiState.fontSize,
-                    nativeCssEnabled = uiState.nativeEpubCssEnabled,
-                    letterSpacingDp = uiState.letterSpacing,
-                    textSpacing = EpubTextSpacing(uiState.lineHeight, uiState.paragraphSpacing, uiState.firstLineIndent),
-                    fontType = preparedEpubFont?.fontType ?: uiState.fontType,
-                    fontFilePath = epubFontFilePath,
-                    customFonts = uiState.customFonts,
-                    bodyFontWeight = uiState.bodyFontWeight,
-                    textColorOverride = effectiveReaderTextColor,
-                    theme = renderingTheme,
-                    coverBackgroundColor = coverEdgeColor,
-                    readerBackgroundColorOverride = if (publisherPaintSuiteActive) {
-                        // 只作为翻页快照/透明页的兜底纸色；文档层不会铺这个底色。
-                        publisherFallbackPaperColor
-                    } else if (selectedCustomBackground != null) {
-                        readerBackgroundColorInt
-                    } else {
-                        null
-                    },
-                    readerBackgroundImagePath = readerBackgroundImagePath,
-                    readerBackgroundImageOpacity = uiState.readerBackgroundImageOpacity,
-                    readerBackgroundImageBlurDp = readerBackgroundImageBlurDp,
-                    autoTextColor = if (publisherPaintSuiteActive) {
-                        null
-                    } else if (selectedCustomBackground != null) {
-                        automaticReaderTextColorInt
-                    } else {
-                        null
-                    },
-                    textAlignment = uiState.textAlignment,
-                    preservePublisherBackground = effectivePreserveEpubBackground,
-                    imagePageCrop = uiState.pageImageCrop,
-                    publisherPaintOnly = publisherPaintSuiteActive,
-                    bionicReadingEnabled = effectiveBionicReadingEnabled,
-                    chineseMode = uiState.chineseMode,
+                    config = EpubRenderConfig(
+                        imageAdjustments = uiState.imageAdjustments.forDisplay(eInkMode),
+                        fontSizeSp = uiState.fontSize,
+                        fontType = preparedEpubFont?.fontType ?: uiState.fontType,
+                        fontFilePath = epubFontFilePath,
+                        customFonts = uiState.customFonts,
+                        bodyFontWeight = uiState.bodyFontWeight,
+                        letterSpacingDp = uiState.letterSpacing,
+                        textSpacing = EpubTextSpacing(uiState.lineHeight, uiState.paragraphSpacing, uiState.firstLineIndent),
+                        textAlignment = uiState.textAlignment,
+                        bionicReadingEnabled = effectiveBionicReadingEnabled,
+                        chineseMode = uiState.chineseMode,
+                        textColorOverride = effectiveReaderTextColor,
+                        theme = renderingTheme,
+                        coverBackgroundColor = coverEdgeColor,
+                        readerBackgroundColorOverride = if (publisherPaintSuiteActive) {
+                            // 只作为翻页快照/透明页的兜底纸色；文档层不会铺这个底色。
+                            publisherFallbackPaperColor
+                        } else if (selectedCustomBackground != null) {
+                            readerBackgroundColorInt
+                        } else {
+                            null
+                        },
+                        readerBackgroundImagePath = readerBackgroundImagePath,
+                        readerBackgroundImageOpacity = uiState.readerBackgroundImageOpacity,
+                        readerBackgroundImageBlurDp = readerBackgroundImageBlurDp,
+                        autoTextColor = if (publisherPaintSuiteActive) {
+                            null
+                        } else if (selectedCustomBackground != null) {
+                            automaticReaderTextColorInt
+                        } else {
+                            null
+                        },
+                        imagePageCrop = uiState.pageImageCrop,
+                        publisherPaintOnly = publisherPaintSuiteActive,
+                        preservePublisherBackground = effectivePreserveEpubBackground,
+                        marginTopDp = uiState.marginTopDp,
+                        marginRightDp = uiState.marginRightDp,
+                        marginBottomDp = uiState.marginBottomDp,
+                        marginLeftDp = uiState.marginLeftDp,
+                        continuousScroll = isBookLayoutContinuousScroll,
+                        pageTransition = if (isBookLayoutContinuousScroll) "none" else effectivePageTransition,
+                        pageTransitionDurationMs = VisualMotion.durationMillis(
+                            uiState.pageAnimationSettings.durationFor(effectivePageTransition)
+                        ),
+                        edgeTapMode = uiState.readerEdgeTapMode,
+                        longPressSelectionRange = uiState.longPressSelectionRange,
+                        nativeCssEnabled = uiState.nativeEpubCssEnabled,
+                    ),
                     restoreLocatorJson = uiState.epubLocatorJson,
                     restoreProgression = uiState.pendingPageFraction,
                     restoreProgressionInclusive =
                         uiState.pendingPageFractionSemantics ==
                             ReaderPageFractionSemantics.INCLUSIVE_PAGE_END,
                     initialFragment = epubPendingFragment,
-                    continuousScroll = isBookLayoutContinuousScroll,
-                    pageTransition = if (isBookLayoutContinuousScroll) "none" else effectivePageTransition,
-                    pageTransitionDurationMs = VisualMotion.durationMillis(
-                        uiState.pageAnimationSettings.durationFor(effectivePageTransition)
-                    ),
-                    marginTopDp = uiState.marginTopDp,
-                    marginRightDp = uiState.marginRightDp,
-                    marginBottomDp = uiState.marginBottomDp,
-                    marginLeftDp = uiState.marginLeftDp,
-                    edgeTapMode = uiState.readerEdgeTapMode,
-                    longPressSelectionRange = uiState.longPressSelectionRange,
                     // Keep all notes available; each EPUB WebView routes them by loaded chapter.
                     notes = renderedEpubNotes,
                     ttsCurrentSentence = ttsCurrentSentence,
@@ -3044,7 +3046,7 @@ fun ReaderScreen(
                     selectionMenuVisible = selectionState != null && !isSelectionDragging,
                     bookmarkPullEnabled = bookmarkPullEnabled,
                     paginationContentIdentity = viewModel.paginationContentIdentity(),
-                    // 23 个回调收进一个对象，签名从 77 个参数降到 54 个。
+                    // 23 个回调与 32 个渲染配置各收成一个对象，签名从 77 个参数降到 24 个。
                     callbacks = EpubReaderCallbacks(
                         onReleaseHandlerReady = { epubReleaseHandler = it },
                         onManualScrollStarted = {
