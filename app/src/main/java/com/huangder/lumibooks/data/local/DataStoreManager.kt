@@ -371,6 +371,7 @@ class DataStoreManager @Inject constructor(
         private val LUMI_EASTER_EGG_UNLOCKED = booleanPreferencesKey("lumi_easter_egg_unlocked")
         private val STARTUP_SCREEN = stringPreferencesKey("startup_screen")
         private val APP_ACCENT_COLOR = stringPreferencesKey("app_accent_color")
+        private val APP_ACCENT_CUSTOM_COLOR = stringPreferencesKey("app_accent_custom_color")
         private val APP_FONT_SIZE = stringPreferencesKey("app_font_size")
         private val GLOBAL_FONT_MODE = stringPreferencesKey("global_font_mode")
         private val REDUCE_TRANSPARENCY_ENABLED = booleanPreferencesKey("reduce_transparency_enabled")
@@ -955,6 +956,17 @@ class DataStoreManager @Inject constructor(
 
     val appAccentColor: Flow<String> = context.dataStore.data.map { preferences ->
         normalizeAppAccentHex(preferences[APP_ACCENT_COLOR])
+    }
+
+    /** 最近一次通过拾色器保存的自定义色，供预设行的「自定义」chip 一键回到该色；从未保存过时为 null。 */
+    val appAccentCustomColor: Flow<String?> = context.dataStore.data.map { preferences ->
+        val stored = preferences[APP_ACCENT_CUSTOM_COLOR]
+        // 只放行合法 hex；非法/缺失一律视为没有自定义记忆
+        if (stored != null && stored.matches(Regex("^#?[0-9A-Fa-f]{6}$"))) {
+            normalizeAppAccentHex(stored)
+        } else {
+            null
+        }
     }
 
     val appFontSize: Flow<AppFontSize> = context.dataStore.data.map { preferences ->
@@ -2549,6 +2561,15 @@ class DataStoreManager @Inject constructor(
     suspend fun saveAppAccentColor(color: String) {
         context.dataStore.edit { preferences ->
             preferences[APP_ACCENT_COLOR] = normalizeAppAccentHex(color)
+        }
+    }
+
+    /** 拾色器确认时调用：同时更新当前主色与「最近自定义色」记忆。 */
+    suspend fun saveCustomAppAccentColor(color: String) {
+        val normalized = normalizeAppAccentHex(color)
+        context.dataStore.edit { preferences ->
+            preferences[APP_ACCENT_COLOR] = normalized
+            preferences[APP_ACCENT_CUSTOM_COLOR] = normalized
         }
     }
 

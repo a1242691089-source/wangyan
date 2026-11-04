@@ -1747,6 +1747,7 @@
     <string name="local_network_permission_not_now">Not now</string>
     <string name="webdav_error_local_network_permission">Local network permission is missing. Allow 忘言 to access your configured NAS or LAN WebDAV server.</string>
     <string name="label_app_accent_preset">Color preset</string>
+    <string name="accent_preset_custom">Custom</string>
     <string name="accent_preset_ink_green">Ink Green</string>
     <string name="accent_preset_sand_blue">Sand Blue</string>
     <string name="accent_preset_navy">Navy</string>

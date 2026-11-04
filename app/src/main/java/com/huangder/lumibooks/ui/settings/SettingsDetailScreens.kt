@@ -1134,7 +1134,9 @@ fun DisplayDetail(viewModel: SettingsViewModel) {
             SettingsDivider()
             AppAccentPresetRow(
                 selectedHex = uiState.appAccentColor,
-                onSelect = viewModel::saveAppAccentColor
+                onSelect = viewModel::saveAppAccentColor,
+                onCustomClick = { showAccentColorDialog = true },
+                customHex = uiState.appAccentCustomColor
             )
             SettingsDivider()
             ThemeColorSettingRow(colorHex = uiState.appAccentColor, onClick = { showAccentColorDialog = true })
@@ -1280,7 +1282,7 @@ fun DisplayDetail(viewModel: SettingsViewModel) {
             initialColorHex = uiState.appAccentColor,
             onDismiss = { showAccentColorDialog = false },
             onConfirm = { color ->
-                viewModel.saveAppAccentColor(color)
+                viewModel.saveCustomAppAccentColor(color)
                 showAccentColorDialog = false
             }
         )
@@ -1361,14 +1363,20 @@ private fun ThemeColorSettingRow(
  *
  * 与下方的 [ThemeColorSettingRow] 是"快捷预设 / 精确自定义"两种入口，共用同一个
  * `app_accent_color` 存储键，因此切换预设后立即与自定义拾色器保持同步。
+ *
+ * 行尾的「自定义」chip：当前主色不在预设内时呈选中态；已存有自定义色且未选中时，
+ * 点击直接回到该色（走 [onSelect]），否则打开拾色弹窗（走 [onCustomClick]）。
  */
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 internal fun AppAccentPresetRow(
     selectedHex: String,
-    onSelect: (String) -> Unit
+    onSelect: (String) -> Unit,
+    onCustomClick: () -> Unit,
+    customHex: String? = null
 ) {
     val current = normalizeAppAccentHex(selectedHex)
+    val isCustomSelected = APP_ACCENT_PRESETS.none { current == normalizeAppAccentHex(it.accentHex) }
     Column(Modifier.padding(AppSpace.md)) {
         Text(
             stringResource(R.string.label_app_accent_preset),
@@ -1407,6 +1415,43 @@ internal fun AppAccentPresetRow(
                         color = if (isSelected) AppColors.TextPrimary else AppColors.TextSecondary
                     )
                 }
+            }
+            Row(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable {
+                        if (!isCustomSelected && customHex != null && current != customHex) {
+                            onSelect(customHex)
+                        } else {
+                            onCustomClick()
+                        }
+                    }
+                    .padding(horizontal = AppSpace.sm, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(20.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (customHex != null) {
+                                Color(parseAppAccentArgb(customHex))
+                            } else {
+                                AppColors.BgGray
+                            }
+                        )
+                        .border(
+                            width = if (isCustomSelected) 2.dp else 1.dp,
+                            color = if (isCustomSelected) AppColors.TextPrimary else AppColors.Divider,
+                            shape = CircleShape
+                        )
+                )
+                Spacer(Modifier.width(AppSpace.xs))
+                Text(
+                    stringResource(R.string.accent_preset_custom),
+                    fontSize = AppType.BodySmall,
+                    color = if (isCustomSelected) AppColors.TextPrimary else AppColors.TextSecondary
+                )
             }
         }
     }

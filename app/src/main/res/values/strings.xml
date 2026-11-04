@@ -1770,6 +1770,7 @@
     <string name="local_network_permission_not_now">暂不</string>
     <string name="webdav_error_local_network_permission">缺少本地网络权限：请允许忘言访问你配置的 NAS 或局域网 WebDAV 服务器</string>
     <string name="label_app_accent_preset">配色方案</string>
+    <string name="accent_preset_custom">自定义</string>
     <string name="accent_preset_ink_green">墨绿</string>
     <string name="accent_preset_sand_blue">沙青</string>
     <string name="accent_preset_navy">绀青</string>

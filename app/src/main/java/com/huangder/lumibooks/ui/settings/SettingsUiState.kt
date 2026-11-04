@@ -77,6 +77,7 @@ data class SettingsUiState(
     val lumiEasterEggUnlocked: Boolean = false,
     val startupScreen: String = DataStoreManager.DEFAULT_STARTUP_SCREEN,
     val appAccentColor: String = DEFAULT_APP_ACCENT_HEX,
+    val appAccentCustomColor: String? = null,
     val appFontSize: AppFontSize = AppFontSize.STANDARD,
     val globalFontMode: String = "system", // "default" / "system"
     val reduceTransparencyEnabled: Boolean = false,

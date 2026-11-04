@@ -8,7 +8,7 @@ import org.junit.Test
 
 /**
  * 浅色「iOS 式」全局着色的护栏：
- * 窗口底色混 6%、卡片混 3%，色相能看出来但文字对比度与层次不能被破坏。
+ * 窗口底色混 12%、卡片混 6%，色相明确可见但文字对比度与层次不能被破坏。
  */
 class AppSurfaceTintTest {
     private val presets = APP_ACCENT_PRESETS.map { it.accentHex to parseAppAccentArgb(it.accentHex) }
@@ -19,15 +19,15 @@ class AppSurfaceTintTest {
 
     @Test
     fun fractionConstantsAreLocked() {
-        assertEquals(0.06f, APP_WINDOW_TINT_FRACTION)
-        assertEquals(0.03f, APP_CARD_TINT_FRACTION)
+        assertEquals(0.12f, APP_WINDOW_TINT_FRACTION)
+        assertEquals(0.06f, APP_CARD_TINT_FRACTION)
     }
 
     @Test
     fun windowTintEqualsRequestedFractionOfAccent() {
         presets.forEach { (_, accent) ->
             assertEquals(
-                blendAppAccentArgb(lightWindowBase, accent, 0.06f),
+                blendAppAccentArgb(lightWindowBase, accent, 0.12f),
                 tintedAppWindowArgb(lightWindowBase, accent)
             )
         }
@@ -37,7 +37,7 @@ class AppSurfaceTintTest {
     fun cardTintEqualsRequestedFractionOfAccent() {
         presets.forEach { (_, accent) ->
             assertEquals(
-                blendAppAccentArgb(cardBase, accent, 0.03f),
+                blendAppAccentArgb(cardBase, accent, 0.06f),
                 tintedAppCardArgb(cardBase, accent)
             )
         }
@@ -81,7 +81,8 @@ class AppSurfaceTintTest {
     fun tintedCardStaysNearWhite() {
         presets.forEach { (hex, accent) ->
             val ratio = contrastRatio(tintedAppCardArgb(cardBase, accent), cardBase)
-            assertTrue("卡片偏灰了：$hex -> $ratio", ratio < 1.05)
+            // 6% 强度下最深预设（绀青）实测 1.1005：肉眼仍是近白，且与 12% 窗口的层次差更大
+            assertTrue("卡片偏灰了：$hex -> $ratio", ratio < 1.12)
         }
     }
 

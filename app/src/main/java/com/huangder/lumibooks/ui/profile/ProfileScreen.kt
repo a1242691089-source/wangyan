@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -72,8 +73,19 @@ class ProfileViewModel @Inject constructor(
         initialValue = DEFAULT_APP_ACCENT_HEX
     )
 
+    val appAccentCustomColor: StateFlow<String?> = dataStoreManager.appAccentCustomColor.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = null
+    )
+
     fun selectAccentColor(hex: String) {
         viewModelScope.launch { dataStoreManager.saveAppAccentColor(hex) }
+    }
+
+    /** 拾色器确认：更新当前主色并记忆自定义色（供预设行「自定义」chip 一键回切）。 */
+    fun saveCustomAccentColor(hex: String) {
+        viewModelScope.launch { dataStoreManager.saveCustomAppAccentColor(hex) }
     }
 }
 
@@ -93,6 +105,10 @@ fun ProfileScreen(
 ) {
     val homeState by homeViewModel.uiState.collectAsState()
     val accentHex by profileViewModel.appAccentColor.collectAsState()
+    val customAccentHex by profileViewModel.appAccentCustomColor.collectAsState()
+    var showAccentColorDialog by androidx.compose.runtime.remember {
+        androidx.compose.runtime.mutableStateOf(false)
+    }
     val context = androidx.compose.ui.platform.LocalContext.current
 
     Column(
@@ -128,7 +144,9 @@ fun ProfileScreen(
         )
         AppAccentPresetRow(
             selectedHex = accentHex,
-            onSelect = profileViewModel::selectAccentColor
+            onSelect = profileViewModel::selectAccentColor,
+            onCustomClick = { showAccentColorDialog = true },
+            customHex = customAccentHex
         )
 
         Spacer(Modifier.height(AppSpace.lg))
@@ -161,6 +179,17 @@ fun ProfileScreen(
         )
 
         Spacer(Modifier.height(AppSpace.xl))
+    }
+
+    if (showAccentColorDialog) {
+        com.huangder.lumibooks.ui.settings.ThemeColorDialog(
+            initialColorHex = accentHex,
+            onDismiss = { showAccentColorDialog = false },
+            onConfirm = { color ->
+                profileViewModel.saveCustomAccentColor(color)
+                showAccentColorDialog = false
+            }
+        )
     }
 }
 

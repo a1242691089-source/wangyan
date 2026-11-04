@@ -8,11 +8,11 @@ import kotlin.math.roundToInt
 
 const val DEFAULT_APP_ACCENT_HEX = "#1A6840"
 
-/** 浅色窗口底色混入主色的比例。够轻，白字/黑字对比度几乎不变，但整页能看出色相。 */
-const val APP_WINDOW_TINT_FRACTION = 0.06f
+/** 浅色窗口底色混入主色的比例。文字对比度仍 ≥12:1，但整页色相明确可见。 */
+const val APP_WINDOW_TINT_FRACTION = 0.12f
 
 /** 浅色卡片底色混入主色的比例。卡片必须比窗口更接近白，否则层次会糊。 */
-const val APP_CARD_TINT_FRACTION = 0.03f
+const val APP_CARD_TINT_FRACTION = 0.06f
 
 
 private const val DARK_CARD_ARGB = 0xFF1C1C1E.toInt()

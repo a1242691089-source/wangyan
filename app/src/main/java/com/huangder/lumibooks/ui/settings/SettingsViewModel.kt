@@ -234,6 +234,11 @@ class SettingsViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
+            dataStoreManager.appAccentCustomColor.collectLatest { color ->
+                _uiState.value = _uiState.value.copy(appAccentCustomColor = color)
+            }
+        }
+        viewModelScope.launch {
             dataStoreManager.appFontSize.collectLatest { size ->
                 _uiState.update { it.copy(appFontSize = size) }
             }
@@ -606,6 +611,18 @@ class SettingsViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(appAccentColor = normalized)
         viewModelScope.launch {
             dataStoreManager.saveAppAccentColor(normalized)
+        }
+    }
+
+    /** 拾色器确认：更新当前主色并记忆自定义色（供预设行「自定义」chip 一键回切）。 */
+    fun saveCustomAppAccentColor(color: String) {
+        val normalized = normalizeAppAccentHex(color)
+        _uiState.value = _uiState.value.copy(
+            appAccentColor = normalized,
+            appAccentCustomColor = normalized
+        )
+        viewModelScope.launch {
+            dataStoreManager.saveCustomAppAccentColor(normalized)
         }
     }
 
