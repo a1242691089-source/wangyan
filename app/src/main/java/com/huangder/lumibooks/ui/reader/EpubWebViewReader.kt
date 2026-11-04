@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -485,6 +486,48 @@ internal data class EpubTextSpacing(
     val firstLineIndent: Float = 2f
 )
 
+/**
+ * [EpubWebViewReader] 向外抛的全部事件。
+ *
+ * 收成一个对象而不是 23 个独立参数，是为了压住这个 Composable 的签名规模（77 → 54）：
+ * 每加一个事件不必再同步改签名、两个调用点和函数体。字段名与调用点参数名保持一致，
+ * 所以两个调用点只是把 `onXxx = {...}` 搬进构造器，不需要改名。
+ *
+ * 用 class 而非 data class：字段全是函数类型，`equals` 只会退化成引用比较，
+ * data class 生成的 equals/componentN 对 Compose 的跳过判断没有任何额外价值，
+ * 反而给编译器多一份负担（这个文件本来就是全仓库编译最重的地方）。
+ */
+@Immutable
+internal class EpubReaderCallbacks(
+    val onManualScrollStarted: () -> Unit = {},
+    val onPageTextProviderReady: ((suspend (chapterIndex: Int, pageIndex: Int) -> EpubPageText?)?) -> Unit,
+    val onPageTurnHandlerReady: (((direction: Int) -> Boolean)?) -> Unit,
+    /**
+     * 由 reader 交出一个「等一帧后再释放 WebView」的函数；`key(epubRetryToken)` 重建时
+     * 必须走它，否则旧 WebView 会在新实例挂载后被立刻销毁。
+     */
+    val onReleaseHandlerReady: (((onReleased: () -> Unit) -> Unit)?) -> Unit = {},
+    val onPageChanged: (chapterIndex: Int, pageIndex: Int, pageCount: Int, locatorJson: String?) -> Unit,
+    val onPaginationConfigured: (String) -> Unit = {},
+    val onPageCountConfirmed: (signature: String, chapterIndex: Int, pageCount: Int) -> Unit = { _, _, _ -> },
+    val onBookmarkPullStart: () -> Unit = {},
+    val onBookmarkPullProgress: (distancePx: Float, armed: Boolean) -> Unit = { _, _ -> },
+    val onBookmarkPullFinished: (commit: Boolean) -> Unit = {},
+    val onCenterTap: () -> Unit,
+    val onSelectionMenuDismiss: () -> Unit = {},
+    val onImagePreviewOpen: () -> Unit,
+    val onChapterTurn: (direction: Int) -> Unit,
+    val onInternalLink: (chapterIndex: Int, fragment: String?) -> Unit,
+    val onExternalLink: (href: String) -> Unit,
+    val onSelection: (EpubSelectionInfo) -> Unit,
+    val onSelectionCleared: () -> Unit,
+    val onSearchResolved: (token: Int, found: Boolean) -> Unit,
+    val onNavigationStage: (operationId: Long, stage: EpubNavigationStage) -> Unit = { _, _ -> },
+    val onNavigationResult: (EpubNavigationResult) -> Unit = {},
+    val onRenderUnavailable: (EpubRenderFailure) -> Unit,
+    val onRendererEngineResolved: (nativeCss: Boolean) -> Unit = {}
+)
+
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 internal fun EpubWebViewReader(
@@ -539,7 +582,6 @@ internal fun EpubWebViewReader(
     notes: List<Note> = emptyList(),
     ttsCurrentSentence: TtsSentencePosition? = null,
     ttsFollowEnabled: Boolean = true,
-    onManualScrollStarted: () -> Unit = {},
     ttsHighlightColor: Int = TtsSentenceHighlightSpan.computeHighlightColor(Color.WHITE),
     searchRequest: EpubSearchRequest? = null,
     locatorRequest: EpubLocatorRequest? = null,
@@ -550,31 +592,36 @@ internal fun EpubWebViewReader(
     dictionarySelection: EpubDictionarySelection? = null,
     selectionMenuVisible: Boolean = false,
     bookmarkPullEnabled: Boolean = true,
-    onPageTextProviderReady: ((suspend (chapterIndex: Int, pageIndex: Int) -> EpubPageText?)?) -> Unit,
-    onPageTurnHandlerReady: (((direction: Int) -> Boolean)?) -> Unit,
-    onReleaseHandlerReady: (((onReleased: () -> Unit) -> Unit)?) -> Unit = {},
-    onPageChanged: (chapterIndex: Int, pageIndex: Int, pageCount: Int, locatorJson: String?) -> Unit,
     paginationContentIdentity: String = "",
-    onPaginationConfigured: (String) -> Unit = {},
-    onPageCountConfirmed: (signature: String, chapterIndex: Int, pageCount: Int) -> Unit = { _, _, _ -> },
-    onBookmarkPullStart: () -> Unit = {},
-    onBookmarkPullProgress: (distancePx: Float, armed: Boolean) -> Unit = { _, _ -> },
-    onBookmarkPullFinished: (commit: Boolean) -> Unit = {},
-    onCenterTap: () -> Unit,
-    onSelectionMenuDismiss: () -> Unit = {},
-    onImagePreviewOpen: () -> Unit,
-    onChapterTurn: (direction: Int) -> Unit,
-    onInternalLink: (chapterIndex: Int, fragment: String?) -> Unit,
-    onExternalLink: (href: String) -> Unit,
-    onSelection: (EpubSelectionInfo) -> Unit,
-    onSelectionCleared: () -> Unit,
-    onSearchResolved: (token: Int, found: Boolean) -> Unit,
-    onNavigationStage: (operationId: Long, stage: EpubNavigationStage) -> Unit = { _, _ -> },
-    onNavigationResult: (EpubNavigationResult) -> Unit = {},
-    onRenderUnavailable: (EpubRenderFailure) -> Unit,
-    onRendererEngineResolved: (nativeCss: Boolean) -> Unit = {},
+    callbacks: EpubReaderCallbacks,
     modifier: Modifier = Modifier
 ) {
+    // 逐个取回局部名，而不是 with(callbacks) { ... }：
+    // 后者会把 2900 行里 45 处回调调用藏进隐式作用域，读代码时看不出事件从哪来。
+    val onManualScrollStarted = callbacks.onManualScrollStarted
+    val onPageTextProviderReady = callbacks.onPageTextProviderReady
+    val onPageTurnHandlerReady = callbacks.onPageTurnHandlerReady
+    val onReleaseHandlerReady = callbacks.onReleaseHandlerReady
+    val onPageChanged = callbacks.onPageChanged
+    val onPaginationConfigured = callbacks.onPaginationConfigured
+    val onPageCountConfirmed = callbacks.onPageCountConfirmed
+    val onBookmarkPullStart = callbacks.onBookmarkPullStart
+    val onBookmarkPullProgress = callbacks.onBookmarkPullProgress
+    val onBookmarkPullFinished = callbacks.onBookmarkPullFinished
+    val onCenterTap = callbacks.onCenterTap
+    val onSelectionMenuDismiss = callbacks.onSelectionMenuDismiss
+    val onImagePreviewOpen = callbacks.onImagePreviewOpen
+    val onChapterTurn = callbacks.onChapterTurn
+    val onInternalLink = callbacks.onInternalLink
+    val onExternalLink = callbacks.onExternalLink
+    val onSelection = callbacks.onSelection
+    val onSelectionCleared = callbacks.onSelectionCleared
+    val onSearchResolved = callbacks.onSearchResolved
+    val onNavigationStage = callbacks.onNavigationStage
+    val onNavigationResult = callbacks.onNavigationResult
+    val onRenderUnavailable = callbacks.onRenderUnavailable
+    val onRendererEngineResolved = callbacks.onRendererEngineResolved
+
     val nativeSession = session as? com.huangder.lumibooks.util.epub.EpubRenderSession
     // A single-media page must use the same WebView geometry on both sides of the crop toggle.
     val mediaOnlyPage by produceState<Boolean?>(null, session, chapterIndex) {

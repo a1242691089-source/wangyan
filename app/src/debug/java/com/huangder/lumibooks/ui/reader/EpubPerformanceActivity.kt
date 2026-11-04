@@ -124,13 +124,15 @@ class EpubPerformanceActivity : ComponentActivity() {
                     pageTransition = transition, pageTransitionDurationMs = 260,
                     marginLeftDp = 20f, marginRightDp = 20f, marginTopDp = 24f, marginBottomDp = 24f,
                     continuousScroll = intent.getBooleanExtra("continuous", false),
-                    onPageTextProviderReady = {}, onPageTurnHandlerReady = { turn = it },
-                    onReleaseHandlerReady = { releaseReader = it }, onPageChanged = { c, p, n, _ -> position(c, p, n) },
-                    onCenterTap = {}, onImagePreviewOpen = {},
-                    onChapterTurn = { chapter = (chapter + it).coerceIn(0, book.chapterCount - 1) },
-                    onInternalLink = { c, _ -> chapter = c }, onExternalLink = {}, onSelection = {},
-                    onSelectionCleared = {}, onSearchResolved = { _, _ -> },
-                    onRenderUnavailable = { Log.e("EpubPerfFixture", "render failure: $it") }
+                    callbacks = EpubReaderCallbacks(
+                        onPageTextProviderReady = {}, onPageTurnHandlerReady = { turn = it },
+                        onReleaseHandlerReady = { releaseReader = it }, onPageChanged = { c, p, n, _ -> position(c, p, n) },
+                        onCenterTap = {}, onImagePreviewOpen = {},
+                        onChapterTurn = { chapter = (chapter + it).coerceIn(0, book.chapterCount - 1) },
+                        onInternalLink = { c, _ -> chapter = c }, onExternalLink = {}, onSelection = {},
+                        onSelectionCleared = {}, onSearchResolved = { _, _ -> },
+                        onRenderUnavailable = { Log.e("EpubPerfFixture", "render failure: $it") }
+                    )
                 )
             }
         }

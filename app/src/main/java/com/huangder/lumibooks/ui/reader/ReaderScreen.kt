@@ -2971,7 +2971,6 @@ fun ReaderScreen(
                 EpubWebViewReader(
                     session = activeEpubSession,
                     layoutPreviewActive = epubLayoutPreviewActive,
-                    onReleaseHandlerReady = { epubReleaseHandler = it },
                     imageAdjustments = uiState.imageAdjustments.forDisplay(eInkMode),
                     chapterIndex = uiState.currentChapterIndex,
                     fontSizeSp = uiState.fontSize,
@@ -3034,12 +3033,6 @@ fun ReaderScreen(
                     ),
                     ttsFollowEnabled = ttsReaderFollowEnabled,
                     searchRequest = epubSearchRequest,
-                    onManualScrollStarted = {
-                        beginManualReaderBrowsing()
-                        if (epubNavigationRequest?.origin == EpubNavigationOrigin.TTS) {
-                            epubNavigationRequest = null
-                        }
-                    },
                     locatorRequest = epubLocatorRequest,
                     pageRequest = epubPageRequest,
                     navigationRequest = epubNavigationRequest.takeIf {
@@ -3050,228 +3043,238 @@ fun ReaderScreen(
                     dictionarySelection = epubDictionarySelection,
                     selectionMenuVisible = selectionState != null && !isSelectionDragging,
                     bookmarkPullEnabled = bookmarkPullEnabled,
-                    onPageTextProviderReady = { epubPageTextProvider = it },
-                    onPageTurnHandlerReady = { epubPageTurnHandler = it },
                     paginationContentIdentity = viewModel.paginationContentIdentity(),
-                    onPaginationConfigured = setOriginalPaginationSignature,
-                    onPageCountConfirmed = { signature, chapter, count ->
-                        if (signature == originalPaginationSignature) {
-                            rendererBookPages = rendererBookPages.withChapter(chapter, count)
-                        }
-                    },
-                    onPageChanged = { chapterIndex, pageIndex, pageCount, locatorJson ->
-                        // A page turn invalidates both the custom menu and the
-                        // WebView's native selection. Clear them at commit time so
-                        // a menu from the previous page cannot linger over the new one.
-                        if (selectionState != null || isSelectionDragging || epubDictionarySelection != null) {
-                            dismissSelectionMenu()
-                        } else {
-                            clearActiveTextSelection()
-                        }
-                        val manualNavigation = epubManualNavigationPending
-                        epubManualNavigationPending = false
-                        if (manualNavigation &&
-                            viewModel.ttsPageChangeOriginFor(chapterIndex, pageIndex) == TtsPageChangeOrigin.USER) {
-                            rememberTtsReturnLocation(chapterIndex, pageIndex, locatorJson)
-                        } else {
-                            lastVisibleReaderLocation = captureReaderLocation(chapterIndex, pageIndex, locatorJson)
-                        }
-                        viewModel.onEpubPageCommitted(
-                            chapterIndex,
-                            pageIndex,
-                            pageCount,
-                            locatorJson
-                        )
-                        epubPageRequest?.let { request ->
-                            val expectedPage = request.chapterFraction?.let { fraction ->
-                                pageIndexForChapterFraction(fraction, pageCount)
-                            } ?: request.pageIndex
-                            if (request.chapterIndex == chapterIndex &&
-                                expectedPage == pageIndex
-                            ) {
-                                epubPageRequest = null
-                            }
-                        }
-                        if (epubLocatorRequest?.chapterIndex == chapterIndex) {
-                            epubLocatorRequest = null
-                        }
-                        epubPendingFragment = null
-                    },
-                    onBookmarkPullStart = { latestBookmarkPullStart.value() },
-                    onBookmarkPullProgress = { distancePx, armed ->
-                        latestBookmarkPullProgress.value(distancePx, armed)
-                    },
-                    onBookmarkPullFinished = { commit ->
-                        latestBookmarkPullFinished.value(commit)
-                    },
-                    onCenterTap = {
-                        if (selectionState != null) dismissSelectionMenu() else viewModel.toggleMenu()
-                    },
-                    onSelectionMenuDismiss = {
-                        dismissSelectionMenu()
-                    },
-                    onImagePreviewOpen = viewModel::hideMenu,
-                    onChapterTurn = { direction ->
-                        if (selectionState != null || isSelectionDragging || epubDictionarySelection != null) {
-                            dismissSelectionMenu()
-                        } else {
-                            clearActiveTextSelection()
-                        }
-                        epubSearchRequest = null
-                        epubLocatorRequest = null
-                        epubPageRequest = null
-                        run {
-                            val targetChapter = uiState.currentChapterIndex + direction
-                            if (targetChapter !in 0 until uiState.chapterCount) return@EpubWebViewReader
-                            navigateEpub(
-                                EpubNavigationOrigin.PAGE_TURN,
-                                targetChapter,
-                                EpubNavigationDestination.Page(
-                                    if (direction < 0) Int.MAX_VALUE else 0
-                                ),
-                                !isBookLayoutContinuousScroll
-                            )
-                        }
-                    },
-                    onInternalLink = { targetChapter, fragment ->
-                        // 书内链接跳转前捕获来源位置，用于左上角“返回到刚才页”按钮
-                        val source = captureReaderLocation()
-                        epubSearchRequest = null
-                        epubLocatorRequest = null
-                        epubPageRequest = null
-                        linkReturnLocation = source
-                        linkReturnToken += 1
-                        navigateEpub(
-                            EpubNavigationOrigin.INTERNAL_LINK,
-                            targetChapter,
-                            fragment?.takeIf { it.isNotBlank() }?.let {
-                                EpubNavigationDestination.Fragment(it)
-                            } ?: EpubNavigationDestination.ChapterStart,
-                            true
-                        )
-                    },
-                    onExternalLink = { href ->
-                        if (isExternalBookLink(href)) pendingExternalLink = href
-                    },
-                    onSelection = { selection ->
-                        if (selection.text.isNotBlank()) {
-                            val isNewSelection = selectionState == null
-                            val resolvedSelection = viewModel.resolveAnnotationSelection(
-                                chapterIndex = uiState.currentChapterIndex,
-                                startPosition = selection.startPosition,
-                                endPosition = selection.endPosition,
-                                selectedText = selection.text,
-                                startLocatorJson = selection.startLocatorJson,
-                                endLocatorJson = selection.endLocatorJson
-                            ) ?: if (selection.annotationOnly &&
-                                selection.endPosition > selection.startPosition
-                            ) {
-                                // Tapping a saved mark should still open its menu
-                                // when the publisher changed whitespace or DOM paths
-                                // and the quote resolver cannot reconstruct the range.
-                                ResolvedHighlightRange(
-                                    selection.startPosition,
-                                    selection.endPosition
-                                )
-                            } else return@EpubWebViewReader
-                            val overlapping = viewModel.findOverlappingReaderNotes(
-                                chapterIndex = uiState.currentChapterIndex,
-                                startPosition = selection.startPosition,
-                                endPosition = selection.endPosition,
-                                selectedText = selection.text,
-                                startLocatorJson = selection.startLocatorJson,
-                                endLocatorJson = selection.endLocatorJson
-                            )
-                            selectionState = SelectionState(
-                                chapterIndex = uiState.currentChapterIndex,
-                                pageInChapter = uiState.currentPageIndex,
-                                charStart = resolvedSelection.start,
-                                charEnd = resolvedSelection.end,
-                                selectedText = selection.text,
-                                touchX = selection.centerX,
-                                touchY = selection.centerY,
-                                overlappingHighlights = overlapping.filter { it.type != "underline" },
-                                overlappingUnderlines = overlapping.filter { it.type == "underline" },
-                                selTopY = selection.top,
-                                selBottomY = selection.bottom,
-                                selStartX = selection.left,
-                                selEndX = selection.right,
-                                annotationOnly = selection.annotationOnly,
-                                startLocatorJson = selection.startLocatorJson,
-                                endLocatorJson = selection.endLocatorJson
-                            )
-                            if (isNewSelection) menuReappearKey++
-                        }
-                    },
-                    onSelectionCleared = {
-                        if (epubDictionarySelection == null) {
-                            selectionState = null
-                        }
-                    },
-                    onSearchResolved = { token, found ->
-                        val request = epubSearchRequest
-                        if (request?.token == token &&
-                            request.chapterIndex == uiState.currentChapterIndex
-                        ) {
-                            epubSearchRequest = null
-                            if (!found) {
-                                Toast.makeText(
-                                    context,
-                                    R.string.epub_search_location_failed,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    },
-                    onNavigationStage = { operationId, stage ->
-                        if (epubNavigationRequest?.operationId == operationId) {
-                            epubNavigationStage = stage
-                        }
-                    },
-                    onNavigationResult = { result ->
-                        val request = epubNavigationRequest
-                        if (request?.operationId != result.operationId) {
-                            return@EpubWebViewReader
-                        }
-                        when (result) {
-                            is EpubNavigationResult.Committed -> {
-                                epubNavigationRequest = null
-                                failedEpubNavigation = null
-                                epubRenderFailure = null
-                                epubNavigationRetryCount = 0
-                            }
-                            is EpubNavigationResult.Cancelled -> {
+                    // 23 个回调收进一个对象，签名从 77 个参数降到 54 个。
+                    callbacks = EpubReaderCallbacks(
+                        onReleaseHandlerReady = { epubReleaseHandler = it },
+                        onManualScrollStarted = {
+                            beginManualReaderBrowsing()
+                            if (epubNavigationRequest?.origin == EpubNavigationOrigin.TTS) {
                                 epubNavigationRequest = null
                             }
-                            is EpubNavigationResult.Failed -> {
-                                epubNavigationRequest = null
-                                if (epubNavigationRetryCount == 0 && result.reason in setOf(
-                                        EpubNavigationFailureReason.TIMEOUT,
-                                        EpubNavigationFailureReason.DOCUMENT_ERROR,
-                                        EpubNavigationFailureReason.HTTP_ERROR,
-                                        EpubNavigationFailureReason.SCRIPT_NOT_READY,
-                                        EpubNavigationFailureReason.SCRIPT_EXECUTION_ERROR)) {
-                                    epubNavigationRetryCount = 1
-                                    epubNavigationOperationId++
-                                    epubNavigationRequest = request.copy(operationId = epubNavigationOperationId)
-                                } else if (result.reason != EpubNavigationFailureReason.RENDERER_GONE) {
-                                    failedEpubNavigation = request to result.reason
+                        },
+                        onPageTextProviderReady = { epubPageTextProvider = it },
+                        onPageTurnHandlerReady = { epubPageTurnHandler = it },
+                        onPaginationConfigured = setOriginalPaginationSignature,
+                        onPageCountConfirmed = { signature, chapter, count ->
+                            if (signature == originalPaginationSignature) {
+                                rendererBookPages = rendererBookPages.withChapter(chapter, count)
+                            }
+                        },
+                        onPageChanged = { chapterIndex, pageIndex, pageCount, locatorJson ->
+                            // A page turn invalidates both the custom menu and the
+                            // WebView's native selection. Clear them at commit time so
+                            // a menu from the previous page cannot linger over the new one.
+                            if (selectionState != null || isSelectionDragging || epubDictionarySelection != null) {
+                                dismissSelectionMenu()
+                            } else {
+                                clearActiveTextSelection()
+                            }
+                            val manualNavigation = epubManualNavigationPending
+                            epubManualNavigationPending = false
+                            if (manualNavigation &&
+                                viewModel.ttsPageChangeOriginFor(chapterIndex, pageIndex) == TtsPageChangeOrigin.USER) {
+                                rememberTtsReturnLocation(chapterIndex, pageIndex, locatorJson)
+                            } else {
+                                lastVisibleReaderLocation = captureReaderLocation(chapterIndex, pageIndex, locatorJson)
+                            }
+                            viewModel.onEpubPageCommitted(
+                                chapterIndex,
+                                pageIndex,
+                                pageCount,
+                                locatorJson
+                            )
+                            epubPageRequest?.let { request ->
+                                val expectedPage = request.chapterFraction?.let { fraction ->
+                                    pageIndexForChapterFraction(fraction, pageCount)
+                                } ?: request.pageIndex
+                                if (request.chapterIndex == chapterIndex &&
+                                    expectedPage == pageIndex
+                                ) {
+                                    epubPageRequest = null
                                 }
                             }
-                        }
-                    },
-                    onRenderUnavailable = { failure ->
-                        cancelActiveSearch()
-                        epubSearchRequest = null
-                        epubLocatorRequest = null
-                        epubPageRequest = null
-                        epubNavigationRequest = null
-                        linkReturnLocation = null
-                        epubRenderFailure = failure
-                    },
-                    onRendererEngineResolved = { nativeCss ->
-                        currentChapterRenderer = uiState.currentChapterIndex to nativeCss
-                    },
+                            if (epubLocatorRequest?.chapterIndex == chapterIndex) {
+                                epubLocatorRequest = null
+                            }
+                            epubPendingFragment = null
+                        },
+                        onBookmarkPullStart = { latestBookmarkPullStart.value() },
+                        onBookmarkPullProgress = { distancePx, armed ->
+                            latestBookmarkPullProgress.value(distancePx, armed)
+                        },
+                        onBookmarkPullFinished = { commit ->
+                            latestBookmarkPullFinished.value(commit)
+                        },
+                        onCenterTap = {
+                            if (selectionState != null) dismissSelectionMenu() else viewModel.toggleMenu()
+                        },
+                        onSelectionMenuDismiss = {
+                            dismissSelectionMenu()
+                        },
+                        onImagePreviewOpen = viewModel::hideMenu,
+                        onChapterTurn = { direction ->
+                            if (selectionState != null || isSelectionDragging || epubDictionarySelection != null) {
+                                dismissSelectionMenu()
+                            } else {
+                                clearActiveTextSelection()
+                            }
+                            epubSearchRequest = null
+                            epubLocatorRequest = null
+                            epubPageRequest = null
+                            run {
+                                val targetChapter = uiState.currentChapterIndex + direction
+                                if (targetChapter !in 0 until uiState.chapterCount) return@EpubReaderCallbacks
+                                navigateEpub(
+                                    EpubNavigationOrigin.PAGE_TURN,
+                                    targetChapter,
+                                    EpubNavigationDestination.Page(
+                                        if (direction < 0) Int.MAX_VALUE else 0
+                                    ),
+                                    !isBookLayoutContinuousScroll
+                                )
+                            }
+                        },
+                        onInternalLink = { targetChapter, fragment ->
+                            // 书内链接跳转前捕获来源位置，用于左上角“返回到刚才页”按钮
+                            val source = captureReaderLocation()
+                            epubSearchRequest = null
+                            epubLocatorRequest = null
+                            epubPageRequest = null
+                            linkReturnLocation = source
+                            linkReturnToken += 1
+                            navigateEpub(
+                                EpubNavigationOrigin.INTERNAL_LINK,
+                                targetChapter,
+                                fragment?.takeIf { it.isNotBlank() }?.let {
+                                    EpubNavigationDestination.Fragment(it)
+                                } ?: EpubNavigationDestination.ChapterStart,
+                                true
+                            )
+                        },
+                        onExternalLink = { href ->
+                            if (isExternalBookLink(href)) pendingExternalLink = href
+                        },
+                        onSelection = { selection ->
+                            if (selection.text.isNotBlank()) {
+                                val isNewSelection = selectionState == null
+                                val resolvedSelection = viewModel.resolveAnnotationSelection(
+                                    chapterIndex = uiState.currentChapterIndex,
+                                    startPosition = selection.startPosition,
+                                    endPosition = selection.endPosition,
+                                    selectedText = selection.text,
+                                    startLocatorJson = selection.startLocatorJson,
+                                    endLocatorJson = selection.endLocatorJson
+                                ) ?: if (selection.annotationOnly &&
+                                    selection.endPosition > selection.startPosition
+                                ) {
+                                    // Tapping a saved mark should still open its menu
+                                    // when the publisher changed whitespace or DOM paths
+                                    // and the quote resolver cannot reconstruct the range.
+                                    ResolvedHighlightRange(
+                                        selection.startPosition,
+                                        selection.endPosition
+                                    )
+                                } else return@EpubReaderCallbacks
+                                val overlapping = viewModel.findOverlappingReaderNotes(
+                                    chapterIndex = uiState.currentChapterIndex,
+                                    startPosition = selection.startPosition,
+                                    endPosition = selection.endPosition,
+                                    selectedText = selection.text,
+                                    startLocatorJson = selection.startLocatorJson,
+                                    endLocatorJson = selection.endLocatorJson
+                                )
+                                selectionState = SelectionState(
+                                    chapterIndex = uiState.currentChapterIndex,
+                                    pageInChapter = uiState.currentPageIndex,
+                                    charStart = resolvedSelection.start,
+                                    charEnd = resolvedSelection.end,
+                                    selectedText = selection.text,
+                                    touchX = selection.centerX,
+                                    touchY = selection.centerY,
+                                    overlappingHighlights = overlapping.filter { it.type != "underline" },
+                                    overlappingUnderlines = overlapping.filter { it.type == "underline" },
+                                    selTopY = selection.top,
+                                    selBottomY = selection.bottom,
+                                    selStartX = selection.left,
+                                    selEndX = selection.right,
+                                    annotationOnly = selection.annotationOnly,
+                                    startLocatorJson = selection.startLocatorJson,
+                                    endLocatorJson = selection.endLocatorJson
+                                )
+                                if (isNewSelection) menuReappearKey++
+                            }
+                        },
+                        onSelectionCleared = {
+                            if (epubDictionarySelection == null) {
+                                selectionState = null
+                            }
+                        },
+                        onSearchResolved = { token, found ->
+                            val request = epubSearchRequest
+                            if (request?.token == token &&
+                                request.chapterIndex == uiState.currentChapterIndex
+                            ) {
+                                epubSearchRequest = null
+                                if (!found) {
+                                    Toast.makeText(
+                                        context,
+                                        R.string.epub_search_location_failed,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        },
+                        onNavigationStage = { operationId, stage ->
+                            if (epubNavigationRequest?.operationId == operationId) {
+                                epubNavigationStage = stage
+                            }
+                        },
+                        onNavigationResult = { result ->
+                            val request = epubNavigationRequest
+                            if (request?.operationId != result.operationId) {
+                                return@EpubReaderCallbacks
+                            }
+                            when (result) {
+                                is EpubNavigationResult.Committed -> {
+                                    epubNavigationRequest = null
+                                    failedEpubNavigation = null
+                                    epubRenderFailure = null
+                                    epubNavigationRetryCount = 0
+                                }
+                                is EpubNavigationResult.Cancelled -> {
+                                    epubNavigationRequest = null
+                                }
+                                is EpubNavigationResult.Failed -> {
+                                    epubNavigationRequest = null
+                                    if (epubNavigationRetryCount == 0 && result.reason in setOf(
+                                            EpubNavigationFailureReason.TIMEOUT,
+                                            EpubNavigationFailureReason.DOCUMENT_ERROR,
+                                            EpubNavigationFailureReason.HTTP_ERROR,
+                                            EpubNavigationFailureReason.SCRIPT_NOT_READY,
+                                            EpubNavigationFailureReason.SCRIPT_EXECUTION_ERROR)) {
+                                        epubNavigationRetryCount = 1
+                                        epubNavigationOperationId++
+                                        epubNavigationRequest = request.copy(operationId = epubNavigationOperationId)
+                                    } else if (result.reason != EpubNavigationFailureReason.RENDERER_GONE) {
+                                        failedEpubNavigation = request to result.reason
+                                    }
+                                }
+                            }
+                        },
+                        onRenderUnavailable = { failure ->
+                            cancelActiveSearch()
+                            epubSearchRequest = null
+                            epubLocatorRequest = null
+                            epubPageRequest = null
+                            epubNavigationRequest = null
+                            linkReturnLocation = null
+                            epubRenderFailure = failure
+                        },
+                        onRendererEngineResolved = { nativeCss ->
+                            currentChapterRenderer = uiState.currentChapterIndex to nativeCss
+                        },
+                    ),
                     modifier = Modifier.fillMaxSize()
                 )
                 }
