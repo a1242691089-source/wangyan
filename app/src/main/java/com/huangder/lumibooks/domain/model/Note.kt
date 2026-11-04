@@ -33,6 +33,26 @@ data class Note(
     val isInkStroke: Boolean
         get() = type.startsWith(PDF_INK_TYPE_PREFIX) || type.startsWith(EPUB_COMIC_INK_TYPE_PREFIX)
 
+    /**
+     * Six-type intent derived from the stored [type] string; `null` when the row
+     * is not one of the six intent types (plain style marks, ink strokes, or any
+     * unknown future value — those render without a badge for forward compatibility).
+     *
+     * Legacy collapses (no data migration, storage value is never rewritten):
+     * - `"note"` → [NoteType.COMMENT]
+     * - underline/highlight with comment text → [NoteType.COMMENT] (modern note
+     *   creation stores "highlight" + text, see ReaderScreen note input flow)
+     * - highlight without text → [NoteType.EXCERPT]
+     */
+    val noteType: NoteType?
+        get() = when {
+            isInkStroke -> null
+            type == "underline" && !isNoteEntry -> null
+            type == "note" || type == "underline" -> NoteType.COMMENT
+            type == "highlight" -> if (isNoteEntry) NoteType.COMMENT else NoteType.EXCERPT
+            else -> NoteType.fromValue(type)
+        }
+
     fun detachFromHighlightRule(): Note = copy(
         origin = ORIGIN_MANUAL,
         sourceRuleId = null,
