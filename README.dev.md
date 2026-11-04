@@ -191,10 +191,11 @@ keyPassword=<密码>
 
 1. 改 `app/build.gradle.kts` 的 `versionCode` / `versionName`，同时同步 `docs/app-config.json` 的 `latest_version` / `latest_version_code` / `title` / `message`（两者版本号必须同一步提交，否则更新弹窗不会出现）。
 2. 三处更新日志首条同步：`app/src/main/assets/changelog.md`、`docs/changelog.html`、`devdocs/CHANGELOG.md`；7 个 README 的 version badge 同步。
-3. 构建（本机 8G 内存需分两段，避免 R8 阶段提交内存耗尽）：
+3. 构建（本机 8G 内存需分两段并临时降配，避免 R8 阶段提交内存耗尽；**不要把降配写进 `gradle.properties`**，否则 CI 的 Kotlin daemon 会被饿死而 OOM）：
    ```bash
-   gradle :app:compileReleaseKotlin --no-daemon
-   gradle :app:assembleRelease --no-daemon
+   export GRADLE_OPTS="-Xmx2560m -XX:MaxMetaspaceSize=768m"
+   gradle :app:compileReleaseKotlin --no-daemon --max-workers=2 -Pkotlin.daemon.jvmargs=-Xmx1536m
+   gradle :app:assembleRelease       --no-daemon --max-workers=2
    ```
 4. 打 tag 并发布 Release，上传 `app-universal-release.apk` 与 `app-arm64-v8a-release.apk`（`splits.abi` 会额外产出 4 个 per-abi 包）。
 5. push `docs/**` 变更 → `static.yml` 自动部署 GitHub Pages。
