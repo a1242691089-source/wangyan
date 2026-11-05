@@ -41,11 +41,11 @@ import com.huangder.lumibooks.ui.theme.AppSpace
 
 /**
  * 知识页：时间倒序卡片流。每张卡片 = 原文引用 + 个人理解 + 出处，
- * 点卡片打开对应书（定位到具体位置在 V0.3 引入）。
+ * 点卡片进入知识详情（证据定位与关系在详情页承接）。
  */
 @Composable
 fun KnowledgeScreen(
-    onOpenBook: (String) -> Unit,
+    onOpenNode: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: KnowledgeViewModel = hiltViewModel()
 ) {
@@ -113,7 +113,7 @@ fun KnowledgeScreen(
             verticalArrangement = Arrangement.spacedBy(AppSpace.md)
         ) {
             items(cards, key = { it.node.syncId.ifBlank { "node-${it.node.id}" } }) { card ->
-                KnowledgeCardItem(card = card, onClick = { onOpenBook(card.evidence.bookId) })
+                KnowledgeCardItem(card = card, onClick = { onOpenNode(card.node.id) })
             }
         }
     }

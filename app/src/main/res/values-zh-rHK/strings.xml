@@ -1511,4 +1511,29 @@
     <string name="knowledge_input_title">存為知識</string>
     <string name="knowledge_input_placeholder">寫下你的理解（可留空，只保存原文引用）</string>
     <string name="knowledge_input_hint">確認後將保存原文與你的理解</string>
+
+    <string name="knowledge_detail_title">知識詳情</string>
+    <string name="knowledge_detail_missing">呢條知識已不存在</string>
+    <string name="knowledge_detail_evidence">證據</string>
+    <string name="knowledge_detail_relations">關係</string>
+    <string name="knowledge_detail_add_relation">加入關係</string>
+    <string name="knowledge_detail_no_evidence">呢條知識還未有原文證據</string>
+    <string name="knowledge_detail_no_relations">還未同其他知識建立關係</string>
+    <string name="knowledge_detail_relation_exists">呢個關係已存在</string>
+    <string name="knowledge_detail_open_reader">定位閱讀</string>
+    <string name="knowledge_detail_pick_type">揀選關係類型</string>
+    <string name="knowledge_detail_pick_node">揀選關聯嘅知識</string>
+    <string name="knowledge_detail_no_targets">冇可揀嘅知識節點</string>
+    <string name="knowledge_detail_untitled">未命名知識</string>
+    <string name="knowledge_detail_delete_title">刪除呢條知識？</string>
+    <string name="knowledge_detail_delete_body">原文證據同關聯關係會一併刪除，無法復原。</string>
+    <string name="relation_type_mentions">提及</string>
+    <string name="relation_type_explains">解釋</string>
+    <string name="relation_type_supports">支持</string>
+    <string name="relation_type_contradicts">矛盾</string>
+    <string name="relation_type_extends">延伸</string>
+    <string name="relation_type_belongs_to">歸屬</string>
+    <string name="relation_type_applies_to">適用</string>
+    <string name="relation_type_exemplifies">例證</string>
+    <string name="relation_type_related_to">相關</string>
 </resources>

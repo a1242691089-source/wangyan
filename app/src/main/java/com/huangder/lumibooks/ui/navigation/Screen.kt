@@ -10,6 +10,11 @@ sealed class Screen(val route: String) {
     /** 知识图谱，占位阶段只有空状态。 */
     object Knowledge : Screen("knowledge")
 
+    /** 单条知识详情（证据链与关系），从知识页卡片进入。 */
+    object KnowledgeDetail : Screen("knowledge/{nodeId}") {
+        fun createRoute(nodeId: Long) = "knowledge/$nodeId"
+    }
+
     /** 技能运行时，占位阶段只有空状态。 */
     object Skills : Screen("skills")
 
@@ -21,8 +26,14 @@ sealed class Screen(val route: String) {
 
     /** 阅读统计，从「我的」进入。 */
     object Statistics : Screen("statistics")
-    object Reader : Screen("reader/{bookId}") {
-        fun createRoute(bookId: String) = "reader/$bookId"
+    object Reader : Screen("reader/{bookId}?chapter={chapter}&position={position}") {
+        /**
+         * chapter/position carry an evidence jump target (chapter-local character
+         * offset). Defaults of -1 mean "no target": the reader restores progress
+         * exactly as before.
+         */
+        fun createRoute(bookId: String, chapter: Int = -1, position: Int = -1) =
+            "reader/$bookId?chapter=$chapter&position=$position"
     }
     object Settings : Screen("settings")
     object Notes : Screen("notes/{bookId}") {

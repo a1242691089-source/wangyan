@@ -1504,4 +1504,29 @@
     <string name="knowledge_input_title">ナレッジに保存</string>
     <string name="knowledge_input_placeholder">理解を書く（空欄可・引用のみ保存）</string>
     <string name="knowledge_input_hint">引用と理解を保存します</string>
+
+    <string name="knowledge_detail_title">ナレッジの詳細</string>
+    <string name="knowledge_detail_missing">このナレッジは存在しません</string>
+    <string name="knowledge_detail_evidence">引用</string>
+    <string name="knowledge_detail_relations">関連</string>
+    <string name="knowledge_detail_add_relation">関連を追加</string>
+    <string name="knowledge_detail_no_evidence">このナレッジには引用がまだありません</string>
+    <string name="knowledge_detail_no_relations">他のナレッジとの関連はまだありません</string>
+    <string name="knowledge_detail_relation_exists">この関連は既に存在します</string>
+    <string name="knowledge_detail_open_reader">該当箇所へ移動</string>
+    <string name="knowledge_detail_pick_type">関連タイプを選択</string>
+    <string name="knowledge_detail_pick_node">関連付けるナレッジを選択</string>
+    <string name="knowledge_detail_no_targets">選択できるナレッジがありません</string>
+    <string name="knowledge_detail_untitled">無題のナレッジ</string>
+    <string name="knowledge_detail_delete_title">このナレッジを削除しますか？</string>
+    <string name="knowledge_detail_delete_body">引用と関連も一緒に削除され、元に戻せません。</string>
+    <string name="relation_type_mentions">言及</string>
+    <string name="relation_type_explains">説明</string>
+    <string name="relation_type_supports">支持</string>
+    <string name="relation_type_contradicts">矛盾</string>
+    <string name="relation_type_extends">発展</string>
+    <string name="relation_type_belongs_to">帰属</string>
+    <string name="relation_type_applies_to">適用</string>
+    <string name="relation_type_exemplifies">例証</string>
+    <string name="relation_type_related_to">関連</string>
 </resources>

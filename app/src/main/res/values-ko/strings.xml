@@ -1504,4 +1504,29 @@
     <string name="knowledge_input_title">지식으로 저장</string>
     <string name="knowledge_input_placeholder">이해를 적어 보세요(비워 두면 원문만 저장)</string>
     <string name="knowledge_input_hint">원문과 이해가 저장됩니다</string>
+
+    <string name="knowledge_detail_title">지식 상세</string>
+    <string name="knowledge_detail_missing">이 지식은 더 이상 존재하지 않습니다</string>
+    <string name="knowledge_detail_evidence">인용</string>
+    <string name="knowledge_detail_relations">관계</string>
+    <string name="knowledge_detail_add_relation">관계 추가</string>
+    <string name="knowledge_detail_no_evidence">이 지식에는 아직 인용이 없습니다</string>
+    <string name="knowledge_detail_no_relations">다른 지식과의 관계가 아직 없습니다</string>
+    <string name="knowledge_detail_relation_exists">이 관계는 이미 존재합니다</string>
+    <string name="knowledge_detail_open_reader">해당 위치로 이동</string>
+    <string name="knowledge_detail_pick_type">관계 유형 선택</string>
+    <string name="knowledge_detail_pick_node">연결할 지식 선택</string>
+    <string name="knowledge_detail_no_targets">선택할 수 있는 지식이 없습니다</string>
+    <string name="knowledge_detail_untitled">제목 없는 지식</string>
+    <string name="knowledge_detail_delete_title">이 지식을 삭제할까요?</string>
+    <string name="knowledge_detail_delete_body">인용과 관계도 함께 삭제되며 복구할 수 없습니다.</string>
+    <string name="relation_type_mentions">언급</string>
+    <string name="relation_type_explains">설명</string>
+    <string name="relation_type_supports">지지</string>
+    <string name="relation_type_contradicts">모순</string>
+    <string name="relation_type_extends">확장</string>
+    <string name="relation_type_belongs_to">소속</string>
+    <string name="relation_type_applies_to">적용</string>
+    <string name="relation_type_exemplifies">예시</string>
+    <string name="relation_type_related_to">관련</string>
 </resources>

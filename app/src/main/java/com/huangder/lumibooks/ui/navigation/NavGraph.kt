@@ -67,6 +67,7 @@ import kotlinx.coroutines.launch
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.bookshelf.BookshelfScreen
 import com.huangder.lumibooks.ui.bookshelf.AnnotationFeedScreen
+import com.huangder.lumibooks.ui.knowledge.KnowledgeDetailScreen
 import com.huangder.lumibooks.ui.knowledge.KnowledgeScreen
 import com.huangder.lumibooks.ui.profile.ProfileScreen
 import com.huangder.lumibooks.ui.skills.SkillsPlaceholderScreen
@@ -569,6 +570,15 @@ fun MainNavGraph(
         navController.navigate(Screen.Reader.createRoute(bookId))
     }
 
+    /** Evidence jump from a knowledge detail: same opening path, plus an exact chapter/offset target. */
+    fun openEvidenceInReader(bookId: String, chapterIndex: Int, startPosition: Int) {
+        ReaderOpenPerformance.start(bookId)
+        transitionBookId = null
+        readerReady = false
+        showTransition = false
+        navController.navigate(Screen.Reader.createRoute(bookId, chapterIndex, startPosition))
+    }
+
     fun requestOpenBook(book: Book, sourceBounds: Rect? = null,
         sourcePresentation: com.huangder.lumibooks.ui.animation.BookReaderPresentation? = null) {
         if (book.isCloudOnly) {
@@ -950,7 +960,9 @@ fun MainNavGraph(
                                 }
                                 2 -> {
                                     KnowledgeScreen(
-                                        onOpenBook = { bookId -> openBookRouteWithoutBook(bookId) }
+                                        onOpenNode = { nodeId ->
+                                            navController.navigate(Screen.KnowledgeDetail.createRoute(nodeId))
+                                        }
                                     )
                                 }
                                 3 -> {
@@ -1039,8 +1051,36 @@ fun MainNavGraph(
             }
 
             composable(
+                route = Screen.KnowledgeDetail.route,
+                arguments = listOf(navArgument("nodeId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val nodeId = backStackEntry.arguments?.getLong("nodeId") ?: return@composable
+                KnowledgeDetailScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenEvidence = { bookId, chapterIndex, startPosition ->
+                        openEvidenceInReader(bookId, chapterIndex, startPosition)
+                    },
+                    onOpenNode = { targetNodeId ->
+                        if (targetNodeId != nodeId) {
+                            navController.navigate(Screen.KnowledgeDetail.createRoute(targetNodeId))
+                        }
+                    }
+                )
+            }
+
+            composable(
                 route = Screen.Reader.route,
-                arguments = listOf(navArgument("bookId") { type = NavType.StringType }),
+                arguments = listOf(
+                    navArgument("bookId") { type = NavType.StringType },
+                    navArgument("chapter") {
+                        type = NavType.IntType
+                        defaultValue = -1
+                    },
+                    navArgument("position") {
+                        type = NavType.IntType
+                        defaultValue = -1
+                    }
+                ),
                 enterTransition = {
                     if (bookReaderTransition.usesHeroTransition) {
                         EnterTransition.None
