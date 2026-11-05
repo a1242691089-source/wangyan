@@ -11,17 +11,19 @@
 
 `translatable="false"` 被排除，是因为把品牌名、正则、`0%` 这类占位复制到 8 个文件毫无意义；要求它们齐平只会制造噪音。
 
-## 2. 当前基线（zh-rHK/MO 补齐之后）
+## 2. 当前基线（ja/ko 与 diagnostic 补齐之后，全部归零）
 
-| locale | 基线 | 缺口性质 |
+| locale | 基线 | 状态 |
 |---|---|---|
 | en | 0 | 已齐平 |
 | zh-rCN | 0 | 已齐平（照抄 values，同一套简体） |
-| zh-rTW | 41 | 只剩 `diagnostic_*`（开发者诊断页，主动不翻） |
-| zh-rHK | 41 | 只剩 `diagnostic_*`（226 条已补，港澳书面语） |
-| zh-rMO | 41 | 只剩 `diagnostic_*`（与 zh-rHK 逐条一致） |
-| ja | 275 | 待补，需实译 |
-| ko | 275 | 待补，需实译 |
+| zh-rTW | 0 | 已齐平（含 `diagnostic_*`） |
+| zh-rHK | 0 | 已齐平（港澳书面语，与 zh-rMO 逐条一致） |
+| zh-rMO | 0 | 已齐平（与 zh-rHK 逐条一致） |
+| ja | 0 | 已齐平（です・ます調） |
+| ko | 0 | 已齐平（합니다体） |
+
+七个 locale 全部 1739 条（= 1737 可翻译 + 2 条随 `values` 一起复制的非翻译键）。`baselineIsClosedAtZero` 钉死了「全零」这个状态：谁想把基线重新上调，必须改动测试本身。
 
 ## 3. 不能机器生成繁体
 
@@ -55,16 +57,16 @@
 ## 5. 新增一条文案时的动作
 
 1. 写进 `values/strings.xml`。
-2. 至少同步 `values-en`、`values-zh-rCN`、`values-zh-rTW`、`values-zh-rHK`、`values-zh-rMO`——这五个基线现在都是 0 冗余，漏一条就红。
-3. `ja` / `ko` 仍有 275 条余量，但不要把余量当缓冲区：补齐时同步下调基线。
+2. **七个 locale 全部同步**：`values-en`、`values-ja`、`values-ko`、`values-zh-rCN`、`values-zh-rHK`、`values-zh-rMO`、`values-zh-rTW`。基线已全部归零，漏任何一个都会红。
+3. 批量补的时候用台账：写 `tools/i18n_ja_ko/<批次>.tsv`（`key ⇥ ja ⇥ ko`，或繁体的 `key ⇥ 文本`），再跑 `python tools/i18n_fill.py fill --batch <批次> --apply`（繁体用 `fillzh`）。脚本会按 base 顺序插入、断言占位符多重集、注释数与 key 唯一性，并拒绝裸 `&`/`<`/半角撇号。
 
-## 6. 批次路线（剩余）
+## 6. 批次路线
 
-1. `zh-rTW` → `zh-rHK` / `zh-rMO`：已完成（2026-11-05）。226 条以 `zh-rTW` 文本为底稿、按港澳用词替换后追加，两边各降到 41。
+1. `zh-rTW` → `zh-rHK` / `zh-rMO`：已完成（2026-11-05）。226 条以 `zh-rTW` 文本为底稿、按港澳用词替换后追加。
    现存文本差异：`zh-rHK` vs `zh-rTW` 95 处、`zh-rMO` vs `zh-rTW` 84 处、`zh-rHK` vs `zh-rMO` 0 处（两份文件现在逐条一致）。
-2. `ja` / `ko`：各 234 条实译（275 减 41 条 diagnostic）。
-3. `diagnostic_*` 41 条：目前主动不翻，若要翻，6 个 locale 一起补完即可把基线全部降到 0。
-4. 已知债务：`welcome_privacy_content` / `welcome_terms_content` 在 `zh-rTW`、`zh-rHK`、`zh-rMO` 三份文件里都混有简体字（书、们、会、关、应、读、设），是早期直接复制 `zh-rCN` 留下的。修正需要重排两千字法律文本，单独一批处理。
+2. `ja` / `ko`：已完成（2026-11-05）。各 275 条实译（234 功能文案 + 41 诊断页），基线 275 → 0。
+3. `diagnostic_*` 41 条：已完成（2026-11-05）。ja/ko 实译，zh-rTW/HK/MO 共用一份繁体文本（纯技术文案，三地用词无分歧）。
+4. 已知债务：`welcome_privacy_content` / `welcome_terms_content` 在 `zh-rTW`、`zh-rHK`、`zh-rMO` 三份文件里都混有简体字（书、们、会、关、应、读、设），是早期直接复制 `zh-rCN` 留下的。修正需要重排两千字法律文本，单独一批处理。这批属**内容错误**而非覆盖率缺口，棘轮测试看不到。
 
 ## 7. 本批实测结果
 
@@ -80,3 +82,12 @@
 - 两文件 1543 → 1769 行、1472 → 1698 键、注释 34 条未变、`git diff --numstat` 追加段均为 `226 0`。
 - 基线：267 → 41。新增单测 `placeholderTypesMatchAcrossLocales`（跨语言占位符多重集）、`hkAndMoMustStayIdentical`（两文件逐条一致），共 6 用例全绿。
 - 搬运脚本 `tools/i18n_port_tw_block.py`（`check` / `port` / `normalize` / `verify`），ja/ko 批次可复用。
+
+### ja / ko 与 diagnostic（2026-11-05，终局批次）
+
+- ja / ko 各 275 条，分五批：highlight 60 / reader+tts 47 / book+epub+folder+bookshelf 48 / annotation 等 79 / diagnostic 41。
+- 语体从既有 1464 条实测得出并延续：**ja です・ます調**（标签用体言止め）、**ko 합니다体**（标签用名词短语）。术语表：ハイライト / 注釈 / しおり / ブックマーク / テーマ / フォルダー / 目次；하이라이트 / 주석 / 책갈피 / 북마크 / 테마 / 폴더 / 목차。
+- ko 新文案**避免「忘言 + 助词」直接相接**：既有文件里有 `忘言를` / `忘言가`，助词与「言」的收音不一致，不再扩散，改用「忘言 앱이」这类句式绕开。
+- 41 条 diagnostic：ja/ko 实译（含两段合规长文，逐项对照 en：记录时长 20 分钟、上限约 2 MB、脱敏对象、仅手动分享/保存时才离开设备）；zh-rTW / zh-rHK / zh-rMO 共用同一份繁体文本——这批是纯技术文案，三地用词无分歧，不需要港澳覆盖。
+- 台账 `tools/i18n_ja_ko/A–F.tsv`（中→日→韩对照、繁体），写入脚本 `tools/i18n_fill.py`（`list` / `fill` / `fillzh` / `verify`）。
+- 验证：`:app:processDebugResources` 通过；`StringsRatchetTest` 7 用例全绿，新增 `baselineIsClosedAtZero`；七个 locale 均 1739 条、缺 0。

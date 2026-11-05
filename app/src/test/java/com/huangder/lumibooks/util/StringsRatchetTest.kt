@@ -16,9 +16,10 @@ import java.io.File
  *
  * Keys marked `translatable="false"` are excluded from the count: copying a
  * brand name or a regex into other locales is meaningless, so demanding them
- * would only create noise. The `diagnostic_*` block stays untranslated on
- * purpose for now (developer-only screens), which is why most locales keep a
- * 41-key allowance.
+ * would only create noise. Since the ja/ko + diagnostic batch, every locale is
+ * closed at zero; the map is kept (rather than deleted) so that a future
+ * intentional gap has one obvious place to be declared, and
+ * [baselineIsClosedAtZero] fails if someone quietly reopens an allowance.
  */
 class StringsRatchetTest {
 
@@ -26,15 +27,15 @@ class StringsRatchetTest {
     data class StringEntry(val name: String, val translatable: Boolean)
 
     companion object {
-        /** locale → allowed missing key count, documented by the V0.3b design note. */
+        /** locale → allowed missing key count. 全部归零后由 [baselineIsClosedAtZero] 守住。 */
         private val ALLOWED_MISSING = mapOf(
             "en" to 0,
-            "ja" to 275,
-            "ko" to 275,
+            "ja" to 0,
+            "ko" to 0,
             "zh-rCN" to 0,
-            "zh-rHK" to 41,
-            "zh-rMO" to 41,
-            "zh-rTW" to 41
+            "zh-rHK" to 0,
+            "zh-rMO" to 0,
+            "zh-rTW" to 0
         )
 
         /**
@@ -123,6 +124,20 @@ class StringsRatchetTest {
         }
 
         assertTrue(failures.joinToString("\n"), failures.isEmpty())
+    }
+
+    /**
+     * 基线已经全部归零。允许值一旦被人上调，缺失数测试就形同虚设——这条把
+     * 「归零」本身钉死，让重新开口子必须是一次有意识的测试改动。
+     */
+    @Test
+    fun baselineIsClosedAtZero() {
+        val reopened = ALLOWED_MISSING.filterValues { it != 0 }
+        assertTrue(
+            "i18n 基线已全量归零，不允许重新上调：$reopened。" +
+                "新增文案请同时补齐 7 个 locale，或用 tools/i18n_fill.py 生成台账。",
+            reopened.isEmpty()
+        )
     }
 
     @Test
