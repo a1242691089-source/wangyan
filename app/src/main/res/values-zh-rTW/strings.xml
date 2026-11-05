@@ -1690,7 +1690,7 @@
     <string name="folder_storage_authorized">授權目錄：%1$s</string>
     <string name="folder_storage_authorized_description">在授權目錄中建立真實資料夾，並與書架保持同步。</string>
     <string name="folder_storage_missing">無法使用</string>
-    <string name="folder_physical_move_blocked">該書籍或資料夾綁定了授權目錄，不能只移動書架分類；請先選擇授權目錄中的目標位置</string>
+    <string name="folder_physical_move_blocked">該書籍或資料夾已綁定授權目錄，不能只移動書架分類；請先選擇授權目錄中的目標位置</string>
     <string name="folder_cross_storage_confirmation">移動到授權目錄會複製並驗證檔案，然後刪除應用程式目錄中的原始檔案。請確認後重試</string>
     <string name="folder_cross_storage_confirmation_title">移動到授權目錄</string>
     <string name="folder_cross_storage_confirmation_message">檔案將複製到授權目錄並驗證，成功後刪除應用程式目錄中的原始檔案。是否繼續？</string>
