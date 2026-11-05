@@ -31,7 +31,7 @@ class StringsRatchetTest {
             "en" to 15,
             "ja" to 275,
             "ko" to 275,
-            "zh-rCN" to 176,
+            "zh-rCN" to 0,
             "zh-rHK" to 267,
             "zh-rMO" to 267,
             "zh-rTW" to 267
