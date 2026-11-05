@@ -1,0 +1,61 @@
+﻿# A 批：highlight_* 60 条
+highlight_rule_copy_name	%1$s のコピー	%1$s 사본
+highlight_rule_imported_name	%1$s（インポート）	%1$s(가져옴)
+highlight_rules_title	忘言 ハイライトルール	忘言 하이라이트 규칙
+highlight_rules_subtitle	ローカルの TXT / EPUB テキストにのみ視覚スタイルを適用します	로컬 TXT / EPUB 텍스트에만 시각 스타일을 적용합니다
+highlight_rules_note_switch	メモにまとめる	메모로 정리
+highlight_rules_note_switch_hint	オンにすると書籍全体をスキャンしてエクスポート可能なルールメモを作成します。既定はオフです	켜면 책 전체를 검사하여 내보낼 수 있는 규칙 메모를 만듭니다. 기본값은 꺼짐입니다
+highlight_rules_add	ルールを追加	규칙 추가
+highlight_rules_import	インポート	가져오기
+highlight_rules_export_json	JSON をエクスポート	JSON 내보내기
+highlight_rules_export_zip	ZIP をエクスポート	ZIP 내보내기
+highlight_rules_empty	ハイライトルールはまだありません	아직 하이라이트 규칙이 없습니다
+highlight_rules_count	%1$d 件のルール	규칙 %1$d개
+highlight_rule_new_title	忘言 ハイライトルールを追加	忘言 하이라이트 규칙 추가
+highlight_rule_edit_title	忘言 ハイライトルールを編集	忘言 하이라이트 규칙 편집
+highlight_rule_name	ルール名	규칙 이름
+highlight_rule_pattern	RE2 正規表現	RE2 정규식
+highlight_rule_sample	サンプルテキスト	예시 텍스트
+highlight_rule_text_color	文字色	글자 색
+highlight_rule_font	ハイライトのフォント	하이라이트 글꼴
+highlight_rule_font_body	本文に合わせる	본문 글꼴 사용
+highlight_rule_font_import	+ フォントをインポート	+ 글꼴 가져오기
+highlight_rule_font_unavailable	フォントを利用できません	글꼴을 사용할 수 없음
+highlight_rule_no_color	本文の色に合わせる	본문 색 사용
+highlight_rule_custom_color	カスタムカラー	사용자 지정 색
+highlight_rule_custom_color_invalid	有効な色の値を入力してください（例：#FF1976D2）	올바른 색상 값을 입력하세요. 예: #FF1976D2
+highlight_rule_underline	下線	밑줄
+highlight_rule_underline_none	なし	없음
+highlight_rule_underline_straight	直線	실선
+highlight_rule_underline_wave	波線	물결선
+highlight_rule_underline_double	二重線	이중선
+highlight_rule_underline_dashed	破線	파선
+highlight_rule_bold	太字	굵게
+highlight_rule_italic	斜体	기울임
+highlight_rule_preview	リアルタイムプレビュー	실시간 미리보기
+highlight_rule_preview_empty	サンプルテキストを入力すると一致結果を確認できます	예시 텍스트를 입력하면 일치 결과를 볼 수 있습니다
+highlight_rule_required	名前と正規表現は必須です	이름과 정규식은 비워 둘 수 없습니다
+highlight_rule_unsupported	無効化済み：%1$s	사용 중지됨: %1$s
+highlight_rule_duplicate	ルールを複製	규칙 복제
+highlight_rule_delete_title	ルールを削除しますか？	규칙을 삭제할까요?
+highlight_rule_delete_message	「%1$s」と、そのルールが管理するメモは削除されます。手動メモに変換済みのメモは保持されます。	“%1$s” 및 해당 규칙이 관리하는 메모가 삭제됩니다. 직접 메모로 전환된 메모는 유지됩니다.
+highlight_rules_import_preview	忘言 ハイライトルールをインポート	忘言 하이라이트 규칙 가져오기
+highlight_rules_import_valid	有効なルール：%1$d	유효한 규칙: %1$d
+highlight_rules_import_duplicate	内容が同一のためスキップ：%1$d	내용이 같아 건너뜀: %1$d
+highlight_rules_import_conflict	ID の競合：%1$d	ID 충돌: %1$d
+highlight_rules_import_unsupported	非対応のため保持して無効化：%1$d	지원되지 않아 보존하고 사용 중지: %1$d
+highlight_rules_import_keep	両方を保持	둘 다 유지
+highlight_rules_import_replace	競合を置き換え	충돌 항목 바꾸기
+highlight_rules_import_result	%1$d 件をインポート、%2$d 件をスキップ、%3$d 件の競合を名前変更	%1$d개 가져옴, %2$d개 건너뜀, 충돌 %3$d개 이름 변경
+highlight_rules_import_failed	ルールをインポートできません：%1$s	규칙을 가져올 수 없습니다: %1$s
+highlight_rules_export_success	忘言 ハイライトルールをエクスポートしました	忘言 하이라이트 규칙을 내보냈습니다
+highlight_rules_export_failed	ルールをエクスポートできません	규칙을 내보낼 수 없습니다
+highlight_rules_scan_progress	書籍全体をスキャン中：%1$d / %2$d	책 전체 검사 중: %1$d / %2$d
+highlight_rules_scan_waiting	書籍全体のスキャンを準備中	책 전체 검사를 준비하는 중
+highlight_rules_scan_complete	スキャン完了。ルールメモ %1$d 件	검사 완료, 규칙 메모 %1$d개
+highlight_rules_scan_failed	スキャンに失敗しました：%1$s	검사 실패: %1$s
+highlight_rules_scan_cancelled	スキャンをキャンセルしました	검사를 취소했습니다
+highlight_rules_cancel_scan	スキャンをキャンセル	검사 취소
+highlight_rules_rebuild	ルールメモを再構築	규칙 메모 다시 만들기
+highlight_rules_rebuild_hint	削除済み一致の除外記録を消去し、書籍全体を再スキャンします	삭제된 일치 항목의 제외 기록을 지우고 책 전체를 다시 검사합니다
+highlight_rules_compat_notice	互換性のあるルール形式であり、第三者との公式な関係や所属を示すものではありません。認識できないフィールドはそのまま保存されるだけで、ネットワーク・スクリプト・リクエスト設定として実行されることはありません。	호환되는 규칙 형식이며 제3자와 공식적인 관계나 소속을 의미하지 않습니다. 인식하지 못하는 필드는 그대로 저장될 뿐 네트워크, 스크립트, 요청 설정으로 실행되지 않습니다.
