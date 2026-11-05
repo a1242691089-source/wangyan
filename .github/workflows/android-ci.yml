@@ -115,6 +115,7 @@ jobs:
           com.huangder.lumibooks.ui.reader.
           com.huangder.lumibooks.ui.components.
           com.huangder.lumibooks.ui.bookshelf.
+          com.huangder.lumibooks.ui.knowledge.
           com.huangder.lumibooks.ui.animation.
           com.huangder.lumibooks.ui.settings.
           com.huangder.lumibooks.ui.home.
@@ -171,7 +172,7 @@ jobs:
           - shard: reader
             tests: "com.huangder.lumibooks.ui.reader.**"
           - shard: ui
-            tests: "com.huangder.lumibooks.ui.components.**,com.huangder.lumibooks.ui.bookshelf.**,com.huangder.lumibooks.ui.animation.**,com.huangder.lumibooks.ui.settings.**,com.huangder.lumibooks.ui.home.**,com.huangder.lumibooks.ui.theme.**,com.huangder.lumibooks.ui.welcome.**,com.huangder.lumibooks.ui.navigation.**,com.huangder.lumibooks.ui.excerpt.**,com.huangder.lumibooks.ui.icons.**,com.huangder.lumibooks.ui.layout.**,com.huangder.lumibooks.ui.statistics.**,com.huangder.lumibooks.widget.**"
+            tests: "com.huangder.lumibooks.ui.components.**,com.huangder.lumibooks.ui.bookshelf.**,com.huangder.lumibooks.ui.knowledge.**,com.huangder.lumibooks.ui.animation.**,com.huangder.lumibooks.ui.settings.**,com.huangder.lumibooks.ui.home.**,com.huangder.lumibooks.ui.theme.**,com.huangder.lumibooks.ui.welcome.**,com.huangder.lumibooks.ui.navigation.**,com.huangder.lumibooks.ui.excerpt.**,com.huangder.lumibooks.ui.icons.**,com.huangder.lumibooks.ui.layout.**,com.huangder.lumibooks.ui.statistics.**,com.huangder.lumibooks.widget.**"
           - shard: data
             tests: "com.huangder.lumibooks.data.**,com.huangder.lumibooks.dictionary.**,com.huangder.lumibooks.domain.**,com.huangder.lumibooks.service.**"
           - shard: util
