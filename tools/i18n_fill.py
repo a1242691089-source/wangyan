@@ -164,6 +164,58 @@ def cmd_fill(args):
         print("（dry-run，未写盘；加 --apply 生效）")
 
 
+def insert_rows(locale, rows, base, order):
+    """把 (key, value) 按 base 顺序插入 locale 文件，返回 (写入数, 总条数)。"""
+    path = locale_path(locale)
+    text = read(path)
+    before = entries(text)
+    todo = [(k, v) for k, v in rows if k not in before]
+    if not todo:
+        return 0, len(before)
+    todo.sort(key=lambda kv: order[kv[0]])
+    block = "".join(f'    <string name="{k}">{v}</string>\n' for k, v in todo)
+    idx = text.rfind("</resources>")
+    assert idx > 0, f"{path}: 找不到 </resources>"
+    head = text[:idx]
+    assert head.endswith("\n"), f"{path}: </resources> 前不是换行"
+    new_text = head + block + text[idx:]
+
+    assert new_text.count("<!--") == text.count("<!--"), f"{path}: 注释数被改变"
+    after = entries(new_text)
+    assert len(after) == len(before) + len(todo), f"{path}: 条目数增量异常"
+    for k, v in todo:
+        assert after[k]["value"] == v, f"{path}: {k} 写入值不一致"
+    assert len(after) == len(set(after)), f"{path}: 写入后出现重复 key"
+    write(path, new_text)
+    return len(todo), len(after)
+
+
+def cmd_fillzh(args):
+    """同一份繁体文本写入 zh-rTW / zh-rHK / zh-rMO，并断言港澳两文件逐字节一致。"""
+    path = REPO / "tools" / "i18n_ja_ko" / f"{args.batch}.tsv"
+    assert path.exists(), f"台账不存在：{path}"
+    base = base_entries()
+    order = {k: i for i, k in enumerate(base)}
+    rows = []
+    for lineno, line in enumerate(read(path).split("\n"), 1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("\t")
+        assert len(parts) == 2, f"{path}:{lineno} 应为 2 列（key/繁体），实际 {len(parts)} 列"
+        key, value = (p.strip() for p in parts)
+        assert key in base, f"{key}: 不在 values/strings.xml"
+        assert placeholders(value) == placeholders(base[key]["value"]), f"{key}: 占位符不一致"
+        for ch in FORBIDDEN:
+            assert ch not in value, f"{key}: 含禁用字符 {ch!r}"
+        rows.append((key, value))
+    assert len({k for k, _ in rows}) == len(rows), "台账里有重复 key"
+
+    for locale in ("zh-rTW", "zh-rHK", "zh-rMO"):
+        wrote, total = insert_rows(locale, rows, base, order)
+        print(f"{locale}: 写入 {wrote} 条 -> {total} 条")
+    assert read(locale_path("zh-rHK")) == read(locale_path("zh-rMO")), "zh-rHK 与 zh-rMO 不再一致"
+
+
 def cmd_verify(args):
     base = base_entries()
     total = sum(1 for v in base.values() if v["translatable"])
@@ -190,6 +242,9 @@ def main():
     p.add_argument("--batch", required=True)
     p.add_argument("--apply", action="store_true")
     p.set_defaults(func=cmd_fill)
+    p = sub.add_parser("fillzh")
+    p.add_argument("--batch", required=True)
+    p.set_defaults(func=cmd_fillzh)
     p = sub.add_parser("verify")
     p.set_defaults(func=cmd_verify)
     args = ap.parse_args()

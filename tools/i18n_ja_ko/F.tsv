@@ -1,0 +1,42 @@
+﻿# F 批：diagnostic_* 41 条繁体（zh-rTW / zh-rHK / zh-rMO 共用同一份文本）
+diagnostic_title	產生診斷套件
+diagnostic_capture_title	擷取日誌
+diagnostic_entry_desc	記錄並匯出問題相關日誌
+diagnostic_issue_type	問題類型
+diagnostic_issue_import	匯入／解析
+diagnostic_issue_open_book	開啟書籍
+diagnostic_issue_render	排版／渲染
+diagnostic_issue_page_turn	翻頁
+diagnostic_issue_selection	選取文字／標註
+diagnostic_issue_tts	TTS
+diagnostic_issue_sync	同步
+diagnostic_issue_backup	備份／轉換
+diagnostic_issue_other	其他
+diagnostic_description_label	請描述你看到的現象（必填）
+diagnostic_description_hint	例如：開啟某本 EPUB 後第 3 章空白，返回再進入仍然如此
+diagnostic_missing_description	已開始擷取，但未補充現象描述
+diagnostic_consent_title	開始擷取前請了解
+diagnostic_consent_body	點選「同意並開始」後，忘言 會在本機持續記錄最近 20 分鐘的結構化診斷事件，最多保留約 2 MB。記錄內容包括：事件發生時間、等級、模組和固定事件名稱、目前頁面、操作 ID、耗時、結果、應用程式啟動／背景／恢復、匯入解析、閱讀開啟／渲染／翻頁、選取文字、TTS、同步、備份和轉換狀態；發生錯誤時還會記錄例外類型、錯誤訊息和經過清理的類別名稱／方法名稱／原始碼行號堆疊。診斷套件還會包含應用程式版本、Android API、裝置廠商和型號、CPU ABI、語言、主題、螢幕尺寸與密度等執行環境資訊。
+diagnostic_consent_body_extra	書籍 ID 等識別碼會使用安裝層級隨機加鹽雜湊；本機路徑、URI、URL 參數、電子郵件、IP、Token、密碼、Cookie 和 Authorization 等會被移除或去識別化。不會記錄書籍正文、章節正文、筆記正文、標註文字、朗讀文字、憑證檔案或 Room 資料庫快照。你主動填寫的現象描述和最多 3 張截圖會隨診斷套件匯出，截圖會在匯出前壓縮，可能包含個人內容；如果裝置保留了上次未擷取當機標記，產生時也可能附上該當機的類型和清理後的堆疊。日誌先儲存在應用程式私有目錄，診斷套件只在你主動點選分享或儲存時離開裝置。離開此頁面後擷取仍會繼續，直到你結束並產生診斷套件。拒絕不會開始擷取。
+diagnostic_consent_agree	同意並開始
+diagnostic_consent_decline	拒絕
+diagnostic_start	開始擷取日誌
+diagnostic_stop	結束並產生診斷套件
+diagnostic_add_screenshot	新增截圖（選填）
+diagnostic_generating	正在產生診斷套件...
+diagnostic_share	分享診斷套件
+diagnostic_save	儲存到檔案
+diagnostic_previous_crash	發現上次異常結束的現場，可產生診斷套件
+diagnostic_preview	套件內僅包含去識別化後的結構化事件，不包含書籍正文或存取憑證。描述和截圖可能包含個人內容。
+diagnostic_preview_files	將包含 summary.md、errors.json、events.ndjson.gz、device.json 和 %1$d 張截圖；目前緩衝約 %2$d 筆事件。
+diagnostic_preview_range	事件時間範圍：%1$s - %2$s
+diagnostic_screenshot_preview	已選擇的截圖預覽
+diagnostic_failed	診斷套件產生失敗：%1$s
+diagnostic_saved	診斷套件已儲存
+diagnostic_export_recent	匯出最近日誌
+diagnostic_recent_description	偶發問題，無法穩定重現
+diagnostic_recording_note	擷取工作階段會在離開此頁面後繼續執行，直到你產生診斷套件。
+diagnostic_step_one	第一步
+diagnostic_step_one_desc	選擇問題類型並填寫現象，然後開始記錄。你可以離開此頁面去重現問題。
+diagnostic_step_two	第二步
+diagnostic_step_two_desc	重現完成後回來產生診斷套件；無法重現時可直接匯出最近日誌。
