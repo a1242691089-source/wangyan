@@ -2,16 +2,23 @@ package com.huangder.lumibooks.data.repository
 
 import androidx.room.withTransaction
 import com.huangder.lumibooks.data.local.dao.KnowledgeDao
+import com.huangder.lumibooks.data.local.dao.KnowledgeRelationRow
 import com.huangder.lumibooks.data.local.dao.SyncStateDao
 import com.huangder.lumibooks.data.local.database.AppDatabase
 import com.huangder.lumibooks.data.local.entity.KnowledgeEvidenceEntity
 import com.huangder.lumibooks.data.local.entity.KnowledgeNodeEntity
+import com.huangder.lumibooks.data.local.entity.KnowledgeRelationEntity
 import com.huangder.lumibooks.data.local.entity.SyncTombstoneEntity
 import com.huangder.lumibooks.data.sync.SyncIdentityStore
 import com.huangder.lumibooks.domain.model.AnnotationTags
 import com.huangder.lumibooks.domain.model.KnowledgeCard
 import com.huangder.lumibooks.domain.model.KnowledgeEvidence
 import com.huangder.lumibooks.domain.model.KnowledgeNode
+import com.huangder.lumibooks.domain.model.KnowledgeNodeDetail
+import com.huangder.lumibooks.domain.model.KnowledgeNodeSummary
+import com.huangder.lumibooks.domain.model.KnowledgeRelation
+import com.huangder.lumibooks.domain.model.KnowledgeRelationType
+import com.huangder.lumibooks.domain.model.KnowledgeRelationView
 import com.huangder.lumibooks.domain.repository.BookRepository
 import com.huangder.lumibooks.domain.repository.KnowledgeRepository
 import kotlinx.coroutines.flow.Flow
@@ -70,6 +77,60 @@ class KnowledgeRepositoryImpl @Inject constructor(
         )
         knowledgeDao.deleteNode(node.toEntity())
     }
+
+    override fun observeNodeDetail(nodeId: Long): Flow<KnowledgeNodeDetail?> =
+        combine(
+            knowledgeDao.observeNodeById(nodeId),
+            knowledgeDao.observeEvidencesForNode(nodeId),
+            knowledgeDao.observeRelationsForNode(nodeId)
+        ) { node, evidences, relations ->
+            node ?: return@combine null
+            KnowledgeNodeDetail(
+                node = node.toDomain(),
+                evidences = evidences.map { it.toDomain() },
+                relations = relations.map { it.toRelationView(nodeId) }
+            )
+        }
+
+    override suspend fun nodeSummaries(): List<KnowledgeNodeSummary> =
+        knowledgeDao.nodeSummaries().map {
+            KnowledgeNodeSummary(id = it.id, title = it.title, thought = it.thought)
+        }
+
+    override suspend fun addRelation(
+        sourceNodeId: Long,
+        targetNodeId: Long,
+        type: KnowledgeRelationType
+    ): Long {
+        require(sourceNodeId != targetNodeId) { "A knowledge node cannot relate to itself" }
+        val now = System.currentTimeMillis()
+        return database.withTransaction {
+            val inserted = knowledgeDao.insertRelation(
+                KnowledgeRelationEntity(
+                    sourceNodeId = sourceNodeId,
+                    targetNodeId = targetNodeId,
+                    syncId = UUID.randomUUID().toString(),
+                    relationType = type.stored,
+                    createdAt = now,
+                    updatedAt = now
+                )
+            )
+            if (inserted != -1L) {
+                inserted
+            } else {
+                // The unique index rejected the triple; report the row that already exists.
+                knowledgeDao.relationByTriple(sourceNodeId, targetNodeId, type.stored)?.id ?: -1L
+            }
+        }
+    }
+
+    override suspend fun deleteRelation(relation: KnowledgeRelation) {
+        val syncId = relation.syncId.ifBlank { "legacy-relation-${relation.id}" }
+        syncStateDao.upsertTombstones(
+            listOf(SyncTombstoneEntity("knowledge", syncId, System.currentTimeMillis(), syncIdentityStore.deviceId()))
+        )
+        knowledgeDao.deleteRelationById(relation.id)
+    }
 }
 
 private fun KnowledgeNodeEntity.toDomain() = KnowledgeNode(
@@ -99,3 +160,21 @@ private fun KnowledgeEvidence.toEntity() = KnowledgeEvidenceEntity(
     selectedText = selectedText, noteSyncId = noteSyncId,
     createdAt = createdAt, updatedAt = updatedAt
 )
+
+private fun KnowledgeRelationRow.toRelationView(viewingNodeId: Long): KnowledgeRelationView {
+    val isOutgoing = relation.sourceNodeId == viewingNodeId
+    return KnowledgeRelationView(
+        relation = KnowledgeRelation(
+            id = relation.id,
+            syncId = relation.syncId,
+            sourceNodeId = relation.sourceNodeId,
+            targetNodeId = relation.targetNodeId,
+            type = KnowledgeRelationType.fromStored(relation.relationType),
+            createdAt = relation.createdAt,
+            updatedAt = relation.updatedAt
+        ),
+        isOutgoing = isOutgoing,
+        counterpartNodeId = if (isOutgoing) relation.targetNodeId else relation.sourceNodeId,
+        counterpartTitle = if (isOutgoing) targetTitle else sourceTitle
+    )
+}
