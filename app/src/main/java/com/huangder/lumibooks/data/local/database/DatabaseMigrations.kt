@@ -5,6 +5,46 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.huangder.lumibooks.domain.model.AnnotationTags
 
 object DatabaseMigrations {
+    val MIGRATION_21_22 = object : Migration(21, 22) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // Knowledge relations: directed typed edges between nodes, CASCADE on
+            // both ends (same choice as evidence). One row per (source, target,
+            // type); A->B and B->A are distinct rows. Self-edges are rejected at
+            // the repository layer, not by a CHECK (Room schema parity).
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `knowledge_relations` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`sourceNodeId` INTEGER NOT NULL, " +
+                    "`targetNodeId` INTEGER NOT NULL, " +
+                    "`syncId` TEXT NOT NULL, " +
+                    "`relationType` TEXT NOT NULL, " +
+                    "`createdAt` INTEGER NOT NULL, " +
+                    "`updatedAt` INTEGER NOT NULL, " +
+                    "FOREIGN KEY(`sourceNodeId`) REFERENCES `knowledge_nodes`(`id`) " +
+                    "ON UPDATE NO ACTION ON DELETE CASCADE, " +
+                    "FOREIGN KEY(`targetNodeId`) REFERENCES `knowledge_nodes`(`id`) " +
+                    "ON UPDATE NO ACTION ON DELETE CASCADE)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_knowledge_relations_sourceNodeId` " +
+                    "ON `knowledge_relations` (`sourceNodeId`)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_knowledge_relations_targetNodeId` " +
+                    "ON `knowledge_relations` (`targetNodeId`)"
+            )
+            db.execSQL(
+                "CREATE UNIQUE INDEX IF NOT EXISTS " +
+                    "`index_knowledge_relations_sourceNodeId_targetNodeId_relationType` " +
+                    "ON `knowledge_relations` (`sourceNodeId`, `targetNodeId`, `relationType`)"
+            )
+            db.execSQL(
+                "CREATE UNIQUE INDEX IF NOT EXISTS `index_knowledge_relations_syncId` " +
+                    "ON `knowledge_relations` (`syncId`)"
+            )
+        }
+    }
+
     val MIGRATION_20_21 = object : Migration(20, 21) {
         override fun migrate(db: SupportSQLiteDatabase) {
             // Knowledge domain: nodes + evidence (1:N, CASCADE). Sync fields mirror notes.

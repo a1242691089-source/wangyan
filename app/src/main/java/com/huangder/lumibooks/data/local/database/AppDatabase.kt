@@ -28,6 +28,7 @@ import com.huangder.lumibooks.data.local.entity.BookHighlightSettingsEntity
 import com.huangder.lumibooks.data.local.entity.HighlightRuleExclusionEntity
 import com.huangder.lumibooks.data.local.entity.KnowledgeEvidenceEntity
 import com.huangder.lumibooks.data.local.entity.KnowledgeNodeEntity
+import com.huangder.lumibooks.data.local.entity.KnowledgeRelationEntity
 import com.huangder.lumibooks.data.local.dao.HighlightRuleDao
 
 @Database(
@@ -48,9 +49,10 @@ import com.huangder.lumibooks.data.local.dao.HighlightRuleDao
         BookHighlightSettingsEntity::class,
         HighlightRuleExclusionEntity::class,
         KnowledgeNodeEntity::class,
-        KnowledgeEvidenceEntity::class
+        KnowledgeEvidenceEntity::class,
+        KnowledgeRelationEntity::class
     ],
-    version = 21,
+    version = 22,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
