@@ -1227,6 +1227,7 @@
     <string name="label_first_line_indent">首行缩进</string>
     <string name="label_paragraph_spacing">段间距</string>
     <string name="menu_replace">替换</string>
+    <string name="menu_save_knowledge">存为知识</string>
     <string name="menu_settings">菜单设置</string>
     <string name="menu_underline">划线</string>
     <string name="more_options">更多操作</string>
@@ -1598,4 +1599,7 @@
     <string name="local_network_permission_continue">继续</string>
     <string name="local_network_permission_not_now">暂不</string>
     <string name="webdav_error_local_network_permission">缺少本地网络权限：请允许忘言访问你配置的 NAS 或局域网 WebDAV 服务器</string>
+    <string name="knowledge_input_title">存为知识</string>
+    <string name="knowledge_input_placeholder">写下你的理解（可留空，仅保存原文引用）</string>
+    <string name="knowledge_input_hint">确认后将保存原文与你的理解</string>
 </resources>

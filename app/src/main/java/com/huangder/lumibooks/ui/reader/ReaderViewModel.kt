@@ -598,7 +598,8 @@ class ReaderViewModel @Inject constructor(
     private val highlightRuleRepository: HighlightRuleRepository,
     private val highlightRuleMaterializer: HighlightRuleMaterializer,
     private val highlightRuleScanManager: HighlightRuleScanManager,
-    private val markdownUpdateManager: com.huangder.lumibooks.util.markdown.MarkdownUpdateManager
+    private val markdownUpdateManager: com.huangder.lumibooks.util.markdown.MarkdownUpdateManager,
+    private val knowledgeRepository: com.huangder.lumibooks.domain.repository.KnowledgeRepository
 ) : ViewModel() {
 
     private companion object {
@@ -6001,6 +6002,37 @@ class ReaderViewModel @Inject constructor(
 
     fun deleteAnnotationTag(name: String) {
         viewModelScope.launch { readingRepository.deleteAnnotationTag(name) }
+    }
+
+    /** 「存为知识」：原文引用 + 个人理解落 knowledge 域；理解可留空（纯引用）。 */
+    fun saveKnowledge(
+        selectedText: String,
+        thought: String,
+        tags: List<String>,
+        chapterIndex: Int,
+        startPosition: Int,
+        endPosition: Int,
+        startLocatorJson: String?,
+        endLocatorJson: String?
+    ) {
+        viewModelScope.launch {
+            val now = System.currentTimeMillis()
+            val node = com.huangder.lumibooks.domain.model.KnowledgeNode(
+                thought = thought.trim(), tags = tags, createdAt = now, updatedAt = now
+            )
+            val evidence = com.huangder.lumibooks.domain.model.KnowledgeEvidence(
+                bookId = bookId,
+                chapterIndex = chapterIndex,
+                startPosition = startPosition,
+                endPosition = endPosition,
+                startLocatorJson = startLocatorJson,
+                endLocatorJson = endLocatorJson,
+                selectedText = selectedText,
+                createdAt = now,
+                updatedAt = now
+            )
+            knowledgeRepository.saveNodeWithEvidence(node, evidence)
+        }
     }
 
     fun addNote(

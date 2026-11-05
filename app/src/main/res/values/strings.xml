@@ -60,6 +60,9 @@
     <string name="knowledge_empty_title">知识库还是空的</string>
     <string name="knowledge_empty_body">阅读时划线并「存为知识」，书里的概念会在这里连成图谱。</string>
     <string name="knowledge_empty_footnote">图谱与证据链将在后续版本开放</string>
+    <string name="knowledge_input_title">存为知识</string>
+    <string name="knowledge_input_placeholder">写下你的理解（可留空，仅保存原文引用）</string>
+    <string name="knowledge_input_hint">确认后将保存原文与你的理解</string>
     <string name="skills_empty_title">还没有技能</string>
     <string name="skills_empty_body">把重复的整理、摘要、回顾做成一键可跑的流程，之后在这里管理。</string>
     <string name="skills_empty_footnote">技能运行时将在后续版本开放</string>
@@ -707,6 +710,7 @@
     <string name="menu_remove_underline">移除划线</string>
     <string name="menu_dictionary">字典</string>
     <string name="menu_replace">替换</string>
+    <string name="menu_save_knowledge">存为知识</string>
     <string name="menu_settings">菜单设置</string>
     <string name="replace_with_label">为</string>
     <string name="replace_input_hint">请输入替换的文字</string>

@@ -64,6 +64,7 @@ internal fun SelectionMenuAction.labelRes(): Int = when (this) {
     SelectionMenuAction.WEB_SEARCH -> R.string.menu_web_search
     SelectionMenuAction.COPY -> R.string.menu_copy
     SelectionMenuAction.REPLACE -> R.string.menu_replace
+    SelectionMenuAction.SAVE_KNOWLEDGE -> R.string.menu_save_knowledge
 }
 
 @Composable
@@ -232,6 +233,7 @@ private fun SelectionMenuAction.icon(): ImageVector = when (this) {
     SelectionMenuAction.WEB_SEARCH -> AppIcons.Globe
     SelectionMenuAction.COPY -> AppIcons.FileText
     SelectionMenuAction.REPLACE -> AppIcons.ArrowsLeftRight
+    SelectionMenuAction.SAVE_KNOWLEDGE -> AppIcons.Archive
 }
 
 @Composable

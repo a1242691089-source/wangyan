@@ -59,6 +59,9 @@
     <string name="knowledge_empty_title">Your knowledge base is empty</string>
     <string name="knowledge_empty_body">Highlight a passage and save it as knowledge — concepts from your books will connect into a graph here.</string>
     <string name="knowledge_empty_footnote">The graph and evidence links arrive in a later version</string>
+    <string name="knowledge_input_title">Save as knowledge</string>
+    <string name="knowledge_input_placeholder">Write your understanding (optional — keep only the quote)</string>
+    <string name="knowledge_input_hint">The excerpt and your understanding will be saved</string>
     <string name="skills_empty_title">No skills yet</string>
     <string name="skills_empty_body">Turn recurring sorting, summarising and reviewing into one-tap flows, then manage them here.</string>
     <string name="skills_empty_footnote">The skill runtime arrives in a later version</string>
@@ -656,6 +659,7 @@
     <string name="menu_search">Search</string>
     <string name="menu_web_search">Web search</string>
     <string name="menu_replace">Replace</string>
+    <string name="menu_save_knowledge">Save as knowledge</string>
     <string name="replace_with_label">With</string>
     <string name="replace_input_hint">Enter replacement text</string>
     <string name="replace_success">Replaced</string>

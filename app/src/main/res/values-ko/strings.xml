@@ -1167,6 +1167,7 @@
     <string name="label_first_line_indent">첫 줄 들여쓰기</string>
     <string name="label_paragraph_spacing">단락 간격</string>
     <string name="menu_replace">바꾸기</string>
+    <string name="menu_save_knowledge">지식으로 저장</string>
     <string name="menu_settings">메뉴 설정</string>
     <string name="menu_underline">밑줄</string>
     <string name="more_options">더 보기</string>
@@ -1500,4 +1501,7 @@
     <string name="local_network_permission_continue">계속</string>
     <string name="local_network_permission_not_now">나중에</string>
     <string name="webdav_error_local_network_permission">로컬 네트워크 권한이 없습니다. 설정한 NAS 또는 LAN WebDAV 서버에 대한 액세스를 허용하세요.</string>
+    <string name="knowledge_input_title">지식으로 저장</string>
+    <string name="knowledge_input_placeholder">이해를 적어 보세요(비워 두면 원문만 저장)</string>
+    <string name="knowledge_input_hint">원문과 이해가 저장됩니다</string>
 </resources>

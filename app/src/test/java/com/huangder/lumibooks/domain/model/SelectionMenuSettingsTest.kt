@@ -37,4 +37,18 @@ class SelectionMenuSettingsTest {
         assertEquals(listOf(SelectionMenuAction.REPLACE), settings.visibleActions(isTxt = true))
         assertEquals(listOf(SelectionMenuAction.COPY), settings.visibleActions(isTxt = false))
     }
+
+    @Test fun newlyAddedActionAppendsToTailOfStoredOrder() {
+        // Existing users' stored orders lack SAVE_KNOWLEDGE; fromStored must append it last
+        // so their menu layout does not jump when the enum grows.
+        val settings = SelectionMenuSettings.fromStored(
+            listOf("highlight", "note", "copy"),
+            emptyMap()
+        )
+        assertEquals(
+            listOf(SelectionMenuAction.HIGHLIGHT, SelectionMenuAction.NOTE, SelectionMenuAction.COPY),
+            settings.order.take(3)
+        )
+        assertEquals(SelectionMenuAction.SAVE_KNOWLEDGE, settings.order.last())
+    }
 }

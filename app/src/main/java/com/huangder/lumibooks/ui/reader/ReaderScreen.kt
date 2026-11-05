@@ -2108,6 +2108,8 @@ fun ReaderScreen(
     // 🔥 原生选择 ActionMode 回调 → 等待笔记输入
     var pendingSelection by remember { mutableStateOf<PendingSelection?>(null) }
     var showNoteInput by remember { mutableStateOf(false) }
+    var showKnowledgeInput by remember { mutableStateOf(false) }
+    var knowledgeInputText by remember { mutableStateOf("") }
     var noteInputText by remember { mutableStateOf("") }
 
     // 自定义选择菜单状态（null = 不显示）
@@ -5184,6 +5186,31 @@ fun ReaderScreen(
             selectionState = null
             clearActiveTextSelection()
         },
+        onSaveKnowledge = {
+            val fresh = if (isBookLayout || isContinuousScrollMode) null else readViewRef.value?.getSelectionInfo()
+            if (fresh != null) {
+                pendingSelection = PendingSelection(
+                    fresh.selectedText, fresh.chapterIndex,
+                    fresh.startPosition,
+                    fresh.endPosition
+                )
+                showKnowledgeInput = true
+            } else {
+                selectionForAction()?.let { selection ->
+                    pendingSelection = PendingSelection(
+                        selection.selectedText,
+                        selection.chapterIndex,
+                        selection.charStart,
+                        selection.charEnd,
+                        selection.startLocatorJson,
+                        selection.endLocatorJson
+                    )
+                    showKnowledgeInput = true
+                }
+            }
+            selectionState = null
+            clearActiveTextSelection()
+        },
         onExcerpt = {
             selectionForAction()?.let { selection ->
                 val fresh = if (selection.annotationOnly || isBookLayout || isContinuousScrollMode) null
@@ -5446,6 +5473,29 @@ fun ReaderScreen(
             pendingSelection = null
             editingNote = null
             noteInputText = ""
+        }
+    )
+
+    ReaderSelectionKnowledgeSheet(
+        visible = showKnowledgeInput,
+        requestClose = requestCloseNoteInput,
+        glassBackdrop = activeReaderGlassBackdrop,
+        keepReaderViewport = isBookLayout,
+        thoughtText = knowledgeInputText,
+        onTextChange = { knowledgeInputText = it },
+        availableTags = availableAnnotationTags,
+        pendingSelection = pendingSelection,
+        viewModel = viewModel,
+        onConfirmed = {
+            pendingSelection = null
+            knowledgeInputText = ""
+            clearActiveTextSelection()
+        },
+        onDismissed = {
+            showKnowledgeInput = false
+            requestCloseNoteInput = false
+            pendingSelection = null
+            knowledgeInputText = ""
         }
     )
 
@@ -10274,6 +10324,54 @@ private fun ReaderSelectionNoteSheet(
     )
 }
 
+/** 「存为知识」：原文引用 + 个人理解（可留空）+ 标签，落 knowledge_nodes/evidence。 */
+@Composable
+private fun ReaderSelectionKnowledgeSheet(
+    visible: Boolean,
+    requestClose: Boolean,
+    glassBackdrop: Backdrop?,
+    keepReaderViewport: Boolean,
+    thoughtText: String,
+    onTextChange: (String) -> Unit,
+    availableTags: List<String>,
+    pendingSelection: PendingSelection?,
+    viewModel: ReaderViewModel,
+    onConfirmed: () -> Unit,
+    onDismissed: () -> Unit
+) {
+    var tags by remember(visible) { mutableStateOf(emptyList<String>()) }
+    NoteInputSheet(
+        visible = visible,
+        requestClose = requestClose,
+        glassBackdrop = glassBackdrop,
+        keepReaderViewport = keepReaderViewport,
+        initialText = thoughtText,
+        onTextChange = onTextChange,
+        tags = tags,
+        availableTags = availableTags,
+        onTagsChange = { tags = it },
+        onCreateTag = viewModel::createAnnotationTag,
+        title = stringResource(R.string.knowledge_input_title),
+        placeholder = stringResource(R.string.knowledge_input_placeholder),
+        footer = stringResource(R.string.knowledge_input_hint),
+        onConfirm = {
+            val selection = pendingSelection ?: return@NoteInputSheet
+            viewModel.saveKnowledge(
+                selectedText = selection.selectedText,
+                thought = thoughtText,
+                tags = tags,
+                chapterIndex = selection.chapterIndex,
+                startPosition = selection.startPosition,
+                endPosition = selection.endPosition,
+                startLocatorJson = selection.startLocatorJson,
+                endLocatorJson = selection.endLocatorJson
+            )
+            onConfirmed()
+        },
+        onDismiss = onDismissed
+    )
+}
+
 private data class SelectionState(
     val chapterIndex: Int,
     val pageInChapter: Int,
@@ -10601,6 +10699,7 @@ private fun SelectionMenuOverlay(
     onDictionary: () -> Unit,
     onDictionaryAppSelected: (DictionaryAppOption) -> Unit,
     onCopy: () -> Unit,
+    onSaveKnowledge: () -> Unit = {},
     onViewNote: () -> Unit,
     onEditHighlightTags: () -> Unit = {},
     onEditUnderlineTags: () -> Unit = {},
@@ -10660,6 +10759,7 @@ private fun SelectionMenuOverlay(
                 SelectionMenuAction.WEB_SEARCH -> onWebSearch
                 SelectionMenuAction.COPY -> onCopy
                 SelectionMenuAction.REPLACE -> onReplace
+                SelectionMenuAction.SAVE_KNOWLEDGE -> onSaveKnowledge
             }
         }
     }

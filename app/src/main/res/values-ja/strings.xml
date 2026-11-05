@@ -1167,6 +1167,7 @@
     <string name="label_first_line_indent">一行字下げ</string>
     <string name="label_paragraph_spacing">段落間隔</string>
     <string name="menu_replace">置換</string>
+    <string name="menu_save_knowledge">ナレッジに保存</string>
     <string name="menu_settings">メニュー設定</string>
     <string name="menu_underline">下線</string>
     <string name="more_options">その他の操作</string>
@@ -1500,4 +1501,7 @@
     <string name="local_network_permission_continue">続行</string>
     <string name="local_network_permission_not_now">後で</string>
     <string name="webdav_error_local_network_permission">ローカルネットワーク権限がありません。設定した NAS または LAN 内の WebDAV サーバーへのアクセスを許可してください。</string>
+    <string name="knowledge_input_title">ナレッジに保存</string>
+    <string name="knowledge_input_placeholder">理解を書く（空欄可・引用のみ保存）</string>
+    <string name="knowledge_input_hint">引用と理解を保存します</string>
 </resources>

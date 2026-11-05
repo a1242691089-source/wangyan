@@ -3,7 +3,10 @@ package com.huangder.lumibooks.domain.model
 enum class SelectionMenuAction(val key: String) {
     HIGHLIGHT("highlight"), UNDERLINE("underline"), NOTE("note"),
     DICTIONARY("dictionary"), EXCERPT("excerpt"),
-    SEARCH("search"), WEB_SEARCH("web_search"), COPY("copy"), REPLACE("replace")
+    SEARCH("search"), WEB_SEARCH("web_search"), COPY("copy"), REPLACE("replace"),
+    // Must stay last: fromStored() appends actions missing from stored orders
+    // in entries order, so inserting here would jump ahead of existing menus.
+    SAVE_KNOWLEDGE("save_knowledge")
 }
 
 /** A list (rather than map iteration order) makes order changes observable by StateFlow. */
