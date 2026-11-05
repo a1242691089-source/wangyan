@@ -57,7 +57,32 @@ class StringsRatchetTest {
         private val STRING_TAG = Regex("<string[ \t\r\n][^>]*>")
         private val NAME_ATTR = Regex("\\bname=\"([^\"]+)\"")
         private val NOT_TRANSLATABLE = Regex("\\btranslatable\\s*=\\s*\"false\"")
+        /** 完整元素（开标签属性 + 正文），用于取翻译文本本身。 */
+        private val STRING_ELEMENT =
+            Regex("<string[ \t\r\n]([^>]*)>(.*?)</string>", RegexOption.DOT_MATCHES_ALL)
+        private val PLACEHOLDER =
+            Regex("%(?:\\d+\\$)?[-#+ 0,(]*\\d*(?:\\.\\d+)?[a-zA-Z]")
     }
+
+    /**
+     * name → 原始文本（未反转义）。`&amp;`、`\n` 字面量都按源文件原样保留，
+     * 因为这里只比较结构（占位符、locale 间一致性），不消费文本内容。
+     */
+    fun parseStringValues(xml: String): Map<String, String> =
+        STRING_ELEMENT.findAll(xml.replace(COMMENT, ""))
+            .mapNotNull { match ->
+                val name = NAME_ATTR.find(match.groupValues[1])?.groupValues?.get(1)
+                    ?: return@mapNotNull null
+                name to match.groupValues[2]
+            }
+            .toMap()
+
+    /**
+     * 占位符多重集。比较「类型 + 索引」而不是顺序：译文可以为了语序把
+     * `%1$s` 挪到后面（ja/ko 的 pdf_convert_* 就是如此），只要索引绑定不变。
+     */
+    private fun placeholders(text: String): List<String> =
+        PLACEHOLDER.findAll(text).map { it.value }.toList().sorted()
 
     /**
      * Parses every `<string>` tag into `name → entry`, ignoring comments.
@@ -130,6 +155,42 @@ class StringsRatchetTest {
         assertTrue(
             "translatable=false 不应出现在可翻译集合里",
             (entries.keys - excluded).intersect(excluded).isEmpty()
+        )
+    }
+
+    /**
+     * aapt2 只在 link 阶段校验单个文件里的格式串，**不跨 locale 比对**：
+     * 把 `%1$s` 译成 `%1$d` 照样能编译，运行时才抛 IllegalFormatConversionException。
+     * 这条测试是唯一能挡住这类崩溃的环节。
+     */
+    @Test
+    fun placeholderTypesMatchAcrossLocales() {
+        val base = parseStringValues(resDir().resolve("values/strings.xml").readText())
+        val failures = mutableListOf<String>()
+        ALLOWED_MISSING.keys.forEach { locale ->
+            val translated = parseStringValues(resDir().resolve("values-$locale/strings.xml").readText())
+            translated.forEach { (key, value) ->
+                val expected = placeholders(base[key] ?: return@forEach)
+                val actual = placeholders(value)
+                if (expected != actual) failures += "$locale/$key: 期望 $expected，实际 $actual"
+            }
+        }
+        assertTrue("占位符与源语言不一致：\n" + failures.joinToString("\n"), failures.isEmpty())
+    }
+
+    /**
+     * zh-rHK 与 zh-rMO 用的是同一套港澳书面语，两份文件应当逐条一致。
+     * 抓「只改了 HK 忘了 MO」这类漏改——缺失数棘轮看不到文本级别的不一致。
+     */
+    @Test
+    fun hkAndMoMustStayIdentical() {
+        val hk = parseStringValues(resDir().resolve("values-zh-rHK/strings.xml").readText())
+        val mo = parseStringValues(resDir().resolve("values-zh-rMO/strings.xml").readText())
+        assertEquals("zh-rHK 与 zh-rMO 的 key 集合不同", hk.keys, mo.keys)
+        val diff = hk.filter { (key, value) -> mo[key] != value }.keys.sorted()
+        assertTrue(
+            "zh-rHK 与 zh-rMO 文本不一致（应同步修改）：${diff.take(10)}",
+            diff.isEmpty()
         )
     }
 }
