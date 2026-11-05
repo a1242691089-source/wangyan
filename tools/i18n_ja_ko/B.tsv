@@ -1,0 +1,48 @@
+﻿# B 批：reader_* 39 + tts_* 8
+reader_selection_hint_switch_page	ページの隅までドラッグするとページを切り替えられます	페이지 모서리로 끌면 페이지를 넘길 수 있습니다
+reader_selection_hint_tap_target	終点をタップすると選択を確定します	끝 지점을 탭하면 선택이 완료됩니다
+reader_theme_mode_light	ライト	라이트
+reader_theme_mode_dark	ダーク	다크
+reader_theme_mode_settings	%1$sモードの設定	%1$s 모드 설정
+reader_settings_appearance	読書の外観	읽기 화면
+reader_settings_appearance_summary	背景、文字色、明るさ	배경, 글자 색, 밝기
+reader_settings_accessibility	アクセシビリティ	접근성
+reader_settings_accessibility_summary	バイオニックリーディングと補助オプション	바이오닉 리딩과 보조 옵션
+reader_settings_page_image	ページと画像	페이지와 이미지
+reader_settings_page_image_summary	コミックモード、ページの切り抜き、画像の調整	만화 모드, 페이지 자르기, 이미지 조정
+reader_settings_text_layout	文字レイアウト	텍스트 레이아웃
+reader_settings_text_layout_summary	行揃えと文字の配置	정렬 방식과 텍스트 배치
+reader_settings_text_spacing	文字の間隔	텍스트 간격
+reader_settings_text_spacing_summary	行間、字間、段落間隔、インデント	줄 간격, 자간, 문단 간격, 들여쓰기
+reader_settings_page_layout	ページの余白	페이지 여백
+reader_settings_page_layout_summary	本文とヘッダー・フッターの余白	본문과 머리말·꼬리말 여백
+reader_settings_reader_controls	読書操作	읽기 조작
+reader_settings_reader_controls_summary	ページ送り、端のタップ、スリープ、隅の情報	페이지 넘김, 가장자리 탭, 절전, 모서리 정보
+reader_settings_font	フォント	글꼴
+reader_settings_font_summary	フォントの選択とカスタムフォント	글꼴 선택과 사용자 글꼴
+reader_image_adjustment	画像の調整	이미지 조정
+reader_image_adjustment_entry	調整	조정
+reader_raster_horizontal_crop	左右の白余白を自動で切り抜く	좌우 흰 여백 자동 자르기
+reader_crop_off	オフ	끔
+reader_crop_auto	自動	자동
+reader_crop_manual	手動	수동
+reader_crop_left_px	左側のピクセル	왼쪽 픽셀
+reader_crop_right_px	右側のピクセル	오른쪽 픽셀
+reader_image_adjustment_hint	コントラスト、明るさ、シャープ	대비, 밝기, 선명도
+reader_image_brightness	画像の明るさ	이미지 밝기
+reader_image_contrast	画像のコントラスト	이미지 대비
+reader_image_sharpen	画像のシャープ	이미지 선명도
+reader_image_adjustment_unavailable	画像コンテンツでのみ利用できます	이미지 콘텐츠에서만 사용할 수 있습니다
+reader_image_adjustment_not_configured	画像調整の入口は用意済みです。具体的なフィルターは今後のバージョンで有効になります。	이미지 조정 항목은 준비되어 있으며 구체적인 필터는 이후 버전에서 활성화됩니다.
+tts_return_to_progress	進捗位置に戻る	진행 위치로 돌아가기
+tts_return_to_reading_page	読んでいたページに戻る	읽던 페이지로 돌아가기
+tts_from_this_page	このページから	이 페이지부터
+tts_pitch_label	ピッチ	음높이
+tts_follow_engine	音声エンジンに合わせる	음성 엔진 따르기
+tts_follow_engine_short	合わせる	따르기
+tts_pitch_short	ピッチ %1$s	음높이 %1$s
+reader_txt_toc_rule	TXT 目次ルール	TXT 목차 규칙
+tts_prosody_rejected_error	選択した速度またはピッチは現在の音声エンジンに対応していません。前回の設定を保持しました。	선택한 속도 또는 음높이는 현재 음성 엔진에서 지원되지 않습니다. 이전 설정을 유지했습니다.
+reader_image_adjustment_saved_hint	この書籍にのみ適用され、自動保存されます。画像の調整とデコードの画質は別々に設定します。	이 책에만 적용되며 자동으로 저장됩니다. 이미지 조정과 디코딩 화질은 따로 설정합니다.
+reader_image_sharpen_eink	電子ペーパーモードではシャープ処理は無効になります。	전자잉크 모드에서는 선명도 처리가 비활성화됩니다.
+reader_image_adjustment_reset	元の画像に戻す	원본 이미지로 복원
