@@ -1,0 +1,80 @@
+﻿# D 批：annotation 15 + motion 1 + nav 5 + knowledge 3 + skills 3 + note 8 + profile 2 + markdown 7 + menu 1 + theme 11 + pdf 2 + icon 1 + misc
+annotation_tags	読書マークのタグ	읽기 표시 태그
+annotation_tag_manage	タグを管理	태그 관리
+annotation_tag_global_hint	名前の変更や削除は、すべての書籍の読書マークにすぐ反映されます。書籍のタグには影響しません。	이름을 바꾸거나 삭제하면 모든 책의 읽기 표시에 즉시 적용됩니다. 책 태그에는 영향을 주지 않습니다.
+annotation_tag_delete_title	タグ「%1$s」を削除しますか？	태그 “%1$s”을(를) 삭제할까요?
+annotation_tag_add	タグを追加	태그 추가
+annotation_tag_new	新しいタグ名	새 태그 이름
+annotation_tag_rename	名前を変更	이름 바꾸기
+annotation_tag_filter	絞り込み	필터
+annotation_tag_all	すべてのタグ	모든 태그
+annotation_tag_none	タグなし	태그 없음
+annotation_tag_color	色	색
+annotation_tag_all_colors	すべての色	모든 색
+annotation_tag_all_lines	すべての線種	모든 선 종류
+annotation_tag_color_number	色 %1$d	색 %1$d
+annotation_tag_line	線種	선 종류
+motion_preference_fast	速い	빠르게
+nav_shelf	本棚	서재
+nav_notes	ノート	노트
+nav_knowledge	知識	지식
+nav_skills	スキル	스킬
+nav_profile	マイページ	내 정보
+knowledge_empty_title	ナレッジはまだ空です	지식 베이스가 비어 있습니다
+knowledge_empty_body	本文をハイライトして「知識として保存」すると、本の中の概念がここにつながってグラフになります。	본문을 하이라이트하고 “지식으로 저장”하면 책 속 개념이 여기에서 그래프로 이어집니다.
+knowledge_empty_footnote	グラフと根拠の連鎖は今後のバージョンで公開されます	그래프와 근거 연결은 이후 버전에서 제공됩니다
+skills_empty_title	スキルはまだありません	아직 스킬이 없습니다
+skills_empty_body	繰り返しの整理・要約・振り返りをワンタップで実行できる流れにして、ここで管理できます。	반복되는 정리, 요약, 복습을 한 번의 탭으로 실행하는 흐름으로 만들어 여기에서 관리하세요.
+skills_empty_footnote	スキルの実行環境は今後のバージョンで公開されます	스킬 실행 환경은 이후 버전에서 제공됩니다
+note_type_excerpt	抜粋	발췌
+note_type_comment	注釈	주석
+note_type_thought	思考	생각
+note_type_question	疑問	질문
+note_type_inspiration	ひらめき	영감
+note_type_ai_summary	AI 要約	AI 요약
+note_type_all	すべての種類	모든 유형
+note_unanchored_chapter	位置未特定	위치 미확인
+profile_books_count	蔵書 %1$d 冊	책 %1$d권
+profile_daily_goal	1 日の目標 %1$d 分	일일 목표 %1$d분
+format_markdown	Markdown	Markdown
+markdown_source_updated	Markdown の元ファイルが更新されました	Markdown 원본 파일이 업데이트되었습니다
+markdown_source_updated_body	元の Markdown ファイルが変更されています。読書内容を更新すると、位置を特定できなくなったノートは保持され、原文が変更済みとして記録されます。	원본 Markdown 파일이 변경되었습니다. 읽기 내용을 업데이트하면 위치를 찾을 수 없는 노트는 유지되며 원문이 변경됨으로 표시됩니다.
+markdown_source_update	読書内容を更新	읽기 내용 업데이트
+markdown_keep_snapshot	現在のバージョンを使い続ける	현재 버전 계속 사용
+markdown_source_unavailable	ソースが一時的に利用できないため、保存済みの Markdown のコピーを表示しています。	원본을 일시적으로 사용할 수 없어 저장된 Markdown 사본을 읽고 있습니다.
+markdown_original_changed	原文が変更されました	원문 변경됨
+markdown_update_failed	更新に失敗しました。現在のバージョンとノートは保持されています。	업데이트에 실패했습니다. 현재 버전과 노트는 유지됩니다.
+menu_web_search	Web 検索	웹 검색
+theme_bundle_import	セットをインポート	세트 가져오기
+theme_bundle_export	セットをエクスポート	세트 내보내기
+theme_bundle_export_confirm_title	現在のテーマをエクスポート	현재 테마 내보내기
+theme_bundle_export_confirm_message	「%1$s」テーマをエクスポートしますか？	“%1$s” 테마를 내보낼까요?
+theme_bundle_export_success	忘言 テーマセットをエクスポートしました	忘言 테마 세트를 내보냈습니다
+theme_bundle_export_failed	テーマセットのエクスポートに失敗しました	테마 세트 내보내기에 실패했습니다
+theme_bundle_import_success	テーマセットを %1$d 個インポートしました	테마 세트 %1$d개를 가져왔습니다
+theme_bundle_missing_background_fallback	インポートは成功しましたが、ZIP に背景画像（%1$s）が含まれていませんでした。背景は既定のデイテーマに戻しました	가져오기는 완료되었지만 ZIP에 배경 이미지(%1$s)가 없어 배경을 기본 주간 테마로 되돌렸습니다
+theme_bundle_import_failed	テーマセットのインポートに失敗しました：%1$s	테마 세트를 가져오지 못했습니다: %1$s
+theme_bundle_copy_name	%1$s のコピー	%1$s 사본
+theme_bundle_copy_name_number	%1$s のコピー %2$d	%1$s 사본 %2$d
+pdf_zoom_lock	現在の拡大率を固定	현재 확대 비율 고정
+pdf_zoom_unlock	拡大率の固定を解除	확대 비율 고정 해제
+icon_style_lumi_chan	忘言ちゃん	忘言짱
+refresh_authorized_folders	許可フォルダーを更新	허용 폴더 새로 고침
+import_already_opened	インポート済みの書籍を %1$d 冊開きました	이미 가져온 책 %1$d권을 열었습니다
+import_summary_with_opened	%1$d 冊をインポートし、既存の %2$d 冊を開きました	%1$d권을 가져오고 기존 책 %2$d권을 열었습니다
+import_refresh_summary	%1$d 冊を更新し、%2$d 冊のファイルが見つかりません	%1$d권을 업데이트하고 %2$d권의 파일이 없음을 확인했습니다
+import_sort_time	時間順	시간순
+chapter_preface_title	まえがき	서문
+startup_diagnostic_title	起動スプラッシュのログ	시작 스플래시 로그
+startup_diagnostic_help	このビルドでは起動ログが有効で、起動の流れを端末内に自動記録するため、事前にキャプチャを開始する必要はありません。上書きインストール後は、表示される場合はようこそ画面を済ませ、スプラッシュアニメーションがオフであることを確認してから、アプリを終了し、ホーム画面のアイコンから開き直してください。スプラッシュが消えたら、できるだけ早く戻って直近 1 時間のログをエクスポートし、開発者に共有してください。ログが自動でアップロードされることはありません。システムの起動画面は画面録画で確認する必要があります。	이 빌드에서는 시작 로그가 켜져 있어 실행 과정을 기기에서 자동으로 기록하므로 따로 캡처를 시작할 필요가 없습니다. 덮어쓰기 설치 후에는 표시되는 경우 환영 화면을 마치고, 스플래시 애니메이션이 꺼져 있는지 확인한 뒤 앱을 종료하고 홈 화면 아이콘에서 다시 실행하세요. 스플래시가 끝나면 가능한 한 빨리 돌아와 최근 1시간의 로그를 내보내 개발자와 공유하세요. 로그는 자동으로 업로드되지 않습니다. 시스템 시작 화면은 화면 녹화로 확인해야 합니다.
+startup_diagnostic_export	起動スプラッシュのログをエクスポート	시작 스플래시 로그 내보내기
+label_app_accent_preset	カラープリセット	색상 구성
+accent_preset_custom	カスタム	사용자 지정
+accent_preset_ink_green	墨緑	먹빛 초록
+accent_preset_sand_blue	砂青	모래빛 파랑
+accent_preset_navy	紺青	감청
+accent_preset_crab_green	蟹青	청록
+accent_preset_ochre	赭石	황토
+accent_preset_deer_brown	鹿皮褐	사슴 갈색
+accent_preset_mist_blue	霽青	안개빛 파랑
+accent_preset_celadon	青磁	청자
