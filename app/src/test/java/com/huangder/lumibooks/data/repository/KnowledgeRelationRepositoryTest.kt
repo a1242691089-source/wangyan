@@ -150,4 +150,29 @@ class KnowledgeRelationRepositoryTest {
         assertEquals("第一行", summary.title)
         assertEquals("第一行\n第二行", summary.thought)
     }
+
+    @Test
+    fun observeKnowledgeCardsCarriesRelationCount() = runBlocking {
+        val a = seedNode("甲")
+        val b = seedNode("乙", createdAt = 200)
+        val c = seedNode("丙", createdAt = 300)
+        repository.addRelation(a, b, KnowledgeRelationType.EXPLAINS)
+        repository.addRelation(b, c, KnowledgeRelationType.SUPPORTS)
+        repository.addRelation(a, c, KnowledgeRelationType.RELATED_TO)
+
+        val counts = repository.observeKnowledgeCards().first()
+            .associate { it.node.id to it.relationCount }
+        // Three edges form a triangle: every node participates in two.
+        assertEquals(2, counts[a])
+        assertEquals(2, counts[b])
+        assertEquals(2, counts[c])
+    }
+
+    @Test
+    fun observeKnowledgeCardsHasZeroCountWithoutRelations() = runBlocking {
+        val a = seedNode("甲")
+        val card = repository.observeKnowledgeCards().first().single()
+        assertEquals(a, card.node.id)
+        assertEquals(0, card.relationCount)
+    }
 }

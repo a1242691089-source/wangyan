@@ -34,8 +34,13 @@ data class KnowledgeCard(
     val node: KnowledgeNode,
     val evidence: KnowledgeEvidence,
     /** Null when the book was removed from the library; the UI shows a fallback label. */
-    val bookTitle: String?
+    val bookTitle: String?,
+    /** Relations where this node is either end; 0 hides the badge on the card. */
+    val relationCount: Int = 0
 )
+
+/** A book that owns at least one knowledge card; title is null once the book is gone. */
+data class KnowledgeBookRef(val bookId: String, val title: String?)
 
 /**
  * Edge types between knowledge nodes, direction source -> target. The stored

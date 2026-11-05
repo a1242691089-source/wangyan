@@ -26,6 +26,9 @@ data class KnowledgeRelationRow(
     val targetTitle: String
 )
 
+/** How many relation edges a node participates in, as source or target. */
+data class KnowledgeRelationCountRow(val nodeId: Long, val count: Int)
+
 @Dao
 interface KnowledgeDao {
     @Transaction
@@ -79,4 +82,17 @@ interface KnowledgeDao {
             "ORDER BY r.createdAt DESC, r.id DESC"
     )
     fun observeRelationsForNode(nodeId: Long): Flow<List<KnowledgeRelationRow>>
+
+    /**
+     * Edge count per node, counting both directions: A->B and B->A each add one.
+     * Matches the detail page, which lists relations where the node is either end.
+     */
+    @Query(
+        "SELECT nodeId, COUNT(*) AS count FROM (" +
+            "SELECT sourceNodeId AS nodeId FROM knowledge_relations " +
+            "UNION ALL " +
+            "SELECT targetNodeId AS nodeId FROM knowledge_relations" +
+            ") GROUP BY nodeId"
+    )
+    fun observeRelationCounts(): Flow<List<KnowledgeRelationCountRow>>
 }

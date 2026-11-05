@@ -36,14 +36,24 @@ class KnowledgeRepositoryImpl @Inject constructor(
 ) : KnowledgeRepository {
 
     override fun observeKnowledgeCards(): Flow<List<KnowledgeCard>> =
-        combine(knowledgeDao.observeNodesWithEvidence(), bookRepository.getAllBooks()) { rows, books ->
+        combine(
+            knowledgeDao.observeNodesWithEvidence(),
+            bookRepository.getAllBooks(),
+            knowledgeDao.observeRelationCounts()
+        ) { rows, books, relationCounts ->
             val titles = books.associate { it.id to it.title }
+            val countByNode = relationCounts.associate { it.nodeId to it.count }
             rows.map { row ->
                 val node = row.node.toDomain()
                 // Newest evidence represents the card; older ones stay in storage for future views.
                 val evidence = row.evidences.maxByOrNull { it.createdAt }
                     ?: return@map null
-                KnowledgeCard(node, evidence.toDomain(), titles[evidence.bookId])
+                KnowledgeCard(
+                    node = node,
+                    evidence = evidence.toDomain(),
+                    bookTitle = titles[evidence.bookId],
+                    relationCount = countByNode[node.id] ?: 0
+                )
             }.filterNotNull()
         }
 
