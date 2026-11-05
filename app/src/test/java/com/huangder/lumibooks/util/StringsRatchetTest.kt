@@ -28,7 +28,7 @@ class StringsRatchetTest {
     companion object {
         /** locale → allowed missing key count, documented by the V0.3b design note. */
         private val ALLOWED_MISSING = mapOf(
-            "en" to 15,
+            "en" to 0,
             "ja" to 275,
             "ko" to 275,
             "zh-rCN" to 0,

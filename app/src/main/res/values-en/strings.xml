@@ -1796,4 +1796,19 @@
     <string name="accent_preset_deer_brown">Deer Brown</string>
     <string name="accent_preset_mist_blue">Mist Blue</string>
     <string name="accent_preset_celadon">Celadon</string>
+    <string name="motion_preference_fast">Fast</string>
+    <string name="format_markdown">Markdown</string>
+    <string name="markdown_source_updated">Markdown source updated</string>
+    <string name="markdown_source_updated_body">The Markdown file has changed. After you update the reading content, notes that can no longer be anchored are kept and marked as source changed.</string>
+    <string name="markdown_source_update">Update reading content</string>
+    <string name="markdown_keep_snapshot">Keep current version</string>
+    <string name="markdown_source_unavailable">The source is temporarily unavailable. You are reading the saved Markdown copy.</string>
+    <string name="markdown_original_changed">Source changed</string>
+    <string name="markdown_update_failed">Update failed. Your current version and notes are kept.</string>
+    <string name="icon_style_lumi_chan">Lumi Chan</string>
+    <string name="chapter_preface_title">Preface</string>
+    <string name="reader_txt_toc_rule">TXT chapter rules</string>
+    <string name="startup_diagnostic_title">Startup splash log</string>
+    <string name="startup_diagnostic_help">Startup logging is on in this build and records the launch sequence on this device, so no capture has to be started first. After an over-the-top install, finish the welcome flow if one appears, confirm the splash animation is off, then close the app and open it again from the home screen icon. Once the splash ends, come back and export the last hour of logs to share with the developer; logs are never uploaded automatically. The system launch screen has to be confirmed with a screen recording.</string>
+    <string name="startup_diagnostic_export">Export startup splash log</string>
 </resources>
