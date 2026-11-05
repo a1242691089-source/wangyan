@@ -609,6 +609,20 @@ class ReaderViewModel @Inject constructor(
     }
 
     private val bookId: String = savedStateHandle.get<String>("bookId") ?: ""
+
+    /**
+     * Evidence jump target passed by the knowledge detail page (V0.3a).
+     * -1 means "no target": progress restore behaves exactly as before.
+     */
+    private val evidenceTargetChapter: Int = savedStateHandle.get<Int>("chapter") ?: -1
+    private val evidenceTargetPosition: Int = savedStateHandle.get<Int>("position") ?: -1
+
+    /**
+     * loadBook runs again for cache recovery and for "update markdown source".
+     * The evidence target must only win on the first load, otherwise those
+     * reloads would yank the reader back to the quoted passage.
+     */
+    private var evidenceTargetConsumed = false
     private var openWorkGate = ReaderOpenWorkGate()
     private var openBackgroundJob = SupervisorJob(viewModelScope.coroutineContext[Job])
     private var openBackgroundScope = CoroutineScope(viewModelScope.coroutineContext + openBackgroundJob)
@@ -4138,10 +4152,24 @@ class ReaderViewModel @Inject constructor(
                         readingProgress = book.readingProgress,
                         chapterCount = chapterCount
                     )
-                    val startChapter = storedReaderPosition?.chapterIndex
-                        ?.coerceIn(0, chapterCount - 1)
+                    // 证据定位跳转（V0.3a）优先于上次阅读进度。原排版没有字符偏移语义，
+                    // 降级为章首定位；精确定位留给 V0.3b 的 locator 搜索链路。
+                    val evidenceTarget = if (evidenceTargetConsumed) {
+                        null
+                    } else {
+                        evidenceJumpLocator(
+                            targetChapter = evidenceTargetChapter,
+                            targetPosition = evidenceTargetPosition,
+                            chapterCount = chapterCount,
+                            bookLayoutRender = renderMode == EpubRenderMode.BOOK_LAYOUT
+                        )?.also { evidenceTargetConsumed = true }
+                    }
+                    val startChapter = evidenceTarget?.chapterIndex
+                        ?: storedReaderPosition?.chapterIndex
+                            ?.coerceIn(0, chapterCount - 1)
                         ?: fallbackRestorePoint.chapterIndex
-                    val pageFraction = storedReaderPosition?.chapterFraction
+                    val pageFraction = evidenceTarget?.chapterFraction
+                        ?: storedReaderPosition?.chapterFraction
                         ?: fallbackRestorePoint.chapterFraction
                     val isContinuousReader = readerWritingMode.usesContinuousScroll(
                         pageTransition,
@@ -4165,13 +4193,13 @@ class ReaderViewModel @Inject constructor(
                         currentChapterIndex = startChapter,
                         pendingPageFraction = pageFraction,
                         pendingPageFractionSemantics = if (
-                            storedReaderPosition == null && !isContinuousReader
+                            evidenceTarget == null && storedReaderPosition == null && !isContinuousReader
                         ) {
                             ReaderPageFractionSemantics.INCLUSIVE_PAGE_END
                         } else {
                             ReaderPageFractionSemantics.START
                         },
-                        pendingReaderPosition = storedReaderPosition,
+                        pendingReaderPosition = evidenceTarget ?: storedReaderPosition,
                         // TXT/EPUB 用新 Canvas 引擎；PDF/CBZ 由位图页阅读器渲染。
                         useNewEngine = !isRasterPageFormat,
                         optimizeLayout = optimize,
@@ -6892,4 +6920,30 @@ class ReaderViewModel @Inject constructor(
             cache.flush()
         }
     }
+}
+
+/**
+ * Pure and unit-testable: maps an evidence jump target (chapter-local character
+ * offset, as stored on knowledge evidence) to a reader locator.
+ *
+ * Returns null when the route carries no usable target or the chapter is out of
+ * range, so the caller keeps its normal progress restore. BOOK_LAYOUT (EPUB
+ * original layout) renders through WebView and has no character-offset
+ * semantics; it degrades to the chapter start, matching the chapter-only jump
+ * the layout already supports.
+ */
+internal fun evidenceJumpLocator(
+    targetChapter: Int,
+    targetPosition: Int,
+    chapterCount: Int,
+    bookLayoutRender: Boolean
+): ReaderPositionLocator? {
+    if (targetChapter < 0 || targetPosition < 0) return null
+    if (targetChapter >= chapterCount) return null
+    return ReaderPositionLocator(
+        chapterIndex = targetChapter,
+        chapterFraction = 0f,
+        flow = ReaderPositionFlow.PAGED,
+        characterOffset = if (bookLayoutRender) null else targetPosition
+    )
 }
