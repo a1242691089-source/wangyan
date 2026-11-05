@@ -34,7 +34,7 @@ class StringsRatchetTest {
             "zh-rCN" to 0,
             "zh-rHK" to 267,
             "zh-rMO" to 267,
-            "zh-rTW" to 96
+            "zh-rTW" to 41
         )
 
         /**
