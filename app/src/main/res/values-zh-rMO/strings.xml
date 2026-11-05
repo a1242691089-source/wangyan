@@ -35,7 +35,7 @@
     <string name="import_book">匯入書籍</string>
     <string name="today_reading_time">今日閱讀時長</string>
     <string name="no_books">暫無書籍</string>
-    <string name="import_books_hint">按匯入掣加入你的電子書</string>
+    <string name="import_books_hint">按匯入按鈕加入你的電子書</string>
 
     <!-- 統計頁 -->
     <string name="statistics_title">統計</string>
@@ -50,7 +50,7 @@
     <!-- 閱讀器 -->
     <string name="reader_title">閱讀器</string>
     <string name="chapter_list">目錄</string>
-    <string name="font_settings">字型設定</string>
+    <string name="font_settings">字體設定</string>
     <string name="theme_settings">主題設定</string>
     <string name="brightness">亮度</string>
     <string name="add_bookmark">加入書籤</string>
@@ -60,10 +60,10 @@
     <string name="library_search_placeholder">搜尋你的書庫</string>
     <string name="library_search_results">搜尋結果</string>
     <string name="reading_progress">閱讀進度</string>
-    <string name="font_size">字型大小</string>
+    <string name="font_size">字體大小</string>
     <string name="line_height">行距</string>
     <string name="letter_spacing">字距</string>
-    <string name="font_type">字型</string>
+    <string name="font_type">字體</string>
 
     <!-- 通用 -->
     <string name="confirm">確定</string>
@@ -112,7 +112,7 @@
 
     <!-- 設定主頁 -->
     <string name="settings_title">設定</string>
-    <string name="tap_to_change_nickname">撳一下修改暱稱</string>
+    <string name="tap_to_change_nickname">點擊修改暱稱</string>
     <string name="category_display">顯示與外觀</string>
     <string name="category_language">語言</string>
     <string name="category_storage">儲存管理</string>
@@ -148,7 +148,7 @@
     <string name="text_alignment_center">置中對齊</string>
     <string name="text_alignment_right">靠右對齊</string>
     <string name="text_alignment_justify">左右對齊</string>
-    <string name="label_font_type">字型</string>
+    <string name="label_font_type">字體</string>
     <string name="label_margin_horiz">左右邊距</string>
     <string name="label_margin_vert">上下邊距</string>
     <string name="label_margin_left">左邊距</string>
@@ -218,7 +218,7 @@
     <string name="backup_content_profile_settings">頭像、暱稱、應用程式與閱讀設定</string>
     <string name="backup_content_library">書架佈局、資料夾、標籤與自訂封面</string>
     <string name="backup_content_reading">閱讀進度、統計、書籤、筆記與標註</string>
-    <string name="backup_content_resources">自訂字型與閱讀背景</string>
+    <string name="backup_content_resources">自訂字體與閱讀背景</string>
     <string name="backup_content_books">所有可讀取的書籍原檔，包括 SAF 書籍</string>
     <string name="backup_advice">密碼、權杖、資料夾權限及裝置狀態不會備份。建議定期備份。</string>
     <string name="restore_replace_title">還原並取代本機資料？</string>
@@ -267,7 +267,7 @@
     <string name="import_books">匯入</string>
     <string name="home_page">主頁</string>
     <string name="avatar">頭像</string>
-    <string name="home_manage_hint">喺度管理你嘅本地 PDF 同 EPUB 圖書</string>
+    <string name="home_manage_hint">在這裡管理你的本地 PDF 和 EPUB 圖書</string>
     <string name="home_pull_to_resume_recent_book">鬆手以繼續閱讀最近書籍</string>
     <string name="book_progress">圖書 · %d%%</string>
     <string name="book_read_finished">已讀完</string>
@@ -276,7 +276,7 @@
     <string name="delete_book">刪除</string>
     <string name="delete_book_title">刪除圖書</string>
     <string name="delete_selected_books_title">刪除所選圖書</string>
-    <string name="delete_selected_books_confirm">確定要刪除所選的 %1$d 本圖書嗎？此操作無法復原。</string>
+    <string name="delete_selected_books_confirm">確定要刪除所選的 %1$d 本圖書嗎？此操作無法還原。</string>
     <string name="delete_book_confirm">確定要從書庫中刪除《%s》嗎？\n此操作無法還原。</string>
     <string name="goal_label">（目標 %d 分鐘）</string>
     <string name="continue_reading">繼續閱讀</string>
@@ -285,7 +285,7 @@
     <string name="today_reading_label">今日閱讀</string>
     <string name="minutes_label">分鐘</string>
     <string name="goal_minutes_label">目標 %d 分鐘</string>
-    <string name="remaining_minutes">仲差 %d 分鐘達標</string>
+    <string name="remaining_minutes">尚差 %d 分鐘達標</string>
     <string name="goal_reached">🎉 已達標！</string>
     <string name="currently_reading">正在閱讀</string>
     <string name="streak_days">%d 天</string>
@@ -309,7 +309,7 @@
     <string name="cover_source_title">選擇封面來源</string>
     <string name="cover_source_pick_image">選擇圖片</string>
     <string name="cover_source_pick_image_desc">從本機相簿選擇圖片</string>
-    <string name="cover_source_web_search">網路搜尋</string>
+    <string name="cover_source_web_search">網絡搜尋</string>
     <string name="cover_source_web_search_desc">透過多個搜尋引擎尋找本書封面</string>
     <string name="cover_search_hint">搜尋或輸入網址</string>
     <string name="cover_search_engine_bing">Bing</string>
@@ -363,7 +363,7 @@
     <string name="export_bookmarks_preparing">正在準備…</string>
     <string name="export_bookmarks_success">匯出成功</string>
     <string name="export_bookmarks_failed">匯出失敗，請重試</string>
-    <string name="tap_to_add_bookmark">閱讀時撳書籤圖示加入</string>
+    <string name="tap_to_add_bookmark">閱讀時點擊書籤圖示新增</string>
     <string name="chapter_number">第 %d 章</string>
     <string name="page_number">第 %d 頁</string>
 
@@ -398,7 +398,7 @@
     <string name="reading_time_hours_short">%1$d小時 · %2$d日</string>
     <string name="heat_low">少</string>
     <string name="heat_high">多</string>
-    <string name="most_read_books">最常閱讀嘅書籍</string>
+    <string name="most_read_books">最常閱讀的書籍</string>
     <string name="no_reading_records">暫無閱讀紀錄</string>
     <string name="today_goal">今日目標</string>
     <string name="goal_progress_format">%1$d/%2$d分鐘</string>
@@ -479,8 +479,8 @@
     <string name="reader_corner_content_battery">電量</string>
     <string name="reader_corner_content_time">時間</string>
     <string name="search_placeholder">輸入關鍵詞</string>
-    <string name="search_results_found">搵到 %d 條結果</string>
-    <string name="search_no_results">未搵到匹配結果</string>
+    <string name="search_results_found">找到 %d 條結果</string>
+    <string name="search_no_results">未找到匹配結果</string>
     <string name="menu_search">搜尋</string>
     <string name="menu_copy">複製</string>
     <string name="menu_highlight">高亮</string>
@@ -547,7 +547,7 @@
     <string name="reset_reader_settings">還原預設值</string>
     <string name="preview">預覽</string>
     <string name="preview_text">落霞與孤鶩齊飛，秋水共長天一色。漁舟唱晚，響窮彭蠡之濱；雁陣驚寒，聲斷衡陽之浦。</string>
-    <string name="font_label">字型</string>
+    <string name="font_label">字體</string>
     <string name="font_system">系統</string>
     <string name="font_fangsong">仿宋</string>
     <string name="font_kaiti">楷體</string>
@@ -557,42 +557,42 @@
     <!-- 歡迎頁 -->
     <string name="welcome_title">歡迎使用</string>
     <string name="welcome_update_title">你已更新至新版本</string>
-    <string name="welcome_desc">忘言是一款開源、本地優先的圖書閱讀器。閱讀資料預設保存在您的裝置中；WebDAV 同步、MinerU 雲端解析、第三方 TTS 等網路功能均需您主動設定或啟用，可能會向對應服務傳送書籍、閱讀資料或朗讀文字。忘言不使用分析或廣告追蹤 SDK。點擊「繼續」按鈕，即表示您已閱讀並同意</string>
+    <string name="welcome_desc">忘言是一款開源、本地優先的圖書閱讀器。閱讀資料預設保存在您的裝置中；WebDAV 同步、MinerU 雲端解析、第三方 TTS 等網絡功能均需您主動設定或啟用，可能會向對應服務傳送書籍、閱讀資料或朗讀文字。忘言不使用分析或廣告追蹤 SDK。點擊「繼續」按鈕，即表示您已閱讀並同意</string>
     <string name="welcome_privacy">《私隱政策》</string>
-    <string name="welcome_and">同</string>
+    <string name="welcome_and">和</string>
     <string name="welcome_terms">《使用條款》</string>
     <string name="welcome_exit">退出</string>
     <string name="welcome_continue">繼續</string>
     <string name="welcome_privacy_title">私隱政策</string>
     <string name="welcome_terms_title">使用條款</string>
     <string name="welcome_support_title">喜歡忘言？</string>
-    <string name="welcome_support_message">歡迎前往「設定 > 贊助開發」支持我哋。每一筆捐贈都會全數用於忘言嘅持續開發同完善。</string>
+    <string name="welcome_support_message">歡迎前往「設定 > 贊助開發」支持我們。每一筆捐贈都會全數用於忘言的持續開發與完善。</string>
     <string name="welcome_start_using">開始使用</string>
     <string name="welcome_language_title">語言</string>
-    <string name="welcome_language_subtitle">選擇你所使用嘅語言</string>
+    <string name="welcome_language_subtitle">選擇你所使用的語言</string>
     <string name="welcome_previous">上一步</string>
     <string name="welcome_open_sponsor">前往捐贈頁</string>
     <string name="welcome_next">下一步</string>
     <string name="welcome_liquid_glass_title">液態玻璃主題 · 全面煥新</string>
-    <string name="welcome_liquid_glass_subtitle">精心設計並適配嘅液態玻璃主題，令忘言每個場景都有出色嘅互動體驗。</string>
-    <string name="welcome_mineru_preview_title">內建 MinerU 解析介面</string>
-    <string name="welcome_mineru_preview_subtitle">MinerU 令 PDF OCR 解析更加準確。</string>
+    <string name="welcome_liquid_glass_subtitle">精心設計並適配的液態玻璃主題，讓忘言每個場景都有出色的互動體驗。</string>
+    <string name="welcome_mineru_preview_title">內置 MinerU 解析介面</string>
+    <string name="welcome_mineru_preview_subtitle">MinerU 讓 PDF OCR 解析更加準確。</string>
     <string name="welcome_bookshelf_preview_title">書庫功能升級</string>
-    <string name="welcome_bookshelf_preview_subtitle">多選書籍同搜尋功能得到增強，書籍再多都唔怕。</string>
+    <string name="welcome_bookshelf_preview_subtitle">多選書籍和搜尋功能得到增強，書籍再多也不怕。</string>
     <string name="welcome_enable_liquid_glass">將主題設定為液態玻璃</string>
     <string name="welcome_liquid_glass_enabled">已設定為液態玻璃</string>
     <string name="welcome_switching_theme">正在切換</string>
-    <string name="welcome_liquid_glass_preview_caption">唔再係簡單嘅純色同模糊，而係具有玻璃形態嘅折射效果。</string>
+    <string name="welcome_liquid_glass_preview_caption">不再是簡單的純色和模糊，而是具有玻璃形態的折射效果。</string>
     <string name="welcome_liquid_glass_home_description">液態玻璃主題 · 全面煥新</string>
     <string name="welcome_liquid_glass_dialog_description">液態玻璃主題 · 全面煥新</string>
     <string name="welcome_liquid_glass_reader_description">液態玻璃主題 · 全面煥新</string>
-    <string name="welcome_mineru_preview_description">內建 MinerU 解析介面</string>
+    <string name="welcome_mineru_preview_description">內置 MinerU 解析介面</string>
     <string name="welcome_bookshelf_preview_description">書庫功能升級</string>
-    <string name="welcome_privacy_summary">忘言是一款本地優先的圖書閱讀器。閱讀資料預設保存在您的裝置中；更新檢查、貢獻者頁、網路封面搜尋、遠端字型、WebDAV、MinerU、第三方 TTS、AI 翻譯等功能僅在使用時連接相應服務。連接 NAS 或局域網 WebDAV 時，本地網絡權限只用於存取你設定的伺服器，公網 WebDAV 不需要此權限。忘言不使用分析或廣告追蹤。點擊「繼續」，即表示您已閱讀並同意</string>
+    <string name="welcome_privacy_summary">忘言是一款本地優先的圖書閱讀器。閱讀資料預設保存在您的裝置中；更新檢查、貢獻者頁、網絡封面搜尋、遠端字體、WebDAV、MinerU、第三方 TTS、AI 翻譯等功能僅在使用時連接相應服務。連接 NAS 或局域網 WebDAV 時，本地網絡權限只用於存取你設定的伺服器，公網 WebDAV 不需要此權限。忘言不使用分析或廣告追蹤。點擊「繼續」，即表示您已閱讀並同意</string>
     <string name="welcome_policy_punctuation">。</string>
     <string name="welcome_app_icon_description">忘言應用程式圖示</string>
-    <string name="welcome_privacy_content">忘言隱私政策\n政策版本：3\n生效日期：2026年6月29日\n最近更新：2026年10月1日\n應用程式名稱：忘言\n套件名稱：com.wangyan.reader\n開發者：a1242691089-source\n聯絡方式：https://github.com/a1242691089-source/wangyan/issues\n一、核心原則\n忘言是開源、本地優先的電子書閱讀器。閱讀、書架、進度、書籤、筆記和大部分設定預設保存在本機。網路封面搜尋、貢獻者/頭像展示、遠端字型下載、更新檢查，以及您主動設定或啟用的 WebDAV 同步、MinerU 云端解析、第三方 TTS 或外部連結会产生相应網路請求。\n二、權限用途\n• READ_EXTERNAL_STORAGE（Android 12 及以下）：讀取您選擇的 EPUB、TXT、PDF 等電子書檔案。\n• READ_MEDIA_IMAGES（Android 13 及以上）：讀取電子書封面、匯出圖片或您選擇的圖片资源。\n• INTERNET / ACCESS_NETWORK_STATE：用于更新和政策版本檢查、遠端字型下載、WebDAV、MinerU、第三方 TTS、網路封面搜尋和外部页面存取。\n• WRITE_SETTINGS：僅在您啟用自定义亮屏时间时修改系統屏幕关闭时间。\n• 前景服務和通知權限：用于 TTS 背景播放、PDF/MinerU 解析或 WebDAV 同步進度通知。\n• WAKE_LOCK：在 TTS 背景播放期间保持裝置喚醒，避免播放意外中断。\n• SYSTEM_ALERT_WINDOW：僅在您啟用悬浮窗字幕时顯示跨應用程式懸浮字幕窗口。\n本應用程式目前最低支援 Android 11，不會在受支援裝置上請求 Android 9 及以下的舊式寫入儲存權限；不申请位置、相机/麦克风、通讯录、电话状态、短信、日历等與閱讀无关的敏感權限。\n三、本機保存的資料\n電子書檔案、閱讀進度、書籤、筆記及選取文字、閱讀時間、閱讀偏好、檔案/檔案夾授權 URI、TXT 編輯內容、MinerU 設定、WebDAV 設定、第三方 TTS 設定和本地 TTS 音訊快取可能保存在本地。MinerU Token、WebDAV 密码、第三方 TTS API Key 使用 Android Keystore 加密保存，並排除系統备份/裝置迁移。\n四、會傳輸資料的場景\n• 更新、公告和條款/政策版本檢查：应用可能存取專案發佈頁或檔案地址。\n• 遠端字型：当您選擇或恢复仿宋字型时，应用会从 GitHub Raw 或 jsDelivr 按需下載字型檔案，不上傳書籍內容。\n• WebDAV 同步：向您設定的伺服器上傳/下載書籍檔案、書籍清單、閱讀進度、書籤、筆記和選取文字。\n• MinerU 云端解析：向 OpenDataLab/MinerU 傳送您選定的 PDF、解析参数、工作識別碼；精準解析还会使用您的個人 Token。\n• 第三方 TTS：向您選擇的服务傳送目前朗读文字段、模型/音色、風格提示和必要認證資訊。若开启 HTTP 连接，API Key 和朗读文字可能未經加密傳輸並被竊聽。\n• 網路封面搜尋：向您選擇的 Bing、百度或 Google 等搜尋服務傳送书名和搜尋關鍵字；這些服務可能記錄 IP、請求時間和瀏覽器網路資訊。\n• 贊助頁貢獻者：開啟貢獻者页面时，应用會請求 GitHub contributors API 並載入 GitHub 頭像，GitHub 及其 CDN 会接收網路請求中繼資料。\n• 外部連結：僅在您主動點擊 GitHub、反馈、下載或第三方协议链接时存取對應網站。\n五、我們不會做什麼\n本應用程式不收集姓名、手機號碼、通讯录、精确位置或裝置識別碼用于追蹤；不整合分析、广告、使用者畫像、第三方推送或崩潰回報 SDK；不提供忘言帳號系統或開發者營運的雲端書庫。除上述由您主動設定、啟用、进入或点击的網路功能外，不主動上傳您的書籍和閱讀內容。\n六、第三方服务\nOpenDataLab/MinerU、WebDAV 服務商、第三方 TTS、GitHub 及其 CDN、Bing、百度和 Google 等服务均獨立於忘言營運。其網路日誌、可用性、計費、資料保存、刪除和合規要求由对应服务條款和隱私政策决定。\n七、資料管理\n您可以在應用程式內清除閱讀历史、快取和相關設定，或随时解除安裝应用。解除安裝会刪除应用私有資料，但不會自动刪除您自行管理的原始電子書檔案、WebDAV 伺服器副本或第三方服务已處理的資料。\n八、兒童私隱\n本應用程式不针对 13 岁以下儿童，不會故意收集儿童個人資料。监护人如发现儿童可能透過可選第三方服务提交了個人資料，请联系我们並同时联系相应服务方。\n九、政策變更、联系我们與适用范围\n我們可能因功能、法律法規或第三方服务变化更新本政策。重大變更会透過應用程式內版本提示要求您重新閱讀並確認。若您对本政策或資料处理有疑问，请联系開發者 https://github.com/a1242691089-source/wangyan/issues。本政策僅適用於忘言应用（com.wangyan.reader）在 Android 平台的功能，不適用於第三方服务自身的資料处理活动。\n本隱私政策最後更新于 2026年10月1日。\n十、本次更新補充說明\n• Android 17 及以上只會在連接您設定的 NAS 或局域網 WebDAV 時按需申請本地網絡權限，公網 WebDAV 不需要此權限。\n• 啟用或手動觸發 AI 翻譯時，所選文字、目標語言、模型參數和認證資料會傳送至您選擇的 Xiaomi MiMo、DeepSeek、OpenAI 或自訂相容服務；API Key 透過 Android Keystore 加密保存在本機。允許 HTTP 時可能以明文傳輸。\n• 本地詞典只在確認後下載並離線查詢。摘錄卡片在本機產生，只有主動分享時才會交給您選擇的接收應用程式。</string>
-    <string name="welcome_terms_content">忘言使用者協議\n協議版本：2\n生效日期：2026年6月29日\n最近更新：2026年10月1日\n應用程式名稱：忘言\n套件名稱：com.wangyan.reader\n開發者：a1242691089-source\n聯絡方式：https://github.com/a1242691089-source/wangyan/issues\n一、接受協議\n下載、安装、開啟或使用忘言，即表示您已閱讀、理解並同意本协议。如不同意，请停止使用本應用程式。\n二、應用程式功能\n忘言是開源、本地優先的電子書閱讀器，支援 EPUB、TXT、PDF 閱讀、本地書架、閱讀進度、書籤、筆記、閱讀統計、系統 TTS、TXT 编辑、檔案/檔案夾授權讀取、可選 MinerU 云端 PDF 解析、可選 WebDAV 同步、可選第三方 TTS，以及網路封面搜尋和按需遠端字型下載。\n本應用程式不提供忘言帳號註冊、登入或開發者營運的雲端書庫。WebDAV、MinerU、第三方 TTS、網路封面搜尋和遠端字型下載均在您主動設定、啟用或使用时发生。\n開啟贊助/貢獻者頁面時會請求 GitHub contributors API 並載入頭像，GitHub 及其 CDN 會接收正常網路請求中繼資料。\n三、使用者權利與義務\n• 您可以免費使用可用功能，自主管理閱讀資料、快取和設定，並随时停用可選網路功能。\n• 您可以在遵守開源許可證的前提下查看、修改和分发本應用程式源碼。\n• 确保您閱讀、导入、编辑、解析、朗读或同步的電子書及文字不侵犯他人合法權益。\n• 僅上傳、同步或傳送您有权处理的檔案和文字，不传输 DRM 保护內容、他人敏感個人資料、商业秘密或依法不得传输的內容。\n• 自行保管 WebDAV 密码、MinerU Token 和第三方 TTS API Key，並遵守对应服務商协议、隱私政策、費用和限額规则。\n• 使用 TXT 编辑器保存前确认內容並备份重要檔案，不得利用本應用程式从事违法、侵权或破坏網路服务安全的活动。\n四、知識產權\n忘言原創源碼、原創介面设计、圖示及品牌標誌的相关权利歸開發者 huangder 所有，原創代码依 GNU GPLv3 許可證开放使用。卷曲翻頁實現改編自 GPLv3 项目 legado-E。第三方依賴及改編程式碼继续受各自許可證约束；應用程式名稱、圖示及品牌標誌不因源碼開源而授予额外商標许可。\n您透過本應用程式閱讀、编辑、解析、朗读或同步的電子書及其內容权利归原始权利人所有。本應用程式僅提供工具功能，不主张对您的閱讀內容享有权利。\n五、免責聲明\n本應用程式按“現狀”提供，不保證对所有檔案、裝置、系統版本和第三方介面完全相容。因裝置故障、误操作、權限撤銷、檔案損壞、同步衝突、第三方服务不可用、計費变化或政策調整造成的损失，由您自行承担。WebDAV、MinerU、第三方 TTS、搜尋服務和字型 CDN 均由第三方或您自建环境独立提供，本應用程式不保證其可用性、資料完整性、保存期限、刪除效果、合成或解析质量。TXT 编辑会改变您授權保存的檔案內容，请提前备份。\n六、私隱保護\n閱讀資料預設保存在本機；網路封面搜尋、貢獻者/頭像展示、遠端字型下載、更新檢查，以及 WebDAV、MinerU、第三方 TTS 和外部連結存取会产生相应網路請求。詳情請參閱《隱私政策》。\n七、第三方服务與使用者自选服务\nOpenDataLab/MinerU、WebDAV 服務商、第三方 TTS、GitHub 及其 CDN、Bing、百度和 Google 等服务独立營運。您应閱讀並遵守相应服务的條款、隱私政策、費用和限額规则。开启 HTTP TTS 时，API Key 和朗读文字可能明文传输。\n八、协议的变更\n我們可能根据功能、法律法規或第三方服务要求修改本协议，並更新最近更新日期。涉及隐私、資料传输、核心功能或使用者义务的重大变更，将透過應用程式內版本提示要求您重新閱讀並確認；其他变更自公布之日起生效。\n九、终止與终止後的处理\n您可以随时停止使用並解除安裝应用。解除安裝会刪除应用私有資料，但不會自动刪除原始電子書檔案、WebDAV 伺服器副本或第三方服务已處理的資料。\n十、适用法律\n本协议的解释和执行适用中华人民共和国法律。因本协议引起的争议，应友好协商解决；协商不成的，任何一方均可向開發者所在地有管辖权的人民法院提起诉讼。\n十一、其他條款\n本协议中任何條款如被认定为无效或不可执行，其余條款仍然有效。本协议构成您與開發者之间关于使用本應用程式的完整协议。\n十二、联系我们\n如对本使用者协议有疑问，请联系開發者 https://github.com/a1242691089-source/wangyan/issues，或在專案 GitHub 仓库提交反馈。\n本使用者协议最後更新于 2026年10月1日。\n十三、本次更新補充說明\nAI 翻譯、本地詞典和摘錄卡片均為可選功能。AI 翻譯會把所選文字傳送至您設定的服務，準確性、費用、限額和資料處理由該服務決定；詞典查詢和卡片產生在本機完成，分享後由接收應用程式的條款規管。</string>
+    <string name="welcome_privacy_content">忘言隱私政策\n政策版本：3\n生效日期：2026年6月29日\n最近更新：2026年10月1日\n應用程式名稱：忘言\n套件名稱：com.wangyan.reader\n開發者：a1242691089-source\n聯絡方式：https://github.com/a1242691089-source/wangyan/issues\n一、核心原則\n忘言是開源、本地優先的電子書閱讀器。閱讀、書架、進度、書籤、筆記和大部分設定預設保存在本機。網絡封面搜尋、貢獻者/頭像展示、遠端字體下載、更新檢查，以及您主動設定或啟用的 WebDAV 同步、MinerU 云端解析、第三方 TTS 或外部連結会产生相应網絡請求。\n二、權限用途\n• READ_EXTERNAL_STORAGE（Android 12 及以下）：讀取您選擇的 EPUB、TXT、PDF 等電子書檔案。\n• READ_MEDIA_IMAGES（Android 13 及以上）：讀取電子書封面、匯出圖片或您選擇的圖片资源。\n• INTERNET / ACCESS_NETWORK_STATE：用于更新和政策版本檢查、遠端字體下載、WebDAV、MinerU、第三方 TTS、網絡封面搜尋和外部页面存取。\n• WRITE_SETTINGS：僅在您啟用自定义亮屏时间时修改系統屏幕关闭时间。\n• 前景服務和通知權限：用于 TTS 背景播放、PDF/MinerU 解析或 WebDAV 同步進度通知。\n• WAKE_LOCK：在 TTS 背景播放期间保持裝置喚醒，避免播放意外中断。\n• SYSTEM_ALERT_WINDOW：僅在您啟用悬浮窗字幕时顯示跨應用程式懸浮字幕窗口。\n本應用程式目前最低支援 Android 11，不會在受支援裝置上請求 Android 9 及以下的舊式寫入儲存權限；不申请位置、相机/麦克风、通讯录、电话状态、短信、日历等與閱讀无关的敏感權限。\n三、本機保存的資料\n電子書檔案、閱讀進度、書籤、筆記及選取文字、閱讀時間、閱讀偏好、檔案/檔案夾授權 URI、TXT 編輯內容、MinerU 設定、WebDAV 設定、第三方 TTS 設定和本地 TTS 音訊快取可能保存在本地。MinerU Token、WebDAV 密码、第三方 TTS API Key 使用 Android Keystore 加密保存，並排除系統备份/裝置迁移。\n四、會傳輸資料的場景\n• 更新、公告和條款/政策版本檢查：应用可能存取專案發佈頁或檔案地址。\n• 遠端字體：当您選擇或恢复仿宋字體时，应用会从 GitHub Raw 或 jsDelivr 按需下載字體檔案，不上載書籍內容。\n• WebDAV 同步：向您設定的伺服器上載/下載書籍檔案、書籍清單、閱讀進度、書籤、筆記和選取文字。\n• MinerU 云端解析：向 OpenDataLab/MinerU 傳送您選定的 PDF、解析参数、工作識別碼；精準解析还会使用您的個人 Token。\n• 第三方 TTS：向您選擇的服务傳送目前朗读文字段、模型/音色、風格提示和必要認證資訊。若开启 HTTP 连接，API Key 和朗读文字可能未經加密傳輸並被竊聽。\n• 網絡封面搜尋：向您選擇的 Bing、百度或 Google 等搜尋服務傳送书名和搜尋關鍵字；這些服務可能記錄 IP、請求時間和瀏覽器網絡資訊。\n• 贊助頁貢獻者：開啟貢獻者页面时，应用會請求 GitHub contributors API 並載入 GitHub 頭像，GitHub 及其 CDN 会接收網絡請求中繼資料。\n• 外部連結：僅在您主動點擊 GitHub、反馈、下載或第三方协议链接时存取對應網站。\n五、我們不會做什麼\n本應用程式不收集姓名、手機號碼、通讯录、精确位置或裝置識別碼用于追蹤；不整合分析、广告、用戶畫像、第三方推送或崩潰回報 SDK；不提供忘言帳號系統或開發者營運的雲端書庫。除上述由您主動設定、啟用、进入或点击的網絡功能外，不主動上載您的書籍和閱讀內容。\n六、第三方服务\nOpenDataLab/MinerU、WebDAV 服務商、第三方 TTS、GitHub 及其 CDN、Bing、百度和 Google 等服务均獨立於忘言營運。其網絡日誌、可用性、計費、資料保存、刪除和合規要求由对应服务條款和隱私政策决定。\n七、資料管理\n您可以在應用程式內清除閱讀历史、快取和相關設定，或随时解除安裝应用。解除安裝会刪除应用私有資料，但不會自动刪除您自行管理的原始電子書檔案、WebDAV 伺服器副本或第三方服务已處理的資料。\n八、兒童私隱\n本應用程式不针对 13 岁以下儿童，不會故意收集儿童個人資料。监护人如发现儿童可能透過可選第三方服务提交了個人資料，请联系我们並同时联系相应服务方。\n九、政策變更、联系我们與适用范围\n我們可能因功能、法律法規或第三方服务变化更新本政策。重大變更会透過應用程式內版本提示要求您重新閱讀並確認。若您对本政策或資料处理有疑问，请联系開發者 https://github.com/a1242691089-source/wangyan/issues。本政策僅適用於忘言应用（com.wangyan.reader）在 Android 平台的功能，不適用於第三方服务自身的資料处理活动。\n本隱私政策最後更新于 2026年10月1日。\n十、本次更新補充說明\n• Android 17 及以上只會在連接您設定的 NAS 或局域網 WebDAV 時按需申請本地網絡權限，公網 WebDAV 不需要此權限。\n• 啟用或手動觸發 AI 翻譯時，所選文字、目標語言、模型參數和認證資料會傳送至您選擇的 Xiaomi MiMo、DeepSeek、OpenAI 或自訂相容服務；API Key 透過 Android Keystore 加密保存在本機。允許 HTTP 時可能以明文傳輸。\n• 本地詞典只在確認後下載並離線查詢。摘錄卡片在本機產生，只有主動分享時才會交給您選擇的接收應用程式。</string>
+    <string name="welcome_terms_content">忘言用戶協議\n協議版本：2\n生效日期：2026年6月29日\n最近更新：2026年10月1日\n應用程式名稱：忘言\n套件名稱：com.wangyan.reader\n開發者：a1242691089-source\n聯絡方式：https://github.com/a1242691089-source/wangyan/issues\n一、接受協議\n下載、安装、開啟或使用忘言，即表示您已閱讀、理解並同意本协议。如不同意，请停止使用本應用程式。\n二、應用程式功能\n忘言是開源、本地優先的電子書閱讀器，支援 EPUB、TXT、PDF 閱讀、本地書架、閱讀進度、書籤、筆記、閱讀統計、系統 TTS、TXT 编辑、檔案/檔案夾授權讀取、可選 MinerU 云端 PDF 解析、可選 WebDAV 同步、可選第三方 TTS，以及網絡封面搜尋和按需遠端字體下載。\n本應用程式不提供忘言帳號註冊、登入或開發者營運的雲端書庫。WebDAV、MinerU、第三方 TTS、網絡封面搜尋和遠端字體下載均在您主動設定、啟用或使用时发生。\n開啟贊助/貢獻者頁面時會請求 GitHub contributors API 並載入頭像，GitHub 及其 CDN 會接收正常網絡請求中繼資料。\n三、用戶權利與義務\n• 您可以免費使用可用功能，自主管理閱讀資料、快取和設定，並随时停用可選網絡功能。\n• 您可以在遵守開源許可證的前提下查看、修改和分发本應用程式源碼。\n• 确保您閱讀、导入、编辑、解析、朗读或同步的電子書及文字不侵犯他人合法權益。\n• 僅上載、同步或傳送您有权处理的檔案和文字，不传输 DRM 保护內容、他人敏感個人資料、商业秘密或依法不得传输的內容。\n• 自行保管 WebDAV 密码、MinerU Token 和第三方 TTS API Key，並遵守对应服務商协议、隱私政策、費用和限額规则。\n• 使用 TXT 编辑器保存前确认內容並备份重要檔案，不得利用本應用程式从事违法、侵权或破坏網絡服务安全的活动。\n四、知識產權\n忘言原創源碼、原創介面设计、圖示及品牌標誌的相关权利歸開發者 huangder 所有，原創代码依 GNU GPLv3 許可證开放使用。卷曲翻頁實現改編自 GPLv3 项目 legado-E。第三方依賴及改編程式碼继续受各自許可證约束；應用程式名稱、圖示及品牌標誌不因源碼開源而授予额外商標许可。\n您透過本應用程式閱讀、编辑、解析、朗读或同步的電子書及其內容权利归原始权利人所有。本應用程式僅提供工具功能，不主张对您的閱讀內容享有权利。\n五、免責聲明\n本應用程式按“現狀”提供，不保證对所有檔案、裝置、系統版本和第三方介面完全相容。因裝置故障、误操作、權限撤銷、檔案損壞、同步衝突、第三方服务不可用、計費变化或政策調整造成的损失，由您自行承担。WebDAV、MinerU、第三方 TTS、搜尋服務和字體 CDN 均由第三方或您自建环境独立提供，本應用程式不保證其可用性、資料完整性、保存期限、刪除效果、合成或解析质量。TXT 编辑会改变您授權保存的檔案內容，请提前备份。\n六、私隱保護\n閱讀資料預設保存在本機；網絡封面搜尋、貢獻者/頭像展示、遠端字體下載、更新檢查，以及 WebDAV、MinerU、第三方 TTS 和外部連結存取会产生相应網絡請求。詳情請參閱《隱私政策》。\n七、第三方服务與用戶自选服务\nOpenDataLab/MinerU、WebDAV 服務商、第三方 TTS、GitHub 及其 CDN、Bing、百度和 Google 等服务独立營運。您应閱讀並遵守相应服务的條款、隱私政策、費用和限額规则。开启 HTTP TTS 时，API Key 和朗读文字可能明文传输。\n八、协议的变更\n我們可能根据功能、法律法規或第三方服务要求修改本协议，並更新最近更新日期。涉及隐私、資料传输、核心功能或用戶义务的重大变更，将透過應用程式內版本提示要求您重新閱讀並確認；其他变更自公布之日起生效。\n九、终止與终止後的处理\n您可以随时停止使用並解除安裝应用。解除安裝会刪除应用私有資料，但不會自动刪除原始電子書檔案、WebDAV 伺服器副本或第三方服务已處理的資料。\n十、适用法律\n本协议的解释和执行适用中华人民共和国法律。因本协议引起的争议，应友好协商解决；协商不成的，任何一方均可向開發者所在地有管辖权的人民法院提起诉讼。\n十一、其他條款\n本协议中任何條款如被认定为无效或不可执行，其余條款仍然有效。本协议构成您與開發者之间关于使用本應用程式的完整协议。\n十二、联系我们\n如对本用戶协议有疑问，请联系開發者 https://github.com/a1242691089-source/wangyan/issues，或在專案 GitHub 仓库提交反馈。\n本用戶协议最後更新于 2026年10月1日。\n十三、本次更新補充說明\nAI 翻譯、本地詞典和摘錄卡片均為可選功能。AI 翻譯會把所選文字傳送至您設定的服務，準確性、費用、限額和資料處理由該服務決定；詞典查詢和卡片產生在本機完成，分享後由接收應用程式的條款規管。</string>
 
     <!-- PDF閱讀器 -->
     <string name="pdf_back">返回</string>
@@ -671,7 +671,7 @@
     <string name="title_mineru">MinerU 雲端解析</string>
     <string name="mineru_powered_by">Powered by MinerU</string>
     <string name="mineru_manual_title">手動解析（無需 API）</string>
-    <string name="mineru_manual_description">在 MinerU 網站自行上傳並解析檔案，下載結果 ZIP 或 Markdown 後匯入忘言Books。</string>
+    <string name="mineru_manual_description">在 MinerU 網站自行上載並解析檔案，下載結果 ZIP 或 Markdown 後匯入忘言Books。</string>
     <string name="mineru_manual_open_website">前往 MinerU 網頁解析</string>
     <string name="mineru_manual_import_result">匯入 MinerU 解析結果</string>
     <string name="mineru_manual_importing">正在匯入解析結果…</string>
@@ -700,47 +700,47 @@
     <string name="mineru_disable">停用 MinerU</string>
     <string name="mineru_clear_token">清除個人 Token</string>
     <string name="mineru_third_party_title">第三方服務說明</string>
-    <string name="mineru_third_party_notice">MinerU 由第三方獨立營運。使用時，所選 PDF 會上傳至 MinerU 及其儲存服務。忘言Books 不營運或控制該服務，也不保證其可用性、解析準確性、處理時效及政策不變。上述說明不影響你依法享有的權利，也不免除忘言Books 依法應承擔的責任。</string>
+    <string name="mineru_third_party_notice">MinerU 由第三方獨立營運。使用時，所選 PDF 會上載至 MinerU 及其儲存服務。忘言Books 不營運或控制該服務，也不保證其可用性、解析準確性、處理時效及政策不變。上述說明不影響你依法享有的權利，也不免除忘言Books 依法應承擔的責任。</string>
     <string name="mineru_service_terms">OpenDataLab 服務協議</string>
     <string name="mineru_privacy_policy">OpenDataLab 個人資訊保護政策</string>
     <string name="mineru_api_limits">MinerU API 限制說明</string>
     <string name="mineru_consent_title">啟用 MinerU 雲端解析</string>
     <string name="mineru_consent_subtitle">請完整閱讀以下風險與第三方協議。確認按鈕將於 30 秒後開放。</string>
-    <string name="mineru_risk_upload">所選 PDF 的正文、圖片、檔名及文件資訊將離開裝置，上傳至 MinerU 和其 OSS/CDN 儲存服務。</string>
+    <string name="mineru_risk_upload">所選 PDF 的正文、圖片、檔名及文件資訊將離開裝置，上載至 MinerU 和其 OSS/CDN 儲存服務。</string>
     <string name="mineru_risk_third_party">MinerU 是獨立第三方服務，其資料保存、刪除、限流、收費和服務變更由營運方決定。</string>
     <string name="mineru_risk_accuracy">雲端解析結果可能遺漏、誤識或改變原排版，忘言Books 不保證結果準確或服務持續可用。</string>
-    <string name="mineru_risk_rights">請勿上傳無權處理、受 DRM 保護、包含敏感個人資訊、商業機密或需要嚴格保密的檔案。</string>
-    <string name="mineru_consent_checkbox">我已閱讀第三方協議，知悉檔案將上傳，並確認有權處理所選檔案。</string>
+    <string name="mineru_risk_rights">請勿上載無權處理、受 DRM 保護、包含敏感個人資訊、商業機密或需要嚴格保密的檔案。</string>
+    <string name="mineru_consent_checkbox">我已閱讀第三方協議，知悉檔案將上載，並確認有權處理所選檔案。</string>
     <string name="mineru_consent_countdown">請繼續閱讀（%1$d 秒）</string>
     <string name="mineru_consent_accept">同意並啟用</string>
     <string name="pdf_convert_choose_method_title">選擇解析方式</string>
-    <string name="pdf_convert_choose_method_body">本機解析不會上傳檔案；MinerU 雲端解析會將所選 PDF 傳送至第三方服務。</string>
+    <string name="pdf_convert_choose_method_body">本機解析不會上載檔案；MinerU 雲端解析會將所選 PDF 傳送至第三方服務。</string>
     <string name="pdf_convert_local_title">使用本機文字層解析</string>
     <string name="pdf_convert_mineru_title">透過 MinerU 服務解析成電子書</string>
     <string name="pdf_convert_mineru_manual_title">手動使用 MinerU</string>
     <string name="pdf_convert_mineru_manual_description">自行在 MinerU 網站解析，再匯入 ZIP 或 Markdown 結果；無需 API 或 Token。</string>
     <string name="pdf_convert_mineru_manual_sheet_title">手動解析</string>
-    <string name="pdf_convert_mineru_manual_sheet_body">先開啟 MinerU 網站並自行上傳目前的 PDF。解析完成後下載 ZIP 或 Markdown，返回此處匯入。</string>
-    <string name="pdf_convert_mineru_manual_website_hint">在瀏覽器中自行上傳 PDF 並下載解析結果。</string>
+    <string name="pdf_convert_mineru_manual_sheet_body">先開啟 MinerU 網站並自行上載目前的 PDF。解析完成後下載 ZIP 或 Markdown，返回此處匯入。</string>
+    <string name="pdf_convert_mineru_manual_website_hint">在瀏覽器中自行上載 PDF 並下載解析結果。</string>
     <string name="pdf_convert_mineru_manual_import_hint">選擇從 MinerU 下載的 ZIP 或 Markdown 檔案。</string>
     <string name="pdf_convert_mineru_manual_progress_title">正在匯入 MinerU 結果</string>
     <string name="pdf_convert_mineru_manual_complete_body">已匯入 MinerU 結果並產生電子書。你可以留在目前的 PDF，或開啟產生的電子書檢查排版效果。</string>
     <string name="pdf_convert_mineru_not_configured_short">尚未設定，點按前往設定</string>
-    <string name="pdf_convert_mineru_mode_description">使用已設定的%1$s；PDF 將上傳至第三方服務。</string>
+    <string name="pdf_convert_mineru_mode_description">使用已設定的%1$s；PDF 將上載至第三方服務。</string>
     <string name="pdf_convert_mineru_not_configured_title">尚未設定 MinerU</string>
     <string name="pdf_convert_mineru_not_configured_body">請先前往設定，選擇目前免費的輕量解析，或設定個人 Token 使用精準解析。</string>
     <string name="pdf_convert_go_to_mineru_settings">前往 MinerU 設定</string>
     <string name="pdf_convert_mineru_book_title">%1$s（MinerU 解析）</string>
     <string name="pdf_convert_mineru_notification_title">正在透過 MinerU 解析 PDF</string>
-    <string name="pdf_convert_mineru_notification_progress">上傳或雲端解析中：%1$d%%</string>
+    <string name="pdf_convert_mineru_notification_progress">上載或雲端解析中：%1$d%%</string>
     <string name="pdf_convert_mineru_notification_complete">MinerU 已完成 %1$d 頁解析，點按開始閱讀</string>
     <string name="pdf_convert_error_mineru_not_configured">MinerU 尚未設定，請先在設定中選擇解析模式。</string>
     <string name="pdf_convert_error_mineru_file_limit">PDF 超出目前 MinerU 模式的大小限制：輕量解析 10MB，精準解析 200MB。</string>
     <string name="pdf_convert_error_mineru_page_limit">PDF 超出目前 MinerU 模式的頁數限制：輕量解析 20 頁，精準解析 200 頁。</string>
     <string name="pdf_convert_error_mineru_auth">個人 Token 無效、過期或無權限，請前往 MinerU 設定更新。</string>
     <string name="pdf_convert_error_mineru_rate_limit">MinerU 目前請求過多或額度已用完，請稍後重試或切換解析方式。</string>
-    <string name="pdf_convert_error_mineru_network">網路連線中斷或 MinerU 任務等待逾時，請檢查網路後重試。</string>
-    <string name="pdf_convert_error_mineru_upload">MinerU 儲存服務拒絕了檔案上傳，請稍後重試；若持續失敗，請改用本機解析。</string>
+    <string name="pdf_convert_error_mineru_network">網絡連線中斷或 MinerU 任務等待逾時，請檢查網絡後重試。</string>
+    <string name="pdf_convert_error_mineru_upload">MinerU 儲存服務拒絕了檔案上載，請稍後重試；若持續失敗，請改用本機解析。</string>
     <string name="pdf_convert_error_mineru_service">MinerU 服務暫時無法完成解析，請稍後重試或改用本機解析。</string>
     <string name="pdf_convert_error_mineru_result">MinerU 回傳的結果不完整或格式異常，無法產生電子書。</string>
     <string name="pdf_convert_error_mineru_manual_format">無法識別所選結果。請選擇從 MinerU 下載的 ZIP 或 Markdown 檔案。</string>
@@ -793,7 +793,7 @@
     <string name="external_tts_error_unauthorized">第三方 TTS 服務驗證失敗，請檢查 API Key</string>
     <string name="external_tts_error_rate_limited">第三方 TTS 服務請求過於頻繁，請稍後再試</string>
     <string name="external_tts_error_invalid_audio">第三方 TTS 服務回傳了無效音訊</string>
-    <string name="external_tts_error_network">第三方 TTS 服務網路請求失敗，請檢查連線</string>
+    <string name="external_tts_error_network">第三方 TTS 服務網絡請求失敗，請檢查連線</string>
     <string name="external_tts_error_service">第三方 TTS 服務暫時無法使用</string>
     <string name="external_tts_error_configuration">第三方 TTS 服務設定無效，請檢查服務設定</string>
     <string name="external_tts_key_required">請先輸入 API Key</string>
@@ -813,7 +813,7 @@
     <string name="external_tts_consent_accept">同意並啟用</string>
     <string name="external_tts_key_local">API Key 透過 Android KeyStore 加密後僅儲存在本機。</string>
     <string name="external_tts_http_warning_title">安全警告：HTTP 明文傳輸</string>
-    <string name="external_tts_http_warning_desc">HTTP 連線不加密，你的 API Key 與朗讀文字可能以明文在網路中傳輸，有遭竊聽的風險。強烈建議使用 HTTPS。</string>
+    <string name="external_tts_http_warning_desc">HTTP 連線不加密，你的 API Key 與朗讀文字可能以明文在網絡中傳輸，有遭竊聽的風險。強烈建議使用 HTTPS。</string>
     <string name="external_tts_http_confirm">我了解 HTTP 風險，仍要開啟</string>
     <string name="external_tts_http_enable">確認開啟 HTTP</string>
     <!-- WebDAV 同步 -->
@@ -824,7 +824,7 @@
     <string name="webdav_not_configured">未設定</string>
     <string name="webdav_server_url_label">伺服器位址</string>
     <string name="webdav_server_url_hint">https://dav.example.com/dav/</string>
-    <string name="webdav_username_label">使用者名稱</string>
+    <string name="webdav_username_label">用戶名稱</string>
     <string name="webdav_password_label">密碼</string>
     <string name="webdav_password_hint">輸入 WebDAV 密碼</string>
     <string name="webdav_token_saved">已加密儲存；留空可繼續使用</string>
@@ -835,26 +835,26 @@
     <string name="webdav_syncing">正在同步…</string>
     <string name="webdav_test_connection">測試連線</string>
     <string name="webdav_test_success">連線成功，WebDAV 服務可用</string>
-    <string name="webdav_test_failed">連線失敗，請檢查伺服器位址、使用者名稱和密碼</string>
+    <string name="webdav_test_failed">連線失敗，請檢查伺服器位址、用戶名稱和密碼</string>
     <string name="webdav_test_running">正在測試連線…</string>
     <string name="webdav_test_failed_detail">連線失敗：%1$s</string>
     <string name="webdav_test_success_dir_pending">連線成功；同步資料夾將在首次同步時自動建立</string>
     <string name="webdav_required_password">未設定 WebDAV 密碼，請重新輸入並儲存</string>
-    <string name="webdav_error_auth">認證失敗（HTTP 401）：請檢查使用者名稱與密碼；若伺服器啟用了兩步驟驗證，請使用應用程式專用密碼</string>
+    <string name="webdav_error_auth">認證失敗（HTTP 401）：請檢查用戶名稱與密碼；若伺服器啟用了兩步驟驗證，請使用應用程式專用密碼</string>
     <string name="webdav_error_forbidden">伺服器拒絕存取（HTTP 403）：請確認帳號有權限，且伺服器位址指向可寫入的 WebDAV 資料夾</string>
-    <string name="webdav_error_not_found">位址不存在（HTTP 404）：請檢查伺服器位址與同步資料夾。Nextcloud 一般形如 https://主機/remote.php/dav/files/使用者名稱/</string>
+    <string name="webdav_error_not_found">位址不存在（HTTP 404）：請檢查伺服器位址與同步資料夾。Nextcloud 一般形如 https://主機/remote.php/dav/files/用戶名稱/</string>
     <string name="webdav_error_conflict">無法在伺服器上建立同步資料夾（HTTP 409）：請確認伺服器位址指向已存在的 WebDAV 資料夾</string>
     <string name="webdav_error_not_supported">該位址不是可用的 WebDAV 資料夾（HTTP %1$d）：伺服器不支援 PROPFIND/MKCOL，請確認位址是否正確</string>
     <string name="webdav_error_service_unavailable">WebDAV 服務暫時無法使用（HTTP 503）：可能正在維護、負載過高或被反向代理攔截，請稍後重試並檢查伺服器狀態</string>
-    <string name="webdav_error_network">網路請求失敗：請檢查網路連線、伺服器位址與連接埠</string>
-    <string name="webdav_error_timeout">連線逾時：請檢查網路、伺服器狀態或位址是否正確</string>
+    <string name="webdav_error_network">網絡請求失敗：請檢查網絡連線、伺服器位址與連接埠</string>
+    <string name="webdav_error_timeout">連線逾時：請檢查網絡、伺服器狀態或位址是否正確</string>
     <string name="webdav_error_tls">憑證驗證失敗：伺服器憑證無效或為自簽憑證，請改用受信任的 HTTPS 憑證</string>
     <string name="webdav_error_invalid_url">伺服器位址無效：請以 http:// 或 https:// 開頭</string>
     <string name="webdav_error_redirect">伺服器將 WebDAV 請求重新導向至其他位址（目標主機：%1$s），請直接填寫最終 WebDAV 位址</string>
     <string name="webdav_error_invalid_response">伺服器回傳無法辨識的 WebDAV 回應（HTTP %1$s），可能被登入頁面、反向代理或閘道攔截</string>
-    <string name="webdav_server_url_help">建議填寫 WebDAV 的完整存取位址，例如 https://dav.example.com/dav/，Nextcloud 為 https://主機/remote.php/dav/files/使用者名稱/</string>
+    <string name="webdav_server_url_help">建議填寫 WebDAV 的完整存取位址，例如 https://dav.example.com/dav/，Nextcloud 為 https://主機/remote.php/dav/files/用戶名稱/</string>
     <string name="webdav_sync_success">同步完成</string>
-    <string name="webdav_sync_failed">同步失敗，請檢查網路和伺服器狀態</string>
+    <string name="webdav_sync_failed">同步失敗，請檢查網絡和伺服器狀態</string>
     <string name="webdav_disable">停用 WebDAV 同步</string>
     <string name="webdav_clear_config">清除設定</string>
     <string name="webdav_enable">儲存並啟用</string>
@@ -866,14 +866,14 @@
     <string name="webdav_last_sync_time">上次同步：%1$s</string>
     <string name="webdav_status_card_title">連線狀態</string>
     <string name="webdav_sync_path_hint">同步目錄（可選，預設為忘言Books）</string>
-    <string name="webdav_required_fields">請填寫伺服器位址和使用者名稱</string>
+    <string name="webdav_required_fields">請填寫伺服器位址和用戶名稱</string>
     <string name="webdav_third_party_title">關於 WebDAV 同步</string>
-    <string name="webdav_third_party_notice">WebDAV 同步使用您自行設定的 WebDAV 伺服器。您選擇的書籍檔案和閱讀資料將上傳至該伺服器。連接 NAS 或局域網伺服器時，本地網絡權限只用於存取該地址；公網 WebDAV 不需要此權限。忘言Books 不傳輸資料至自身伺服器，也不管控第三方伺服器的可用性與安全性。</string>
+    <string name="webdav_third_party_notice">WebDAV 同步使用您自行設定的 WebDAV 伺服器。您選擇的書籍檔案和閱讀資料將上載至該伺服器。連接 NAS 或局域網伺服器時，本地網絡權限只用於存取該地址；公網 WebDAV 不需要此權限。忘言Books 不傳輸資料至自身伺服器，也不管控第三方伺服器的可用性與安全性。</string>
     <string name="epub_render_mode">EPUB 排版模式</string>
     <string name="epub_book_layout">書籍原排版</string>
     <string name="epub_reader_layout">閱讀器排版</string>
-    <string name="epub_book_layout_hint">保留書籍內建的 HTML、CSS、字型與圖文結構，可能會增加效能開銷</string>
-    <string name="epub_reader_layout_hint">使用閱讀器統一的字型、段落間距與頁面邊距設定，更流暢，載入更快</string>
+    <string name="epub_book_layout_hint">保留書籍內置的 HTML、CSS、字體與圖文結構，可能會增加效能開銷</string>
+    <string name="epub_reader_layout_hint">使用閱讀器統一的字體、段落間距與頁面邊距設定，更流暢，載入更快</string>
     <string name="reader_external_link_title">開啟外部連結？</string>
     <string name="reader_external_link_message">這本 EPUB 想要開啟外部應用程式或網站：\n%1$s</string>
     <string name="reader_external_link_open">開啟</string>
@@ -891,11 +891,11 @@
     <string name="reader_layout_editor_reader_hint">僅影響閱讀器排版（TXT 與 EPUB/MOBI 閱讀器模式）</string>
     <string name="reader_layout_editor_book_hint">僅影響書籍原排版（EPUB/MOBI 原書排版）</string>
     <string name="epub_layout_first_open_title">EPUB 排版提示</string>
-    <string name="epub_layout_first_open_message">如果本書內建排版，可點擊螢幕中央，在「主題」中選擇「書籍原排版」。</string>
+    <string name="epub_layout_first_open_message">如果本書內置排版，可點擊螢幕中央，在「主題」中選擇「書籍原排版」。</string>
     <string name="epub_layout_first_open_confirm">知道了</string>
     <string name="reader_first_open_hint_do_not_show_again">不再提示</string>
     <string name="mobi_layout_first_open_title">MOBI 排版提示</string>
-    <string name="mobi_layout_first_open_message">如果本書內建排版，可點擊螢幕中央，在「主題」中選擇「書籍原排版」。</string>
+    <string name="mobi_layout_first_open_message">如果本書內置排版，可點擊螢幕中央，在「主題」中選擇「書籍原排版」。</string>
     <string name="mobi_layout_first_open_confirm">知道了</string>
     <string name="screen_sleep_timeout">螢幕休眠時間</string>
     <string name="screen_sleep_timeout_follow_system">跟隨系統</string>
@@ -934,7 +934,7 @@
 
     <string name="txt_toc_rule_dialog_title">TXT 目錄規則</string>
     <string name="txt_toc_rule_auto_section">自動偵測</string>
-    <string name="txt_toc_rule_auto_message">根據標題密度和編號連續性選擇最合適的內建規則。</string>
+    <string name="txt_toc_rule_auto_message">根據標題密度和編號連續性選擇最合適的內置規則。</string>
     <string name="txt_toc_rule_auto_title">自動選擇</string>
     <string name="txt_toc_rule_auto_description">自動比較下面四種規則，選擇最符合目前 TXT 的一種。</string>
     <string name="txt_toc_rule_multilingual_title">中英文及日韓章節</string>
@@ -972,7 +972,7 @@
     <string name="txt_toc_help_intro_title">甚麼是 TXT 目錄規則？</string>
     <string name="txt_toc_help_intro_body">忘言會逐行讀取 TXT。目錄規則會判斷哪些行是卷名或章節名並顯示在目錄中，不會改寫正文。</string>
     <string name="txt_toc_help_step_one_title">第一步：先試「自動選擇」</string>
-    <string name="txt_toc_help_step_one_body">自動選擇會比較內建規則的符合數量與編號連續性。大多數 TXT 直接使用即可；若結果不理想，再手動嘗試下面四種規則。</string>
+    <string name="txt_toc_help_step_one_body">自動選擇會比較內置規則的符合數量與編號連續性。大多數 TXT 直接使用即可；若結果不理想，再手動嘗試下面四種規則。</string>
     <string name="txt_toc_help_step_two_title">第二步：依標題外觀選擇</string>
     <string name="txt_toc_help_step_two_body">「中英文及日韓章節」適合第一章、Chapter 1、第1話、제1장與第一卷；「括號裝飾標題」適合【第一章】、[Chapter 1]；「數字編號章節」適合 1. 開始、2、出發；「符號開頭章節」適合 ☆、第一章、★、新的開始、◆：章節標題。</string>
     <string name="txt_toc_help_step_three_title">第三步：檢查符合數量</string>
@@ -990,7 +990,7 @@
     <string name="txt_toc_compat_description">以整份檔案語意比對，只使用規則中的正規表示式；規則中的指令碼淨化不會執行。</string>
     <string name="txt_toc_compat_empty">尚無相容規則</string>
     <string name="txt_toc_compat_badge_script">含指令碼（未執行）</string>
-    <string name="txt_toc_compat_import_preset">匯入內建相容預設</string>
+    <string name="txt_toc_compat_import_preset">匯入內置相容預設</string>
     <string name="txt_toc_compat_preset_result">已匯入 %1$d 條相容預設規則</string>
     <string name="txt_toc_compat_clear">清空相容規則</string>
     <string name="txt_toc_compat_cleared">相容規則已清空</string>
@@ -1002,7 +1002,7 @@
     <string name="txt_toc_import_not_json">無法辨識的規則檔案格式</string>
     <string name="txt_toc_import_unknown_format">無法辨識的規則檔案格式，僅支援 TXT 目錄規則</string>
     <string name="txt_toc_import_book_source_unsupported">本應用不支援書源格式，僅支援 TXT 目錄規則</string>
-    <string name="txt_toc_import_builtin_reserved">匯入的規則不能覆寫內建規則</string>
+    <string name="txt_toc_import_builtin_reserved">匯入的規則不能覆寫內置規則</string>
     <string name="txt_toc_import_result">已匯入忘言規則 %1$d 條、相容規則 %2$d 條，略過 %3$d 條，其中 %4$d 條含未執行的指令碼</string>
 
     <string name="reader_writing_mode">排版方向</string>
@@ -1035,7 +1035,7 @@
     <string name="webdav_sync_content_books">書籍原始檔案</string>
     <string name="webdav_sync_content_books_description">EPUB、PDF 和 TXT 檔案</string>
     <string name="webdav_sync_content_profile_settings">個人資料與設定</string>
-    <string name="webdav_sync_content_profile_settings_description">頭像、暱稱、主題、字型和閱讀偏好</string>
+    <string name="webdav_sync_content_profile_settings_description">頭像、暱稱、主題、字體和閱讀偏好</string>
     <string name="webdav_sync_content_library">書架組織</string>
     <string name="webdav_sync_content_library_description">資料夾、標籤、封面和書籍歸屬</string>
     <string name="webdav_sync_content_reading_data">閱讀資料與統計</string>
@@ -1070,7 +1070,7 @@
     <string name="tag_group_ungrouped">未分組</string>
     <string name="delete_primary_tag_title">刪除標籤「%1$s」？</string>
     <string name="delete_tag_with_children_desc">此標籤下有 %1$d 個子標籤</string>
-    <string name="delete_tag_simple_desc">刪除後無法復原</string>
+    <string name="delete_tag_simple_desc">刪除後無法還原</string>
     <string name="delete_tag_keep_children">保留子標籤</string>
     <string name="delete_tag_cascade">一併刪除</string>
     <string name="comic_mode">漫畫模式</string>
@@ -1526,7 +1526,7 @@
     <string name="knowledge_detail_no_targets">沒有可選的知識節點</string>
     <string name="knowledge_detail_untitled">未命名知識</string>
     <string name="knowledge_detail_delete_title">刪除這條知識？</string>
-    <string name="knowledge_detail_delete_body">原文證據與關聯關係會一併刪除，無法復原。</string>
+    <string name="knowledge_detail_delete_body">原文證據與關聯關係會一併刪除，無法還原。</string>
     <string name="knowledge_filter_all_books">全部書籍</string>
     <string name="knowledge_filter_empty">沒有符合條件的知識</string>
     <string name="knowledge_filter_clear">清除篩選</string>
