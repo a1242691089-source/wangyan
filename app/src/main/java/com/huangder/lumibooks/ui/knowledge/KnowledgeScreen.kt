@@ -12,12 +12,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -52,6 +55,8 @@ fun KnowledgeScreen(
     val cards by viewModel.visibleCards.collectAsState()
     val allTags by viewModel.tags.collectAsState()
     val selectedTag by viewModel.selectedTag.collectAsState()
+    val allBooks by viewModel.books.collectAsState()
+    val selectedBookId by viewModel.selectedBookId.collectAsState()
     val allCount by viewModel.cards.collectAsState()
 
     Column(
@@ -103,26 +108,83 @@ fun KnowledgeScreen(
             }
         }
 
+        Spacer(Modifier.height(AppSpace.xs))
+
+        // 书籍筛选：与标签行同款 chips，两个维度 AND 组合。
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = AppSpace.lg),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            FilterChip(
+                label = stringResource(R.string.knowledge_filter_all_books),
+                selected = selectedBookId == null,
+                onClick = { viewModel.setBook(null) },
+                modifier = Modifier.widthIn(max = 160.dp)
+            )
+            allBooks.forEach { book ->
+                FilterChip(
+                    label = book.title ?: stringResource(R.string.note_unanchored_chapter),
+                    selected = selectedBookId == book.bookId,
+                    onClick = {
+                        viewModel.setBook(if (selectedBookId == book.bookId) null else book.bookId)
+                    },
+                    modifier = Modifier.widthIn(max = 160.dp)
+                )
+            }
+        }
+
         Spacer(Modifier.height(AppSpace.sm))
 
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                horizontal = AppSpace.lg, vertical = AppSpace.sm
-            ),
-            verticalArrangement = Arrangement.spacedBy(AppSpace.md)
-        ) {
-            items(cards, key = { it.node.syncId.ifBlank { "node-${it.node.id}" } }) { card ->
-                KnowledgeCardItem(card = card, onClick = { onOpenNode(card.node.id) })
+        if (cards.isEmpty()) {
+            // 全部知识非空但筛选无命中：给出回到全量的出口。
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        stringResource(R.string.knowledge_filter_empty),
+                        fontSize = 14.sp,
+                        color = AppColors.TextSecondary
+                    )
+                    Spacer(Modifier.height(AppSpace.sm))
+                    Text(
+                        stringResource(R.string.knowledge_filter_clear),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = AppColors.Accent,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(50))
+                            .clickable { viewModel.clearFilters() }
+                            .padding(horizontal = 14.dp, vertical = 8.dp)
+                    )
+                }
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                    horizontal = AppSpace.lg, vertical = AppSpace.sm
+                ),
+                verticalArrangement = Arrangement.spacedBy(AppSpace.md)
+            ) {
+                items(cards, key = { it.node.syncId.ifBlank { "node-${it.node.id}" } }) { card ->
+                    KnowledgeCardItem(card = card, onClick = { onOpenNode(card.node.id) })
+                }
             }
         }
     }
 }
 
 @Composable
-private fun FilterChip(label: String, selected: Boolean, onClick: () -> Unit) {
+private fun FilterChip(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(50))
             .background(if (selected) AppColors.Accent else AppColors.BgGray)
             .clickable(onClick = onClick)
@@ -203,6 +265,25 @@ private fun KnowledgeCardItem(card: KnowledgeCard, onClick: () -> Unit) {
         if (card.node.tags.isNotEmpty()) {
             Spacer(Modifier.height(AppSpace.sm))
             AnnotationTagChips(card.node.tags)
+        }
+
+        // 关系计数：轻量提示这条知识已经连进知识网络，详情页才展开。
+        if (card.relationCount > 0) {
+            Spacer(Modifier.height(AppSpace.xs))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = AppIcons.Link,
+                    contentDescription = null,
+                    tint = AppColors.TextSecondary.copy(alpha = 0.8f),
+                    modifier = Modifier.size(14.dp)
+                )
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    stringResource(R.string.knowledge_relation_count, card.relationCount),
+                    fontSize = 12.sp,
+                    color = AppColors.TextSecondary.copy(alpha = 0.8f)
+                )
+            }
         }
     }
 }

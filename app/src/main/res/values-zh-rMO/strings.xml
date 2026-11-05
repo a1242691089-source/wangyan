@@ -1527,6 +1527,10 @@
     <string name="knowledge_detail_untitled">未命名知識</string>
     <string name="knowledge_detail_delete_title">刪除這條知識？</string>
     <string name="knowledge_detail_delete_body">原文證據與關聯關係會一併刪除，無法復原。</string>
+    <string name="knowledge_filter_all_books">全部書籍</string>
+    <string name="knowledge_filter_empty">沒有符合條件的知識</string>
+    <string name="knowledge_filter_clear">清除篩選</string>
+    <string name="knowledge_relation_count">%1$d 條關係</string>
     <string name="relation_type_mentions">提及</string>
     <string name="relation_type_explains">解釋</string>
     <string name="relation_type_supports">支持</string>

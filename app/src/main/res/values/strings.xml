@@ -78,6 +78,10 @@
     <string name="knowledge_detail_untitled">未命名知识</string>
     <string name="knowledge_detail_delete_title">删除这条知识？</string>
     <string name="knowledge_detail_delete_body">原文证据与关联关系会一并删除，无法恢复。</string>
+    <string name="knowledge_filter_all_books">全部书籍</string>
+    <string name="knowledge_filter_empty">没有符合条件的知识</string>
+    <string name="knowledge_filter_clear">清除筛选</string>
+    <string name="knowledge_relation_count">%1$d 条关系</string>
     <string name="relation_type_mentions">提及</string>
     <string name="relation_type_explains">解释</string>
     <string name="relation_type_supports">支持</string>

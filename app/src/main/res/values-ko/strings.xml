@@ -1520,6 +1520,10 @@
     <string name="knowledge_detail_untitled">제목 없는 지식</string>
     <string name="knowledge_detail_delete_title">이 지식을 삭제할까요?</string>
     <string name="knowledge_detail_delete_body">인용과 관계도 함께 삭제되며 복구할 수 없습니다.</string>
+    <string name="knowledge_filter_all_books">모든 책</string>
+    <string name="knowledge_filter_empty">조건에 맞는 지식이 없습니다</string>
+    <string name="knowledge_filter_clear">필터 지우기</string>
+    <string name="knowledge_relation_count">관계 %1$d개</string>
     <string name="relation_type_mentions">언급</string>
     <string name="relation_type_explains">설명</string>
     <string name="relation_type_supports">지지</string>

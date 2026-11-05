@@ -77,6 +77,10 @@
     <string name="knowledge_detail_untitled">Untitled knowledge</string>
     <string name="knowledge_detail_delete_title">Delete this knowledge item?</string>
     <string name="knowledge_detail_delete_body">Its excerpts and relations are deleted too and cannot be restored.</string>
+    <string name="knowledge_filter_all_books">All books</string>
+    <string name="knowledge_filter_empty">No knowledge matches the current filters</string>
+    <string name="knowledge_filter_clear">Clear filters</string>
+    <string name="knowledge_relation_count">%1$d relations</string>
     <string name="relation_type_mentions">Mentions</string>
     <string name="relation_type_explains">Explains</string>
     <string name="relation_type_supports">Supports</string>
