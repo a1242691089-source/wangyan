@@ -67,7 +67,7 @@ import kotlinx.coroutines.launch
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.bookshelf.BookshelfScreen
 import com.huangder.lumibooks.ui.bookshelf.AnnotationFeedScreen
-import com.huangder.lumibooks.ui.knowledge.KnowledgePlaceholderScreen
+import com.huangder.lumibooks.ui.knowledge.KnowledgeScreen
 import com.huangder.lumibooks.ui.profile.ProfileScreen
 import com.huangder.lumibooks.ui.skills.SkillsPlaceholderScreen
 import com.huangder.lumibooks.ui.components.BookTransitionOverlay
@@ -949,7 +949,9 @@ fun MainNavGraph(
                                     )
                                 }
                                 2 -> {
-                                    KnowledgePlaceholderScreen()
+                                    KnowledgeScreen(
+                                        onOpenBook = { bookId -> openBookRouteWithoutBook(bookId) }
+                                    )
                                 }
                                 3 -> {
                                     SkillsPlaceholderScreen()
