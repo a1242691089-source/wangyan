@@ -43,6 +43,8 @@ HK_RULES = (
     ("規範", "規管"),
     ("回饋", "反映"),
     ("簡訊", "短訊"),
+    # 港澳用「私隱」（PCPD 口径），台湾用「隱私」。TW 定稿已统一为「隱私」。
+    ("隱私", "私隱"),
 )
 
 PERMISSIONS = (
@@ -102,6 +104,15 @@ def to_hongkong(text):
     for a, b in HK_RULES:
         text = text.replace(a, b)
     return text
+
+
+def normalize_privacy(text):
+    """把「私隱」拉平回「隱私」，用于比较。
+
+    「隱私→私隱」是本批新引入的有意差异（旧文本 TW/HK 两边都混着两种写法），
+    所以复现旧 HK 的断言必须先归一，否则这条规则会把旧 TW 的 3 处「隱私」也改掉。
+    """
+    return text.replace("私隱", "隱私")
 
 
 def check_value(key, value):
@@ -189,8 +200,8 @@ def cmd_verify(args):
     ok = True
     for key in KEYS:
         old_tw, old_hk, old_mo = tw[key]["value"], hk[key]["value"], mo[key]["value"]
-        derived = to_hongkong(old_tw)
-        same = derived == old_hk
+        derived = normalize_privacy(to_hongkong(old_tw))
+        same = derived == normalize_privacy(old_hk)
         print(f"  {'✓' if same else '✗'} {key}: R(TW) == HK -> {same}")
         if not same:
             for i, (a, b) in enumerate(zip(derived, old_hk), 1):
@@ -221,8 +232,9 @@ def cmd_write(args):
 
     # 2) 派生前 pre-flight
     for key in KEYS:
-        assert to_hongkong(before["zh-rTW"][key]["value"]) == before["zh-rHK"][key]["value"], \
-            f"{key}: 派生规则无法复现现有 HK，先修规则"
+        derived = normalize_privacy(to_hongkong(before["zh-rTW"][key]["value"]))
+        existing = normalize_privacy(before["zh-rHK"][key]["value"])
+        assert derived == existing, f"{key}: 派生规则无法复现现有 HK，先修规则"
         assert before["zh-rHK"][key]["value"] == before["zh-rMO"][key]["value"], \
             f"{key}: 现有 HK/MO 不一致"
 

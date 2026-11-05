@@ -94,7 +94,9 @@ class TraditionalChineseTextGuardTest {
             "連線" to "連接",
             "規範" to "規管",
             "回饋" to "反映",
-            "簡訊" to "短訊"
+            "簡訊" to "短訊",
+            // 港澳用「私隱」（PCPD 口径），台湾用「隱私」。
+            "隱私" to "私隱"
         )
 
         private fun toHongKong(text: String): String =
