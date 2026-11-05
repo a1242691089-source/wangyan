@@ -5,6 +5,53 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.huangder.lumibooks.domain.model.AnnotationTags
 
 object DatabaseMigrations {
+    val MIGRATION_20_21 = object : Migration(20, 21) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // Knowledge domain: nodes + evidence (1:N, CASCADE). Sync fields mirror notes.
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `knowledge_nodes` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`syncId` TEXT NOT NULL, " +
+                    "`title` TEXT NOT NULL, " +
+                    "`thought` TEXT NOT NULL, " +
+                    "`tagsJson` TEXT NOT NULL DEFAULT '[]', " +
+                    "`createdAt` INTEGER NOT NULL, " +
+                    "`updatedAt` INTEGER NOT NULL)"
+            )
+            db.execSQL(
+                "CREATE UNIQUE INDEX IF NOT EXISTS `index_knowledge_nodes_syncId` " +
+                    "ON `knowledge_nodes` (`syncId`)"
+            )
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `knowledge_evidence` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`nodeId` INTEGER NOT NULL, " +
+                    "`syncId` TEXT NOT NULL, " +
+                    "`bookId` TEXT NOT NULL, " +
+                    "`chapterIndex` INTEGER NOT NULL, " +
+                    "`chapterTitle` TEXT, " +
+                    "`startPosition` INTEGER NOT NULL, " +
+                    "`endPosition` INTEGER NOT NULL, " +
+                    "`startLocatorJson` TEXT, " +
+                    "`endLocatorJson` TEXT, " +
+                    "`selectedText` TEXT NOT NULL, " +
+                    "`noteSyncId` TEXT, " +
+                    "`createdAt` INTEGER NOT NULL, " +
+                    "`updatedAt` INTEGER NOT NULL, " +
+                    "FOREIGN KEY(`nodeId`) REFERENCES `knowledge_nodes`(`id`) " +
+                    "ON UPDATE NO ACTION ON DELETE CASCADE)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_knowledge_evidence_nodeId` " +
+                    "ON `knowledge_evidence` (`nodeId`)"
+            )
+            db.execSQL(
+                "CREATE UNIQUE INDEX IF NOT EXISTS `index_knowledge_evidence_syncId` " +
+                    "ON `knowledge_evidence` (`syncId`)"
+            )
+        }
+    }
+
     val MIGRATION_19_20 = object : Migration(19, 20) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL("CREATE TABLE IF NOT EXISTS annotation_tags (name TEXT NOT NULL PRIMARY KEY, updatedAt INTEGER NOT NULL, isDeleted INTEGER NOT NULL DEFAULT 0)")

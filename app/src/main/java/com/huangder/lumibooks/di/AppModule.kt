@@ -76,7 +76,8 @@ object AppModule {
             DatabaseMigrations.MIGRATION_16_17,
             DatabaseMigrations.MIGRATION_17_18,
             DatabaseMigrations.MIGRATION_18_19,
-            DatabaseMigrations.MIGRATION_19_20
+            DatabaseMigrations.MIGRATION_19_20,
+            DatabaseMigrations.MIGRATION_20_21
         )
             .build()
     }
@@ -178,6 +179,23 @@ object AppModule {
         database: AppDatabase,
         syncIdentityStore: com.huangder.lumibooks.data.sync.SyncIdentityStore
     ): FolderRepository = FolderRepositoryImpl(folderDao, database.syncStateDao(), syncIdentityStore)
+
+    @Provides
+    @Singleton
+    fun provideKnowledgeDao(database: AppDatabase): com.huangder.lumibooks.data.local.dao.KnowledgeDao =
+        database.knowledgeDao()
+
+    @Provides
+    @Singleton
+    fun provideKnowledgeRepository(
+        knowledgeDao: com.huangder.lumibooks.data.local.dao.KnowledgeDao,
+        bookRepository: BookRepository,
+        database: AppDatabase,
+        syncIdentityStore: com.huangder.lumibooks.data.sync.SyncIdentityStore
+    ): com.huangder.lumibooks.domain.repository.KnowledgeRepository =
+        com.huangder.lumibooks.data.repository.KnowledgeRepositoryImpl(
+            knowledgeDao, bookRepository, database.syncStateDao(), syncIdentityStore, database
+        )
 
     @Provides
     @Singleton
