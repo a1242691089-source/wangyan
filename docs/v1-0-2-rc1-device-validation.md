@@ -92,6 +92,26 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 **遗留**：知识详情按钮的玻璃质感待 backdrop 升级/根因明确后恢复；其他 NavHost 目的地若有新增玻璃同样先 forceFallback；统计页虽存活，`StatisticsScreen.kt` 的玻璃用法建议单独复核。
 
+### P0 根治（结构层，2026-11-06 晚 · 待真机确认）
+
+上节写的「具体哪条采样链成环未完全定论」现已定到行：
+
+| 环节 | 位置 | 作用 |
+| --- | --- | --- |
+| ① 捕获层挂载 | `NavGraph.kt:851` `Modifier.layerBackdrop(liquidGlassBackdrop)`（条件 `canCaptureNavigationBackdrop && isLiquidGlass && !isLumiChan`） | NavHost **自身**把整棵导航内容（含当前目的地页面）每帧录进 `liquidGlassBackdrop` |
+| ② 采样链下发 | `AnchoredLiquidGlassMenu.kt:567`（`LiquidGlassMenuHost` 默认参数 `backdrop = LocalLiquidGlassBackdrop.current`）、`:1111`（面板内容 `provides` 同一个 backdrop） | 该层沿 CompositionLocal 一路下发到子树的每个玻璃节点 |
+| ③ 自采样 | 知识详情页两枚玻璃按钮不传 `backdrop`，取 `LocalLiquidGlassBackdrop.current` | 玻璃节点把「正在录制自己的那个捕获层」画进自己的离屏层 → RenderNode 自引用环 → `prepareTreeImpl ↔ 子节点遍历 functor` 无限递归 |
+
+**为什么只有知识详情页崩**：它是全仓唯一「NavHost 目的地 + 使用玻璃 + 零 backdrop 治理」的组合。结构同构的首页卡片「更多」按钮靠 `HomeScreen.kt:643` 一行 `CompositionLocalProvider(LocalLiquidGlassBackdrop provides null)` 活着，其上方注释写的就是这个自引用问题（"a surface that samples its own capture makes the render tree reference itself (native HWUI crash)"）。
+
+**「升级 backdrop 2.0.1」已排除**，四条证据：① 2.0.1 release notes 只有 Compose 1.12 抬版，2.0.0 只讲 KMP 化与 API 变更，均无递归/崩溃修复；② 上游 Issue #100 仍 open，维护者答复指向「使用方布局约束」；③ 1.0.6 与 2.0.1 的 `recordLayer` / `drawBackdrop` 机制逐段一致；④ 升级带 breaking change（`effects.effect` 只留 Compose 版，命中 `LiquidMenuOptics.kt:64`）。
+
+**根治改动**（分支 `fix/p0-backdrop-isolation`，提交 `c60de33`，**未合并**）：详情页头部 `Row` 外包 `CompositionLocalProvider(LocalLiquidGlassBackdrop provides null)`，删掉 rc1 的两处 `forceFallback = true`。按钮重新走玻璃管线，只失去背景折射——本页纯色背景，视觉几乎无差。
+
+**状态**：`assembleDebug` 已通过（`app-universal-debug.apk`），真机验证因设备占用中断。**线上 v1.0.2 正式包仍是 forceFallback 行为**，本节结论待验证，不得视为已交付。
+
+**待跑的真机矩阵**（设备空出后执行，全绿再合 main）：① 液态玻璃下打开详情 3/3 存活；② 进出详情页各一次；③ 删除确认弹窗；④ 添加关联 Sheet；⑤ 邻页抽查（统计 / 设置 / 首页）；⑥ 默认主题；⑦ 彩蛋主题。
+
 ### 仪器测试
 
 - 首轮 `connectedDebugAndroidTest --offline` 直接失败：缺 `androidx.test:monitor:1.6.1`、`espresso-core:3.5.1`、`espresso-idling-resource:3.5.0`、`room-testing:2.8.4` 及 UTP 插件 `android-test-plugin-host-additional-test-output:31.13.2`（本机 Gradle home 从未跑过 androidTest）。不是代码问题，联网跑即可。
