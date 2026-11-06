@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>이용약관</title>
+<style>
+:root { --bg: #FBFBFC; --card: #fff; --text: #000; --text2: #6E6E73; --line: #E5E5EA; --accent: #E85D5D; }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --card: #1C1C1E; --text: #fff; --text2: #98989D; --line: #38383A; --accent: #FF8A80; } }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; }
+p, li, th, td, .meta { overflow-wrap:anywhere; word-break:break-word; }
+pre, code { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }
+body { background:var(--bg); color:var(--text); font:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:20px 16px 60px; line-height:1.6; -webkit-text-size-adjust:100%; }
+h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+.meta { font-size:13px; color:var(--text2); margin-bottom:28px; }
+h2 { font-size:18px; font-weight:600; margin:28px 0 12px; padding-top:20px; border-top:1px solid var(--line); }
+h2:first-of-type { border-top:none; padding-top:0; }
+h3 { font-size:15px; font-weight:600; margin:16px 0 8px; }
+p { font-size:15px; color:var(--text2); margin-bottom:10px; }
+strong { color:var(--text); }
+table { width:100%; max-width:100%; table-layout:fixed; border-collapse:collapse; margin:10px 0 16px; font-size:13px; }
+th, td { text-align:left; vertical-align:top; padding:8px; border-bottom:1px solid var(--line); }
+th { font-weight:600; color:var(--text); font-size:12px; text-transform:uppercase; }
+td { color:var(--text2); }
+ul { list-style:none; padding:0; margin-bottom:10px; }
+li { padding:3px 0; font-size:14px; color:var(--text2); }
+li::before { content:"· "; color:var(--accent); font-weight:bold; }
+.cross { color:#c13515; }
+.note { font-size:13px; color:var(--text2); margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<h1>이용약관</h1>
+<p class="meta">약관 버전: 2 · 시행일: 2026년 6월 29일 · 최종 업데이트: 2026년 10월 1일</p>
+
+<h2>1. 약관의 동의</h2>
+<p>忘言(이하 “본 앱”)를 이용해 주셔서 감사합니다. 본 앱을 다운로드, 설치, 실행 또는 사용하면 본 약관을 읽고 이해했으며 이에 구속되는 데 동의한 것으로 간주됩니다. 동의하지 않으시면 본 앱의 사용을 중단해 주세요.</p>
+
+<h2>2. 앱 소개</h2>
+<h3>2.1 기능</h3>
+<p>忘言는 오픈소스 로컬 우선 전자책 리더이며, 주요 기능은 다음과 같습니다.</p>
+<ul>
+<li>EPUB, TXT, PDF 형식의 전자책을 읽고 로컬 서재, 읽기 진행률, 북마크, 노트, 읽기 통계를 관리합니다.</li>
+<li>시스템 파일 선택기로 파일을 가져오거나 폴더 권한을 부여하여, 지정한 위치의 책을 직접 읽습니다.</li>
+<li>앱 안에서 TXT를 편집하고, 저장을 확정하면 권한을 부여한 파일에 변경 사항을 기록합니다.</li>
+<li>시스템 TTS로 듣기 기능을 제공하며, OpenAI TTS, Xiaomi MiMo 또는 호환되는 서드파티 TTS를 이용자가 직접 설정할 수도 있습니다.</li>
+<li>이용자가 활성화한 뒤 MinerU/OpenDataLab 클라우드 서비스로 PDF를 해석합니다.</li>
+<li>이용자가 설정한 뒤 WebDAV로 도서, 읽기 진행률, 북마크, 노트를 동기화합니다.</li>
+<li>이용자가 설정하고 활성화하거나 직접 실행했을 때 Xiaomi MiMo, DeepSeek, OpenAI 또는 호환 서비스로 선택한 텍스트를 번역합니다.</li>
+<li>“설정 → 서비스 → 로컬 사전”에서 사전 데이터를 필요할 때 내려받습니다. 설치 후에는 오프라인으로 검색하며 자동으로 내려받거나 업데이트하지 않습니다.</li>
+<li>선택한 텍스트, 노트, 북마크로 발췌 카드를 만들어 이용자의 선택에 따라 시스템 사진 보관함에 저장하거나 다른 앱으로 공유합니다.</li>
+<li>이용자가 사용할 때 Bing, 바이두, Google 등 검색 서비스로 온라인 표지를 찾고, 방송체(仿宋) 글꼴을 선택하면 원격 글꼴을 필요할 때 내려받습니다.</li>
+</ul>
+
+<h3>2.2 앱의 성격</h3>
+<ul>
+<li>로컬 읽기, 로컬 해석, 시스템 TTS는 기본적으로 도서 내용을 업로드하지 않습니다.</li>
+<li>WebDAV, MinerU 클라우드 해석, 서드파티 TTS, AI 번역은 모두 선택적 네트워크 기능이며 이용자의 설정·활성화·확인이 필요합니다.</li>
+<li>본 앱은 忘言 계정 가입·로그인이나 개발자가 운영하는 클라우드 서재를 제공하지 않습니다.</li>
+<li>로컬 사전 검색은 기기에서 완료되며 검색어, 본문, 필터 적중 기록을 업로드하지 않습니다.</li>
+<li>忘言의 자체 코드는 GNU GPLv3로 공개되며, 서드파티 구성 요소와 개작 코드는 각자의 라이선스를 따릅니다.</li>
+</ul>
+
+<h2>3. 이용자의 권리와 의무</h2>
+<h3>이용자의 권리</h3>
+<ul>
+<li>사용 가능한 기능을 무료로 이용하고 읽기 데이터, 캐시, 설정을 직접 관리할 수 있습니다.</li>
+<li>WebDAV, MinerU, 서드파티 TTS, AI 번역 등 선택적 네트워크 기능을 언제든지 비활성화하고 관련 토큰, 비밀번호, API 키를 삭제할 수 있습니다.</li>
+<li>언제든지 본 앱을 삭제할 수 있습니다. 삭제하면 앱 전용 데이터는 지워지지만 이용자가 직접 관리하는 원본 전자책 파일은 삭제되지 않습니다.</li>
+<li>오픈소스 라이선스를 준수하는 범위에서 본 앱의 소스 코드를 열람, 수정, 배포할 수 있습니다.</li>
+</ul>
+<h3>이용자의 의무</h3>
+<ul>
+<li>읽기, 가져오기, 편집, 해석, 동기화하는 전자책과 내용이 타인의 지식재산권이나 그 밖의 정당한 권리를 침해하지 않도록 해야 합니다.</li>
+<li>처리할 권리가 있는 파일과 텍스트만 업로드·동기화·전송하고, DRM으로 보호된 콘텐츠, 타인의 민감한 개인정보, 영업비밀, 법령상 전송할 수 없는 내용을 업로드해서는 안 됩니다.</li>
+<li>WebDAV 서버 주소, 사용자 이름, 비밀번호, MinerU 토큰, 서드파티 TTS와 AI 번역 API 키를 직접 선택하고 보관하며, 계정 유출, 설정 오류, 서드파티 정책 변경으로 생기는 위험을 부담합니다.</li>
+<li>MinerU, WebDAV 제공자, OpenAI, Xiaomi MiMo 또는 기타 사용자 지정 서비스를 이용할 때 해당 서비스의 약관, 개인정보 처리방침, 요금, 한도 규칙을 준수해야 합니다.</li>
+<li>TXT 편집기로 저장하기 전에 내용을 확인하고 중요한 파일을 백업하여 잘못된 변경이나 덮어쓰기를 피해야 합니다.</li>
+<li>본 앱을 이용해 위법 행위, 권리 침해, 네트워크 서비스의 안전을 해치는 행위를 해서는 안 됩니다.</li>
+</ul>
+
+<h2>4. 지식재산권</h2>
+<p>본 앱은 오픈소스 프로젝트 Lumi Books를 기반으로 2차 개발되었습니다. 자체 소스 코드, 자체 인터페이스 디자인과 아이콘에 대한 권리는 원저자 huangder에게 있으며 GNU GPLv3에 따라 공개됩니다. 「忘言」의 이름, 아이콘, 브랜드 표식은 본 프로젝트 유지관리자가 보유합니다. 말아 넘기기 구현은 GPLv3 프로젝트 legado-E를 개작한 것입니다. 서드파티 의존성과 개작 코드의 권리는 각 권리자에게 있으며 해당 라이선스를 계속 따릅니다. 자세한 내용은 “오픈소스 라이선스” 페이지를 참고하세요. 소스 코드 공개로 앱 이름, 아이콘, 브랜드 표식에 대한 추가 상표 라이선스가 부여되지는 않습니다.</p>
+<p>본 앱을 통해 읽고, 편집하고, 해석하고, 낭독하고, 동기화하는 전자책과 그 내용에 대한 권리는 원권리자에게 있습니다. 본 앱은 도구 기능만 제공하며 이용자의 읽기 내용에 대해 권리를 주장하지 않습니다.</p>
+
+<h2>5. 면책</h2>
+<ul>
+<li>본 앱은 “있는 그대로” 제공되며 명시적 또는 묵시적 보증을 하지 않습니다. 모든 파일, 기기, OS 버전, 서드파티 인터페이스와의 완전한 호환성을 보장하지 않습니다.</li>
+<li>기기 고장, 시스템 충돌, 조작 실수, 파일 손상, 권한 취소, 캐시 정리, 앱 삭제로 인한 데이터 손실은 이용자가 부담합니다. 중요한 도서와 읽기 데이터는 정기적으로 백업하세요.</li>
+<li>WebDAV 서비스는 이용자가 선택한 제공자나 직접 구축한 환경이 제공하며, 본 앱은 그 가용성, 전송 속도, 저장 보안, 충돌 처리, 데이터 무결성, 삭제 결과, 정책 안정성을 보장하지 않습니다.</li>
+<li>MinerU/OpenDataLab은 제3자가 독립적으로 운영하며, 본 앱은 지속적 가용성, 해석 정확도, 처리 시간, 데이터 보관 기간, 요금, 서비스 정책의 불변을 보장하지 않습니다.</li>
+<li>서드파티 TTS의 합성 품질, 응답 속도, 가용성, 과금, 한도, 데이터 보존, 규정 준수 요건은 해당 서비스 제공자가 정하며, 본 앱은 서드파티 서비스에 대한 책임을 지지 않습니다.</li>
+<li>AI 번역의 정확성, 응답 속도, 가용성, 과금, 한도, 콘텐츠 처리, 데이터 보존은 해당 서비스 제공자가 정하며, 번역 결과는 참고용입니다.</li>
+<li>발췌 카드의 저장과 공유는 이용자의 조작으로 이루어집니다. 공유 후 받는 앱이 이미지와 그 내용을 처리하는 방식은 해당 앱의 약관과 개인정보 처리방침을 따릅니다.</li>
+<li>TXT 편집은 저장 권한을 부여한 파일의 내용을 변경합니다. 저장 오류, 인코딩 불일치, 원본 덮어쓰기가 발생하면 이용자의 백업으로 복원하세요.</li>
+</ul>
+
+<h2>6. 개인정보 보호</h2>
+<p>본 앱은 개인정보 보호를 중요하게 생각합니다. 읽기 데이터는 기본적으로 기기에 저장됩니다. 온라인 표지 검색, 기여자/아바타 표시, 원격 글꼴 다운로드, 사전 패키지 다운로드, 업데이트 확인, 그리고 이용자가 설정하거나 활성화한 WebDAV 동기화, MinerU 클라우드 해석, 서드파티 TTS, AI 번역, 외부 링크 접속은 각각 네트워크 요청을 발생시킵니다. 설치된 사전의 검색과 발췌 카드 생성은 기기에서 완료되며, 이용자가 직접 공유할 때에만 이미지가 받는 앱으로 전달됩니다. 자세한 내용은 <a href="privacy-ko.html">개인정보 처리방침</a>을 참고하세요.</p>
+
+<h2>7. 서드파티 서비스와 이용자가 선택한 서비스</h2>
+<ul>
+<li><strong>MinerU/OpenDataLab:</strong> PDF 클라우드 해석에 사용합니다. 처음 활성화하기 전에 OpenDataLab의 <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">서비스 약관</a>과 <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">개인정보 보호정책</a>을 읽고 동의한 뒤 파일 업로드를 확인해야 합니다.</li>
+<li><strong>WebDAV:</strong> 이용자가 서버 정보를 입력하고 수동 또는 자동 동기화를 결정합니다. 동기화 데이터에는 전자책 파일, 도서 목록, 읽기 진행률, 북마크, 노트, 선택한 텍스트가 포함될 수 있습니다.</li>
+<li><strong>서드파티 TTS:</strong> 이용자가 서비스를 선택하고 Base URL/API 키를 입력하여 위험에 동의합니다. 낭독 텍스트와 스타일 지시가 해당 서비스로 전송됩니다.</li>
+<li><strong>AI 번역:</strong> 이용자가 서비스를 선택하고 Base URL/API 키를 입력한 뒤 활성화하거나 직접 실행합니다. 현재 선택한 텍스트, 대상 언어, 모델 매개변수가 해당 서비스로 전송되며, HTTP를 켜면 평문으로 전송될 수 있습니다.</li>
+<li><strong>GitHub와 그 CDN:</strong> 업데이트, 기여자 목록, 아바타, 원격 글꼴 다운로드에 사용합니다. 네트워크 로그와 데이터 처리는 GitHub와 CDN 각자의 정책을 따릅니다.</li>
+<li><strong>표지 검색 서비스:</strong> 이용자가 온라인 표지 검색을 직접 사용할 때에만 책 제목이나 검색어를 받으며, 처리는 Bing, 바이두, Google 등의 정책을 따릅니다.</li>
+<li><strong>후원/기여자 페이지:</strong> 페이지를 열면 GitHub contributors API를 요청해 아바타를 불러오며, GitHub와 그 CDN은 일반적인 요청 메타데이터를 받습니다.</li>
+<li><strong>사전 다운로드:</strong> 이용자가 설정에서 다운로드나 업데이트를 확정했을 때에만 설정된 GitHub Release에서 사전 패키지를 내려받습니다. 설치 후 검색은 온라인 사전 서비스를 호출하지 않습니다.</li>
+</ul>
+
+<h2>8. 약관의 변경</h2>
+<p>당사는 기능 변화, 법령, 서드파티 서비스의 요구에 따라 본 약관을 변경할 권리를 보유합니다. 변경된 약관은 앱 안이나 웹에 게시하고 “최종 업데이트” 날짜를 갱신합니다. 개인정보, 데이터 전송, 핵심 기능, 이용자 의무와 관련된 중요한 변경은 앱 내 버전 안내로 다시 읽고 확인하도록 요청하며, 그 밖의 변경은 게시한 날부터 효력이 발생합니다.</p>
+
+<h2>9. 이용 종료와 종료 후 처리</h2>
+<p>이용자는 언제든지 본 앱의 사용을 중단하고 기기에서 삭제할 수 있습니다. 삭제 후 앱 전용 데이터는 시스템에 의해 지워지며 복구할 수 없습니다. 이용자가 직접 관리하는 전자책 원본 파일, WebDAV 서버의 사본, 서드파티 서비스가 이미 처리한 데이터는 앱 삭제와 함께 반드시 삭제되지는 않으므로 직접 관리하거나 해당 서비스 제공자에게 문의하세요.</p>
+
+<h2>10. 준거법</h2>
+<p>본 약관의 해석과 집행에는 중화인민공화국 법률을 적용합니다. 본 약관으로 인해 또는 이와 관련하여 발생하는 분쟁은 우선 우호적인 협의로 해결하며, 협의가 이루어지지 않으면 어느 당사자든 개발자 소재지의 관할 인민법원에 소송을 제기할 수 있습니다.</p>
+
+<h2>11. 기타 조항</h2>
+<p>본 약관의 어느 조항이 어떤 이유로든 무효 또는 집행 불가로 판단되면 해당 조항은 허용되는 최대 범위에서 집행되고 나머지 조항은 계속 유효합니다. 본 약관은 본 앱의 이용과 관련하여 이용자와 개발자 사이의 완전한 합의를 구성합니다.</p>
+
+<h2>12. 문의</h2>
+<p>본 이용약관에 대해 질문, 의견, 제안이 있으시면 다음 방법으로 연락해 주세요.</p>
+<ul>
+<li>개발자: a1242691089-source</li>
+<li>연락처: <a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+<p style="font-size:13px; color:var(--text2); margin-top:28px;">본 이용약관은 2026년 10월 1일에 마지막으로 업데이트되었습니다.</p>
+<p class="note">이 페이지가 전체 버전이며 앱과 함께 오프라인으로 제공됩니다. 네트워크 연결이 필요하지 않습니다.</p>
+</body>
+</html>

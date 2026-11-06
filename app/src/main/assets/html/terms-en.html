@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Terms of Service</title>
+<style>
+:root { --bg: #FBFBFC; --card: #fff; --text: #000; --text2: #6E6E73; --line: #E5E5EA; --accent: #E85D5D; }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --card: #1C1C1E; --text: #fff; --text2: #98989D; --line: #38383A; --accent: #FF8A80; } }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; }
+p, li, th, td, .meta { overflow-wrap:anywhere; word-break:break-word; }
+pre, code { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }
+body { background:var(--bg); color:var(--text); font:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:20px 16px 60px; line-height:1.6; -webkit-text-size-adjust:100%; }
+h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+.meta { font-size:13px; color:var(--text2); margin-bottom:28px; }
+h2 { font-size:18px; font-weight:600; margin:28px 0 12px; padding-top:20px; border-top:1px solid var(--line); }
+h2:first-of-type { border-top:none; padding-top:0; }
+h3 { font-size:15px; font-weight:600; margin:16px 0 8px; }
+p { font-size:15px; color:var(--text2); margin-bottom:10px; }
+strong { color:var(--text); }
+table { width:100%; max-width:100%; table-layout:fixed; border-collapse:collapse; margin:10px 0 16px; font-size:13px; }
+th, td { text-align:left; vertical-align:top; padding:8px; border-bottom:1px solid var(--line); }
+th { font-weight:600; color:var(--text); font-size:12px; text-transform:uppercase; }
+td { color:var(--text2); }
+ul { list-style:none; padding:0; margin-bottom:10px; }
+li { padding:3px 0; font-size:14px; color:var(--text2); }
+li::before { content:"· "; color:var(--accent); font-weight:bold; }
+.cross { color:#c13515; }
+.note { font-size:13px; color:var(--text2); margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<h1>Terms of Service</h1>
+<p class="meta">Terms version: 2 · Effective: June 29, 2026 · Last updated: October 1, 2026</p>
+
+<h2>1. Acceptance of these terms</h2>
+<p>Welcome to 忘言 (the “App”). By downloading, installing, opening or using the App, you confirm that you have read, understood and agreed to be bound by these Terms of Service; if you do not agree, please stop using the App.</p>
+
+<h2>2. About the App</h2>
+<h3>2.1 Features</h3>
+<p>忘言 is an open-source, local-first e-book reader. Its main features include:</p>
+<ul>
+<li>Reading EPUB, TXT and PDF e-books, and managing a local library, reading progress, bookmarks, notes and reading statistics.</li>
+<li>Importing files or authorizing folders through the system file picker so that books in the locations you designate can be read directly.</li>
+<li>Editing TXT inside the App and writing the changes back to the file you authorized when you confirm saving.</li>
+<li>System TTS listening; you may also configure OpenAI TTS, Xiaomi MiMo or a custom compatible third-party TTS service yourself.</li>
+<li>Parsing PDFs through the MinerU/OpenDataLab cloud service after you enable it.</li>
+<li>Syncing books, reading progress, bookmarks and notes over WebDAV after you configure it.</li>
+<li>Translating selected text through Xiaomi MiMo, DeepSeek, OpenAI or a custom compatible service after you configure it and enable or trigger it manually.</li>
+<li>Downloading dictionary packs on demand from “Settings → Services → Local dictionary”; after installation lookups are offline and nothing is downloaded or updated automatically.</li>
+<li>Turning selected text, notes or bookmarks into excerpt cards that you may save to the system photo library or share with other apps.</li>
+<li>Looking up online covers through search services such as Bing, Baidu or Google when you use that feature, and downloading remote fonts on demand when you choose the Fangsong typeface.</li>
+</ul>
+
+<h3>2.2 Nature of the App</h3>
+<ul>
+<li>Local reading, local parsing and system TTS do not upload book content by default.</li>
+<li>WebDAV, MinerU cloud parsing, third-party TTS and AI translation are all optional network features that require you to configure, enable or confirm them.</li>
+<li>The App offers no 忘言 account registration or sign-in, and no developer-operated cloud library.</li>
+<li>Local dictionary lookups happen on the device; the queried word, book text and filter hits are never uploaded.</li>
+<li>The original 忘言 code is released under the GNU GPLv3 license; third-party components and adapted code follow their own licenses.</li>
+</ul>
+
+<h2>3. Your rights and obligations</h2>
+<h3>Your rights</h3>
+<ul>
+<li>Use the available features free of charge and manage your reading data, caches and settings yourself.</li>
+<li>Disable optional network features such as WebDAV, MinerU, third-party TTS and AI translation at any time, and clear the related tokens, passwords or API keys.</li>
+<li>Uninstall the App at any time; uninstalling removes app-private data but does not delete the original e-book files you manage yourself.</li>
+<li>View, modify and distribute the App’s source code in compliance with its open-source license.</li>
+</ul>
+<h3>Your obligations</h3>
+<ul>
+<li>Ensure that the e-books and content you read, import, edit, parse or sync do not infringe the intellectual property or other lawful rights of others.</li>
+<li>Upload, sync or send only files and text you have the right to handle, and never upload DRM-protected content, other people’s sensitive personal information, trade secrets, or content that may not lawfully be transmitted.</li>
+<li>Choose and safeguard your WebDAV address, username, password, MinerU token, and third-party TTS and AI translation API keys, and accept the risks of account leakage, misconfiguration or changes in third-party policies.</li>
+<li>When using MinerU, a WebDAV provider, OpenAI, Xiaomi MiMo or any custom service, comply with that service’s terms, privacy policy, fees and quota rules.</li>
+<li>Review the content and back up important files before saving with the TXT editor, to avoid accidental modification or overwriting.</li>
+<li>Do not use the App for any unlawful, infringing activity or anything that compromises the security of network services.</li>
+</ul>
+
+<h2>4. Intellectual property</h2>
+<p>The App is developed from the open-source project Lumi Books. Rights in its original source code, original interface design and icons belong to the original author huangder and are made available under the GNU GPLv3 license; the “忘言” name, icon and brand marks are held by the maintainers of this project. The curl page-turn implementation is adapted from the GPLv3 project legado-E. Rights in third-party dependencies and adapted code belong to their respective owners and remain subject to their licenses; see the “Open source licenses” page for details. Open-sourcing the code grants no additional trademark license for the app name, icon or brand marks.</p>
+<p>Rights in the e-books you read, edit, parse, read aloud or sync through the App, and in their content, belong to the original rights holders. The App merely provides tools and claims no rights in your reading content.</p>
+
+<h2>5. Disclaimer</h2>
+<ul>
+<li>The App is provided “as is”, without any express or implied warranty. We do not warrant full compatibility with every file, device, OS version or third-party interface.</li>
+<li>You bear any data loss caused by device failure, system crash, mistake, file corruption, revoked permissions, cache clearing or uninstalling the App; back up important books and reading data regularly.</li>
+<li>WebDAV service is provided by the provider you choose or by your own environment; the App does not warrant its availability, transfer speed, storage security, conflict handling, data integrity, deletion results or policy stability.</li>
+<li>MinerU/OpenDataLab is operated independently by a third party; the App does not warrant continued availability, parsing accuracy, processing time, data retention periods, fees, or that its service policies will not change.</li>
+<li>For third-party TTS, synthesis quality, response speed, availability, billing, quotas, data retention and compliance requirements are determined by the corresponding provider; the App assumes no responsibility for third-party services.</li>
+<li>For AI translation, accuracy, response speed, availability, billing, quotas, content handling and data retention are determined by the corresponding provider; translation results are for reference only.</li>
+<li>Excerpt cards are saved or shared at your initiative; once shared, how the receiving app handles the image and its content is governed by that app’s own terms and privacy policy.</li>
+<li>TXT editing changes the content of the file you authorized for saving; if a save is wrong, the encoding incompatible, or the original overwritten, restore from your own backup.</li>
+</ul>
+
+<h2>6. Privacy</h2>
+<p>The App takes privacy seriously. Reading data is stored on your device by default; online cover search, contributor/avatar display, remote font downloads, dictionary pack downloads, update checks, and the WebDAV sync, MinerU cloud parsing, third-party TTS, AI translation or external links you configure or enable all trigger the corresponding network requests. Lookups in an installed dictionary and excerpt card generation happen on the device; the image is handed to another app only when you actively share the card. See the <a href="privacy-en.html">Privacy Policy</a> for details.</p>
+
+<h2>7. Third-party and user-chosen services</h2>
+<ul>
+<li><strong>MinerU/OpenDataLab:</strong> used for cloud PDF parsing. Before the first use you must read and accept OpenDataLab’s <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">terms of service</a> and <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">personal information protection policy</a>, and confirm the file upload.</li>
+<li><strong>WebDAV:</strong> you enter the server details and decide whether syncing is manual or automatic. Synced data may include e-book files, a book manifest, reading progress, bookmarks, notes and selected text.</li>
+<li><strong>Third-party TTS:</strong> you choose the service, fill in the base URL/API key and accept the risks. The spoken text segment and style prompt are sent to that service.</li>
+<li><strong>AI translation:</strong> you choose the service, fill in the base URL/API key, and enable or manually trigger it. The currently selected text, target language and model parameters are sent to that service; enabling HTTP may result in unencrypted transmission.</li>
+<li><strong>GitHub and its CDN:</strong> used for updates, the contributor list, avatars and remote font downloads; their network logs and data handling follow GitHub’s and the CDN’s own policies.</li>
+<li><strong>Cover search services:</strong> they receive the book title or keywords only when you actively use online cover search; processing follows the policies of Bing, Baidu, Google or the service used.</li>
+<li><strong>Sponsor/contributor page:</strong> opening the page requests the GitHub contributors API and loads avatars; GitHub and its CDN receive ordinary request metadata.</li>
+<li><strong>Dictionary download:</strong> the App downloads a dictionary pack from the configured GitHub Release only when you confirm a download or update in Settings; after installation, lookups do not call any online dictionary service.</li>
+</ul>
+
+<h2>8. Changes to these terms</h2>
+<p>We reserve the right to modify these terms in line with feature changes, laws and regulations, or third-party service requirements. Revised terms are published in the App or on the website together with a new “last updated” date. Material changes involving privacy, data transfer, core features or user obligations are announced through an in-app version prompt that asks you to read and accept them again; other changes take effect when published.</p>
+
+<h2>9. Termination and consequences</h2>
+<p>You may stop using the App and uninstall it at any time. After uninstalling, app-private data is deleted by the system and cannot be recovered; e-book source files you manage yourself, copies on WebDAV servers, and data already processed by third-party services are not necessarily deleted with the App, so please manage them yourself or contact the relevant providers.</p>
+
+<h2>10. Governing law</h2>
+<p>These terms are interpreted and enforced under the laws of the People’s Republic of China. Disputes arising from or relating to these terms should be resolved through friendly negotiation; if negotiation fails, either party may bring an action before the competent people’s court at the developer’s location.</p>
+
+<h2>11. Miscellaneous</h2>
+<p>If any provision of these terms is held invalid or unenforceable for any reason, that provision shall be enforced to the maximum extent permitted and the remaining provisions shall stay in effect. These terms constitute the entire agreement between you and the developer regarding use of the App.</p>
+
+<h2>12. Contact us</h2>
+<p>If you have any question, comment or suggestion about these Terms of Service, please contact us:</p>
+<ul>
+<li>Developer: a1242691089-source</li>
+<li>Contact: <a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+<p style="font-size:13px; color:var(--text2); margin-top:28px;">These Terms of Service were last updated on October 1, 2026.</p>
+<p class="note">This page is the complete version, provided offline with the app; no network access is required.</p>
+</body>
+</html>

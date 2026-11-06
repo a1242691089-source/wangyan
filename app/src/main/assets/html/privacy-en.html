@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Privacy Policy</title>
+<style>
+:root { --bg: #FBFBFC; --card: #fff; --text: #000; --text2: #6E6E73; --line: #E5E5EA; --accent: #E85D5D; }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --card: #1C1C1E; --text: #fff; --text2: #98989D; --line: #38383A; --accent: #FF8A80; } }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; }
+p, li, th, td, .meta { overflow-wrap:anywhere; word-break:break-word; }
+pre, code { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }
+body { background:var(--bg); color:var(--text); font:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:20px 16px 60px; line-height:1.6; -webkit-text-size-adjust:100%; }
+h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+.meta { font-size:13px; color:var(--text2); margin-bottom:28px; }
+h2 { font-size:18px; font-weight:600; margin:28px 0 12px; padding-top:20px; border-top:1px solid var(--line); }
+h2:first-of-type { border-top:none; padding-top:0; }
+h3 { font-size:15px; font-weight:600; margin:16px 0 8px; }
+p { font-size:15px; color:var(--text2); margin-bottom:10px; }
+strong { color:var(--text); }
+table { width:100%; max-width:100%; table-layout:fixed; border-collapse:collapse; margin:10px 0 16px; font-size:13px; }
+th, td { text-align:left; vertical-align:top; padding:8px; border-bottom:1px solid var(--line); }
+th { font-weight:600; color:var(--text); font-size:12px; text-transform:uppercase; }
+td { color:var(--text2); }
+ul { list-style:none; padding:0; margin-bottom:10px; }
+li { padding:3px 0; font-size:14px; color:var(--text2); }
+li::before { content:"· "; color:var(--accent); font-weight:bold; }
+.cross { color:#c13515; }
+.note { font-size:13px; color:var(--text2); margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<h1>Privacy Policy</h1>
+<p class="meta">Policy version: 3 · Effective: June 29, 2026 · Last updated: October 1, 2026</p>
+
+<h2>1. Introduction</h2>
+<p>忘言 (the “App”), meaning “Words Left Unsaid”, is an open-source, local-first e-book reader. We know privacy matters to you. This policy explains how the App handles data, and which optional features send data to online services that you choose or confirm.</p>
+<p>The App does not provide any book content, and does not provide, bundle, import or share online book sources or subscription feeds; it performs no online search or content download. TXT chapter rules (including the optional third-party compatibility rules) are used only to parse TXT files that are local or that you have authorized; any script-sanitizing code carried by such rules is never executed.</p>
+<p><strong>Core principle: reading, library, progress, notes and most settings are stored on your device by default. Only when you actively configure or enable network features — WebDAV sync, MinerU cloud parsing, third-party TTS, AI translation — are the relevant book files, reading data or selected text sent to the matching service. On-demand local dictionaries are queried offline once installed; queries, book text and filter hits are never uploaded.</strong></p>
+<p>Local dictionary content is not bundled in the APK. You can review the catalog in Settings and then confirm the download; packages are verified by version and SHA-256, stored in the app-private directory, and excluded from system backup and WebDAV sync.</p>
+<p><strong>Open-source transparency:</strong> the original 忘言 code is released under the GNU GPLv3 license; third-party components follow their own licenses, and the complete source code is public and auditable.</p>
+
+<h2>2. Permissions</h2>
+<p>The App requests only the Android permissions required for reading and for its optional features:</p>
+<table>
+<tr><th>Permission</th><th>Purpose</th><th>Required</th></tr>
+<tr><td>READ_EXTERNAL_STORAGE (Android 12 and below)</td><td>Read the EPUB, TXT, PDF and other e-book files you select</td><td>Needed for basic reading</td></tr>
+<tr><td>READ_MEDIA_IMAGES (Android 13 and above)</td><td>Read book covers, images you export, and image resources you select</td><td>Depends on Android version</td></tr>
+<tr><td>INTERNET</td><td>Check updates, announcements and the current version of terms/policy; download local dictionaries and remote fonts on demand; connect to the WebDAV server you configure; connect to MinerU, third-party TTS and AI translation services; load the cover search and external link pages you open yourself</td><td>Needed for network features</td></tr>
+<tr><td>ACCESS_LOCAL_NETWORK</td><td>Used only when the WebDAV address you configured points to a NAS, router or other LAN server, to connect to that server; public WebDAV does not need it</td><td>Requested as needed on Android 17 and above</td></tr>
+<tr><td>ACCESS_NETWORK_STATE</td><td>Determine network availability so that update checks, sync, cloud parsing, third-party TTS and AI translation requests can run</td><td>Needed for network features</td></tr>
+<tr><td>WRITE_SETTINGS</td><td>Change the system screen-off timeout when you enable a custom screen-on duration</td><td>Only when that feature is enabled</td></tr>
+<tr><td>FOREGROUND_SERVICE / FOREGROUND_SERVICE_MEDIA_PLAYBACK</td><td>Support TTS playback in the background and its status notification</td><td>Needed for listening</td></tr>
+<tr><td>FOREGROUND_SERVICE_DATA_SYNC</td><td>Show progress for long tasks such as PDF/MinerU parsing or WebDAV sync</td><td>Needed for those tasks</td></tr>
+<tr><td>POST_NOTIFICATIONS (Android 13 and above)</td><td>Show notifications for reading playback, parsing and sync progress</td><td>Used after you grant it</td></tr>
+<tr><td>WAKE_LOCK</td><td>Keep the device awake during background TTS playback so audio is not interrupted</td><td>Needed for listening</td></tr>
+<tr><td>SYSTEM_ALERT_WINDOW</td><td>Show the floating subtitle window over other apps when you enable it</td><td>Only when floating subtitles are enabled</td></tr>
+</table>
+<p><strong>The App does not request the following permissions:</strong></p>
+<ul>
+<li><span class="cross">✕</span> Location</li>
+<li><span class="cross">✕</span> Camera or microphone</li>
+<li><span class="cross">✕</span> Contacts</li>
+<li><span class="cross">✕</span> Phone state</li>
+<li><span class="cross">✕</span> SMS, calendar and other sensitive permissions unrelated to reading</li>
+</ul>
+
+<h2>3. How data is handled</h2>
+<h3>3.1 On-device data</h3>
+<p>The following data is stored on your device or in the file locations you authorize:</p>
+<table>
+<tr><th>Data type</th><th>Details</th><th>Storage</th></tr>
+<tr><td>E-book files</td><td>EPUB, TXT and PDF files that you import, open, download via sync, or read through an authorized folder</td><td>Local files / app sandbox / user-authorized location</td></tr>
+<tr><td>Reading data</td><td>Reading progress, recently read, bookmarks, notes, selected text, reading time</td><td>Room/SQLite</td></tr>
+<tr><td>Reading preferences</td><td>Font size, theme, line spacing, page-turn mode, screen-on duration and other settings</td><td>DataStore</td></tr>
+<tr><td>Folder authorization</td><td>Persisted access to file or folder URIs granted through the system file picker</td><td>System grant records / local settings</td></tr>
+<tr><td>TXT edits</td><td>When you edit a TXT inside the App, changes are saved back to the authorized original or target file</td><td>User-authorized file location</td></tr>
+<tr><td>MinerU settings</td><td>Parsing mode, consent version and time; your personal token is encrypted with the Android Keystore</td><td>DataStore / encrypted storage</td></tr>
+<tr><td>WebDAV settings</td><td>Server URL, username, sync path, sync mode, last sync time; the password is encrypted with the Android Keystore</td><td>DataStore / encrypted storage</td></tr>
+<tr><td>Third-party TTS settings</td><td>Service type, base URL, model, voice, style prompt, consent time; the API key is encrypted with the Android Keystore</td><td>DataStore / encrypted storage</td></tr>
+<tr><td>AI translation settings</td><td>Service type, base URL, authentication method, model, target language and HTTP switch; the API key is encrypted with the Android Keystore</td><td>DataStore / encrypted storage</td></tr>
+<tr><td>TTS audio cache</td><td>Audio segments returned by third-party TTS are cached locally to avoid repeated requests; they can be evicted automatically or cleared by you</td><td>App cache directory</td></tr>
+<tr><td>Excerpt cards</td><td>Cards use the book title, author, chapter, selected text, notes and cover; temporary files stay in the app cache, and saved images are written to the system photo library</td><td>App cache directory / system photo library</td></tr>
+</table>
+
+<h3>3.2 Scenarios that involve network transfer</h3>
+<ul>
+<li>Update, announcement and terms/policy checks: the App may access the project release page or document URL, and — when you select the Fangsong font — download the font file on demand from GitHub Raw or jsDelivr.</li>
+<li>WebDAV sync: when you configure it and sync manually or automatically, the App connects to the WebDAV server you entered and uploads/downloads book files, a book manifest (such as file name, hash, size, modification time), reading progress, bookmarks, notes and the selected text attached to notes.</li>
+<li>MinerU cloud parsing: when you explicitly choose cloud parsing for a PDF, the selected PDF, a randomized file name, your network IP, parsing parameters, the task identifier and — for precise parsing — your personal token are sent to MinerU/OpenDataLab services, and the result is downloaded.</li>
+<li>Third-party TTS: when you choose OpenAI TTS, Xiaomi MiMo or a custom compatible service, the text of the current segment, the model/voice, the style prompt and the necessary credentials are sent to the service you configured; how the server handles that data depends on its own terms and policy. If you enable HTTP, the API key and the spoken text may be transmitted unencrypted and could be intercepted.</li>
+<li>AI translation: when you enable or manually trigger AI translation, the currently selected text, the target language, model parameters and the necessary credentials are sent to Xiaomi MiMo, DeepSeek, OpenAI or the custom compatible service you chose. If you allow HTTP, the API key and the selected text may be transmitted unencrypted and could be intercepted.</li>
+<li>Cover search: when you open online cover search or submit a search, the current book title and keywords are sent through a WebView to the search service you choose, such as Bing, Baidu or Google; those services may also record your IP, request time and browser/network information.</li>
+<li>Sponsor page contributors: when you open the sponsor/contributors page, the App requests the GitHub contributors API and loads GitHub avatars. GitHub and its CDN receive ordinary request metadata under their own policies.</li>
+<li>External links: when you tap a GitHub, feedback, download or third-party agreement link, the corresponding website is opened.</li>
+<li>Local dictionary download: a dictionary package is downloaded from a fixed Release address and verified only when you confirm a download or update; after installation, queries never upload the queried word, book text or filter hits.</li>
+<li>Excerpt card sharing: cards are generated on the device. Only after you tap share and pick a receiving app is the generated image handed to that app; what happens next is governed by that app’s terms and privacy policy.</li>
+</ul>
+
+<h3>3.3 Data the App does not handle</h3>
+<ul>
+<li>It does not collect personally identifying information such as your name, phone number, contacts or precise location.</li>
+<li>It does not collect device identifiers such as IMEI, Android ID or MAC address for tracking.</li>
+<li>It integrates no third-party analytics, advertising, profiling, push notification or crash-reporting SDK.</li>
+<li>It provides no 忘言 account system and no developer-operated cloud library; WebDAV is a server you choose, and the data is under your control.</li>
+<li>Apart from the network features you actively configure, enable, open or tap, it never uploads your books or reading content.</li>
+</ul>
+
+<h2>4. Storage and security</h2>
+<ul>
+<li>The reading database and settings live in the app-private sandbox, protected by Android’s app isolation.</li>
+<li>MinerU tokens, WebDAV passwords, and third-party TTS and AI translation API keys are encrypted with the Android Keystore and excluded from system backup and device migration.</li>
+<li>The EPUB reading WebView blocks external network resources; publisher CSS is used only for local layout.</li>
+<li>Temporary upload, download and parsing caches are deleted when the task ends or the cache is cleared; third-party TTS audio caches can be evicted automatically.</li>
+<li>You can clear reading history, bookmarks, caches and related settings inside the App; uninstalling removes app-private data, but does not delete e-book files you manage yourself on the device.</li>
+</ul>
+
+<h2>5. Third-party and user-chosen services</h2>
+<p>The App integrates no analytics, advertising, push notification or crash-reporting services. The following network capabilities are all optional or triggered by you:</p>
+<ul>
+<li><strong>OpenDataLab / MinerU:</strong> used for cloud PDF parsing, operated independently of 忘言. Please read its <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">terms of service</a> and <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">personal information protection policy</a> before use.</li>
+<li><strong>WebDAV providers or your own server:</strong> used to sync books and reading data. The address, availability, security, retention and deletion are determined by the provider you choose or by your own environment.</li>
+<li><strong>Third-party TTS services:</strong> including OpenAI TTS, Xiaomi MiMo or a compatible endpoint you configure. Spoken text, style prompts, API key usage and billing are governed by the corresponding service terms.</li>
+<li><strong>AI translation services:</strong> including Xiaomi MiMo, DeepSeek, OpenAI or a compatible endpoint you configure. Selected text, target language, model parameters, API key usage and billing are governed by the corresponding service terms.</li>
+<li><strong>GitHub and its CDN:</strong> used for updates, the contributor list, avatars and remote font downloads. Network logs, retention and deletion follow GitHub’s and the CDN’s own policies.</li>
+<li><strong>Search services such as Bing, Baidu and Google:</strong> they receive the book title or keywords only when you actively use online cover search; processing is governed by their own policies.</li>
+<li><strong>Dictionary release address:</strong> dictionary releases and catalogs are hosted on the GitHub address configured by the project; once downloaded, dictionary content and lookups need no network.</li>
+</ul>
+<p>If you do not want books or text to leave your device, do not enable WebDAV sync, MinerU cloud parsing, third-party TTS, AI translation or online cover search; use local reading, local parsing, system TTS and local dictionaries instead.</p>
+
+<h2>6. Children’s privacy</h2>
+<p>The App is not directed at children under 13 and does not knowingly collect their personal information. If a guardian believes a child may have submitted personal information through an optional third-party service, please contact us and the relevant service provider.</p>
+
+<h2>7. Changes to this policy</h2>
+<p>We may update this policy as features, laws or third-party services change. Updates are published in the App or on the website together with a new “last updated” date; material changes are announced with an in-app version prompt that asks you to read and accept them again.</p>
+
+<h2>8. Contact us</h2>
+<p>If you have any question, comment or suggestion about this privacy policy or how data is handled, please contact us:</p>
+<ul>
+<li>Developer: a1242691089-source</li>
+<li>Contact: <a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+
+<h2>9. Scope</h2>
+<p>This privacy policy applies only to the features of 忘言 (com.wangyan.reader) on Android, and not to the data handling of third-party services themselves.</p>
+<p style="font-size:13px; color:var(--text2); margin-top:28px;">This privacy policy was last updated on October 1, 2026.</p>
+<p class="note">This page is the complete version, provided offline with the app; no network access is required.</p>
+</body>
+</html>

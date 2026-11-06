@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>개인정보 처리방침</title>
+<style>
+:root { --bg: #FBFBFC; --card: #fff; --text: #000; --text2: #6E6E73; --line: #E5E5EA; --accent: #E85D5D; }
+@media (prefers-color-scheme: dark) { :root { --bg: #000; --card: #1C1C1E; --text: #fff; --text2: #98989D; --line: #38383A; --accent: #FF8A80; } }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; }
+p, li, th, td, .meta { overflow-wrap:anywhere; word-break:break-word; }
+pre, code { max-width:100%; white-space:pre-wrap; overflow-wrap:anywhere; word-break:break-word; }
+body { background:var(--bg); color:var(--text); font:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:20px 16px 60px; line-height:1.6; -webkit-text-size-adjust:100%; }
+h1 { font-size:24px; font-weight:700; margin-bottom:4px; }
+.meta { font-size:13px; color:var(--text2); margin-bottom:28px; }
+h2 { font-size:18px; font-weight:600; margin:28px 0 12px; padding-top:20px; border-top:1px solid var(--line); }
+h2:first-of-type { border-top:none; padding-top:0; }
+h3 { font-size:15px; font-weight:600; margin:16px 0 8px; }
+p { font-size:15px; color:var(--text2); margin-bottom:10px; }
+strong { color:var(--text); }
+table { width:100%; max-width:100%; table-layout:fixed; border-collapse:collapse; margin:10px 0 16px; font-size:13px; }
+th, td { text-align:left; vertical-align:top; padding:8px; border-bottom:1px solid var(--line); }
+th { font-weight:600; color:var(--text); font-size:12px; text-transform:uppercase; }
+td { color:var(--text2); }
+ul { list-style:none; padding:0; margin-bottom:10px; }
+li { padding:3px 0; font-size:14px; color:var(--text2); }
+li::before { content:"· "; color:var(--accent); font-weight:bold; }
+.cross { color:#c13515; }
+.note { font-size:13px; color:var(--text2); margin-top:20px; padding-top:16px; border-top:1px solid var(--line); }
+a { color:var(--accent); }
+</style>
+</head>
+<body>
+<h1>개인정보 처리방침</h1>
+<p class="meta">정책 버전: 3 · 시행일: 2026년 6월 29일 · 최종 업데이트: 2026년 10월 1일</p>
+
+<h2>1. 들어가며</h2>
+<p>忘言(이하 “본 앱”)는 오픈소스 로컬 우선 전자책 리더입니다. 개인정보가 중요하다는 점을 잘 알고 있습니다. 본 방침은 본 앱이 데이터를 어떻게 처리하는지, 그리고 어떤 선택 기능이 이용자가 선택하거나 확인한 네트워크 서비스로 데이터를 보내는지 설명합니다.</p>
+<p>본 앱은 어떤 도서 콘텐츠도 제공하지 않으며, 온라인 서원이나 구독 피드를 제공·내장·가져오기·공유하지 않습니다. 온라인 검색이나 콘텐츠 다운로드도 하지 않습니다. TXT 목차 규칙(선택적 서드파티 호환 규칙 포함)은 기기 내 파일이나 이용자가 권한을 부여한 TXT 파일을 해석하는 데에만 사용되며, 규칙에 포함된 스크립트 정화 코드는 실행되지 않습니다.</p>
+<p><strong>핵심 원칙: 읽기, 서재, 진행률, 노트 및 대부분의 설정은 기본적으로 기기에 저장됩니다. WebDAV 동기화, MinerU 클라우드 해석, 서드파티 TTS, AI 번역 등 네트워크 기능을 이용자가 직접 설정하거나 활성화할 때에만 해당 도서 파일, 읽기 데이터 또는 선택한 텍스트가 해당 서비스로 전송됩니다. 필요할 때 받는 로컬 사전은 설치 후 오프라인으로 검색되며, 검색어와 본문, 필터 적중 기록은 업로드되지 않습니다.</strong></p>
+<p>로컬 사전 본문은 APK에 포함되어 있지 않습니다. 설정에서 목록을 확인한 뒤 다운로드를 확정할 수 있으며, 패키지는 버전과 SHA-256을 검증하고 앱 전용 디렉터리에 저장되며 시스템 백업과 WebDAV 동기화에서 제외됩니다.</p>
+<p><strong>오픈소스 투명성:</strong> 忘言의 자체 코드는 GNU GPLv3로 공개되며, 서드파티 구성 요소는 각자의 라이선스를 따릅니다. 전체 소스 코드는 공개되어 누구나 검토할 수 있습니다.</p>
+
+<h2>2. 권한</h2>
+<p>본 앱은 읽기와 선택 기능에 필요한 Android 권한만 요청합니다.</p>
+<table>
+<tr><th>권한</th><th>용도</th><th>필요성</th></tr>
+<tr><td>READ_EXTERNAL_STORAGE (Android 12 이하)</td><td>이용자가 선택한 EPUB, TXT, PDF 등 전자책 파일을 읽습니다</td><td>기본 읽기에 필요</td></tr>
+<tr><td>READ_MEDIA_IMAGES (Android 13 이상)</td><td>도서 표지, 내보낸 이미지, 이용자가 선택한 이미지 리소스를 읽습니다</td><td>Android 버전에 따라 필요</td></tr>
+<tr><td>INTERNET</td><td>업데이트·공지·약관 및 방침 버전 확인, 로컬 사전과 원격 글꼴의 필요 시 다운로드, 이용자가 설정한 WebDAV 서버 연결, MinerU·서드파티 TTS·AI 번역 서비스 연결, 이용자가 직접 연 표지 검색과 외부 링크 페이지 로드에 사용합니다</td><td>네트워크 기능에 필요</td></tr>
+<tr><td>ACCESS_LOCAL_NETWORK</td><td>이용자가 설정한 WebDAV 주소가 NAS, 공유기 등 LAN 서버를 가리킬 때에만 해당 서버 연결에 사용합니다. 공용 WebDAV에는 필요하지 않습니다</td><td>Android 17 이상에서 필요 시 요청</td></tr>
+<tr><td>ACCESS_NETWORK_STATE</td><td>업데이트 확인, 동기화, 클라우드 해석, 서드파티 TTS, AI 번역 요청을 실행할 수 있도록 네트워크 상태를 판단합니다</td><td>네트워크 기능에 필요</td></tr>
+<tr><td>WRITE_SETTINGS</td><td>사용자 지정 화면 켜짐 시간을 활성화한 경우 시스템 화면 꺼짐 시간을 변경합니다</td><td>해당 기능 사용 시에만</td></tr>
+<tr><td>FOREGROUND_SERVICE / FOREGROUND_SERVICE_MEDIA_PLAYBACK</td><td>TTS 백그라운드 재생과 재생 상태 알림을 지원합니다</td><td>듣기 기능에 필요</td></tr>
+<tr><td>FOREGROUND_SERVICE_DATA_SYNC</td><td>PDF/MinerU 해석이나 WebDAV 동기화 같은 장시간 작업의 진행률을 표시합니다</td><td>해당 작업에 필요</td></tr>
+<tr><td>POST_NOTIFICATIONS (Android 13 이상)</td><td>낭독 재생, 해석, 동기화 진행 알림을 표시합니다</td><td>허용 후 사용</td></tr>
+<tr><td>WAKE_LOCK</td><td>TTS 백그라운드 재생 중 기기가 잠들지 않게 하여 재생이 끊기지 않도록 합니다</td><td>듣기 기능에 필요</td></tr>
+<tr><td>SYSTEM_ALERT_WINDOW</td><td>플로팅 자막을 활성화한 경우 다른 앱 위에 자막 창을 표시합니다</td><td>플로팅 자막 사용 시에만</td></tr>
+</table>
+<p><strong>본 앱은 다음 권한을 요청하지 않습니다.</strong></p>
+<ul>
+<li><span class="cross">✕</span> 위치 정보</li>
+<li><span class="cross">✕</span> 카메라 / 마이크</li>
+<li><span class="cross">✕</span> 연락처</li>
+<li><span class="cross">✕</span> 통화 상태</li>
+<li><span class="cross">✕</span> SMS, 캘린더 등 읽기와 무관한 민감 권한</li>
+</ul>
+
+<h2>3. 데이터 처리</h2>
+<h3>3.1 기기 내 데이터</h3>
+<p>다음 데이터는 기기 또는 이용자가 권한을 부여한 파일 위치에 저장됩니다.</p>
+<table>
+<tr><th>데이터 유형</th><th>내용</th><th>저장 방식</th></tr>
+<tr><td>전자책 파일</td><td>이용자가 가져오기, 열기, 동기화 다운로드 또는 폴더 권한을 통해 읽는 EPUB, TXT, PDF 파일</td><td>로컬 파일 / 앱 샌드박스 / 이용자 권한 위치</td></tr>
+<tr><td>읽기 데이터</td><td>읽기 진행률, 최근 읽은 책, 북마크, 노트, 선택한 텍스트, 읽기 시간</td><td>Room/SQLite</td></tr>
+<tr><td>읽기 설정</td><td>글자 크기, 테마, 줄 간격, 페이지 넘김 방식, 화면 켜짐 시간 등 설정</td><td>DataStore</td></tr>
+<tr><td>폴더 권한</td><td>시스템 파일 선택기로 부여한 파일·폴더 URI의 영구 접근 권한</td><td>시스템 권한 기록 / 로컬 설정</td></tr>
+<tr><td>TXT 편집 내용</td><td>앱에서 TXT를 편집하면 변경 사항이 권한을 부여한 원본 또는 대상 파일에 기록됩니다</td><td>이용자 권한 파일 위치</td></tr>
+<tr><td>MinerU 설정</td><td>해석 모드, 동의 버전과 시각. 개인 토큰은 Android Keystore로 암호화합니다</td><td>DataStore / 암호화 저장소</td></tr>
+<tr><td>WebDAV 설정</td><td>서버 URL, 사용자 이름, 동기화 경로, 동기화 모드, 최근 동기화 시각. 비밀번호는 Android Keystore로 암호화합니다</td><td>DataStore / 암호화 저장소</td></tr>
+<tr><td>서드파티 TTS 설정</td><td>서비스 유형, Base URL, 모델, 음색, 스타일 지시, 동의 시각. API 키는 Android Keystore로 암호화합니다</td><td>DataStore / 암호화 저장소</td></tr>
+<tr><td>AI 번역 설정</td><td>서비스 유형, Base URL, 인증 방식, 모델, 대상 언어, HTTP 사용 여부. API 키는 Android Keystore로 암호화합니다</td><td>DataStore / 암호화 저장소</td></tr>
+<tr><td>TTS 오디오 캐시</td><td>서드파티 TTS가 반환한 오디오를 중복 요청을 줄이기 위해 로컬에 캐시합니다. 자동 정리 또는 이용자가 직접 삭제할 수 있습니다</td><td>앱 캐시 디렉터리</td></tr>
+<tr><td>발췌 카드</td><td>카드 생성 시 책 제목, 저자, 장, 선택한 텍스트, 노트, 표지를 사용합니다. 임시 파일은 앱 캐시에 있으며 저장한 이미지는 시스템 사진 보관함에 기록됩니다</td><td>앱 캐시 디렉터리 / 시스템 사진 보관함</td></tr>
+</table>
+
+<h3>3.2 네트워크 전송이 발생하는 상황</h3>
+<ul>
+<li>업데이트·공지·약관 및 방침 확인: 프로젝트 릴리스 페이지나 문서 주소에 접속할 수 있으며, 방송체(仿宋) 글꼴을 선택하면 GitHub Raw 또는 jsDelivr에서 필요할 때 글꼴 파일을 내려받습니다.</li>
+<li>WebDAV 동기화: 이용자가 설정하고 수동 또는 자동으로 동기화하면 입력한 WebDAV 서버에 접속하여 도서 파일, 도서 목록(파일 이름, 해시, 크기, 수정 시각 등), 읽기 진행률, 북마크, 노트 및 노트에 연결된 선택 텍스트를 주고받습니다.</li>
+<li>MinerU 클라우드 해석: PDF 클라우드 해석을 이용자가 직접 선택하면 선택한 PDF, 무작위화한 파일 이름, 네트워크 IP, 해석 매개변수, 작업 식별자, 정밀 해석에 필요한 개인 토큰이 MinerU/OpenDataLab 관련 서비스로 전송되고 결과를 내려받습니다.</li>
+<li>서드파티 TTS: OpenAI TTS, Xiaomi MiMo 또는 호환 서비스를 선택하면 현재 낭독 텍스트, 모델/음색, 스타일 지시, 필요한 인증 정보가 설정한 서비스로 전송됩니다. 서버의 처리 방식은 해당 서비스의 약관과 방침을 따릅니다. HTTP를 켜면 API 키와 낭독 텍스트가 암호화되지 않은 채 전송되어 도청될 수 있습니다.</li>
+<li>AI 번역: AI 번역을 활성화하거나 직접 실행하면 현재 선택한 텍스트, 대상 언어, 모델 매개변수, 필요한 인증 정보가 선택한 Xiaomi MiMo, DeepSeek, OpenAI 또는 호환 서비스로 전송됩니다. HTTP를 허용하면 API 키와 선택 텍스트가 암호화되지 않은 채 전송되어 도청될 수 있습니다.</li>
+<li>표지 검색: 온라인 표지 검색을 열거나 검색을 제출하면 현재 책 제목과 검색어가 WebView를 통해 이용자가 선택한 Bing, 바이두, Google 등 검색 서비스로 전송됩니다. 이러한 서비스는 IP, 요청 시각, 브라우저 및 네트워크 정보를 기록할 수 있습니다.</li>
+<li>후원 페이지 기여자: 후원/기여자 페이지를 열면 GitHub contributors API를 요청하고 GitHub 아바타를 불러옵니다. GitHub와 그 CDN은 각자의 방침에 따라 일반적인 요청 메타데이터를 받습니다.</li>
+<li>외부 링크: GitHub, 피드백, 다운로드, 서드파티 약관 등의 링크를 눌렀을 때 해당 사이트로 이동합니다.</li>
+<li>로컬 사전 다운로드: 이용자가 다운로드나 업데이트를 확정했을 때에만 고정된 Release 주소에서 사전 패키지를 받아 검증합니다. 설치 후 검색은 검색어, 본문, 필터 적중 기록을 업로드하지 않습니다.</li>
+<li>발췌 카드 공유: 카드는 기기에서 생성됩니다. 이용자가 공유를 눌러 받을 앱을 선택한 때에만 생성된 이미지가 해당 앱으로 전달되며, 이후 처리는 받는 앱의 약관과 개인정보 처리방침을 따릅니다.</li>
+</ul>
+
+<h3>3.3 본 앱이 처리하지 않는 데이터</h3>
+<ul>
+<li>이름, 전화번호, 연락처, 정확한 위치 등 개인을 식별할 수 있는 정보를 수집하지 않습니다.</li>
+<li>IMEI, Android ID, MAC 주소 등 기기 식별자를 추적 목적으로 수집하지 않습니다.</li>
+<li>서드파티 분석, 광고, 프로파일링, 푸시 알림, 충돌 보고 SDK를 포함하지 않습니다.</li>
+<li>忘言 계정 시스템이나 개발자가 운영하는 클라우드 서재를 제공하지 않습니다. WebDAV는 이용자가 선택한 서버이며 데이터는 이용자가 관리합니다.</li>
+<li>이용자가 직접 설정·활성화·열람·클릭한 위의 네트워크 기능 외에는 도서와 읽기 내용을 자발적으로 업로드하지 않습니다.</li>
+</ul>
+
+<h2>4. 저장과 보안</h2>
+<ul>
+<li>읽기 데이터베이스와 설정은 앱 전용 샌드박스에 저장되며 Android 앱 격리 메커니즘으로 보호됩니다.</li>
+<li>MinerU 토큰, WebDAV 비밀번호, 서드파티 TTS와 AI 번역 API 키는 Android Keystore로 암호화해 저장하며 시스템 백업과 기기 이전 대상에서 제외합니다.</li>
+<li>EPUB 읽기용 WebView는 외부 네트워크 리소스 로드를 차단하며, 출판사 CSS는 로컬 조판 표시에만 사용합니다.</li>
+<li>임시 업로드, 다운로드, 해석 캐시는 작업 종료 또는 캐시 정리 시 삭제되며, 서드파티 TTS 오디오 캐시는 자동으로 정리될 수 있습니다.</li>
+<li>읽기 기록, 북마크, 캐시, 관련 설정은 앱 안에서 삭제할 수 있습니다. 앱을 삭제하면 앱 전용 데이터는 지워지지만, 기기에서 이용자가 직접 관리하는 원본 전자책 파일은 삭제되지 않습니다.</li>
+</ul>
+
+<h2>5. 서드파티 서비스와 이용자가 선택한 서비스</h2>
+<p>본 앱은 분석, 광고, 푸시 알림, 충돌 보고 서비스를 포함하지 않습니다. 다음 네트워크 기능은 모두 선택 사항이거나 이용자의 조작으로 실행됩니다.</p>
+<ul>
+<li><strong>OpenDataLab / MinerU:</strong> PDF 클라우드 해석에 사용하며 忘言와 독립적으로 운영됩니다. 사용 전에 <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">서비스 약관</a>과 <a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">개인정보 보호정책</a>을 읽어 주세요.</li>
+<li><strong>WebDAV 제공자 또는 직접 구축한 서버:</strong> 도서와 읽기 데이터 동기화에 사용합니다. 주소, 가용성, 보안, 보관, 삭제는 이용자가 선택한 제공자나 직접 구축한 환경이 결정합니다.</li>
+<li><strong>서드파티 TTS 서비스:</strong> OpenAI TTS, Xiaomi MiMo 또는 설정한 호환 엔드포인트를 포함합니다. 낭독 텍스트, 스타일 지시, API 키 사용, 요금은 해당 서비스 약관을 따릅니다.</li>
+<li><strong>AI 번역 서비스:</strong> Xiaomi MiMo, DeepSeek, OpenAI 또는 설정한 호환 엔드포인트를 포함합니다. 선택 텍스트, 대상 언어, 모델 매개변수, API 키 사용, 요금은 해당 서비스 약관을 따릅니다.</li>
+<li><strong>GitHub와 그 CDN:</strong> 업데이트, 기여자 목록, 아바타, 원격 글꼴 다운로드에 사용합니다. 네트워크 로그의 기록·보관·삭제는 GitHub와 CDN 각자의 방침을 따릅니다.</li>
+<li><strong>Bing, 바이두, Google 등 검색 서비스:</strong> 이용자가 온라인 표지 검색을 직접 사용할 때에만 책 제목이나 검색어를 받습니다. 처리는 각 서비스의 방침을 따릅니다.</li>
+<li><strong>사전 배포 주소:</strong> 사전 Release와 목록은 프로젝트가 설정한 GitHub 주소에 호스팅됩니다. 다운로드가 끝나면 사전 본문과 검색에 네트워크가 필요하지 않습니다.</li>
+</ul>
+<p>도서나 텍스트가 기기 밖으로 나가기를 원하지 않는다면 WebDAV 동기화, MinerU 클라우드 해석, 서드파티 TTS, AI 번역, 온라인 표지 검색을 활성화하지 말고 로컬 읽기, 로컬 해석, 시스템 TTS, 로컬 사전을 사용하세요.</p>
+
+<h2>6. 아동의 개인정보</h2>
+<p>본 앱은 만 13세 미만 아동을 대상으로 하지 않으며 아동의 개인정보를 고의로 수집하지 않습니다. 보호자가 아동이 선택적 서드파티 서비스를 통해 개인정보를 제출했을 가능성을 발견하면 저희와 해당 서비스 제공자에게 모두 연락해 주세요.</p>
+
+<h2>7. 방침의 변경</h2>
+<p>기능, 법령 또는 서드파티 서비스의 변화에 따라 본 방침을 업데이트할 수 있습니다. 업데이트 후에는 앱 안이나 웹에 공개하고 “최종 업데이트” 날짜를 갱신합니다. 중요한 변경은 앱 내 버전 안내로 다시 읽고 확인하도록 요청합니다.</p>
+
+<h2>8. 문의</h2>
+<p>본 개인정보 처리방침이나 데이터 처리에 대해 질문, 의견, 제안이 있으시면 다음 방법으로 연락해 주세요.</p>
+<ul>
+<li>개발자: a1242691089-source</li>
+<li>연락처: <a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+
+<h2>9. 적용 범위</h2>
+<p>본 개인정보 처리방침은 Android의 忘言(com.wangyan.reader) 기능에만 적용되며 서드파티 서비스 자체의 데이터 처리에는 적용되지 않습니다.</p>
+<p style="font-size:13px; color:var(--text2); margin-top:28px;">본 개인정보 처리방침은 2026년 10월 1일에 마지막으로 업데이트되었습니다.</p>
+<p class="note">이 페이지가 전체 버전이며 앱과 함께 오프라인으로 제공됩니다. 네트워크 연결이 필요하지 않습니다.</p>
+</body>
+</html>
