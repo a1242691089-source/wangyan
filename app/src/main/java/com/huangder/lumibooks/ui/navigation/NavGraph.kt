@@ -802,8 +802,13 @@ fun MainNavGraph(
     LumiBackgroundHost(
         scene = backgroundScene,
         modifier = Modifier.fillMaxSize(),
-        bookshelfHeaderBottom = bookshelfHeaderBottom,
-        backgroundBackdrop = liquidGlassBackdrop
+        bookshelfHeaderBottom = bookshelfHeaderBottom
+        // Never pass the NavHost-wide `liquidGlassBackdrop` here. Destination content
+        // (e.g. KnowledgeDetail's glass buttons) samples `LocalLumiBackgroundBackdrop`;
+        // recording the NavHost into it makes the sampler part of its own captured
+        // layer -> RenderNode self-reference -> RenderThread stack overflow (SIGSEGV).
+        // Glass that must blur page content (tab bar, menus, dialogs) receives the
+        // capture explicitly and lives OUTSIDE the NavHost, so it stays safe.
     ) {
     LiquidGlassMenuHost(
         modifier = Modifier.fillMaxSize(),

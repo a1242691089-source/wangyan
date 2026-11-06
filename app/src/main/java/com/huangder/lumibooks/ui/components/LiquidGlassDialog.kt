@@ -158,10 +158,21 @@ fun LiquidGlassDialogHost(
         LocalLiquidGlassBackdrop provides activeBackdrop.takeIf { isLiquidGlass }
     ) {
         Box(modifier = modifier) {
-            Box(
-                modifier = Modifier.fillMaxSize()
+            // Content must NOT inherit the dialog capture. The dialog backdrop is a
+            // layer that records THIS host's content (the whole NavHost); a glass
+            // surface inside that content sampling it becomes part of its own captured
+            // layer -> RenderNode self-reference -> RenderThread stack overflow
+            // (SIGSEGV, e.g. KnowledgeDetail opening). Destination glass falls back to
+            // the Lumi artwork backdrop instead; the dialog overlay below still sees
+            // `activeBackdrop` because it is composed outside this inner provider.
+            CompositionLocalProvider(
+                LocalLiquidGlassBackdrop provides inheritedBackdrop.takeIf { isLiquidGlass }
             ) {
-                content()
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    content()
+                }
             }
 
             AnimatedVisibility(

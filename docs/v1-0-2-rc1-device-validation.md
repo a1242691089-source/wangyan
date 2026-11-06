@@ -65,17 +65,36 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 | # | 级别 | 问题 | 证据 |
 | --- | --- | --- | --- |
-| 1 | **P0 阻塞** | **点击知识卡片必崩**：SIGSEGV (SEGV_ACCERR) RenderThread **栈溢出**，512 帧全部是 `libhwui RenderNode::prepareTreeImpl` 互递归（渲染树过深）。冷启动直接进知识页点卡片 2/2 稳定复现，无 Java 堆栈。知识详情页完全不可用 | crash buffer：`stack pointer is close to top of stack; likely stack overflow` |
+| 1 | **P0 阻塞** | **点击知识卡片必崩（已定位并热修，见下文「P0 根因与热修」）**：SIGSEGV (SEGV_ACCERR) RenderThread **栈溢出**，完整栈（`#000` 起 510 帧）100% 是 `libhwui RenderNode::prepareTreeImpl` 互递归，零应用/View 帧 —— RenderNode 渲染树成环。触发条件：**液态玻璃主题下打开知识详情**（页面顶部两个 `LiquidGlassIconButton` 的玻璃渲染路径）。默认主题同路径存活；动画时长置 0 仍崩（排除转场时序）；统计页玻璃正常（非泛化问题） | `p0-crash.txt`、`docs/` 下复现脚本 `p0_repro.py` |
 | 2 | P1 | **拆分 strings 资源未本地化**：res/values 下另有 13 个 `*_strings.xml`/`excerpt.xml` 等文件（共约 241 条），棘轮与历次补齐只覆盖 strings.xml。实测缺口：ja/ko 各 74、zh-rTW 58、zh-rHK/MO 各 78、en 4。表现为韩文界面混排「本地词典」「词库按需下载…」「浏览和管理 OPDS 远程书库」等简体原文 | dictionary_strings.xml、remote_library_strings.xml 等 |
 | 3 | P1 | **应用内法律文档无本地化**：关于页「隐私政策/用户协议」加载 `assets/html/privacy.html`、`terms.html`，只有简体中文一个版本；标题栏走 strings.xml 是译文，形成「繁体标题+简体正文」混排。ja/ko/en 用户同样看到简体文档 | tw-privacy-top.png |
 | 4 | P3 | `LocaleHelper.LANGUAGE_DISPLAY_NAMES` 把「跟隨系統設定」硬编码为繁体，简体界面下也显示繁体 | LocaleHelper.kt:26 |
 
 **未验证**（受阻于 #1 或超出本轮）：高亮规则导入导出占位符替换、划词「存为知识」到节点关系管理、性能与发热。
 
+### P0 根因与热修（2026-11-06 下午）
+
+**实证矩阵**（Galaxy S24 Ultra / Android 16，脚本 `D:/wb-tc/device-test/p0_repro.py` 自动复现）：
+
+| 场景 | 主题 | 结果 |
+| --- | --- | --- |
+| 知识列表 → 点卡片进详情 | 液态玻璃 | 崩 6/6（多轮，含动画时长=0） |
+| 同路径 | 默认 | 存活 |
+| 知识详情按钮 forceFallback | 液态玻璃 | 存活 2/2 |
+| 统计页 / 笔记 Tab / 设置页（独立 Activity）玻璃 | 液态玻璃 | 存活 |
+
+**结论**：崩溃需要「液态玻璃管线 + 知识详情页内两个玻璃按钮」。完整栈 510 帧纯 `prepareTreeImpl ↔ 子节点遍历 functor` 交替 —— 渲染树存在 RenderNode 自引用环。backdrop 库 1.0.6 的机制：`layerBackdrop` 每帧把宿主子树重录进 GraphicsLayer；玻璃节点再把采样层画进自己的离屏层（`CompositingStrategy.Offscreen` + RuntimeShader 链）。当「被录进捕获层的玻璃节点」与「采样链」组合成环时，RenderThread `prepareTree` 无限递归直至栈溢出。具体哪条采样链在知识详情页成环未完全定论（两次 backdrop 供给修复后仍崩，forceFallback 才根治），疑似与设备/Compose/hwui 版本相关的库缺陷（上游 backdrop 已迭代到 2.0.1）。
+
+**热修（3 处，均为低风险）**：
+1. `KnowledgeDetailScreen.kt`：详情页两个 `LiquidGlassIconButton` 加 `forceFallback = true`（根治，已真机验证 2/2 不崩）。代价：玻璃主题下详情页按钮退化为普通圆钮。
+2. `NavGraph.kt` `LumiBackgroundHost` 不再把 NavHost 捕获层传作 `backgroundBackdrop` —— 恢复 `LumiBackground.kt:44` 注释声明的设计（"cards can never sample their own render nodes"），目的地内玻璃兜底只采样背景画布。
+3. `LiquidGlassDialog.kt` `LiquidGlassDialogHost` 的 content 不再继承弹窗采样 backdrop（弹窗本体不受影响），防止全局玻璃弹窗可见期间主内容玻璃采样到含自身的捕获层。
+
+**遗留**：知识详情按钮的玻璃质感待 backdrop 升级/根因明确后恢复；其他 NavHost 目的地若有新增玻璃同样先 forceFallback；统计页虽存活，`StatisticsScreen.kt` 的玻璃用法建议单独复核。
+
 ### 仪器测试
 
 - 首轮 `connectedDebugAndroidTest --offline` 直接失败：`androidx.test:monitor:1.6.1`、`espresso-core:3.5.1`、`espresso-idling-resource:3.5.0`、`room-testing:2.8.4` 不在离线缓存（本机 Gradle home 从未跑过 androidTest，JVM 单测不需要这几个包）。这不是代码问题，去掉 `--offline` 联网解析即可。
 - 联网后 `:app:assembleDebugAndroidTest` 在 2m51s 内成功，产出 `app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk`（1.4 MB）。
-- 执行阶段受阻：设备在编译期间掉线（`adb devices` 空，USB 上已无三星设备），connected 测试与 P0 复现都跑不了。复现脚本已备好：`D:/wb-tc/device-test/p0_repro.py`（清 logcat → 流式抓全量 → 冷启动 → 知识 Tab → 点首张卡片 → 判 `pidof` 存活 → 抽取含 `#000` 起始帧的 crash 段）。
 
-结果待补：util 包冒烟（i18n 守门所在分片）与全量 150 条 connectedDebugAndroidTest；以及 P0 的完整 tombstone 头部帧（现有 512 帧里只留存了 `#452`–`#512`，`#0`–`#451` 被 logcat 环形缓冲冲掉，无法判定递归起点是应用侧还是框架侧的 RenderNode 自引用）。
+结果待补：util 包冒烟（i18n 守门所在分片）与全量 150 条 connectedDebugAndroidTest。P0 的完整 tombstone 已于下午补齐（`#000` 起 510 帧，见「P0 根因与热修」）。

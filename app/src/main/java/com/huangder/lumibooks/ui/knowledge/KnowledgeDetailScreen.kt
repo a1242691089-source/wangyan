@@ -106,7 +106,16 @@ fun KnowledgeDetailScreen(
                 size = 40.dp,
                 iconSize = 18.dp,
                 contentColor = AppColors.TextPrimary,
-                normalContainerColor = AppColors.BgGray
+                normalContainerColor = AppColors.BgGray,
+                // P0 hotfix (v1.0.2-rc1 device validation): rendering these buttons
+                // through the liquid-glass pipeline inside a NavHost destination blows
+                // the RenderThread stack (RenderNode::prepareTreeImpl recursion,
+                // SIGSEGV) on Android 16 — reproducible 100% on Galaxy S24 Ultra when
+                // opening this screen. Exact library/device interaction unresolved
+                // (backdrop 1.0.6 recorded-layer + offscreen lens layer); plain
+                // buttons verified crash-free. Re-enable glass here only after the
+                // backdrop upgrade/root-cause fix.
+                forceFallback = true
             )
             Spacer(Modifier.width(AppSpace.md))
             Text(
@@ -126,7 +135,10 @@ fun KnowledgeDetailScreen(
                     size = 40.dp,
                     iconSize = 18.dp,
                     contentColor = AppColors.Danger,
-                    normalContainerColor = AppColors.BgGray
+                    normalContainerColor = AppColors.BgGray,
+                    // See the back button above: glass pipeline crashes RenderThread
+                    // inside NavHost destinations on Android 16 (P0 hotfix).
+                    forceFallback = true
                 )
             }
         }
