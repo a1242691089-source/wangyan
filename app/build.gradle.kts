@@ -39,7 +39,7 @@ android {
         applicationId = "com.wangyan.reader"
         minSdk = 26
         targetSdk = 37
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0.2"
 
         buildConfigField("boolean", "DIAGNOSTIC_BUILD", "false")
@@ -75,6 +75,10 @@ android {
         release {
             if (hasReleaseSigning) {
                 signingConfig = signingConfigs.getByName("release")
+            } else {
+                // No keystore.properties (local machine / CI): fall back to debug signing
+                // so assembleRelease produces an installable artifact for smoke testing.
+                signingConfig = signingConfigs.getByName("debug")
             }
             buildConfigField("boolean", "STARTUP_TRACE_ENABLED", releaseStartupTrace.get().toString())
             isMinifyEnabled = true

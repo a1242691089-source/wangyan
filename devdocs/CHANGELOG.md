@@ -1,5 +1,13 @@
 # 更新日志
 
+## 1.0.2-rc2 (2026-11-06)
+
+预发布版（Release Candidate），携带 rc1 真机验证发现的唯一阻断项 P0 的热修；正式版 1.0.2 在验证全部通过后发布。
+
+### 🛠 修复
+
+- **修复**（P0）：液态玻璃主题下打开知识详情页必现崩溃——RenderThread 栈溢出（SIGSEGV，510 帧纯 native 递归）。根因是 backdrop 库 1.0.6 的捕获/采样机制下，玻璃节点被录进宿主捕获层后采样该层，渲染树自引用成环。热修：知识详情页两个 `LiquidGlassIconButton`（返回/删除）改 `forceFallback = true` 暂离玻璃路径，并加固 `LumiBackgroundHost` 背景注入与 `LiquidGlassDialogHost` 捕获层继承两处边界。真机回归 2/2 存活；玻璃质感恢复待 backdrop 升级 2.x 后重评估。
+
 ## 1.0.2-rc1 (2026-11-06)
 
 预发布版（Release Candidate），供真机验证使用；正式版 1.0.2 在验证通过后发布。
