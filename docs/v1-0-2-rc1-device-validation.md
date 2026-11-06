@@ -112,6 +112,30 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 **待跑的真机矩阵**（设备空出后执行，全绿再合 main）：① 液态玻璃下打开详情 3/3 存活；② 进出详情页各一次；③ 删除确认弹窗；④ 添加关联 Sheet；⑤ 邻页抽查（统计 / 设置 / 首页）；⑥ 默认主题；⑦ 彩蛋主题。
 
+### P0 结构层根治真机验证（2026-11-06 夜 · 通过，已合 main）
+
+**设备**：SM-S9280（Galaxy S24 Ultra）· Android 16 · arm64 · 1080×2340 · 覆盖安装自正式 v1.0.2（同 debug 签名，书架 7 本与知识卡数据保留）。
+**被测包**：分支 `fix/p0-backdrop-isolation`（`c60de33`）重新构建的 `app-universal-debug.apk`（versionCode 5 / 1.0.2）。
+**构建来源教训**：20:20 构建的旧 debug 包实为 main 工作树产物（reflog 证实分支只存在 5 秒），forceFallback 版与隔离版在矩阵①上都会存活，装错包测不出差异——21:06 checkout 分支后重建（21:12 产物）才装。教训：**验证包必须确认构建时间晚于 checkout 时刻**。
+**驱动**：adb 全自动（uiautomator 定位 + screencap 逐屏核验），脚本 `D:/wb-tc/device-test/p0_matrix.py`；判定 pid 不变 + logcat 无 FATAL/SIGSEGV/tombstone。
+
+| # | 场景 | 结果 |
+| --- | --- | --- |
+| ① | 液态玻璃下打开详情 ×3 | **存活 3/3**（pid 16055 / 17349 / 18183，截图确认两枚按钮玻璃管线正常渲染）✓ |
+| ② | 进出详情页各一次 | 存活 ✓（退出后进程不变 + 重进无崩溃） |
+| ③ | 删除确认弹窗 | 存活 ✓（弹窗文案/按钮渲染正常，点取消后 pid 不变，未真删） |
+| ④ | 添加关系 Sheet | 存活 ✓（「选择关系类型」9 个类型 chip 渲染正常） |
+| ⑤ | 邻页抽查（统计 / 设置 / 首页） | 存活 ✓ |
+| ⑥ | 默认主题重复①② | 存活 ✓（pid 25458 / 25911） |
+| ⑦ | 彩蛋主题 | **跳过**：显示与外观页「？」主题点击与长按均无响应（疑似未解锁彩蛋，与本次改动无关） |
+| 收尾 | 切回液态玻璃复开详情 | 存活 ✓（pid 30595） |
+
+**累计 8 个独立进程、0 崩溃**。隔离方案证实有效，merge 提交 `7a47821` 已合入 main 并推送，CI（run 42227572951）通过。
+
+结论：知识详情页玻璃按钮不再经过 forceFallback 降级，重新走液态玻璃管线（仅失去背景折射，本页纯色背景视觉几乎无差）；线上 v1.0.2 的 forceFallback 行为将在下个版本被此结构层修复取代。
+
+**操作注记**：覆盖安装同 versionCode 会重置新手向导（多页，需点完「下一步」）；统计页是从「我的」进入的独立页面，栈顶时底部栏点击无效需先返回；底部五栏为纯图标 tab（text/content-desc 全空），坐标 x=284/410/536/662/792、y≈2180。
+
 ### 仪器测试
 
 - 首轮 `connectedDebugAndroidTest --offline` 直接失败：缺 `androidx.test:monitor:1.6.1`、`espresso-core:3.5.1`、`espresso-idling-resource:3.5.0`、`room-testing:2.8.4` 及 UTP 插件 `android-test-plugin-host-additional-test-output:31.13.2`（本机 Gradle home 从未跑过 androidTest）。不是代码问题，联网跑即可。
@@ -156,8 +180,40 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 | 项 | 状态 | 说明 |
 | --- | --- | --- |
-| P0 结构层根治的真机验证 | 待设备 | 代码在分支 `fix/p0-backdrop-isolation`（`c60de33`），debug 包已构建；真机矩阵见上文「P0 根治（结构层）」，全绿后再合 main |
-| 全量 150 条 connectedDebugAndroidTest | 待设备空闲 | util 包 31 条冒烟已跑（27 过 4 败，均环境相关） |
+| P0 结构层根治的真机验证 | **已完成（2026-11-06 夜）** | 7 项矩阵 ①-⑥ 全过（⑦ 彩蛋未解锁跳过），累计 8 进程 0 崩溃；已合 main（`7a47821`），见上文「P0 结构层根治真机验证」 |
+| 全量 150 条 connectedDebugAndroidTest | **已完成（2026-11-06 深夜）** | 分 3 批跑：执行 111 条 / 99 通过 / 12 失败（全部环境或测试代码缺陷，与 P0 零交集）/ 39 条被向导页崩溃中断。详见下节 |
 | 站点法律页本地化 | 未做 | `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页 + `lumi-nav.js`）仍是纯简体；应用内 `assets/html/` 的 7 语言版本已完成 |
 | 法律译文审校 | 未做 | `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*` 为本轮新译，未经人工/法务确认 |
 | `StatisticsScreen.kt` 玻璃用法复核 | 未做 | 该页在 rc1 崩溃矩阵中存活，但未单独验证结构安全性 |
+
+## 全量仪器测试（2026-11-06 深夜 · 分 3 批，设备 SM-S9280）
+
+基于合并后 main（`7a47821`）。首轮一次性跑全量在 84 分钟时停滞——`EpubDirectNavigationHostInstrumentedTest.preparedNextViewReplacesActiveOnlyWhenPromoted` 之后 1 小时零产出，UTP 未收尾，遂终止改分批。
+
+| 批次 | 范围 | 条数 | 结果 |
+| --- | --- | --- | --- |
+| 1 | 非 reader 包（data / util / widget / ui.settings / welcome / components） | 77 | 执行 38（35 通过 / 3 失败），随后**进程崩溃**中断，39 条未执行 |
+| 2 | `ui.reader.**`（排除卡死类） | 72 | 执行 72，63 通过 / **9 失败** |
+| 3 | `EpubDirectNavigationHostInstrumentedTest` 单独跑 | 1 | **通过**（1m27s） |
+
+合计 150 条：执行 111、通过 99、失败 12、未执行 39。
+
+### 12 条失败清单与定性（全部与 P0 玻璃改动零交集）
+
+| 类/用例 | 报错 | 定性 |
+| --- | --- | --- |
+| `EpubFixedLayoutInsetsInstrumentedTest.fixedLayoutTextPageIsScaledIntoInsetBox` | `expected:<213.333>` vs `<219.961>` | 密度断言，已知环境基线 |
+| `DataStoreManagerIconStyleTest.initializationError`（`AccentColorTest` 同） | `Method tearDown() should be void` | **测试代码缺陷**：JUnit4 校验器不接受非 void 的 `@After`，Robolectric 下不校验、真机 runner 下必失败 |
+| `WelcomeScreenInstrumentedTest.introductionUsesUnifiedVersionTwoDesign` | 失败后 `Process crashed`；日志 14000+ 行全是 `setRequestedFrameRate frameRate=NaN` + `dispatchDraw` 刷屏 | **既有问题**：向导页在测试环境无限重绘，拖垮进程并中断整批 |
+| `ReaderPagingLayoutInstrumentedTest.chapterTitleParagraphIgnoresExplicitTextAlignment` | `expected:<ALIGN_NORMAL>` vs `<ALIGN_CENTER>` | 文本度量/对齐，环境相关 |
+| `ReaderSelectionMagnifierInstrumentedTest.imageOnlySelectionDoesNotShowMagnifier` | `expected:<0>` vs `<1>` | 同上 |
+| `RoundedHighlightRenderingInstrumentedTest` ×3 | 字间 `largestGap=38`、`positions must be monotonic`、justified 坐标 | 像素/几何断言，与已知 `EpubHighlightOverlay` 同类 |
+| `VerticalTextLayouterInstrumentedTest` ×2 | 垂直几何、Latin cluster 宽度 | 字体度量差异 |
+| `ReaderParagraphFormatterTest.existingWhitespaceIsSupplementedToRequestedIndent` | 缩进宽度 | 同上 |
+| `EpubVerticalPagingInstrumentedTest.verticalTurnShowsIncomingPageAndPromotesItOnce` | 翻页转场 | 同上 |
+
+### 结论与后续
+
+- 这些用例此前**从未在真机跑过**（CI 只跑 Robolectric 分片），无基线可比，登记为「首次真机基线的待观察项」；密度/字体度量类断言大概率需要按设备密度做容差，或改断言为范围判断。
+- 两处**测试代码/被测页的既有缺陷**值得单独修：`DataStoreManager*Test` 的 `@After` 返回类型；`WelcomeScreen` 在测试环境的无限重绘（这可能也是真机上向导页偶发卡顿的源头）。
+- **整批不可一次跑完**：向导页崩溃会中断整批；reader 包串跑会出现单点挂起。可靠跑法=按包分批 + 排除 `WelcomeScreenInstrumentedTest`。
