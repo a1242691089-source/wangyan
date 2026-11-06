@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -52,6 +53,7 @@ import com.huangder.lumibooks.domain.model.KnowledgeRelationView
 import com.huangder.lumibooks.ui.components.AnnotationTagChips
 import com.huangder.lumibooks.ui.components.LiquidGlassAlertDialog
 import com.huangder.lumibooks.ui.components.LiquidGlassIconButton
+import com.huangder.lumibooks.ui.components.LocalLiquidGlassBackdrop
 import com.huangder.lumibooks.ui.components.accentColor
 import com.huangder.lumibooks.ui.components.labelRes
 import com.huangder.lumibooks.ui.icons.AppIcons
@@ -93,53 +95,52 @@ fun KnowledgeDetailScreen(
             .background(AppColors.PageBg)
             .statusBarsPadding()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = AppSpace.lg, vertical = AppSpace.sm)
-        ) {
-            LiquidGlassIconButton(
-                imageVector = directionalIcon(AppIcons.ArrowLeft, AppIcons.ArrowRight),
-                contentDescription = stringResource(R.string.back),
-                onClick = onNavigateBack,
-                size = 40.dp,
-                iconSize = 18.dp,
-                contentColor = AppColors.TextPrimary,
-                normalContainerColor = AppColors.BgGray,
-                // P0 hotfix (v1.0.2-rc1 device validation): rendering these buttons
-                // through the liquid-glass pipeline inside a NavHost destination blows
-                // the RenderThread stack (RenderNode::prepareTreeImpl recursion,
-                // SIGSEGV) on Android 16 — reproducible 100% on Galaxy S24 Ultra when
-                // opening this screen. Exact library/device interaction unresolved
-                // (backdrop 1.0.6 recorded-layer + offscreen lens layer); plain
-                // buttons verified crash-free. Re-enable glass here only after the
-                // backdrop upgrade/root-cause fix.
-                forceFallback = true
-            )
-            Spacer(Modifier.width(AppSpace.md))
-            Text(
-                stringResource(R.string.knowledge_detail_title),
-                fontSize = AppType.Section,
-                fontWeight = FontWeight.Bold,
-                color = AppColors.TextPrimary,
-                modifier = Modifier.weight(1f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            if (detail != null) {
+        // Glass surfaces here must not sample the NavHost-wide capture layer. The
+        // NavHost records this destination into `liquidGlassBackdrop`
+        // (NavGraph.kt:850-851) and LiquidGlassMenuHost hands the very same layer
+        // down to every destination (AnchoredLiquidGlassMenu.kt:685); a surface that
+        // samples it becomes part of its own captured layer -> RenderNode
+        // self-reference -> RenderThread stack overflow (SIGSEGV, P0).
+        // Opting out still draws the glass gradient, control edge and press feedback
+        // (only refraction is dropped) - the same treatment as the home card's "more"
+        // button (HomeScreen.kt:637-643).
+        CompositionLocalProvider(LocalLiquidGlassBackdrop provides null) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AppSpace.lg, vertical = AppSpace.sm)
+            ) {
                 LiquidGlassIconButton(
-                    imageVector = AppIcons.Trash,
-                    contentDescription = stringResource(R.string.delete),
-                    onClick = { showDeleteNode = true },
+                    imageVector = directionalIcon(AppIcons.ArrowLeft, AppIcons.ArrowRight),
+                    contentDescription = stringResource(R.string.back),
+                    onClick = onNavigateBack,
                     size = 40.dp,
                     iconSize = 18.dp,
-                    contentColor = AppColors.Danger,
-                    normalContainerColor = AppColors.BgGray,
-                    // See the back button above: glass pipeline crashes RenderThread
-                    // inside NavHost destinations on Android 16 (P0 hotfix).
-                    forceFallback = true
+                    contentColor = AppColors.TextPrimary,
+                    normalContainerColor = AppColors.BgGray
                 )
+                Spacer(Modifier.width(AppSpace.md))
+                Text(
+                    stringResource(R.string.knowledge_detail_title),
+                    fontSize = AppType.Section,
+                    fontWeight = FontWeight.Bold,
+                    color = AppColors.TextPrimary,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                if (detail != null) {
+                    LiquidGlassIconButton(
+                        imageVector = AppIcons.Trash,
+                        contentDescription = stringResource(R.string.delete),
+                        onClick = { showDeleteNode = true },
+                        size = 40.dp,
+                        iconSize = 18.dp,
+                        contentColor = AppColors.Danger,
+                        normalContainerColor = AppColors.BgGray
+                    )
+                }
             }
         }
 
