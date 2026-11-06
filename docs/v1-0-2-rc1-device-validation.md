@@ -184,6 +184,7 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 | 全量 150 条 connectedDebugAndroidTest | **已完成（2026-11-06 深夜）** | 分 3 批跑：执行 111 条 / 99 通过 / 12 失败（全部环境或测试代码缺陷，与 P0 零交集）/ 39 条被向导页崩溃中断。详见下节 |
 | 站点法律页本地化 | 未做 | `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页 + `lumi-nav.js`）仍是纯简体；应用内 `assets/html/` 的 7 语言版本已完成 |
 | 法律译文审校 | 未做 | `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*` 为本轮新译，未经人工/法务确认 |
+| 仪器测试串跑挂起排查 | 未做 | `WelcomeScreenInstrumentedTest`（串跑第 3 用例起挂死，2026-11-07 实测）与 `EpubDirectNavigationHostInstrumentedTest` 同型：单独跑均通过，疑似 Compose 测试状态跨用例污染；临时对策=按方法分批 |
 | `StatisticsScreen.kt` 玻璃用法复核 | 未做 | 该页在 rc1 崩溃矩阵中存活，但未单独验证结构安全性 |
 
 ## 全量仪器测试（2026-11-06 深夜 · 分 3 批，设备 SM-S9280）
@@ -203,8 +204,8 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 | 类/用例 | 报错 | 定性 |
 | --- | --- | --- |
 | `EpubFixedLayoutInsetsInstrumentedTest.fixedLayoutTextPageIsScaledIntoInsetBox` | `expected:<213.333>` vs `<219.961>` | 密度断言，已知环境基线 |
-| `DataStoreManagerIconStyleTest.initializationError`（`AccentColorTest` 同） | `Method tearDown() should be void` | **测试代码缺陷**：JUnit4 校验器不接受非 void 的 `@After`，Robolectric 下不校验、真机 runner 下必失败 |
-| `WelcomeScreenInstrumentedTest.introductionUsesUnifiedVersionTwoDesign` | 失败后 `Process crashed`；日志 14000+ 行全是 `setRequestedFrameRate frameRate=NaN` + `dispatchDraw` 刷屏 | **既有问题**：向导页在测试环境无限重绘，拖垮进程并中断整批 |
+| `DataStoreManagerIconStyleTest.initializationError`（`AccentColorTest` 同） | `Method tearDown() should be void` | **测试代码缺陷，已修复**：`@After`/`@Before` 表达式体推断返回 `Preferences`（非 void）；改块体 void 后两类真机全过 |
+| `WelcomeScreenInstrumentedTest.introductionUsesUnifiedVersionTwoDesign` | 失败后 `Process crashed`；日志 14000+ 行全是 `setRequestedFrameRate frameRate=NaN` + `dispatchDraw` 刷屏 | **既有问题，已修复**：根因是测试未传 motionPreference（默认 STANDARD）→ 向导页渐变背景 3 路 `infiniteRepeatable`（18s/23s/29s）永不结束；测试注入 `MotionPreference.REDUCED` 后该用例单独跑通过（59s），NaN 刷屏降至约 224 行（残余来自系统 UI） |
 | `ReaderPagingLayoutInstrumentedTest.chapterTitleParagraphIgnoresExplicitTextAlignment` | `expected:<ALIGN_NORMAL>` vs `<ALIGN_CENTER>` | 文本度量/对齐，环境相关 |
 | `ReaderSelectionMagnifierInstrumentedTest.imageOnlySelectionDoesNotShowMagnifier` | `expected:<0>` vs `<1>` | 同上 |
 | `RoundedHighlightRenderingInstrumentedTest` ×3 | 字间 `largestGap=38`、`positions must be monotonic`、justified 坐标 | 像素/几何断言，与已知 `EpubHighlightOverlay` 同类 |
@@ -215,5 +216,5 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 ### 结论与后续
 
 - 这些用例此前**从未在真机跑过**（CI 只跑 Robolectric 分片），无基线可比，登记为「首次真机基线的待观察项」；密度/字体度量类断言大概率需要按设备密度做容差，或改断言为范围判断。
-- 两处**测试代码/被测页的既有缺陷**值得单独修：`DataStoreManager*Test` 的 `@After` 返回类型；`WelcomeScreen` 在测试环境的无限重绘（这可能也是真机上向导页偶发卡顿的源头）。
-- **整批不可一次跑完**：向导页崩溃会中断整批；reader 包串跑会出现单点挂起。可靠跑法=按包分批 + 排除 `WelcomeScreenInstrumentedTest`。
+- 两处**测试代码/被测页的既有缺陷**已于 2026-11-07 修复：`DataStoreManager*Test` 的 `@After`/`@Before` 改块体 void；`WelcomeScreenInstrumentedTest` 注入 `MotionPreference.REDUCED` 使渐变背景走静态分支（原崩溃用例复跑通过）。注意：**真机向导页本身仍带无限动画**（REDUCED 才静态化），若真机上向导页有卡顿/耗电疑虑，需另行评估产品侧对「减弱动态效果」系统设置的自适应。
+- **整批不可一次跑完，根因更新**：向导页 NaN 崩溃已消除，但 2026-11-07 复测发现 `WelcomeScreenInstrumentedTest` 四用例**同类串跑仍会无声挂死**——第 3 个用例（`startButtonKeepsExistingInstallSpecificNextStep`，唯一访问液态玻璃预览页的用例）在前两个全流程用例之后跑挂死 23 分钟（43 线程全 sleeping、无 ANR、无崩溃），**单独跑 1 分钟通过**；与 `EpubDirectNavigationHostInstrumentedTest` 串跑挂起同型（状态污染）。可靠跑法=按包/按方法分批，单类用例 ≥3 的建议再拆。

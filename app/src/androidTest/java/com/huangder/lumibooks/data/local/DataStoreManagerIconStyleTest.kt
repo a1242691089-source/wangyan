@@ -18,16 +18,21 @@ class DataStoreManagerIconStyleTest {
     private lateinit var manager: DataStoreManager
 
     @Before
-    fun setUp() = runBlocking {
-        context = ApplicationProvider.getApplicationContext()
-        context.dataStore.edit { it.clear() }
-        manager = DataStoreManager(context)
+    fun setUp() {
+        runBlocking {
+            context = ApplicationProvider.getApplicationContext()
+            context.dataStore.edit { it.clear() }
+            manager = DataStoreManager(context)
+        }
     }
 
+    // JUnit4 要求 @After 返回 void：表达式体推断为 Preferences 会 initializationError
     @After
-    fun tearDown() = runBlocking {
-        manager.saveAppIconStyle("lumi2")
-        context.dataStore.edit { it.clear() }
+    fun tearDown() {
+        runBlocking {
+            manager.saveAppIconStyle("lumi2")
+            context.dataStore.edit { it.clear() }
+        }
     }
 
     @Test
