@@ -94,7 +94,8 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 ### 仪器测试
 
-- 首轮 `connectedDebugAndroidTest --offline` 直接失败：`androidx.test:monitor:1.6.1`、`espresso-core:3.5.1`、`espresso-idling-resource:3.5.0`、`room-testing:2.8.4` 不在离线缓存（本机 Gradle home 从未跑过 androidTest，JVM 单测不需要这几个包）。这不是代码问题，去掉 `--offline` 联网解析即可。
-- 联网后 `:app:assembleDebugAndroidTest` 在 2m51s 内成功，产出 `app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk`（1.4 MB）。
+- 首轮 `connectedDebugAndroidTest --offline` 直接失败：缺 `androidx.test:monitor:1.6.1`、`espresso-core:3.5.1`、`espresso-idling-resource:3.5.0`、`room-testing:2.8.4` 及 UTP 插件 `android-test-plugin-host-additional-test-output:31.13.2`（本机 Gradle home 从未跑过 androidTest）。不是代码问题，联网跑即可。
+- **util 包冒烟（含 P0 热修代码）：31 条，27 过 / 4 失败**。4 条均为设备环境相关，与本次 UI 改动零交集：`EpubFixedLayoutInsets`（屏幕密度断言 213.33 vs 219.96）、`EpubHighlightOverlay`（高亮行像素差）、`EpubParserLinkTest`×2（TOC 解析出更多条目）。本机首次跑通仪器测试，无基线可比，登记为待观察项。
+- 注意：`connectedAndroidTest` 结束会**自动卸载应用**（AGP 默认），跑完需重装 APK 并重走新手向导/协议弹窗。
 
-结果待补：util 包冒烟（i18n 守门所在分片）与全量 150 条 connectedDebugAndroidTest。P0 的完整 tombstone 已于下午补齐（`#000` 起 510 帧，见「P0 根因与热修」）。
+结果待补：全量 150 条 connectedDebugAndroidTest。P0 的完整 tombstone 已于下午补齐（`#000` 起 510 帧，见「P0 根因与热修」）。
