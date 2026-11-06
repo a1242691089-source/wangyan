@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dictionary_entry_source">原詞條來源與貢獻紀錄（連網開啟）</string>
+    <string name="dictionary_title">本地詞典</string>
+    <string name="dictionary_management_intro">詞庫按需下載，安裝後離線查詞。下載後自動啟用，不會自動下載或更新詞庫。</string>
+    <string name="dictionary_refresh">檢查詞典與規則更新</string>
+    <string name="dictionary_not_published">資源尚未發布</string>
+    <string name="dictionary_download_install_size">下載 / 安裝佔用：</string>
+    <string name="dictionary_installed_version">已安裝版本：%1$s</string>
+    <string name="dictionary_download_paused">等待網絡或系統繼續下載</string>
+    <string name="dictionary_installing">正在認證並安裝…</string>
+    <string name="dictionary_retry">重試</string>
+    <string name="dictionary_download">下載</string>
+    <string name="dictionary_update">更新</string>
+    <string name="dictionary_sources">來源與授權</string>
+    <string name="dictionary_move_up">上移</string>
+    <string name="dictionary_move_down">下移</string>
+    <string name="dictionary_delete">刪除詞典</string>
+    <string name="dictionary_delete_message">刪除「%1$s」的本地詞庫？之後可以重新下載。</string>
+    <string name="dictionary_disclaimer_title">詞典來源說明與免責聲明</string>
+    <string name="dictionary_feedback">提供詞典資源 / 問題回報</string>
+    <string name="dictionary_confirm_download">我已知悉，繼續下載</string>
+    <string name="dictionary_confirm_update">我已知悉，繼續更新</string>
+    <string name="dictionary_enable_after_download">首次下載成功後自動啟用，可隨時在此停用或刪除。</string>
+    <string name="dictionary_back_results">返回詞典結果</string>
+    <string name="dictionary_partial_filtered">部分內容已依詞典內容規則過濾</string>
+    <string name="dictionary_all_filtered">目前內容規則下暫無可顯示釋義</string>
+    <string name="dictionary_no_installed">尚未啟用本地詞典。請前往管理詞典下載或啟用。</string>
+    <string name="dictionary_no_result">已啟用的詞典暫未收錄該詞語</string>
+    <string name="dictionary_lookup_failed">部分詞典暫時無法查詢，請在管理頁檢查或重新下載。</string>
+    <string name="dictionary_manage">管理詞典</string>
+    <string name="dictionary_external">其他詞典應用程式</string>
+    <string name="dictionary_web">搜尋網頁</string>
+    <string name="dictionary_disclaimer_short">第三方詞典內容僅供參考，不代表 忘言 的觀點或立場；部分內容可能經規則過濾。歡迎提供更多中國大陸詞典資源，我們將在核實後加入。</string>
+    <string name="dictionary_disclaimer_full">忘言 已盡力尋找並優先接入中國大陸社群提供的開源詞典資源，目前中文主詞庫採用 chinese-xinhua 社群項目，同時提供其他來源的選用詞典。具體來源與授權請查看各詞典說明。\n\n如果你了解其他合適的中國大陸詞典資源，歡迎提供項目連結、資料來源及授權說明。我們會優先核實，並在確認授權、內容質素與技術相容性後加入。\n\n第三方詞典內容僅供學習與閱讀參考，可能存在錯誤、過時內容或地區用語差異。詞條、例句及引用中的表述不代表 忘言 的觀點或立場。忘言 會進行索引、格式整理及必要的字形轉換，並依內容規則過濾部分詞條、義項或例句，因此顯示內容可能與原始詞典不同。\n\n本說明不改變各詞庫授權條款賦予你的權利。過濾規則可能存在遺漏或誤判，如發現錯誤、侵權、不當內容或誤過濾，請透過「問題回報」聯絡我們。</string>
+</resources>

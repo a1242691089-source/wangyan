@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_epub_css_title">네이티브 CSS 조판(실험)</string>
+    <string name="native_epub_css_hint">이 책에만 적용됩니다. 일반적인 조판은 네이티브 엔진을 사용하고, 복잡한 장과 아직 지원하지 않는 읽기 설정은 자동으로 WebView를 사용합니다.</string>
+</resources>

@@ -88,4 +88,12 @@
     <string name="remote_error_invalid_file">下載的檔案無效：可能是登入已過期或檔案已損壞</string>
     <string name="remote_error_destination">無法寫入所選資料夾，請重新授權該資料夾</string>
     <string name="remote_error_unknown">操作失敗，請重試</string>
+    <string name="remote_library_legal_title">遠端書庫使用聲明</string>
+    <string name="remote_library_legal_message">請確保你有權存取此書庫，並有權瀏覽、下載和匯入其中的作品。你應遵守適用法律法規、作品著作權及服務條款，不得匯入或散布侵權、違法或未經授權的內容。書庫位址和內容由你自行提供與管理，忘言 不提供或審核書源，也不對其合法性、正確性或可用性負責。繼續操作即表示你確認書庫及相關使用行為合法，並願意承擔相應責任。</string>
+    <string name="remote_library_legal_confirm_wait">請閱讀聲明（%1$d 秒）</string>
+    <string name="remote_library_legal_confirm">我已閱讀並確認</string>
+    <string name="remote_library_feedback">問題回報與檢舉</string>
+    <string name="remote_library_feedback_hint">遇到問題或發現非法書庫？請點右下角回報。</string>
+    <string name="remote_library_settings_opds_summary">瀏覽和管理 OPDS 遠端書庫</string>
+    <string name="remote_library_settings_webdav_summary">瀏覽和管理 WebDAV 遠端書庫</string>
 </resources>

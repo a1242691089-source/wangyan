@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="selection_menu_settings_description">텍스트를 길게 눌렀을 때 표시할 도구의 순서와 항목을 조정합니다</string>
+    <string name="selection_menu_drag">끌어서 순서 변경: %1$s</string>
+    <string name="selection_menu_txt_only">TXT 전용</string>
+    <string name="selection_menu_move_up">%1$s 위로</string>
+    <string name="selection_menu_move_down">%1$s 아래로</string>
+</resources>

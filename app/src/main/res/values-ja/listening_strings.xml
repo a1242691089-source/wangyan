@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tts_listening_resume_title">読み上げの位置に移動しますか？</string>
+    <string name="tts_listening_resume_message">前回の読書位置を復元しました。前回は「%1$s」まで聞いていました。読み上げの位置に移動しますか？</string>
+    <string name="tts_listening_resume_jump">読み上げの位置へ移動</string>
+    <string name="tts_listening_resume_keep">読書位置を保つ</string>
+    <string name="tts_listening_resume_furthest">より先の位置へ移動</string>
+    <string name="tts_listening_resume_setting">書籍を開いたときの位置</string>
+    <string name="tts_start_title">読み上げをどこから始めますか？</string>
+    <string name="tts_start_message">前回は「%1$s」まで聞いていました。現在のページから読むか、元の読み上げ位置から読むかを選んでください。</string>
+    <string name="tts_start_current_page">現在のページから読む</string>
+    <string name="tts_start_saved_position">元の位置から読む</string>
+    <string name="tts_start_remember_choice">今回の選択を記憶する</string>
+    <string name="tts_start_setting">読み上げの開始位置</string>
+    <string name="tts_start_ask_each_time">毎回確認する</string>
+    <string name="tts_listening_resume_show_prompt">戻ったときのヒントを表示</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="selection_menu_settings_description">調整長按文字後的工具順序和顯示項目</string>
+    <string name="selection_menu_drag">拖曳排序：%1$s</string>
+    <string name="selection_menu_txt_only">僅 TXT</string>
+    <string name="selection_menu_move_up">上移%1$s</string>
+    <string name="selection_menu_move_down">下移%1$s</string>
+</resources>

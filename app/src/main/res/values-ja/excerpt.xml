@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="excerpt_title">抜粋</string>
+    <string name="excerpt_style">スタイルを変更</string>
+    <string name="excerpt_save">画像を保存</string>
+    <string name="excerpt_share">抜粋を共有</string>
+    <string name="excerpt_saved">画像を保存しました</string>
+    <string name="excerpt_failed">画像の生成に失敗しました。もう一度お試しください。</string>
+    <string name="excerpt_save_failed">保存に失敗しました。空き容量と権限を確認してください。</string>
+    <string name="excerpt_share_failed">共有に失敗しました。もう一度お試しください。</string>
+</resources>

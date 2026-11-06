@@ -63,6 +63,20 @@ class StringsRatchetTest {
             Regex("<string[ \t\r\n]([^>]*)>(.*?)</string>", RegexOption.DOT_MATCHES_ALL)
         private val PLACEHOLDER =
             Regex("%(?:\\d+\\$)?[-#+ 0,(]*\\d*(?:\\.\\d+)?[a-zA-Z]")
+
+        /**
+         * `values/` 下所有含 `<string>` 的文件——不止 `strings.xml`。
+         *
+         * 1.0.2 之前覆盖率只算 `strings.xml`，13 个拆分文件（远程书库、词典、听书、
+         * 摘录、划词菜单等）从未进入口径，实际缺 416 个 locale×key，运行时静默回退
+         * 到简体。把文件清单收进同一处，下面三条测试就都不会再漏文件。
+         */
+        private fun stringFiles(): List<File> =
+            resDir().resolve("values")
+                .listFiles { file -> file.isFile && file.extension == "xml" }
+                ?.filter { STRING_TAG.containsMatchIn(it.readText().replace(COMMENT, "")) }
+                ?.sortedBy { it.name }
+                ?: emptyList()
     }
 
     /**
@@ -127,6 +141,41 @@ class StringsRatchetTest {
     }
 
     /**
+     * 拆分 strings 文件同样要求 7 个 locale 全齐。
+     *
+     * [missingKeysDoNotExceedBaseline] 只看 `strings.xml`；远程书库、词典、听书等
+     * 13 个文件当年漏在口径外，缺口 416 条无人发现。这条按「文件 × locale」逐个求
+     * 差集，并把「整个文件不存在」单独报出来——那是最容易被忽略的形态。
+     */
+    @Test
+    fun splitStringFilesAreFullyTranslated() {
+        val files = stringFiles()
+        assertTrue("values/ 下只找到 ${files.size} 个 strings 文件，测试口径失效", files.size >= 10)
+
+        val failures = mutableListOf<String>()
+        files.forEach fileLoop@{ baseFile ->
+            val base = translatableKeys(baseFile)
+            if (base.isEmpty()) return@fileLoop
+            ALLOWED_MISSING.keys.forEach localeLoop@{ locale ->
+                val file = resDir().resolve("values-$locale/${baseFile.name}")
+                if (!file.exists()) {
+                    failures += "${baseFile.name} [$locale]: 整个文件缺失，${base.size} 条全部回退简体"
+                    return@localeLoop
+                }
+                val missing = base - translatableKeys(file)
+                if (missing.isNotEmpty()) {
+                    failures += "${baseFile.name} [$locale]: 缺 ${missing.size}/${base.size} 条 —— " +
+                        missing.sorted().take(10).joinToString(", ")
+                }
+            }
+        }
+        assertTrue(
+            "拆分 strings 文件未补齐（漏翻不会崩，只会让界面混语言）：\n" + failures.joinToString("\n"),
+            failures.isEmpty()
+        )
+    }
+
+    /**
      * 基线已经全部归零。允许值一旦被人上调，缺失数测试就形同虚设——这条把
      * 「归零」本身钉死，让重新开口子必须是一次有意识的测试改动。
      */
@@ -180,14 +229,20 @@ class StringsRatchetTest {
      */
     @Test
     fun placeholderTypesMatchAcrossLocales() {
-        val base = parseStringValues(resDir().resolve("values/strings.xml").readText())
         val failures = mutableListOf<String>()
-        ALLOWED_MISSING.keys.forEach { locale ->
-            val translated = parseStringValues(resDir().resolve("values-$locale/strings.xml").readText())
-            translated.forEach { (key, value) ->
-                val expected = placeholders(base[key] ?: return@forEach)
-                val actual = placeholders(value)
-                if (expected != actual) failures += "$locale/$key: 期望 $expected，实际 $actual"
+        stringFiles().forEach fileLoop@{ baseFile ->
+            val base = parseStringValues(baseFile.readText())
+            if (base.isEmpty()) return@fileLoop
+            ALLOWED_MISSING.keys.forEach localeLoop@{ locale ->
+                val file = resDir().resolve("values-$locale/${baseFile.name}")
+                if (!file.exists()) return@localeLoop
+                parseStringValues(file.readText()).forEach { (key, value) ->
+                    val expected = placeholders(base[key] ?: return@forEach)
+                    val actual = placeholders(value)
+                    if (expected != actual) {
+                        failures += "$locale/${baseFile.name}/$key: 期望 $expected，实际 $actual"
+                    }
+                }
             }
         }
         assertTrue("占位符与源语言不一致：\n" + failures.joinToString("\n"), failures.isEmpty())
@@ -199,13 +254,26 @@ class StringsRatchetTest {
      */
     @Test
     fun hkAndMoMustStayIdentical() {
-        val hk = parseStringValues(resDir().resolve("values-zh-rHK/strings.xml").readText())
-        val mo = parseStringValues(resDir().resolve("values-zh-rMO/strings.xml").readText())
-        assertEquals("zh-rHK 与 zh-rMO 的 key 集合不同", hk.keys, mo.keys)
-        val diff = hk.filter { (key, value) -> mo[key] != value }.keys.sorted()
+        val failures = mutableListOf<String>()
+        stringFiles().forEach { baseFile ->
+            val hkFile = resDir().resolve("values-zh-rHK/${baseFile.name}")
+            val moFile = resDir().resolve("values-zh-rMO/${baseFile.name}")
+            if (!hkFile.exists() || !moFile.exists()) {
+                failures += "${baseFile.name}: HK 或 MO 缺文件（HK=${hkFile.exists()}, MO=${moFile.exists()}）"
+                return@forEach
+            }
+            val hk = parseStringValues(hkFile.readText())
+            val mo = parseStringValues(moFile.readText())
+            if (hk.keys != mo.keys) {
+                failures += "${baseFile.name}: key 集合不同 ${(hk.keys - mo.keys) + (mo.keys - hk.keys)}"
+                return@forEach
+            }
+            val diff = hk.filter { (key, value) -> mo[key] != value }.keys.sorted()
+            if (diff.isNotEmpty()) failures += "${baseFile.name}: 文本不一致 ${diff.take(10)}"
+        }
         assertTrue(
-            "zh-rHK 与 zh-rMO 文本不一致（应同步修改）：${diff.take(10)}",
-            diff.isEmpty()
+            "zh-rHK 与 zh-rMO 文本不一致（应同步修改）：\n" + failures.joinToString("\n"),
+            failures.isEmpty()
         )
     }
 }

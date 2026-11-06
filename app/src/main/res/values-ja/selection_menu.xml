@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="selection_menu_settings_description">テキストを長押ししたときのツールの順序と表示項目を調整します</string>
+    <string name="selection_menu_drag">ドラッグして並べ替え：%1$s</string>
+    <string name="selection_menu_txt_only">TXT のみ</string>
+    <string name="selection_menu_move_up">%1$sを上へ</string>
+    <string name="selection_menu_move_down">%1$sを下へ</string>
+</resources>

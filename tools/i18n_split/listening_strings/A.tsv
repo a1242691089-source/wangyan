@@ -1,0 +1,15 @@
+﻿# listening_strings.xml · ja / ko —— 听书进度（zh-rTW 已有，港澳由 TW 派生）
+tts_listening_resume_title	読み上げの位置に移動しますか？	듣기 진행 위치로 이동할까요?
+tts_listening_resume_message	前回の読書位置を復元しました。前回は「%1$s」まで聞いていました。読み上げの位置に移動しますか？	지난 읽기 위치를 복원했습니다. 지난번에는 “%1$s”까지 들었습니다. 듣기 진행 위치로 이동할까요?
+tts_listening_resume_jump	読み上げの位置へ移動	듣기 진행 위치로 이동
+tts_listening_resume_keep	読書位置を保つ	읽기 위치 유지
+tts_listening_resume_furthest	より先の位置へ移動	더 뒤의 위치로 이동
+tts_listening_resume_setting	書籍を開いたときの位置	책을 열 때의 위치
+tts_start_title	読み上げをどこから始めますか？	듣기를 어디서 시작할까요?
+tts_start_message	前回は「%1$s」まで聞いていました。現在のページから読むか、元の読み上げ位置から読むかを選んでください。	지난번에는 “%1$s”까지 들었습니다. 현재 페이지에서 시작할지, 원래 듣기 위치에서 시작할지 선택하세요.
+tts_start_current_page	現在のページから読む	현재 페이지에서 시작
+tts_start_saved_position	元の位置から読む	원래 위치에서 시작
+tts_start_remember_choice	今回の選択を記憶する	이번 선택 기억하기
+tts_start_setting	読み上げの開始位置	듣기 시작 위치
+tts_start_ask_each_time	毎回確認する	매번 묻기
+tts_listening_resume_show_prompt	戻ったときのヒントを表示	돌아왔을 때 안내 표시

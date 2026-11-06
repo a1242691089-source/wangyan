@@ -1,0 +1,6 @@
+﻿# selection_menu.xml · ja / ko —— 划词菜单设置
+selection_menu_settings_description	テキストを長押ししたときのツールの順序と表示項目を調整します	텍스트를 길게 눌렀을 때 표시할 도구의 순서와 항목을 조정합니다
+selection_menu_drag	ドラッグして並べ替え：%1$s	끌어서 순서 변경: %1$s
+selection_menu_txt_only	TXT のみ	TXT 전용
+selection_menu_move_up	%1$sを上へ	%1$s 위로
+selection_menu_move_down	%1$sを下へ	%1$s 아래로

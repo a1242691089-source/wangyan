@@ -1,0 +1,6 @@
+﻿# selection_menu.xml · zh-rTW 定稿（zh-rHK / zh-rMO 由本文件派生）
+selection_menu_settings_description	調整長按文字後的工具順序和顯示項目
+selection_menu_drag	拖曳排序：%1$s
+selection_menu_txt_only	僅 TXT
+selection_menu_move_up	上移%1$s
+selection_menu_move_down	下移%1$s

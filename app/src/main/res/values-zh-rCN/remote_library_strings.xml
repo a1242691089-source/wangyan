@@ -88,4 +88,12 @@
     <string name="remote_error_invalid_file">下载的文件无效：可能是登录已过期或文件已损坏</string>
     <string name="remote_error_destination">无法写入所选文件夹，请重新授权该文件夹</string>
     <string name="remote_error_unknown">操作失败，请重试</string>
+    <string name="remote_library_legal_title">远程书库使用声明</string>
+    <string name="remote_library_legal_message">请确保你有权访问此书库，并有权浏览、下载和导入其中的作品。你应遵守适用法律法规、作品版权及服务条款，不得导入或传播侵权、违法或未经授权的内容。书库地址和内容由你自行提供与管理，忘言 不提供或审核书源，也不对其合法性、准确性或可用性负责。继续操作即表示你确认书库及相关使用行为合法，并愿意承担相应责任。</string>
+    <string name="remote_library_legal_confirm_wait">请阅读声明（%1$d 秒）</string>
+    <string name="remote_library_legal_confirm">我已阅读并确认</string>
+    <string name="remote_library_feedback">问题反馈与举报</string>
+    <string name="remote_library_feedback_hint">遇到问题或发现非法书库？点击右下角反馈。</string>
+    <string name="remote_library_settings_opds_summary">浏览和管理 OPDS 远程书库</string>
+    <string name="remote_library_settings_webdav_summary">浏览和管理 WebDAV 远程书库</string>
 </resources>

@@ -1,0 +1,9 @@
+﻿# excerpt.xml · ja / ko —— 摘录卡片
+excerpt_title	抜粋	발췌
+excerpt_style	スタイルを変更	스타일 변경
+excerpt_save	画像を保存	이미지 저장
+excerpt_share	抜粋を共有	발췌 공유
+excerpt_saved	画像を保存しました	이미지를 저장했습니다
+excerpt_failed	画像の生成に失敗しました。もう一度お試しください。	이미지 생성에 실패했습니다. 다시 시도하세요.
+excerpt_save_failed	保存に失敗しました。空き容量と権限を確認してください。	저장에 실패했습니다. 저장 공간과 권한을 확인하세요.
+excerpt_share_failed	共有に失敗しました。もう一度お試しください。	공유에 실패했습니다. 다시 시도하세요.

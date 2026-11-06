@@ -1,0 +1,3 @@
+﻿# native_epub_strings.xml · ja / ko —— 原生 CSS 排版（zh-rTW 已有，港澳由 TW 派生）
+native_epub_css_title	ネイティブ CSS レイアウト（実験的）	네이티브 CSS 조판(실험)
+native_epub_css_hint	この書籍のみで有効になります。一般的なレイアウトはネイティブエンジンを使い、複雑な章や未対応の読書設定は自動的に WebView を使います。	이 책에만 적용됩니다. 일반적인 조판은 네이티브 엔진을 사용하고, 복잡한 장과 아직 지원하지 않는 읽기 설정은 자동으로 WebView를 사용합니다.

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="native_epub_css_title">ネイティブ CSS レイアウト（実験的）</string>
+    <string name="native_epub_css_hint">この書籍のみで有効になります。一般的なレイアウトはネイティブエンジンを使い、複雑な章や未対応の読書設定は自動的に WebView を使います。</string>
+</resources>

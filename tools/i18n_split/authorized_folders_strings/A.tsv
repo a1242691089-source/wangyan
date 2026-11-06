@@ -1,0 +1,5 @@
+﻿# authorized_folders_strings.xml · ja / ko —— 授权文件夹
+authorized_folders_title	許可済みフォルダ	권한이 부여된 폴더
+authorized_folders_hint	左にスワイプすると許可を削除します。書籍と元のファイルは残ります。	왼쪽으로 밀면 권한이 삭제되며 책과 원본 파일은 유지됩니다.
+authorized_folders_empty	許可済みフォルダはありません。書籍をインポートするときにフォルダを許可できます。	권한이 부여된 폴더가 없습니다. 책을 가져올 때 폴더를 지정할 수 있습니다.
+authorized_folders_remove_failed	許可の削除に失敗しました。もう一度お試しください。	권한 삭제에 실패했습니다. 다시 시도하세요.

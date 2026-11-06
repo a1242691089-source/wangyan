@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dictionary_entry_source">표제어 출처 및 기여 기록(온라인에서 열기)</string>
+    <string name="dictionary_title">로컬 사전</string>
+    <string name="dictionary_management_intro">사전 데이터는 필요할 때 다운로드하며, 설치 후에는 오프라인으로 검색할 수 있습니다. 다운로드하면 자동으로 활성화되며 사전 데이터를 자동으로 내려받거나 업데이트하지 않습니다.</string>
+    <string name="dictionary_refresh">사전 및 규칙 업데이트 확인</string>
+    <string name="dictionary_not_published">아직 공개되지 않은 리소스입니다</string>
+    <string name="dictionary_download_install_size">다운로드 / 설치 용량:</string>
+    <string name="dictionary_installed_version">설치된 버전: %1$s</string>
+    <string name="dictionary_download_paused">네트워크 또는 시스템의 재개를 기다리는 중입니다</string>
+    <string name="dictionary_installing">검증 후 설치하는 중…</string>
+    <string name="dictionary_retry">다시 시도</string>
+    <string name="dictionary_download">다운로드</string>
+    <string name="dictionary_update">업데이트</string>
+    <string name="dictionary_sources">출처 및 라이선스</string>
+    <string name="dictionary_move_up">위로</string>
+    <string name="dictionary_move_down">아래로</string>
+    <string name="dictionary_delete">사전 삭제</string>
+    <string name="dictionary_delete_message">“%1$s”의 로컬 사전 데이터를 삭제할까요? 나중에 다시 다운로드할 수 있습니다.</string>
+    <string name="dictionary_disclaimer_title">사전 출처 안내 및 면책 고지</string>
+    <string name="dictionary_feedback">사전 리소스 제공 / 문제 신고</string>
+    <string name="dictionary_confirm_download">확인했습니다. 계속 다운로드</string>
+    <string name="dictionary_confirm_update">확인했습니다. 계속 업데이트</string>
+    <string name="dictionary_enable_after_download">처음 다운로드가 완료되면 자동으로 활성화되며, 여기에서 언제든지 비활성화하거나 삭제할 수 있습니다.</string>
+    <string name="dictionary_back_results">사전 결과로 돌아가기</string>
+    <string name="dictionary_partial_filtered">일부 내용이 사전 콘텐츠 규칙에 따라 필터링되었습니다</string>
+    <string name="dictionary_all_filtered">현재 콘텐츠 규칙에서는 표시할 수 있는 뜻이 없습니다</string>
+    <string name="dictionary_no_installed">로컬 사전이 활성화되어 있지 않습니다. 사전 관리에서 다운로드하거나 활성화하세요.</string>
+    <string name="dictionary_no_result">활성화된 사전에 아직 이 단어가 없습니다</string>
+    <string name="dictionary_lookup_failed">일부 사전을 조회할 수 없습니다. 관리 화면에서 확인하거나 다시 다운로드하세요.</string>
+    <string name="dictionary_manage">사전 관리</string>
+    <string name="dictionary_external">다른 사전 앱</string>
+    <string name="dictionary_web">웹에서 검색</string>
+    <string name="dictionary_disclaimer_short">타사 사전의 내용은 참고용이며 忘言의 견해나 입장을 대변하지 않습니다. 일부 내용은 규칙에 따라 필터링될 수 있습니다. 중국 본토의 사전 리소스를 제공해 주시면 확인 후 추가하겠습니다.</string>
+    <string name="dictionary_disclaimer_full">忘言는 중국 본토 커뮤니티가 제공하는 오픈소스 사전 리소스를 우선적으로 찾아 연결하려 노력했으며, 현재 중국어 주 사전으로 chinese-xinhua 커뮤니티 프로젝트를 사용하고 함께 다른 출처의 선택 사전도 제공합니다. 구체적인 출처와 라이선스는 각 사전의 설명을 확인하세요.\n\n중국 본토의 다른 적절한 사전 리소스를 알고 계시다면 프로젝트 링크, 데이터 출처 및 라이선스 설명을 알려 주세요. 우선 확인한 뒤 라이선스와 콘텐츠 품질, 기술 호환성을 확인하고 추가하겠습니다.\n\n타사 사전의 내용은 학습과 독서 참고용이며 오류, 오래된 내용 또는 지역별 표현 차이가 있을 수 있습니다. 표제어와 예문, 인용의 표현은 忘言의 견해나 입장을 대변하지 않습니다. 忘言는 색인 생성, 형식 정리 및 필요한 자형 변환을 수행하고 콘텐츠 규칙에 따라 일부 표제어, 뜻풀이 또는 예문을 필터링하므로 표시되는 내용이 원본 사전과 다를 수 있습니다.\n\n이 안내는 각 사전 라이선스가 부여하는 권리를 변경하지 않습니다. 필터링 규칙에는 누락이나 오판이 있을 수 있습니다. 오류, 권리 침해, 부적절한 내용 또는 잘못된 필터링을 발견하면 “문제 신고”를 통해 알려 주세요.</string>
+</resources>

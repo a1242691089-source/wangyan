@@ -88,4 +88,12 @@
     <string name="remote_error_invalid_file">다운로드한 파일이 올바르지 않습니다: 로그인이 만료되었거나 파일이 손상되었을 수 있습니다</string>
     <string name="remote_error_destination">선택한 폴더에 쓸 수 없습니다. 이 폴더에 다시 권한을 부여해 주세요</string>
     <string name="remote_error_unknown">작업에 실패했습니다. 다시 시도해 주세요</string>
+    <string name="remote_library_legal_title">원격 서재 이용 안내</string>
+    <string name="remote_library_legal_message">이 서재에 접근할 권한과 그 안의 작품을 열람·다운로드·가져올 권한이 있는지 확인하세요. 관련 법령과 저작권, 서비스 약관을 준수해야 하며, 권리를 침해하거나 위법하거나 무단 배포된 콘텐츠를 가져오거나 유포해서는 안 됩니다. 서재 주소와 콘텐츠는 이용자가 직접 제공하고 관리하며, 忘言는 서원을 제공하거나 심사하지 않고 그 합법성·정확성·가용성에 대해 책임지지 않습니다. 계속 진행하면 서재 및 관련 이용 행위가 적법함을 확인하고 그에 따르는 책임을 감수하는 데 동의한 것으로 간주됩니다.</string>
+    <string name="remote_library_legal_confirm_wait">안내를 읽어 주세요 (%1$d초)</string>
+    <string name="remote_library_legal_confirm">읽었으며 동의합니다</string>
+    <string name="remote_library_feedback">문제 신고 및 제보</string>
+    <string name="remote_library_feedback_hint">문제가 있거나 불법 서재를 발견하셨나요? 오른쪽 아래의 피드백을 눌러 알려 주세요.</string>
+    <string name="remote_library_settings_opds_summary">OPDS 원격 서재 둘러보기 및 관리</string>
+    <string name="remote_library_settings_webdav_summary">WebDAV 원격 서재 둘러보기 및 관리</string>
 </resources>

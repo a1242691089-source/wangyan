@@ -88,4 +88,12 @@
     <string name="remote_error_invalid_file">ダウンロードしたファイルが無効です：ログインの有効期限が切れているか、ファイルが破損している可能性があります</string>
     <string name="remote_error_destination">選択したフォルダに書き込めません。フォルダへのアクセスを再許可してください</string>
     <string name="remote_error_unknown">操作に失敗しました。もう一度お試しください</string>
+    <string name="remote_library_legal_title">リモートライブラリ利用に関する声明</string>
+    <string name="remote_library_legal_message">この書庫へのアクセス権、およびその中の作品を閲覧・ダウンロード・インポートする権利があることを確認してください。適用される法令、著作権、利用規約を遵守し、権利を侵害する内容、違法な内容、無断で配布された内容をインポートまたは配布してはなりません。書庫のアドレスと内容はご自身で用意・管理するものであり、忘言 は書源を提供も審査もせず、その合法性・正確性・可用性について責任を負いません。続行することで、書庫および関連する利用行為が適法であることを確認し、それに伴う責任を負うことに同意したものとみなされます。</string>
+    <string name="remote_library_legal_confirm_wait">声明をお読みください（%1$d 秒）</string>
+    <string name="remote_library_legal_confirm">読みました。同意します</string>
+    <string name="remote_library_feedback">問題の報告・通報</string>
+    <string name="remote_library_feedback_hint">問題が発生した、または違法な書庫を見つけましたか？右下のフィードバックからご連絡ください。</string>
+    <string name="remote_library_settings_opds_summary">OPDS リモートライブラリの閲覧と管理</string>
+    <string name="remote_library_settings_webdav_summary">WebDAV リモートライブラリの閲覧と管理</string>
 </resources>

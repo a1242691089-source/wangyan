@@ -49,13 +49,24 @@ class TraditionalChineseTextGuardTest {
             ).filterNotNull().firstOrNull { it.isDirectory }
                 ?: error("找不到 res 目录，user.dir=${System.getProperty("user.dir")}")
 
-        /** locale 名（如 `zh-rTW`，默认语言写 `values`）→ key → 原始文本。 */
+        /**
+         * locale 名（如 `zh-rTW`，默认语言写 `values`）→ key → 原始文本。
+         *
+         * 合并该目录下**所有**含 `<string>` 的 xml，而不只是 `strings.xml`：
+         * 远程书库、词典、听书等 13 个拆分文件当年不在扫描范围内，新写的繁体
+         * 文案一度无人守。key 在整个目录内唯一（aapt2 也按目录合并），直接拼即可。
+         */
         private fun stringValues(locale: String): Map<String, String> {
             val dir = if (locale == "values") "values" else "values-$locale"
-            val xml = resDir().resolve(dir).resolve("strings.xml").readText().replace(COMMENT, "")
-            return ELEMENT.findAll(xml).mapNotNull { match ->
-                NAME_ATTR.find(match.groupValues[1])?.groupValues?.get(1)
-                    ?.let { it to match.groupValues[2] }
+            val files = resDir().resolve(dir)
+                .listFiles { file -> file.isFile && file.extension == "xml" }
+                ?.sortedBy { it.name }
+                ?: emptyList()
+            return files.flatMap { file ->
+                ELEMENT.findAll(file.readText().replace(COMMENT, "")).mapNotNull { match ->
+                    NAME_ATTR.find(match.groupValues[1])?.groupValues?.get(1)
+                        ?.let { it to match.groupValues[2] }
+                }
             }.toMap()
         }
 

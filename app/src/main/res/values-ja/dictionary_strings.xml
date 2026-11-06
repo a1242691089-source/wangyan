@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dictionary_entry_source">見出し語の出典と貢献記録（オンラインで開く）</string>
+    <string name="dictionary_title">ローカル辞書</string>
+    <string name="dictionary_management_intro">辞書データは必要なときにダウンロードし、インストール後はオフラインで検索できます。ダウンロードすると自動的に有効になり、辞書データが自動でダウンロード・更新されることはありません。</string>
+    <string name="dictionary_refresh">辞書とルールの更新を確認</string>
+    <string name="dictionary_not_published">リソースはまだ公開されていません</string>
+    <string name="dictionary_download_install_size">ダウンロード / インストール容量：</string>
+    <string name="dictionary_installed_version">インストール済みバージョン：%1$s</string>
+    <string name="dictionary_download_paused">ネットワークまたはシステムの再開を待っています</string>
+    <string name="dictionary_installing">検証してインストールしています…</string>
+    <string name="dictionary_retry">再試行</string>
+    <string name="dictionary_download">ダウンロード</string>
+    <string name="dictionary_update">更新</string>
+    <string name="dictionary_sources">出典とライセンス</string>
+    <string name="dictionary_move_up">上へ</string>
+    <string name="dictionary_move_down">下へ</string>
+    <string name="dictionary_delete">辞書を削除</string>
+    <string name="dictionary_delete_message">「%1$s」のローカル辞書データを削除しますか？後で再ダウンロードできます。</string>
+    <string name="dictionary_disclaimer_title">辞書の出典と免責事項</string>
+    <string name="dictionary_feedback">辞書リソースの提供 / 問題の報告</string>
+    <string name="dictionary_confirm_download">了承しました。ダウンロードを続ける</string>
+    <string name="dictionary_confirm_update">了承しました。更新を続ける</string>
+    <string name="dictionary_enable_after_download">最初のダウンロードが成功すると自動的に有効になります。ここでいつでも無効化・削除できます。</string>
+    <string name="dictionary_back_results">辞書の結果に戻る</string>
+    <string name="dictionary_partial_filtered">一部の内容は辞書のコンテンツルールにより除外されています</string>
+    <string name="dictionary_all_filtered">現在のコンテンツルールでは表示できる語義がありません</string>
+    <string name="dictionary_no_installed">ローカル辞書が有効になっていません。「辞書を管理」からダウンロードまたは有効化してください。</string>
+    <string name="dictionary_no_result">有効な辞書にこの語はまだ収録されていません</string>
+    <string name="dictionary_lookup_failed">一部の辞書で検索できません。管理画面で確認するか、再ダウンロードしてください。</string>
+    <string name="dictionary_manage">辞書を管理</string>
+    <string name="dictionary_external">他の辞書アプリ</string>
+    <string name="dictionary_web">ウェブで検索</string>
+    <string name="dictionary_disclaimer_short">サードパーティ辞書の内容は参考情報であり、忘言 の見解や立場を表すものではありません。一部の内容はルールにより除外される場合があります。中国本土の辞書リソースの提供も歓迎します。確認のうえ追加します。</string>
+    <string name="dictionary_disclaimer_full">忘言 は中国本土のコミュニティが提供するオープンソース辞書リソースを優先して採用するよう努めており、現在の中国語の主辞書には chinese-xinhua コミュニティプロジェクトを採用し、あわせて他の出典による任意の辞書も提供しています。具体的な出典とライセンスは各辞書の説明をご確認ください。\n\n中国本土の他の適切な辞書リソースをご存じの場合は、プロジェクトのリンク、データの出典、ライセンスの説明をお知らせください。優先的に確認し、ライセンス・内容の品質・技術的な互換性を確認したうえで追加します。\n\nサードパーティ辞書の内容は学習および読書の参考用であり、誤り、古い内容、地域による語の違いが含まれる場合があります。見出し語・例文・引用における表現は 忘言 の見解や立場を表すものではありません。忘言 はインデックス作成、書式の整理、必要な字形変換を行い、コンテンツルールに基づいていくつかの見出し語・語義・例文を除外するため、表示内容が元の辞書と異なる場合があります。\n\nこの説明は、各辞書のライセンスがあなたに与える権利を変更するものではありません。除外ルールには漏れや誤判定がある可能性があります。誤り、権利侵害、不適切な内容、誤った除外を見つけた場合は、「問題の報告」からご連絡ください。</string>
+</resources>

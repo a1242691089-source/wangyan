@@ -1,0 +1,34 @@
+﻿# dictionary_strings.xml · zh-rTW 定稿（zh-rHK / zh-rMO 由本文件派生）
+dictionary_entry_source	原詞條來源與貢獻紀錄（連網開啟）
+dictionary_title	本機詞典
+dictionary_management_intro	詞庫按需下載，安裝後離線查詞。下載後自動啟用，不會自動下載或更新詞庫。
+dictionary_refresh	檢查詞典與規則更新
+dictionary_not_published	資源尚未發布
+dictionary_download_install_size	下載 / 安裝佔用：
+dictionary_installed_version	已安裝版本：%1$s
+dictionary_download_paused	等待網路或系統繼續下載
+dictionary_installing	正在驗證並安裝…
+dictionary_retry	重試
+dictionary_download	下載
+dictionary_update	更新
+dictionary_sources	來源與授權
+dictionary_move_up	上移
+dictionary_move_down	下移
+dictionary_delete	刪除詞典
+dictionary_delete_message	刪除「%1$s」的本機詞庫？之後可以重新下載。
+dictionary_disclaimer_title	詞典來源說明與免責聲明
+dictionary_feedback	提供詞典資源 / 問題回報
+dictionary_confirm_download	我已知悉，繼續下載
+dictionary_confirm_update	我已知悉，繼續更新
+dictionary_enable_after_download	首次下載成功後自動啟用，可隨時在此停用或刪除。
+dictionary_back_results	返回詞典結果
+dictionary_partial_filtered	部分內容已依詞典內容規則過濾
+dictionary_all_filtered	目前內容規則下暫無可顯示釋義
+dictionary_no_installed	尚未啟用本機詞典。請前往管理詞典下載或啟用。
+dictionary_no_result	已啟用的詞典暫未收錄該詞語
+dictionary_lookup_failed	部分詞典暫時無法查詢，請在管理頁檢查或重新下載。
+dictionary_manage	管理詞典
+dictionary_external	其他詞典應用程式
+dictionary_web	搜尋網頁
+dictionary_disclaimer_short	第三方詞典內容僅供參考，不代表 忘言 的觀點或立場；部分內容可能經規則過濾。歡迎提供更多中國大陸詞典資源，我們將在核實後加入。
+dictionary_disclaimer_full	忘言 已盡力尋找並優先接入中國大陸社群提供的開源詞典資源，目前中文主詞庫採用 chinese-xinhua 社群專案，同時提供其他來源的選用詞典。具體來源與授權請查看各詞典說明。\n\n如果你了解其他合適的中國大陸詞典資源，歡迎提供專案連結、資料來源及授權說明。我們會優先核實，並在確認授權、內容品質與技術相容性後加入。\n\n第三方詞典內容僅供學習與閱讀參考，可能存在錯誤、過時內容或地區用語差異。詞條、例句及引用中的表述不代表 忘言 的觀點或立場。忘言 會進行索引、格式整理及必要的字形轉換，並依內容規則過濾部分詞條、義項或例句，因此顯示內容可能與原始詞典不同。\n\n本說明不改變各詞庫授權條款賦予你的權利。過濾規則可能存在遺漏或誤判，如發現錯誤、侵權、不當內容或誤過濾，請透過「問題回報」聯絡我們。
