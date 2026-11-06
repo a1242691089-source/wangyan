@@ -14,7 +14,7 @@
 
 > 깔끔하고 우아한 Android 로컬 전자책 리더. EPUB, PDF, TXT, MOBI 전자책과 CBZ 만화 지원. 개인정보 보호 최우선, 완전 오프라인.
 
-[![Version](https://img.shields.io/badge/version-1.0.1-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.0.2-coral)](https://github.com/a1242691089-source/wangyan/releases/latest)
 [![License](https://img.shields.io/badge/license-GPLv3-green)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-blue)](https://developer.android.com)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.3.10-purple)](https://kotlinlang.org)

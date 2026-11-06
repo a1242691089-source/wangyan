@@ -39,7 +39,7 @@ android {
         applicationId = "com.wangyan.reader"
         minSdk = 26
         targetSdk = 37
-        versionCode = 4
+        versionCode = 5
         versionName = "1.0.2"
 
         buildConfigField("boolean", "DIAGNOSTIC_BUILD", "false")

@@ -99,3 +99,18 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 - 注意：`connectedAndroidTest` 结束会**自动卸载应用**（AGP 默认），跑完需重装 APK 并重走新手向导/协议弹窗。
 
 结果待补：全量 150 条 connectedDebugAndroidTest。P0 的完整 tombstone 已于下午补齐（`#000` 起 510 帧，见「P0 根因与热修」）。
+
+## rc2 真机验证（2026-11-06 晚，Galaxy S24 Ultra / Android 16）
+
+版本：v1.0.2-rc2（versionCode 4，`wangyan-1.0.2-rc2-universal.apk` 覆盖安装自 rc1 修复版，同为 debug 签名）。
+
+| 项 | 结果 |
+| --- | --- |
+| 安装 | Success（Streamed Install，覆盖升级，书架 7 本数据完好） |
+| 新手向导 + 协议确认 | 覆盖安装重置向导，已走完 |
+| 关于页版本号 | 显示 **1.0.2** ✓ |
+| 主题 | 液态玻璃（设置保留）✓ |
+| 知识卡创建 | 阅读器划词「stay」→ 存为知识 ✓ |
+| **P0 回归：液态玻璃下开知识详情** | **存活 2/2**（进出各一次，进程 pid 不变，logcat 无 FATAL/SIGSEGV）✓ |
+
+结论：rc2 唯一变更（P0 热修）真机验证通过，正式版 1.0.2 发布阻断项清零。
