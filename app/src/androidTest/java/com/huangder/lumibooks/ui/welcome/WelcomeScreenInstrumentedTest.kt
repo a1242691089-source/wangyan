@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.theme.EBookReaderTheme
+import com.huangder.lumibooks.ui.theme.MotionPreference
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -92,7 +93,11 @@ class WelcomeScreenInstrumentedTest {
         composeRule.setContent {
             EBookReaderTheme(
                 darkTheme = false,
-                eInkMode = false
+                eInkMode = false,
+                // 静态断言页不依赖动画：REDUCED 让渐变背景走静态分支，
+                // 否则 3 路 infiniteRepeatable 永不结束，Compose 框架每帧
+                // 请求帧率得 NaN 刷屏（14000+ 行）拖垮进程
+                motionPreference = MotionPreference.REDUCED
             ) {
                 WelcomeScreen(
                     isNewInstallation = isNewInstallation,
