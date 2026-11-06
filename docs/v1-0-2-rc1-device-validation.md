@@ -4,9 +4,15 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 ## 安装
 
-- APK：`app-universal-release.apk` / `app-arm64-v8a-release.apk`（release 构建，`app/keystore.properties` 缺失时回落 **debug 签名**）。
-- ⚠️ 若真机已装**正式签名**的 v1.0.1：签名不一致会导致覆盖安装失败，需先卸载（会清应用数据，注意备份）。
-- 若之前装的就是 debug/同签名包，可直接覆盖升级；设置 → 关于页应显示 **1.0.2**。
+- APK 在仓库的 `artifacts/` 目录（`.gitignore` 第 39 行 `/artifacts/` 已排除，不进版本库）：
+  - `wangyan-1.0.2-rc1-arm64-v8a.apk` —— 39 MB，绝大多数真机（2018 年后机型）用这个
+  - `wangyan-1.0.2-rc1-universal.apk` —— 39 MB，含 armeabi-v7a / x86 / x86_64，兼容性兜底
+- 签名：**Android Debug 证书**（CN=Android Debug，SHA-256 `5e6068a1…a271a9fc`）。
+  注意：`app/keystore.properties` 不存在时 AGP **不会**回落 debug 签名，`assembleRelease` 实际产出
+  `*-unsigned.apk`（装不上）；本次的包是构建完成后用 `apksigner` + `~/.android/debug.keystore` 手工补签的。
+- ⚠️ 若真机已装**正式签名**的 v1.0.1 发布包：签名不一致会导致覆盖安装失败，需先卸载
+  （会清应用数据，注意备份）。`adb install -r` 报 `INSTALL_FAILED_UPDATE_INCOMPATIBLE` 即此原因。
+- 设置 → 关于页应显示 **1.0.2**（versionCode 3）。
 
 ## 1 · 多语言（本版重点，八 locale 缺失归零）
 
