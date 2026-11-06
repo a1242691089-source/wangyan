@@ -105,3 +105,46 @@
 - 不改政策版本号（`政策版本：3`、`協議版本：2`）——这是字形规范化，条款实质未变，不构成需重新确认的重大变更。
 - 验证：`git diff --numstat` 三文件均 `2 2`；`:app:processDebugResources` 通过；`TraditionalChineseTextGuardTest` 4 用例 + `StringsRatchetTest` 7 用例共 11 全绿。
 - 工具：定稿块文件 `tools/i18n_legal/*.tw.txt`（一行一逻辑行）、写入脚本 `tools/i18n_legal_replace.py`（`check` / `verify --pre` / `write --apply`），按 `<string>` 值区间切片替换，断言 ASCII 词元多重集、7 个权限名、URL、日期、`條款` 计数不变。
+
+## 8. 拆分 strings 文件与法律 HTML（2026-11-06）
+
+前七节的口径只覆盖 `values/strings.xml`。同一 `res/` 下的 13 个拆分文件从未进入任何校验器（`i18n_fill.py` 的 `locale_path()`、`StringsRatchetTest`、`TraditionalChineseTextGuardTest` 全都写死 `strings.xml`），于是「1502 → 0」与「实际仍缺 416」可以同时成立。
+
+### 8.1 缺口与修法
+
+| 文件 | 可译基数 | 修法 |
+| --- | --- | --- |
+| `remote_library_strings.xml` | 91 | 6 个 locale 各缺 8 条（远程书库法律声明标题/正文等），实译 |
+| `dictionary_strings.xml` | 33 | 6 个 locale **整文件缺失**，ja/ko 实译、TW 手写、HK/MO 派生、zh-rCN 照抄 |
+| `listening_strings.xml` | 14 | 5 个 locale 整文件缺失（TW 原有），ja/ko 实译、HK/MO 由 TW 派生 |
+| `excerpt.xml` | 8 | 6 个 locale 整文件缺失 |
+| `selection_menu.xml` | 5 | 6 个 locale 整文件缺失 |
+| `native_epub_strings.xml` | 2 | 5 个 locale 整文件缺失 |
+| `authorized_folders_strings.xml` | 4 | zh-rCN / zh-rHK / zh-rMO 各缺 4 条 |
+
+- 合计 **416 个 locale×key**：ja 70 / ko 70 / zh-rCN 74 / zh-rTW 54 / zh-rHK 74 / zh-rMO 74。修完后 `verify` 全零。
+- ja です・ます調、ko 합니다体延续第 6 节口径；`zh-rTW` 手写（字型／預設／資料夾／檔案／逾時）；`zh-rCN` 是同一套简体，直接照抄 `values/`。
+- `zh-rHK` / `zh-rMO` 由 `zh-rTW` 派生，规则与 `TraditionalChineseTextGuardTest.HK_TERM_RULES` 同口径：`本機詞典→本地詞典`、`本機詞庫→本地詞庫`、`字型→字體`、`網路→網絡`、`使用者→用戶`、`上傳→上載`、`驗證→認證`、`連線→連接`、`隱私→私隱`、`品質→質素`、`專案→項目`；两文件逐字节相同。
+
+### 8.2 工具与守门
+
+- 新脚本 `tools/i18n_split_fill.py`，与 `i18n_fill.py` 同源（直接 import 它的 `entries` / `read` / `write` / `placeholders` / `FORBIDDEN`，避免两份转义口径漂移），只多一个「文件」维度：`list` / `fill` / `fillzh` / `verify`，另有 `--copy-values`（zh-rCN 照抄）与 `--derive-from zh-rTW`（港澳派生）。台账在 `tools/i18n_split/<file-stem>/<batch>.tsv`，目标 locale 文件不存在时按需创建（`<?xml…?><resources></resources>` 骨架）。
+- `StringsRatchetTest` 新增 `splitStringFilesAreFullyTranslated`（按「文件 × locale」求差集，「整文件缺失」单独报），并把 `placeholderTypesMatchAcrossLocales`、`hkAndMoMustStayIdentical` 的扫描范围从 `strings.xml` 扩到 `values/` 下全部含 `<string>` 的文件。
+- `TraditionalChineseTextGuardTest.stringValues()` 改为合并目录下所有 xml，字形扫描与结构冻结自动覆盖拆分文件。
+
+### 8.3 法律 HTML（`app/src/main/assets/html/`）
+
+- 病灶：`privacy.html` / `terms.html` 只有简体一份，`<html lang="zh-CN">`、零语言切换；WebView 顶栏标题走已翻译的 `R.string.privacy_policy`，正文永远简体——日/韩/繁中用户看到「外文标题 + 简体正文」。
+- 命名：`privacy.html` / `terms.html` 作简体基准与兜底，新增 `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*`。`licenses.html` 不本地化。
+- 加载：`WebViewActivity.resolveLegalAsset()` 由运行时 `configuration.locales[0]` 映射后缀（zh-CN 无后缀），`assets.open` 探测存在性，缺失回退基准文件；不认的系统语言也跟着回退简体，避免标题正文两种语言。
+- 内容：结构逐行对齐基准（privacy 9 章、terms 12 章、表格行、列表项、`<h3>` 数量全等）；版本事实全语言一致——政策版本 3 / 协议版本 2 / 生效 2026-06-29 / 更新 2026-10-01；条款页里的隐私链接指向同语言页（`privacy-zh-HK.html` 等）。
+- 语体：TW 手写（隱私、資料夾、檔案、網路、預設、匯入、字型→字型）；HK/MO 由 TW 按上表规则 + `使用者條款→使用條款`、`智慧財產權→知識產權`、`開放原始碼→開放源碼` 派生，两份只差 `<html lang>` 与自链接。
+- **待人工/法务审校**：六种语言的正文属本轮新译，未经法务确认；en/ja/ko 用词与已发布的 `welcome_privacy_content` / `welcome_terms_content` 保持同一批术语，但两份文本的章节数量不同（HTML 9/12 章，字符串版 10/13 章，字符串版多「本次更新补充」一节），后续修订需两边同时改。
+- 守门：新增 `LegalHtmlLocaleTest` 六条用例——变体齐全、`<html lang>` 匹配、结构/硬事实（URL、日期、包名、权限名）与基准一致、繁中三份无简体专用字（黑名单同 `ChineseConverter` 推导口径）、HK/MO 归一后逐字相同、条款页链接同语言隐私页。
+- 遗留：站点副本 `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页，自带 `lumi-nav.js`）仍是纯简体，需另一套导航改造，登记为待办。
+
+### 8.4 本批实测
+
+- `python tools/i18n_split_fill.py verify` → 13 个文件 × 7 locale 全 0（改前 416）。
+- XML 良构 98 个 strings 文件全通过；HK 与 MO 拆分文件逐字节相同。
+- `StringsRatchetTest` 8 用例 + `TraditionalChineseTextGuardTest` 4 用例 + `LegalHtmlLocaleTest` 6 用例 = **18 全绿**。

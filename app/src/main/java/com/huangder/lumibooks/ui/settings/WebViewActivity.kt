@@ -2,6 +2,7 @@ package com.huangder.lumibooks.ui.settings
 import com.huangder.lumibooks.ui.icons.directionalIcon
 import com.huangder.lumibooks.ui.icons.AppIcons
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.webkit.WebView
@@ -45,6 +46,7 @@ import com.huangder.lumibooks.ui.theme.resolveAppFontFamily
 import com.huangder.lumibooks.ui.components.LiquidGlassIconButton
 import com.huangder.lumibooks.util.LaunchThemeController
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -53,6 +55,10 @@ import javax.inject.Inject
  * intent extra:
  *   "title"  — 页面标题
  *   "file"   — assets 文件名（如 "privacy.html"）
+ *
+ * 法律文本按语言分文件：`privacy.html` 是简体基准，其余 locale 用
+ * `privacy-<locale>.html`（见 [resolveLegalAsset]）。正文要与顶栏标题
+ * 的语言一致，否则会出现「日文标题 + 简体正文」。
  *
  * 过渡动画继承系统默认。
  */
@@ -71,7 +77,7 @@ class WebViewActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val title = intent.getStringExtra("title") ?: ""
-        val file = intent.getStringExtra("file") ?: "privacy.html"
+        val file = resolveLegalAsset(this, intent.getStringExtra("file") ?: "privacy.html")
 
         val launchTheme = LaunchThemeController.themeSnapshot(this)
         val isSystemDark = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
@@ -192,4 +198,43 @@ private fun WebViewPage(title: String, assetFile: String, isDark: Boolean, onBac
             )
         }
     }
+}
+
+/**
+ * 法律文本的语言后缀。
+ *
+ * Activity 已在 `attachBaseContext` 里套用应用语言，`system` 也已被解析成具体
+ * locale，所以这里读运行时 configuration，不再二次读 SharedPreferences。
+ * 简体（zh-CN）不加后缀：`privacy.html` 本身就是基准文件。
+ */
+private fun legalAssetSuffix(context: Context): String {
+    val locale = context.resources.configuration.locales[0]
+    return when (locale.language) {
+        "ja" -> "-ja"
+        "ko" -> "-ko"
+        "en" -> "-en"
+        "zh" -> when (locale.country.uppercase(Locale.ROOT)) {
+            "TW" -> "-zh-TW"
+            "HK" -> "-zh-HK"
+            "MO" -> "-zh-MO"
+            else -> ""
+        }
+        // 不认识的系统语言：资源系统同样回退到 values/（简体），正文跟着回退，
+        // 宁可给简体也不要出现「日文标题 + 英文正文」这种错配。
+        else -> ""
+    }
+}
+
+/**
+ * 把 `privacy.html` 解析成实际要加载的 asset：有对应语言版本就用，没有就回退基准文件。
+ *
+ * 判定用「能否打开」而不是硬编码清单——新增语言只需丢文件进 assets，少一个文件
+ * 只会退化成简体，不会白屏。
+ */
+private fun resolveLegalAsset(context: Context, file: String): String {
+    val suffix = legalAssetSuffix(context)
+    if (suffix.isEmpty()) return file
+    val localized = file.removeSuffix(".html") + suffix + ".html"
+    val exists = runCatching { context.assets.open("html/$localized").close() }.isSuccess
+    return if (exists) localized else file
 }

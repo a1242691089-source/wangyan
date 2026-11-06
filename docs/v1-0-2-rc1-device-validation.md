@@ -151,3 +151,13 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 | 手动检查更新 | Toast「目前已是最新版本」✓；冷启动不再弹更新窗 |
 
 结论：应用内更新链路（远端配置拉取 → 弹窗渲染 → 下载跳转 → 已最新判定）首次端到端验证通过；v1.0.2 正式版真机收尾完成，1.0.1 用户可经此链路升级。
+
+## 后续待办（2026-11-06 晚登记）
+
+| 项 | 状态 | 说明 |
+| --- | --- | --- |
+| P0 结构层根治的真机验证 | 待设备 | 代码在分支 `fix/p0-backdrop-isolation`（`c60de33`），debug 包已构建；真机矩阵见上文「P0 根治（结构层）」，全绿后再合 main |
+| 全量 150 条 connectedDebugAndroidTest | 待设备空闲 | util 包 31 条冒烟已跑（27 过 4 败，均环境相关） |
+| 站点法律页本地化 | 未做 | `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页 + `lumi-nav.js`）仍是纯简体；应用内 `assets/html/` 的 7 语言版本已完成 |
+| 法律译文审校 | 未做 | `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*` 为本轮新译，未经人工/法务确认 |
+| `StatisticsScreen.kt` 玻璃用法复核 | 未做 | 该页在 rc1 崩溃矩阵中存活，但未单独验证结构安全性 |
