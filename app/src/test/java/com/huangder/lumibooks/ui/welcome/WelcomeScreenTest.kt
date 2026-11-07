@@ -1,28 +1,37 @@
 package com.huangder.lumibooks.ui.welcome
 
+import android.app.Application
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.theme.EBookReaderTheme
 import com.huangder.lumibooks.ui.theme.MotionPreference
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 
-@RunWith(AndroidJUnit4::class)
-class WelcomeScreenInstrumentedTest {
+// 自真机迁移（原 WelcomeScreenInstrumentedTest）：SM-S9280 / Android 16 上
+// androidx.test 的 EmptyActivity 窗口舞步存在随机楔死竞态（正常 0.2s，楔死时每步
+// 操作卡 ~55s 或永不恢复），结构性断言在 Robolectric 上等价且可进 CI。
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [35], application = Application::class, qualifiers = "zh-rCN-w369dp-h822dp-xxhdpi")
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+class WelcomeScreenTest {
 
     @get:Rule
     val composeRule = createComposeRule()
 
+    private val context get() = ApplicationProvider.getApplicationContext<Application>()
+
     @Test
     fun introductionUsesUnifiedVersionTwoDesign() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         showWelcome(isNewInstallation = false, startOnIntroduction = true)
 
         composeRule.onNodeWithText(context.getString(R.string.welcome_title)).assertIsDisplayed()
@@ -38,7 +47,6 @@ class WelcomeScreenInstrumentedTest {
 
     @Test
     fun startButtonKeepsExistingInstallSpecificNextStep() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         showWelcome(isNewInstallation = true, startOnIntroduction = true)
 
         composeRule.onNodeWithText(context.getString(R.string.welcome_start_using)).performClick()
@@ -52,7 +60,6 @@ class WelcomeScreenInstrumentedTest {
 
     @Test
     fun updateWalkthroughIncludesAllFeaturesAndBackNeverShowsThemeSetup() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         showWelcome(isNewInstallation = false, startOnIntroduction = true)
 
         composeRule.onNodeWithText(context.getString(R.string.welcome_start_using)).performClick()
@@ -74,7 +81,6 @@ class WelcomeScreenInstrumentedTest {
 
     @Test
     fun supportPageContainsCopyAndActionsWithoutDecorativeEmoji() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         showWelcome(isNewInstallation = false, startOnSupport = true)
 
         composeRule.onNodeWithText(context.getString(R.string.welcome_support_title)).assertIsDisplayed()
@@ -95,8 +101,7 @@ class WelcomeScreenInstrumentedTest {
                 darkTheme = false,
                 eInkMode = false,
                 // 静态断言页不依赖动画：REDUCED 让渐变背景走静态分支，
-                // 否则 3 路 infiniteRepeatable 永不结束，Compose 框架每帧
-                // 请求帧率得 NaN 刷屏（14000+ 行）拖垮进程
+                // 避免 3 路 infiniteRepeatable 在无帧推进环境下的不确定性
                 motionPreference = MotionPreference.REDUCED
             ) {
                 WelcomeScreen(

@@ -46,6 +46,8 @@ android {
         buildConfigField("boolean", "STARTUP_TRACE_ENABLED", "false")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // 每个用例前清空应用数据：消除 DataStore/Room/Hilt 状态跨用例残留
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -122,6 +124,11 @@ android {
         }
     }
     testOptions {
+        // 每个用例在独立 instrumentation 进程中运行，用例间自动杀掉应用进程。
+        // 根治「串跑时 Compose 测试等 idle，但 Activity 窗口失焦停帧 → 挂死」
+        // 与 VisualMotion 等进程级单例的跨用例污染（welcome 第 2 用例与
+        // EpubDirectNavigationHost 两例挂死、单独跑均通过的根因）。
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
         unitTests {
             isIncludeAndroidResources = true
             all {
@@ -240,8 +247,16 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
     testImplementation("org.json:json:20240303")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // androidx.test 全家桶保持同代（2026 时点）：旧栈（ext:junit 1.1.5 / espresso 3.5.1，
+    // 2023 年版本）在 Android 16 真机上与系统窗口 Transition 存在竞争死锁——
+    // InstrumentationActivityInvoker$EmptyActivity 盖住 compose 测试活动后永不 finish，
+    // 测试线程死等，表现为「串跑挂死、单独跑通过」的随机假象。1.3.0/3.7.0/1.7.0 修复。
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test:core:1.7.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+    // Orchestrator 本体（测试专用 APK，不进应用包）。写时最新稳定版 1.6.1。
+    androidTestUtil("androidx.test:orchestrator:1.6.1")
     androidTestImplementation("androidx.room:room-testing:2.8.4")
     androidTestImplementation(platform("androidx.compose:compose-bom:2026.06.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")

@@ -184,7 +184,8 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 | 全量 150 条 connectedDebugAndroidTest | **已完成（2026-11-06 深夜）** | 分 3 批跑：执行 111 条 / 99 通过 / 12 失败（全部环境或测试代码缺陷，与 P0 零交集）/ 39 条被向导页崩溃中断。详见下节 |
 | 站点法律页本地化 | 未做 | `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页 + `lumi-nav.js`）仍是纯简体；应用内 `assets/html/` 的 7 语言版本已完成 |
 | 法律译文审校 | 未做 | `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*` 为本轮新译，未经人工/法务确认 |
-| 仪器测试串跑挂起排查 | 未做 | `WelcomeScreenInstrumentedTest`（串跑第 3 用例起挂死，2026-11-07 实测）与 `EpubDirectNavigationHostInstrumentedTest` 同型：单独跑均通过，疑似 Compose 测试状态跨用例污染；临时对策=按方法分批 |
+| 仪器测试串跑挂起排查 | **已完成（2026-11-07）** | 根因=Android 16 真机窗口 Transition 随机竞态（androidx.test EmptyActivity 舞步正常 0.2s、楔死时每步 ~55s 或永不恢复），与测试间状态污染无关；修复=6 个 compose 测试类迁 Robolectric + Orchestrator 进程隔离 + androidx.test 栈升级，详见下节「串跑挂死根治与 compose 测试迁移」 |
+| 首跑基线新失败分诊（2026-11-07） | 未做 | 全量首跑完成后的 4 条非既有基线失败：`AnnotationEditTransactionTest`（expected 2 was 1，Room 事务计数，**疑似真实并发缺陷**）、`ReaderThemeSuiteCodecInstrumentedTest`（codec 往返不一致）、`EpubParserLinkTest` ×2（TOC 链接映射/锚点，设备与预期结构不符）、`EpubHighlightOverlay.roundedOverlaySurvivesReaderReconfiguration`（高亮间隙负值，与既有度量基线同族） |
 | `StatisticsScreen.kt` 玻璃用法复核 | 未做 | 该页在 rc1 崩溃矩阵中存活，但未单独验证结构安全性 |
 
 ## 全量仪器测试（2026-11-06 深夜 · 分 3 批，设备 SM-S9280）
@@ -217,4 +218,27 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 
 - 这些用例此前**从未在真机跑过**（CI 只跑 Robolectric 分片），无基线可比，登记为「首次真机基线的待观察项」；密度/字体度量类断言大概率需要按设备密度做容差，或改断言为范围判断。
 - 两处**测试代码/被测页的既有缺陷**已于 2026-11-07 修复：`DataStoreManager*Test` 的 `@After`/`@Before` 改块体 void；`WelcomeScreenInstrumentedTest` 注入 `MotionPreference.REDUCED` 使渐变背景走静态分支（原崩溃用例复跑通过）。注意：**真机向导页本身仍带无限动画**（REDUCED 才静态化），若真机上向导页有卡顿/耗电疑虑，需另行评估产品侧对「减弱动态效果」系统设置的自适应。
-- **整批不可一次跑完，根因更新**：向导页 NaN 崩溃已消除，但 2026-11-07 复测发现 `WelcomeScreenInstrumentedTest` 四用例**同类串跑仍会无声挂死**——第 3 个用例（`startButtonKeepsExistingInstallSpecificNextStep`，唯一访问液态玻璃预览页的用例）在前两个全流程用例之后跑挂死 23 分钟（43 线程全 sleeping、无 ANR、无崩溃），**单独跑 1 分钟通过**；与 `EpubDirectNavigationHostInstrumentedTest` 串跑挂起同型（状态污染）。可靠跑法=按包/按方法分批，单类用例 ≥3 的建议再拆。
+- **整批不可一次跑完（2026-11-06 结论，已于 2026-11-07 根治，见下节）**：向导页 NaN 崩溃消除后，复测发现向导类用例串跑仍会无声挂死；当时的「状态污染/按方法分批」定性后来被证明不成立——真正根因是真机窗口 Transition 竞态，与用例顺序无关。
+
+## 串跑挂死根治与 compose 测试迁移（2026-11-07）
+
+### 根因链（四轮排除实验后收敛）
+
+1. 启用 AndroidX Test Orchestrator + `clearPackageData`（每用例独立进程）后**挂死依旧复现**——排除「跨用例状态污染」，原定性被推翻。
+2. 升级 androidx.test 全家桶（`ext:junit 1.1.5→1.3.0`、`espresso 3.5.1→3.7.0`、新增 `runner/core 1.7.0`）后**同位置复现**——排除版本陈旧。
+3. 系统三把动画尺归零（`window/transition/animator = 0.0`）后**仍复现**——排除动画时长。
+4. 决定性对照：每个 compose 用例都会执行 androidx.test 的标准「EmptyActivity 窗口舞步」（启动 `InstrumentationActivityInvoker$EmptyActivity` 盖住 compose 测试活动 → PAUSED/不可见 → 恢复）。同一舞步在 supportPage 用例上 **0.23s 完成**，在 updateWalkthrough 用例上**楔死**（12 分钟静默后以每操作 ~55s 的速度爬完 772s，或永不恢复）。**结论：SM-S9280 / Android 16 上窗口 Transition 恢复存在随机竞态**，历史上「串跑第 3 用例挂死 23 分钟」「EpubDirectNavigation 串跑挂死」均为同一竞态的偶然表现（挂死时窗口在前台、全线程 sleeping、无 ANR，与此机制完全吻合）。
+
+### 修复措施
+
+- **6 个 compose 测试类自 androidTest 迁至 `app/src/test`（Robolectric，`sdk 35` + NATIVE graphics）**：`WelcomeScreenTest`（原 `WelcomeScreenInstrumentedTest`）、`BookDetailRowComposeTest`、`LiquidGlassButtonInteractionTest`、`AppIconStyleScreenTest`、`SettingsRowsTest`、`TocReturnButtonTest`。结构性/文本/交互断言在 Robolectric 等价，且**首次可进 CI 常跑**（仪器测试 CI 从不执行）；真机 androidTest 从此不含任何 ActivityScenario 使用者，竞态入口清零。
+- **Orchestrator + clearPackageData + androidx.test 升级保留**：`app/build.gradle.kts`（`execution = ANDROIDX_TEST_ORCHESTRATOR`、`testInstrumentationRunnerArguments["clearPackageData"]="true"`、`androidTestUtil androidx.test:orchestrator:1.6.1`）。
+
+### 迁移后全量真机回归（SM-S9280，2026-11-07）
+
+`connectedDebugAndroidTest` 一次性跑完 **135 条 / 6m44s**（历史：150 条、84 分钟停滞、需 3 批）。执行 134、**15 失败**：
+
+- **11 条既有环境基线**（与上节 12 条清单重叠，度量/几何/密度类）：`EpubFixedLayoutInsets` ×1、`ReaderPagingLayout` ×1、`ReaderSelectionMagnifier` ×1、`RoundedHighlightRendering` ×3、`VerticalTextLayouter` ×2、`ReaderParagraphFormatter` ×1、`EpubVerticalPaging` ×1、`EpubHighlightOverlay.roundedOverlaySurvivesReaderReconfiguration` ×1。
+- **4 条首跑基线新失败**（上一轮 39 条未执行域的首次真机运行，登记待分诊）：`AnnotationEditTransactionTest`（Room 事务计数 2 vs 1，疑似真实并发缺陷，优先排查）、`ReaderThemeSuiteCodecInstrumentedTest`（codec 往返）、`EpubParserLinkTest` ×2（TOC 链接映射与锚点）。
+
+验证注意：迁移后的 JVM 测试本地命令 `gradle :app:testDebugUnitTest --tests "…"`；真机验证必须按类/包整跑（`class#method` 无法复现串跑场景，且 Orchestrator 下每用例独立进程本就无串跑）。
