@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_title">AI Settings</string>
+    <string name="ai_description">Configure a general-purpose AI service (OpenAI-compatible API). Upcoming features such as reading Q&amp;A will use this configuration. It is separate from the AI translation settings.</string>
+    <string name="ai_consent">Saving these settings means you agree to have the content you enter sent to the configured service. Usage costs are billed to that service account.</string>
+    <string name="ai_enable">Enable AI features</string>
+    <string name="ai_test">Test connection</string>
+    <string name="ai_error_empty">The service returned no usable content. Try again or switch models.</string>
+    <string name="ai_error_configuration">Check the base URL and model name; HTTP must be explicitly allowed.</string>
+</resources>

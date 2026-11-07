@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_title">AI 設定</string>
+    <string name="ai_description">設定通用 AI 服務（兼容 OpenAI 介面格式），之後的閱讀問答等功能將使用此設定。與 AI 翻譯設定相互獨立。</string>
+    <string name="ai_consent">儲存設定即表示同意將你輸入的內容傳送至所設定的服務。呼叫費用由對應服務帳戶承擔。</string>
+    <string name="ai_enable">啟用 AI 能力</string>
+    <string name="ai_test">測試連線</string>
+    <string name="ai_error_empty">服務未回傳有效內容，請重試或更換模型。</string>
+    <string name="ai_error_configuration">請檢查基礎位址與模型名稱；HTTP 需明確允許。</string>
+</resources>

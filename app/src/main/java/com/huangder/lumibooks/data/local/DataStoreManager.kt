@@ -416,6 +416,8 @@ class DataStoreManager @Inject constructor(
 
         // 外部 TTS 听书设置
         private val AI_TRANSLATION_SETTINGS = stringPreferencesKey("ai_translation_settings")
+        // 通用 AI 服务设置（V0.5a，与 AI 翻译设置相互独立）
+        private val AI_SETTINGS = stringPreferencesKey("ai_settings")
         private val EXTERNAL_TTS_ENABLED = booleanPreferencesKey("external_tts_enabled")
         private val EXTERNAL_TTS_PROTOCOL = stringPreferencesKey("external_tts_protocol")
         private val EXTERNAL_TTS_BASE_URL = stringPreferencesKey("external_tts_base_url")
@@ -1168,6 +1170,15 @@ class DataStoreManager @Inject constructor(
 
     suspend fun saveTranslationSettings(settings: com.huangder.lumibooks.translation.TranslationSettings) {
         context.dataStore.edit { it[AI_TRANSLATION_SETTINGS] = settings.toJson() }
+    }
+
+    // 通用 AI 服务设置（V0.5a）
+    val aiSettings: Flow<com.huangder.lumibooks.ai.AiSettings> = context.dataStore.data
+        .map { com.huangder.lumibooks.ai.AiSettings.fromJson(it[AI_SETTINGS]) }
+        .distinctUntilChanged()
+
+    suspend fun saveAiSettings(settings: com.huangder.lumibooks.ai.AiSettings) {
+        context.dataStore.edit { it[AI_SETTINGS] = settings.toJson() }
     }
 
     override val externalTtsSettings: Flow<ExternalTtsSettings> = context.dataStore.data.map { preferences ->

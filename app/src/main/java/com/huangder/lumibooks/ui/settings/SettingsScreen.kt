@@ -289,6 +289,14 @@ fun ThirdPartyServicesDetail(viewModel: SettingsViewModel) {
         }
         SettingsGroupDivider()
         CategoryItem(
+            label = stringResource(R.string.ai_title),
+            supportingText = stringResource(R.string.ai_description),
+            grouped = true
+        ) {
+            com.huangder.lumibooks.ai.openAiSettings(context)
+        }
+        SettingsGroupDivider()
+        CategoryItem(
             label = stringResource(R.string.category_mineru),
             supportingText = when (uiState.mineruMode) {
                 "agent" -> stringResource(R.string.mineru_mode_agent_short)

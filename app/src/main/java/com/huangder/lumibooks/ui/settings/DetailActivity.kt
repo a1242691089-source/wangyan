@@ -153,6 +153,9 @@ class DetailActivity : ComponentActivity() {
                             com.huangder.lumibooks.dictionary.LocalDictionarySettings()
                         }
                         "ai_translation" -> DetailPage(stringResource(R.string.translation_title), onBack) { TranslationSettingsDetail() }
+                        "ai_settings" -> DetailPage(stringResource(R.string.ai_title), onBack) {
+                            com.huangder.lumibooks.ui.settings.AiSettingsDetail()
+                        }
                         "mineru" -> DetailPage(stringResource(R.string.title_mineru), onBack) { MineruSettingsDetail(viewModel) }
                         "external_tts" -> DetailPage(stringResource(R.string.title_external_tts), onBack) {
                             ExternalTtsSettingsDetail(viewModel) {

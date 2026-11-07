@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_title">AI 設定</string>
+    <string name="ai_description">汎用 AI サービス（OpenAI 互換 API）を設定します。読書中の質問回答などの機能はこの設定を使用します。AI 翻訳の設定とは独立しています。</string>
+    <string name="ai_consent">設定を保存すると、入力した内容が設定したサービスに送信されることに同意したものとみなされます。利用料金は各サービスのアカウントに請求されます。</string>
+    <string name="ai_enable">AI 機能を有効にする</string>
+    <string name="ai_test">接続をテスト</string>
+    <string name="ai_error_empty">サービスから有効な内容が返されませんでした。再試行するかモデルを変更してください。</string>
+    <string name="ai_error_configuration">ベース URL とモデル名を確認してください。HTTP を使う場合は明示的な許可が必要です。</string>
+</resources>
