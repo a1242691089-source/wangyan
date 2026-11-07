@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>プライバシーポリシー — 忘言</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        /* ═══ 法律文档页专属布局（设计系统见 lumi-immersive.css） ═══ */
+        .doc {
+            width: min(calc(100% - 40px), 860px);
+            margin: clamp(28px, 4vw, 48px) auto 0;
+            padding: clamp(28px, 5vw, 62px);
+            border-radius: var(--radius-xl);
+        }
+        .doc h1 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; }
+        .doc .meta { margin: 10px 0 40px; font-size: 14px; color: var(--muted); }
+        .doc h2 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 46px 0 14px;
+            padding-top: 34px;
+            border-top: 1px solid var(--stroke);
+        }
+        .doc h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 6px; }
+        .doc h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+        .doc p { font-size: 15.5px; line-height: 1.9; color: var(--body-c); margin-bottom: 12px; }
+        .doc strong { color: var(--ink); }
+        .table-scroll { overflow-x: auto; margin: 16px 0 22px; }
+        .doc table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .doc th, .doc td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--stroke); vertical-align: top; }
+        .doc th {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .doc td { color: var(--body-c); line-height: 1.7; }
+        .doc ul { list-style: none; margin: 8px 0 16px; }
+        .doc ul li { padding: 5px 0; font-size: 15px; line-height: 1.8; color: var(--body-c); }
+        .doc ul li::before { content: "·  "; color: var(--accent); font-weight: 700; }
+        .doc .cross { color: #ff7a66; margin-right: 8px; }
+        .doc a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+        .doc .endnote { margin-top: 30px; font-size: 13px; color: var(--muted); }
+        .doc .note { margin-top: 20px; font-size: 13px; color: var(--muted); }
+
+        .doc-footer {
+            width: min(calc(100% - 40px), 860px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 24px 0 36px;
+            border-top: 1px solid var(--stroke);
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .doc-footer a { color: var(--muted); margin-left: 22px; text-decoration: none; }
+        .doc-footer a:first-child { margin-left: 0; }
+        .doc-footer a:hover { color: var(--ink); text-decoration: underline; }
+        .doc-footer a.active { color: var(--ink); }
+        .doc-langs a { margin-left: 0; margin-right: 14px; }
+        @media (max-width: 640px) {
+            .doc-footer { flex-direction: column; text-align: center; }
+            .doc-footer a { margin: 0 8px; }
+        }
+    </style>
+    <link rel="stylesheet" href="lumi-immersive.css">
+</head>
+<body>
+
+<!-- ═══ Top Navigation ═══ -->
+<nav class="top-nav">
+    <a href="index.html" class="nav-logo" aria-label="忘言ホーム">
+        <img src="icon.png" class="logo-icon-img" alt="忘言">
+        <span class="logo-text">忘言</span>
+    </a>
+    <ul class="nav-links" aria-label="メインナビゲーション">
+        <li><a href="features.html">機能</a></li>
+        <li><a href="privacy-section.html" class="active" aria-current="page">プライバシー</a></li>
+        <li><a href="tech.html">技術</a></li>
+        <li><a href="sponsor.html">スポンサー</a></li>
+        <li><a href="feedback.html">フィードバック</a></li>
+    </ul>
+    <div class="nav-cta">
+        <a href="https://github.com/a1242691089-source/wangyan/releases/latest" class="btn-nav-download">忘言を入手</a>
+    </div>
+    <button class="nav-more-btn" type="button" aria-label="ナビゲーションメニューを開く" aria-controls="lumi-nav-menu">メニュー</button>
+    <div class="nav-more-dropdown" id="lumi-nav-menu">
+        <a href="features.html">機能</a>
+        <a href="privacy-section.html" class="active" aria-current="page">プライバシー</a>
+        <a href="tech.html">技術</a>
+        <a href="sponsor.html">スポンサー</a>
+        <a href="feedback.html">フィードバック</a>
+    </div>
+</nav>
+
+<div class="glass-card doc">
+<h1>プライバシーポリシー</h1>
+<p class="meta">ポリシーバージョン：3 · 施行日：2026年6月29日 · 最終更新日：2026年10月1日</p>
+
+<h2>一、はじめに</h2>
+<p>忘言（「本アプリ」）は、オープンソースでローカル優先の電子書籍リーダーです。プライバシーが重要であることは承知しています。本ポリシーは、本アプリがデータをどう扱うか、またどの任意機能が、利用者が選択または確認したネットワークサービスへデータを送信するかを説明します。</p>
+<p>本アプリは書籍コンテンツを提供せず、オンラインの書源・購読フィードの提供、組み込み、インポート、共有も行いません。オンライン検索やコンテンツのダウンロードも行いません。TXT の目次ルール（任意のサードパーティ互換ルールを含む）は、端末内または利用者が許可した TXT ファイルの解析にのみ使われ、ルールに含まれるスクリプト浄化コードが実行されることはありません。</p>
+<p><strong>基本方針：閲覧、書庫、進捗、ノートおよびほとんどの設定は、既定で本機に保存されます。WebDAV 同期、MinerU クラウド解析、サードパーティ TTS、AI 翻訳などのネットワーク機能を利用者が自ら設定・有効化したときに限り、該当する書籍ファイル、閲覧データ、選択テキストが対応サービスへ送信されます。オンデマンドのローカル辞書はインストール後オフラインで検索され、検索語、本文、フィルター一致記録はアップロードされません。</strong></p>
+<p>ローカル辞書の本文は APK に組み込まれていません。設定でカタログを確認したうえでダウンロードを確定できます。パッケージはバージョンと SHA-256 を検証し、アプリ専用ディレクトリに保存され、システムバックアップや WebDAV 同期の対象外です。</p>
+<p><strong>オープンソースの透明性：</strong>忘言 のオリジナルコードは GNU GPLv3 で公開され、サードパーティコンポーネントは各ライセンスに従います。完全なソースコードは公開され、誰でも検証できます。</p>
+
+<h2>二、権限</h2>
+<p>本アプリは、閲覧と任意機能に必要な Android 権限のみを要求します。</p>
+<div class="table-scroll"><table>
+<tr><th>権限</th><th>用途</th><th>必要性</th></tr>
+<tr><td>READ_EXTERNAL_STORAGE（Android 12 以下）</td><td>利用者が選択した EPUB、TXT、PDF などの電子書籍ファイルを読み取ります</td><td>基本的な閲覧に必要</td></tr>
+<tr><td>READ_MEDIA_IMAGES（Android 13 以上）</td><td>書籍の表紙、書き出した画像、利用者が選択した画像リソースを読み取ります</td><td>Android のバージョンにより必要</td></tr>
+<tr><td>INTERNET</td><td>更新・お知らせ・規約やポリシーのバージョン確認、ローカル辞書とリモートフォントのオンデマンド取得、利用者が設定した WebDAV サーバーへの接続、MinerU・サードパーティ TTS・AI 翻訳サービスへの接続、利用者が自ら開いた表紙検索と外部リンクの読み込みに使用します</td><td>ネットワーク機能に必要</td></tr>
+<tr><td>ACCESS_LOCAL_NETWORK</td><td>利用者が設定した WebDAV アドレスが NAS、ルーターなど LAN 上のサーバーを指す場合に限り、そのサーバーへの接続に使用します。公開 WebDAV では不要です</td><td>Android 17 以上で必要に応じて要求</td></tr>
+<tr><td>ACCESS_NETWORK_STATE</td><td>更新確認、同期、クラウド解析、サードパーティ TTS、AI 翻訳の要求を実行できるよう、ネットワーク状態を判定します</td><td>ネットワーク機能に必要</td></tr>
+<tr><td>WRITE_SETTINGS</td><td>カスタムの画面点灯時間を有効にしたとき、システムの画面消灯時間を変更します</td><td>有効時のみ</td></tr>
+<tr><td>FOREGROUND_SERVICE / FOREGROUND_SERVICE_MEDIA_PLAYBACK</td><td>TTS のバックグラウンド再生と再生状態の通知を支えます</td><td>読み上げ機能に必要</td></tr>
+<tr><td>FOREGROUND_SERVICE_DATA_SYNC</td><td>PDF/MinerU 解析や WebDAV 同期などの長時間タスクの進捗を表示します</td><td>該当タスクに必要</td></tr>
+<tr><td>POST_NOTIFICATIONS（Android 13 以上）</td><td>朗読再生、解析、同期の進捗通知を表示します</td><td>許可後に使用</td></tr>
+<tr><td>WAKE_LOCK</td><td>TTS のバックグラウンド再生中に端末をスリープさせず、再生の中断を防ぎます</td><td>読み上げ機能に必要</td></tr>
+<tr><td>SYSTEM_ALERT_WINDOW</td><td>フローティング字幕を有効にしたとき、他のアプリ上に字幕ウィンドウを表示します</td><td>フローティング字幕の有効時のみ</td></tr>
+</table></div>
+<p><strong>本アプリは次の権限を要求しません。</strong></p>
+<ul>
+<li><span class="cross">✕</span> 位置情報</li>
+<li><span class="cross">✕</span> カメラ / マイク</li>
+<li><span class="cross">✕</span> 連絡先</li>
+<li><span class="cross">✕</span> 電話の状態</li>
+<li><span class="cross">✕</span> SMS、カレンダーなど閲覧と無関係な機微な権限</li>
+</ul>
+
+<h2>三、データの取り扱い</h2>
+<h3>3.1 本機のデータ</h3>
+<p>次のデータは、端末または利用者が許可したファイル位置に保存されます。</p>
+<div class="table-scroll"><table>
+<tr><th>データの種類</th><th>内容</th><th>保存方法</th></tr>
+<tr><td>電子書籍ファイル</td><td>利用者がインポート、閲覧、同期でダウンロード、またはフォルダ許可を通じて読み取る EPUB、TXT、PDF ファイル</td><td>ローカルファイル / アプリのサンドボックス / 利用者が許可した位置</td></tr>
+<tr><td>読書データ</td><td>読書進捗、最近読んだ本、ブックマーク、ノート、選択テキスト、読書時間</td><td>Room/SQLite</td></tr>
+<tr><td>読書設定</td><td>文字サイズ、テーマ、行間、ページめくりの方法、画面点灯時間などの設定</td><td>DataStore</td></tr>
+<tr><td>フォルダ許可</td><td>システムのファイル選択画面で付与したファイル・フォルダ URI への永続アクセス権</td><td>システムの許可記録 / ローカル設定</td></tr>
+<tr><td>TXT の編集内容</td><td>アプリ内で TXT を編集すると、変更は許可された元ファイルまたは保存先ファイルに書き戻されます</td><td>利用者が許可したファイル位置</td></tr>
+<tr><td>MinerU 設定</td><td>解析モード、同意バージョンと時刻。個人トークンは Android Keystore で暗号化します</td><td>DataStore / 暗号化ストレージ</td></tr>
+<tr><td>WebDAV 設定</td><td>サーバー URL、ユーザー名、同期パス、同期モード、最終同期時刻。パスワードは Android Keystore で暗号化します</td><td>DataStore / 暗号化ストレージ</td></tr>
+<tr><td>サードパーティ TTS 設定</td><td>サービスの種類、Base URL、モデル、音色、スタイル指示、同意時刻。API キーは Android Keystore で暗号化します</td><td>DataStore / 暗号化ストレージ</td></tr>
+<tr><td>AI 翻訳設定</td><td>サービスの種類、Base URL、認証方式、モデル、翻訳先の言語、HTTP の可否。API キーは Android Keystore で暗号化します</td><td>DataStore / 暗号化ストレージ</td></tr>
+<tr><td>TTS 音声キャッシュ</td><td>サードパーティ TTS が返した音声を重複リクエストの削減のためローカルにキャッシュします。自動削除も利用者による消去も可能です</td><td>アプリのキャッシュディレクトリ</td></tr>
+<tr><td>抜粋カード</td><td>カード生成時に書名、著者、章、選択テキスト、ノート、表紙を使用します。一時ファイルはアプリのキャッシュに置かれ、保存した画像はシステムの写真ライブラリに書き込まれます</td><td>アプリのキャッシュディレクトリ / システムの写真ライブラリ</td></tr>
+</table></div>
+
+<h3>3.2 ネットワーク送信が発生する場面</h3>
+<ul>
+<li>更新・お知らせ・規約やポリシーの確認：プロジェクトのリリースページや文書アドレスにアクセスする場合があり、仿宋フォントを選択したときは GitHub Raw または jsDelivr から必要に応じてフォントファイルをダウンロードします。</li>
+<li>WebDAV 同期：利用者が設定して手動または自動で同期すると、入力した WebDAV サーバーへ接続し、書籍ファイル、書籍マニフェスト（ファイル名、ハッシュ、サイズ、更新日時など）、読書進捗、ブックマーク、ノートおよびノートに対応する選択テキストを送受信します。</li>
+<li>MinerU クラウド解析：PDF のクラウド解析を利用者が明示的に選ぶと、選択した PDF、ランダム化したファイル名、ネットワーク IP、解析パラメータ、タスク識別子、および高精度解析に必要な個人トークンが MinerU/OpenDataLab の関連サービスへ送信され、解析結果をダウンロードします。</li>
+<li>サードパーティ TTS：OpenAI TTS、Xiaomi MiMo、または互換サービスを選ぶと、現在の朗読テキスト、モデル/音色、スタイル指示、必要な認証情報が設定したサービスへ送信されます。サーバー側の扱いは各サービスの規約とポリシーによります。HTTP を有効にすると、API キーと朗読テキストが暗号化されずに送信され、傍受される可能性があります。</li>
+<li>AI 翻訳：AI 翻訳を有効化または手動で実行すると、現在選択しているテキスト、翻訳先の言語、モデルパラメータ、必要な認証情報が、選択した Xiaomi MiMo、DeepSeek、OpenAI または互換サービスへ送信されます。HTTP を許可すると、API キーと選択テキストが暗号化されずに送信され、傍受される可能性があります。</li>
+<li>表紙検索：ネットワーク表紙検索を開く、または検索を送信すると、現在の書名と検索語が WebView 経由で Bing、百度、Google などの選択した検索サービスへ送信されます。これらのサービスは IP、リクエスト時刻、ブラウザーやネットワークの情報を記録する場合があります。</li>
+<li>スポンサーページのコントリビューター：スポンサー/コントリビューターのページを開くと、GitHub contributors API を要求し、GitHub のアバターを読み込みます。GitHub とその CDN は通常のリクエストメタデータを各社のポリシーに従って受け取ります。</li>
+<li>外部リンク：GitHub、フィードバック、ダウンロード、サードパーティ規約などのリンクを利用者がタップしたときに対応するサイトを開きます。</li>
+<li>ローカル辞書のダウンロード：利用者がダウンロードまたは更新を確定したときにのみ、固定の Release アドレスから辞書パッケージを取得して検証します。インストール後の検索では、検索語、本文、フィルター一致記録をアップロードしません。</li>
+<li>抜粋カードの共有：カードは端末内で生成されます。利用者が共有をタップして受け取り先のアプリを選んだときに限り、生成した画像がそのアプリへ渡され、以降の扱いは受け取り側の規約とプライバシーポリシーに従います。</li>
+</ul>
+
+<h3>3.3 本アプリが扱わないデータ</h3>
+<ul>
+<li>氏名、電話番号、連絡先、正確な位置などの個人を特定する情報を収集しません。</li>
+<li>IMEI、Android ID、MAC アドレスなどの端末識別子を追跡目的で収集しません。</li>
+<li>サードパーティの分析、広告、プロファイリング、プッシュ通知、クラッシュ報告 SDK を組み込みません。</li>
+<li>忘言 アカウントや開発者が運営するクラウド書庫は提供しません。WebDAV は利用者が選ぶサーバーであり、データは利用者が管理します。</li>
+<li>利用者が自ら設定・有効化・表示・タップした上記のネットワーク機能を除き、書籍や閲覧内容を自発的にアップロードしません。</li>
+</ul>
+
+<h2>四、保存とセキュリティ</h2>
+<ul>
+<li>読書データベースと設定はアプリ専用のサンドボックスに保存され、Android のアプリ分離機構で保護されます。</li>
+<li>MinerU トークン、WebDAV パスワード、サードパーティ TTS と AI 翻訳の API キーは Android Keystore で暗号化して保存し、システムバックアップと端末移行の対象から除外しています。</li>
+<li>EPUB 閲覧用の WebView は外部ネットワークリソースの読み込みを遮断し、出版社の CSS はローカルな組版表示にのみ使います。</li>
+<li>一時的なアップロード、ダウンロード、解析のキャッシュは、タスク終了時またはキャッシュ削除時に消去されます。サードパーティ TTS の音声キャッシュは自動的に破棄される場合があります。</li>
+<li>読書履歴、ブックマーク、キャッシュ、関連設定はアプリ内で消去できます。アンインストールするとアプリ専用データは削除されますが、端末上で利用者が管理する元の電子書籍ファイルは削除されません。</li>
+</ul>
+
+<h2>五、サードパーティサービスと利用者が選ぶサービス</h2>
+<p>本アプリは分析、広告、プッシュ通知、クラッシュ報告のサービスを組み込んでいません。以下のネットワーク機能はいずれも任意、または利用者の操作で実行されます。</p>
+<ul>
+<li><strong>OpenDataLab / MinerU：</strong>PDF のクラウド解析に使用し、忘言 とは独立して運営されています。利用前に<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">サービス規約</a>と<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">個人情報保護方針</a>をお読みください。</li>
+<li><strong>WebDAV サービス事業者または自前サーバー：</strong>書籍と読書データの同期に使用します。アドレス、可用性、安全性、保存、削除は、利用者が選んだ事業者または自前の環境により決まります。</li>
+<li><strong>サードパーティ TTS サービス：</strong>OpenAI TTS、Xiaomi MiMo、または設定した互換インターフェースを含みます。朗読テキスト、スタイル指示、API キーの使用、料金は各サービスの規約に従います。</li>
+<li><strong>AI 翻訳サービス：</strong>Xiaomi MiMo、DeepSeek、OpenAI、または設定した互換インターフェースを含みます。選択テキスト、翻訳先の言語、モデルパラメータ、API キーの使用、料金は各サービスの規約に従います。</li>
+<li><strong>GitHub とその CDN：</strong>更新、コントリビューター一覧、アバター、リモートフォントの取得に使用します。ネットワークログの記録・保存・削除は GitHub と CDN 各社のポリシーによります。</li>
+<li><strong>Bing、百度、Google などの検索サービス：</strong>利用者がネットワーク表紙検索を自ら使ったときに限り、書名や検索語を受け取ります。取り扱いは各サービスのポリシーによります。</li>
+<li><strong>辞書の配布アドレス：</strong>辞書の Release とカタログはプロジェクトが設定した GitHub アドレスでホストされます。ダウンロード後は、辞書本文と検索にネットワークを必要としません。</li>
+</ul>
+<p>書籍やテキストを端末外に出したくない場合は、WebDAV 同期、MinerU クラウド解析、サードパーティ TTS、AI 翻訳、ネットワーク表紙検索を有効にせず、ローカル閲覧、ローカル解析、システム TTS、ローカル辞書をご利用ください。</p>
+
+<h2>六、児童のプライバシー</h2>
+<p>本アプリは 13 歳未満の児童を対象としておらず、児童の個人情報を故意に収集しません。保護者の方が、児童が任意のサードパーティサービスを通じて個人情報を送信した可能性に気づいた場合は、当方および該当サービス事業者へご連絡ください。</p>
+
+<h2>七、本ポリシーの変更</h2>
+<p>機能、法令、サードパーティサービスの変化に応じて本ポリシーを更新する場合があります。更新後はアプリ内またはウェブで公表し、「最終更新日」を更新します。重要な変更は、アプリ内のバージョン通知で再読と確認をお願いします。</p>
+
+<h2>八、お問い合わせ</h2>
+<p>本プライバシーポリシーまたはデータの取り扱いについてご質問、ご意見、ご提案がある場合は、次の方法でご連絡ください。</p>
+<ul>
+<li>開発者：a1242691089-source</li>
+<li>連絡先：<a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+
+<h2>九、適用範囲</h2>
+<p>本プライバシーポリシーは Android 上の 忘言（com.wangyan.reader）の機能にのみ適用され、サードパーティサービス自身のデータ処理には適用されません。</p>
+<p class="endnote">本プライバシーポリシーの最終更新日：2026年10月1日。</p>
+<p class="note">このページが完全版であり、アプリとともにオフラインで提供されます。ネットワーク接続は不要です。</p>
+</div>
+
+<div class="doc-footer">
+    <span>© 2026 忘言 · オープンソースプロジェクト Lumi (GPL-3.0) ベース</span>
+    <span>
+        <a href="index.html">ホーム</a>
+        <a href="terms.html">利用規約</a>
+    </span>
+    <span class="doc-langs">
+        <a href="privacy.html" data-legal-lang="zh-CN">简体中文</a>
+        <a href="privacy-en.html" data-legal-lang="en">English</a>
+        <a href="privacy-ja.html" data-legal-lang="ja" aria-current="page">日本語</a>
+        <a href="privacy-ko.html" data-legal-lang="ko">한국어</a>
+        <a href="privacy-zh-TW.html" data-legal-lang="zh-TW">繁體中文</a>
+        <a href="privacy-zh-HK.html" data-legal-lang="zh-HK">繁體中文（香港）</a>
+        <a href="privacy-zh-MO.html" data-legal-lang="zh-MO">繁體中文（澳門）</a>
+    </span>
+</div>
+
+<script src="lumi-nav.js"></script>
+<script src="legal-lang.js"></script>
+</body>
+</html>

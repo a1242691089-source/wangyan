@@ -182,7 +182,7 @@ Date: 2026-11-06 · 版本：v1.0.2-rc1（versionCode 3）· 基于 v1.0.1 之�
 | --- | --- | --- |
 | P0 结构层根治的真机验证 | **已完成（2026-11-06 夜）** | 7 项矩阵 ①-⑥ 全过（⑦ 彩蛋未解锁跳过），累计 8 进程 0 崩溃；已合 main（`7a47821`），见上文「P0 结构层根治真机验证」 |
 | 全量 150 条 connectedDebugAndroidTest | **已完成（2026-11-06 深夜）** | 分 3 批跑：执行 111 条 / 99 通过 / 12 失败（全部环境或测试代码缺陷，与 P0 零交集）/ 39 条被向导页崩溃中断。详见下节 |
-| 站点法律页本地化 | 未做 | `docs/privacy.html` / `docs/terms.html`（GitHub Pages 单页 + `lumi-nav.js`）仍是纯简体；应用内 `assets/html/` 的 7 语言版本已完成 |
+| 站点法律页本地化 | **已完成（2026-11-07）** | 生成 12 个本地化静态页（privacy/terms × en/ja/ko/zh-TW/zh-HK/zh-MO），内容取自应用内译文（单一事实源）；新增页脚语言切换器 + `docs/legal-lang.js`（浏览器语言自动跳转、每会话一次、手动切换存 localStorage）；生成器 `docs/tools/build-legal-pages.py`，译文更新后重跑即可同步 |
 | 法律译文审校 | 未做 | `privacy-{en,ja,ko,zh-TW,zh-HK,zh-MO}.html` 与 `terms-*` 为本轮新译，未经人工/法务确认 |
 | 仪器测试串跑挂起排查 | **已完成（2026-11-07）** | 根因=Android 16 真机窗口 Transition 随机竞态（androidx.test EmptyActivity 舞步正常 0.2s、楔死时每步 ~55s 或永不恢复），与测试间状态污染无关；修复=6 个 compose 测试类迁 Robolectric + Orchestrator 进程隔离 + androidx.test 栈升级，详见下节「串跑挂死根治与 compose 测试迁移」 |
 | 首跑基线新失败分诊（2026-11-07） | **已完成（同日）** | 4 条全部定性为测试自身缺陷，无真实产品缺陷：`AnnotationEditTransactionTest`（夹具三条 note `syncId` 均为默认 `""`，撞 `notes.syncId` 唯一索引，REPLACE 静默删行——非「Room 事务计数」）；`ReaderThemeSuiteCodecInstrumentedTest`（断言用未归一化 source 比对，且 decode 会把缺失 light/dark 回填为 settings，整表 equals 结构上不可行）；`EpubParserLinkTest` ×2（期望停留在废弃正则解析器的「有子项=分组」旧语义，现行链路有意允许卷父项可点、同文件 ≥2 锚点切逻辑章节）；连带发现 `WidgetDaoTest` 同族 syncId 缺陷（用例偶然通过、覆盖失效）一并修复。真机 4 类 11 条重跑全绿 |

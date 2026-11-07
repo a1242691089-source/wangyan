@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-MO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>私隱政策 — 忘言</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        /* ═══ 法律文档页专属布局（设计系统见 lumi-immersive.css） ═══ */
+        .doc {
+            width: min(calc(100% - 40px), 860px);
+            margin: clamp(28px, 4vw, 48px) auto 0;
+            padding: clamp(28px, 5vw, 62px);
+            border-radius: var(--radius-xl);
+        }
+        .doc h1 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; }
+        .doc .meta { margin: 10px 0 40px; font-size: 14px; color: var(--muted); }
+        .doc h2 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 46px 0 14px;
+            padding-top: 34px;
+            border-top: 1px solid var(--stroke);
+        }
+        .doc h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 6px; }
+        .doc h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+        .doc p { font-size: 15.5px; line-height: 1.9; color: var(--body-c); margin-bottom: 12px; }
+        .doc strong { color: var(--ink); }
+        .table-scroll { overflow-x: auto; margin: 16px 0 22px; }
+        .doc table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        .doc th, .doc td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--stroke); vertical-align: top; }
+        .doc th {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .doc td { color: var(--body-c); line-height: 1.7; }
+        .doc ul { list-style: none; margin: 8px 0 16px; }
+        .doc ul li { padding: 5px 0; font-size: 15px; line-height: 1.8; color: var(--body-c); }
+        .doc ul li::before { content: "·  "; color: var(--accent); font-weight: 700; }
+        .doc .cross { color: #ff7a66; margin-right: 8px; }
+        .doc a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+        .doc .endnote { margin-top: 30px; font-size: 13px; color: var(--muted); }
+        .doc .note { margin-top: 20px; font-size: 13px; color: var(--muted); }
+
+        .doc-footer {
+            width: min(calc(100% - 40px), 860px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 24px 0 36px;
+            border-top: 1px solid var(--stroke);
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .doc-footer a { color: var(--muted); margin-left: 22px; text-decoration: none; }
+        .doc-footer a:first-child { margin-left: 0; }
+        .doc-footer a:hover { color: var(--ink); text-decoration: underline; }
+        .doc-footer a.active { color: var(--ink); }
+        .doc-langs a { margin-left: 0; margin-right: 14px; }
+        @media (max-width: 640px) {
+            .doc-footer { flex-direction: column; text-align: center; }
+            .doc-footer a { margin: 0 8px; }
+        }
+    </style>
+    <link rel="stylesheet" href="lumi-immersive.css">
+</head>
+<body>
+
+<!-- ═══ Top Navigation ═══ -->
+<nav class="top-nav">
+    <a href="index.html" class="nav-logo" aria-label="忘言主頁">
+        <img src="icon.png" class="logo-icon-img" alt="忘言">
+        <span class="logo-text">忘言</span>
+    </a>
+    <ul class="nav-links" aria-label="主導覽">
+        <li><a href="features.html">功能</a></li>
+        <li><a href="privacy-section.html" class="active" aria-current="page">私隱</a></li>
+        <li><a href="tech.html">技術</a></li>
+        <li><a href="sponsor.html">贊助</a></li>
+        <li><a href="feedback.html">意見反饋</a></li>
+    </ul>
+    <div class="nav-cta">
+        <a href="https://github.com/a1242691089-source/wangyan/releases/latest" class="btn-nav-download">取得忘言</a>
+    </div>
+    <button class="nav-more-btn" type="button" aria-label="開啟導覽選單" aria-controls="lumi-nav-menu">選單</button>
+    <div class="nav-more-dropdown" id="lumi-nav-menu">
+        <a href="features.html">功能</a>
+        <a href="privacy-section.html" class="active" aria-current="page">私隱</a>
+        <a href="tech.html">技術</a>
+        <a href="sponsor.html">贊助</a>
+        <a href="feedback.html">意見反饋</a>
+    </div>
+</nav>
+
+<div class="glass-card doc">
+<h1>私隱政策</h1>
+<p class="meta">政策版本：3 · 生效日期：2026年6月29日 · 最近更新：2026年10月1日</p>
+
+<h2>一、前言</h2>
+<p>忘言（以下稱「本應用程式」）是一款開放源碼、本機優先的電子書閱讀器。我們深知私隱對您的重要性，本政策說明本應用程式如何處理資料，以及哪些選用功能會把資料傳送到您選擇或確認的網絡服務。</p>
+<p>本應用程式不提供任何書籍內容，也不提供、內建、匯入或分享線上書源與訂閱來源，不進行線上搜尋或內容下載。TXT 目錄規則（包括選用的第三方相容規則）僅用於解析您本機或已授權的 TXT 檔案，規則中可能夾帶的腳本淨化程式碼不會被執行。</p>
+<p><strong>核心原則：閱讀、書庫、進度、筆記與大多數設定預設儲存在本機。只有在您主動設定或啟用 WebDAV 同步、MinerU 雲端解析、第三方 TTS、AI 翻譯等網絡功能時，相應的書籍檔案、閱讀資料或選取文字才會傳送到對應服務。按需下載的本機詞典安裝後離線查詢；查詢詞、書籍正文與過濾命中紀錄不會上載。</strong></p>
+<p>本機詞典正文不內建於 APK。您可以在設定中查看目錄後主動確認下載；下載檔會認證版本與 SHA-256，安裝後儲存在應用程式專用目錄，不進入系統備份或 WebDAV 同步。</p>
+<p><strong>開源透明：</strong>忘言 原創程式碼以 GNU GPLv3 授權條款發布，第三方元件遵循各自的授權條款，完整原始碼公開可供檢視。</p>
+
+<h2>二、權限說明</h2>
+<p>本應用程式僅申請實現閱讀與選用功能所需的 Android 系統權限：</p>
+<div class="table-scroll"><table>
+<tr><th>權限</th><th>用途</th><th>是否必要</th></tr>
+<tr><td>READ_EXTERNAL_STORAGE（Android 12 及以下）</td><td>讀取您選擇的 EPUB、TXT、PDF 等電子書檔案</td><td>基本閱讀需要</td></tr>
+<tr><td>READ_MEDIA_IMAGES（Android 13 及以上）</td><td>讀取電子書封面、匯出圖片或您選擇的圖片資源</td><td>依系統版本需要</td></tr>
+<tr><td>INTERNET</td><td>檢查更新、公告與條款／政策版本；按需下載本機詞典與遠端字體；連接您設定的 WebDAV 伺服器；連接 MinerU、第三方 TTS、AI 翻譯服務；載入您主動使用的封面搜尋與外部連結頁面</td><td>網絡功能需要</td></tr>
+<tr><td>ACCESS_LOCAL_NETWORK</td><td>僅在您設定的 WebDAV 位址指向 NAS、路由器或其他區域網絡伺服器時，用於連接該伺服器；公網 WebDAV 不需要此權限</td><td>Android 17 及以上按需申請</td></tr>
+<tr><td>ACCESS_NETWORK_STATE</td><td>判斷網絡狀態，以便執行更新檢查、同步、雲端解析、第三方 TTS 或 AI 翻譯請求</td><td>網絡功能需要</td></tr>
+<tr><td>WRITE_SETTINGS</td><td>當您啟用自訂亮屏時間時，修改系統螢幕關閉時間</td><td>僅啟用時需要</td></tr>
+<tr><td>FOREGROUND_SERVICE / FOREGROUND_SERVICE_MEDIA_PLAYBACK</td><td>支援 TTS 背景播放與播放狀態通知</td><td>聽書功能需要</td></tr>
+<tr><td>FOREGROUND_SERVICE_DATA_SYNC</td><td>顯示 PDF／MinerU 解析或 WebDAV 同步等長任務的進度</td><td>對應任務需要</td></tr>
+<tr><td>POST_NOTIFICATIONS（Android 13 及以上）</td><td>顯示朗讀播放、解析與同步進度通知</td><td>用戶授權後使用</td></tr>
+<tr><td>WAKE_LOCK</td><td>在 TTS 背景播放期間保持裝置喚醒，避免播放意外中斷</td><td>聽書功能需要</td></tr>
+<tr><td>SYSTEM_ALERT_WINDOW</td><td>在您啟用懸浮字幕時顯示跨應用程式懸浮字幕視窗</td><td>僅啟用懸浮視窗時需要</td></tr>
+</table></div>
+<p><strong>本應用程式不申請以下權限：</strong></p>
+<ul>
+<li><span class="cross">✕</span> 位置資訊權限</li>
+<li><span class="cross">✕</span> 相機／麥克風權限</li>
+<li><span class="cross">✕</span> 通訊錄權限</li>
+<li><span class="cross">✕</span> 電話狀態權限</li>
+<li><span class="cross">✕</span> 短訊、行事曆等與閱讀無關的敏感權限</li>
+</ul>
+
+<h2>三、資料處理說明</h2>
+<h3>3.1 本機資料</h3>
+<p>以下資料預設儲存在您的裝置或您授權的檔案位置：</p>
+<div class="table-scroll"><table>
+<tr><th>資料類型</th><th>說明</th><th>儲存方式</th></tr>
+<tr><td>電子書檔案</td><td>您主動匯入、開啟、同步下載或透過資料夾授權讀取的 EPUB、TXT、PDF 檔案</td><td>本機檔案／應用程式沙盒／用戶授權位置</td></tr>
+<tr><td>閱讀資料</td><td>閱讀進度、最近閱讀、書籤、筆記、選取文字、閱讀時長</td><td>Room/SQLite</td></tr>
+<tr><td>閱讀偏好</td><td>字級、主題、行距、翻頁方式、亮屏時間等設定</td><td>DataStore</td></tr>
+<tr><td>資料夾授權</td><td>您透過系統檔案選擇器授予的檔案或資料夾 URI 持續存取權限</td><td>系統授權紀錄／本機設定</td></tr>
+<tr><td>TXT 編輯內容</td><td>您在應用程式內編輯 TXT 時，修改會存回您授權的原檔案或目標檔案</td><td>用戶授權檔案位置</td></tr>
+<tr><td>MinerU 設定</td><td>解析模式、同意版本與時間；個人 Token 以 Android Keystore 加密</td><td>DataStore／加密儲存</td></tr>
+<tr><td>WebDAV 設定</td><td>伺服器 URL、用戶名稱、同步路徑、同步模式、最近同步時間；密碼以 Android Keystore 加密</td><td>DataStore／加密儲存</td></tr>
+<tr><td>第三方 TTS 設定</td><td>服務類型、Base URL、模型、音色、風格提示、同意時間；API Key 以 Android Keystore 加密</td><td>DataStore／加密儲存</td></tr>
+<tr><td>AI 翻譯設定</td><td>服務類型、Base URL、認證方式、模型、目標語言與 HTTP 開關；API Key 以 Android Keystore 加密</td><td>DataStore／加密儲存</td></tr>
+<tr><td>TTS 音訊快取</td><td>第三方 TTS 回傳的音訊片段會快取在本機以減少重複請求，可自動清理或由您清除</td><td>應用程式快取目錄</td></tr>
+<tr><td>摘錄卡片</td><td>產生卡片時使用書名、作者、章節、選取文字、筆記與封面；暫存檔保存在應用程式快取，儲存的圖片寫入系統相片庫</td><td>應用程式快取目錄／系統相片庫</td></tr>
+</table></div>
+
+<h3>3.2 會發生網絡傳輸的情境</h3>
+<ul>
+<li>更新、公告、條款／政策版本檢查：應用程式可能存取項目發布頁或文件位址，並在您選擇仿宋字體時從 GitHub Raw 或 jsDelivr 按需下載字體檔。</li>
+<li>WebDAV 同步：當您設定並手動或自動同步時，應用程式會連接您填寫的 WebDAV 伺服器，上載／下載書籍檔案、書籍清單（如檔名、雜湊、大小、修改時間）以及閱讀進度、書籤、筆記與筆記對應的選取文字。</li>
+<li>MinerU 雲端解析：當您主動選擇雲端解析 PDF 時，所選 PDF、隨機化檔名、網絡 IP、解析參數、任務識別碼以及精準解析所需的個人 Token 會傳送至 MinerU／OpenDataLab 相關服務，並下載解析結果。</li>
+<li>第三方 TTS：當您選擇 OpenAI TTS、Xiaomi MiMo 或自訂相容服務時，當前朗讀文字段、模型／音色、風格提示與必要認證資訊會傳送至您設定的第三方服務，伺服器端如何處理資料取決於該服務的條款與政策。若您開啟 HTTP 連接，API Key 與朗讀文字可能未經加密傳輸而被竊聽。</li>
+<li>AI 翻譯：當您啟用或手動觸發 AI 翻譯時，當前選取的文字、目標語言、模型參數與必要認證資訊會傳送至您選擇的 Xiaomi MiMo、DeepSeek、OpenAI 或自訂相容服務。若您主動允許 HTTP 連接，API Key 與選取文字可能未經加密傳輸而被竊聽。</li>
+<li>封面搜尋：當您進入網絡封面搜尋或提交搜尋時，當前書名與搜尋關鍵字會透過 WebView 傳送至您選擇的 Bing、百度或 Google 等搜尋服務；這些服務也可能記錄 IP、請求時間與瀏覽器網絡資訊。</li>
+<li>贊助頁貢獻者：當您開啟贊助／貢獻者頁面，應用程式會請求 GitHub contributors API 並載入 GitHub 頭像。GitHub 及其 CDN 會依自身政策接收網絡請求中介資料。</li>
+<li>外部連結：當您主動點擊 GitHub、意見反映、下載、第三方協議等連結時，會跳轉到對應網站。</li>
+<li>本機詞典下載：僅在您確認下載或更新時從固定 Release 位址下載並認證詞庫包；安裝後的查詢不上載查詢詞、書籍正文或過濾命中紀錄。</li>
+<li>摘錄卡片分享：卡片在裝置本機產生。只有當您點擊分享並選擇接收應用程式後，產生的圖片才會交給該應用程式，後續處理受接收應用程式的條款與私隱政策約束。</li>
+</ul>
+
+<h3>3.3 本應用程式不處理的資料</h3>
+<ul>
+<li>不蒐集您的姓名、手機號碼、通訊錄、精確位置等個人身分資訊。</li>
+<li>不蒐集 IMEI、Android ID、MAC 位址等裝置識別碼用於追蹤。</li>
+<li>不整合第三方分析、廣告、用戶輪廓、第三方推播或當機回報 SDK。</li>
+<li>不提供 忘言 帳號系統或開發者營運的雲端書庫；WebDAV 是您自選伺服器，資料由您自行控制。</li>
+<li>除上述由您主動設定、啟用、進入或點擊的網絡功能外，不會主動上載您的書籍與閱讀內容。</li>
+</ul>
+
+<h2>四、資料儲存與安全</h2>
+<ul>
+<li>閱讀資料庫與設定儲存在應用程式私有沙盒中，受 Android 應用程式隔離機制保護。</li>
+<li>MinerU Token、WebDAV 密碼、第三方 TTS 與 AI 翻譯 API Key 以 Android Keystore 加密保存，並已從系統備份／裝置移轉規則中排除。</li>
+<li>EPUB 閱讀 WebView 會阻擋外部網絡資源載入，出版方 CSS 僅用於本機排版顯示。</li>
+<li>暫存上載、下載與解析快取會在任務結束或快取清理時刪除；第三方 TTS 音訊快取可自動淘汰。</li>
+<li>您可以在應用程式內清除閱讀歷史、書籤、快取與相關設定；解除安裝會刪除應用程式私有資料，但不會自動刪除您裝置上自行管理的原始電子書檔案。</li>
+</ul>
+
+<h2>五、第三方服務與用戶自選服務</h2>
+<p>本應用程式不整合分析、廣告、第三方推播或當機報告服務。以下網絡能力均為選用或由用戶觸發：</p>
+<ul>
+<li><strong>OpenDataLab / MinerU：</strong>用於雲端 PDF 解析，獨立於 忘言 營運，使用前請閱讀其<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">服務協議</a>與<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">個人資訊保護政策</a>。</li>
+<li><strong>WebDAV 服務商或自建伺服器：</strong>用於同步書籍與閱讀資料。伺服器位址、可用性、安全性、資料保存與刪除由您選擇的服務方或自建環境決定。</li>
+<li><strong>第三方 TTS 服務：</strong>包括 OpenAI TTS、Xiaomi MiMo 或您設定的相容介面。朗讀文字、風格提示、API Key 使用與費用規則受對應服務條款約束。</li>
+<li><strong>AI 翻譯服務：</strong>包括 Xiaomi MiMo、DeepSeek、OpenAI 或您設定的相容介面。選取文字、目標語言、模型參數、API Key 使用與費用規則受對應服務條款約束。</li>
+<li><strong>GitHub 及其 CDN：</strong>用於更新、貢獻者清單、頭像與遠端字體下載。GitHub 及 CDN 的網絡日誌、保存與刪除規則由其自身政策決定。</li>
+<li><strong>Bing、百度、Google 等搜尋服務：</strong>僅在您主動使用網絡封面搜尋時接收書名或搜尋關鍵字，具體處理由對應服務政策決定。</li>
+<li><strong>詞典發布位址：</strong>詞庫 Release 與目錄託管於項目設定的 GitHub 位址；下載完成後，詞典正文與查詢不依賴網絡。</li>
+</ul>
+<p>如不希望書籍或文字離開裝置，請不要啟用 WebDAV 同步、MinerU 雲端解析、第三方 TTS、AI 翻譯或網絡封面搜尋，並使用本機閱讀、本機解析、系統 TTS 與本機詞典。</p>
+
+<h2>六、兒童私隱</h2>
+<p>本應用程式並非針對 13 歲以下兒童，不會故意蒐集兒童個人資訊。監護人如發現兒童可能透過選用第三方服務提交了個人資訊，請聯絡我們並同時聯絡相應服務方。</p>
+
+<h2>七、私隱政策的變更</h2>
+<p>我們可能因功能、法令法規或第三方服務變化更新本政策。更新後將在應用程式內或網頁公布，並更新「最近更新」日期；重大變更會透過應用程式內版本提示要求您重新閱讀並確認。</p>
+
+<h2>八、聯絡我們</h2>
+<p>如果您對本私隱政策或資料處理有任何疑問、意見或建議，請透過以下方式聯絡我們：</p>
+<ul>
+<li>開發者：a1242691089-source</li>
+<li>聯絡方式：<a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+
+<h2>九、適用範圍</h2>
+<p>本私隱政策僅適用於 忘言 應用程式（com.wangyan.reader）在 Android 平台上的功能，不適用於第三方服務自身的資料處理活動。</p>
+<p class="endnote">本私隱政策最後更新於 2026年10月1日。</p>
+<p class="note">本頁面即為完整版本，隨應用程式離線提供，無需連網存取。</p>
+</div>
+
+<div class="doc-footer">
+    <span>© 2026 忘言 · 基於開源項目 Lumi (GPL-3.0)</span>
+    <span>
+        <a href="index.html">主頁</a>
+        <a href="terms.html">用戶協議</a>
+    </span>
+    <span class="doc-langs">
+        <a href="privacy.html" data-legal-lang="zh-CN">简体中文</a>
+        <a href="privacy-en.html" data-legal-lang="en">English</a>
+        <a href="privacy-ja.html" data-legal-lang="ja">日本語</a>
+        <a href="privacy-ko.html" data-legal-lang="ko">한국어</a>
+        <a href="privacy-zh-TW.html" data-legal-lang="zh-TW">繁體中文</a>
+        <a href="privacy-zh-HK.html" data-legal-lang="zh-HK">繁體中文（香港）</a>
+        <a href="privacy-zh-MO.html" data-legal-lang="zh-MO" aria-current="page">繁體中文（澳門）</a>
+    </span>
+</div>
+
+<script src="lumi-nav.js"></script>
+<script src="legal-lang.js"></script>
+</body>
+</html>

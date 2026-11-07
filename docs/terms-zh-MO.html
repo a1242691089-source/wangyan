@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-MO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>用戶協議 — 忘言</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        /* ═══ 法律文档页专属布局（设计系统见 lumi-immersive.css） ═══ */
+        .doc {
+            width: min(calc(100% - 40px), 860px);
+            margin: clamp(28px, 4vw, 48px) auto 0;
+            padding: clamp(28px, 5vw, 62px);
+            border-radius: var(--radius-xl);
+        }
+        .doc h1 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 700; }
+        .doc .meta { margin: 10px 0 40px; font-size: 14px; color: var(--muted); }
+        .doc h2 {
+            font-size: 21px;
+            font-weight: 600;
+            margin: 46px 0 14px;
+            padding-top: 34px;
+            border-top: 1px solid var(--stroke);
+        }
+        .doc h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 6px; }
+        .doc h3 { font-size: 17px; font-weight: 600; margin: 28px 0 10px; }
+        .doc p { font-size: 15.5px; line-height: 1.9; color: var(--body-c); margin-bottom: 12px; }
+        .doc strong { color: var(--ink); }
+        .doc ul { list-style: none; margin: 8px 0 16px; }
+        .doc ul li { padding: 5px 0; font-size: 15px; line-height: 1.8; color: var(--body-c); }
+        .doc ul li::before { content: "·  "; color: var(--accent); font-weight: 700; }
+        .doc a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+        .doc .endnote { margin-top: 30px; font-size: 13px; color: var(--muted); }
+        .doc .note { margin-top: 20px; font-size: 13px; color: var(--muted); }
+
+        .doc-footer {
+            width: min(calc(100% - 40px), 860px);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 24px 0 36px;
+            border-top: 1px solid var(--stroke);
+            font-size: 13px;
+            color: var(--muted);
+        }
+        .doc-footer a { color: var(--muted); margin-left: 22px; text-decoration: none; }
+        .doc-footer a:first-child { margin-left: 0; }
+        .doc-footer a:hover { color: var(--ink); text-decoration: underline; }
+        .doc-footer a.active { color: var(--ink); }
+        .doc-langs a { margin-left: 0; margin-right: 14px; }
+        @media (max-width: 640px) {
+            .doc-footer { flex-direction: column; text-align: center; }
+            .doc-footer a { margin: 0 8px; }
+        }
+    </style>
+    <link rel="stylesheet" href="lumi-immersive.css">
+</head>
+<body>
+
+<!-- ═══ Top Navigation ═══ -->
+<nav class="top-nav">
+    <a href="index.html" class="nav-logo" aria-label="忘言主頁">
+        <img src="icon.png" class="logo-icon-img" alt="忘言">
+        <span class="logo-text">忘言</span>
+    </a>
+    <ul class="nav-links" aria-label="主導覽">
+        <li><a href="features.html">功能</a></li>
+        <li><a href="privacy-section.html" class="active" aria-current="page">私隱</a></li>
+        <li><a href="tech.html">技術</a></li>
+        <li><a href="sponsor.html">贊助</a></li>
+        <li><a href="feedback.html">意見反饋</a></li>
+    </ul>
+    <div class="nav-cta">
+        <a href="https://github.com/a1242691089-source/wangyan/releases/latest" class="btn-nav-download">取得忘言</a>
+    </div>
+    <button class="nav-more-btn" type="button" aria-label="開啟導覽選單" aria-controls="lumi-nav-menu">選單</button>
+    <div class="nav-more-dropdown" id="lumi-nav-menu">
+        <a href="features.html">功能</a>
+        <a href="privacy-section.html" class="active" aria-current="page">私隱</a>
+        <a href="tech.html">技術</a>
+        <a href="sponsor.html">贊助</a>
+        <a href="feedback.html">意見反饋</a>
+    </div>
+</nav>
+
+<div class="glass-card doc">
+<h1>使用條款</h1>
+<p class="meta">條款版本：2 · 生效日期：2026年6月29日 · 最近更新：2026年10月1日</p>
+
+<h2>一、條款的接受</h2>
+<p>歡迎使用 忘言（以下稱「本應用程式」）。下載、安裝、開啟或使用本應用程式，即表示您已閱讀、理解並同意受本使用條款約束；如不同意，請停止使用本應用程式。</p>
+
+<h2>二、應用程式說明</h2>
+<h3>2.1 應用程式功能</h3>
+<p>忘言 是一款開放源碼、本機優先的電子書閱讀器，主要功能包括：</p>
+<ul>
+<li>閱讀 EPUB、TXT、PDF 格式電子書，管理本機書庫、閱讀進度、書籤、筆記與閱讀統計。</li>
+<li>透過系統檔案選擇器匯入檔案或授權資料夾，以便直接讀取您指定位置的書籍。</li>
+<li>在應用程式內編輯 TXT，並在您確認儲存時寫回您授權的檔案。</li>
+<li>提供系統 TTS 聽書；也可由您主動設定 OpenAI TTS、Xiaomi MiMo 或自訂相容第三方 TTS 服務。</li>
+<li>在您主動啟用後，透過 MinerU/OpenDataLab 雲端服務解析 PDF。</li>
+<li>在您主動設定後，透過 WebDAV 同步書籍、閱讀進度、書籤與筆記。</li>
+<li>在您主動設定並啟用或手動觸發後，透過 Xiaomi MiMo、DeepSeek、OpenAI 或自訂相容服務翻譯選取的文字。</li>
+<li>在「設定 → 服務 → 本機詞典」中按需下載詞庫；安裝後離線查詢，不會自動下載或更新。</li>
+<li>將選取文字、筆記或書籤製作成摘錄卡片，並由您選擇儲存到系統相片庫或分享給其他應用程式。</li>
+<li>在您主動使用時，透過 Bing、百度或 Google 等搜尋服務尋找網絡封面；在您選擇仿宋字體時按需下載遠端字體。</li>
+</ul>
+
+<h3>2.2 應用程式性質</h3>
+<ul>
+<li>本機閱讀、本機解析與系統 TTS 預設不上載書籍內容。</li>
+<li>WebDAV、MinerU 雲端解析、第三方 TTS 與 AI 翻譯均為選用網絡功能，需您主動設定、啟用或確認。</li>
+<li>本應用程式不提供 忘言 帳號註冊、登入或開發者營運的雲端書庫。</li>
+<li>本機詞典查詢在裝置上完成，不上載查詢詞、書籍正文或過濾命中紀錄。</li>
+<li>忘言 原創程式碼以 GNU GPLv3 授權條款發布，第三方元件及改作程式碼遵循各自的授權條款。</li>
+</ul>
+
+<h2>三、用戶權利與義務</h2>
+<h3>您的權利</h3>
+<ul>
+<li>免費使用本應用程式的可用功能，自主管理閱讀資料、快取與設定。</li>
+<li>隨時停用 WebDAV、MinerU、第三方 TTS、AI 翻譯等選用網絡功能，並清除相關 Token、密碼或 API Key。</li>
+<li>隨時解除安裝本應用程式；解除安裝會刪除應用程式私有資料，但不會自動刪除您自行管理的原始電子書檔案。</li>
+<li>在遵守開源授權條款的前提下檢視、修改與散布本應用程式原始碼。</li>
+</ul>
+<h3>您的義務</h3>
+<ul>
+<li>確保您閱讀、匯入、編輯、解析或同步的電子書及內容不侵害他人知識產權或其他合法權益。</li>
+<li>僅上載、同步或傳送您有權處理的檔案與文字，不上載受 DRM 保護、含有他人敏感個人資訊、營業秘密或依法不得傳輸的內容。</li>
+<li>自行選擇並保管 WebDAV 伺服器位址、用戶名稱、密碼、MinerU Token、第三方 TTS 與 AI 翻譯 API Key，並承擔因帳號洩漏、設定錯誤或第三方服務政策變化產生的風險。</li>
+<li>使用 MinerU、WebDAV 服務商、OpenAI、Xiaomi MiMo 或其他自訂服務時，遵守對應服務條款、私隱政策、費用與限額規則。</li>
+<li>使用 TXT 編輯器儲存前自行確認內容並備份重要檔案，避免誤改或覆寫。</li>
+<li>不得利用本應用程式從事任何違法、侵權或破壞網絡服務安全的活動。</li>
+</ul>
+
+<h2>四、知識產權</h2>
+<p>本應用程式基於開源項目 Lumi Books 二次開發。其原創原始碼、原創介面設計與圖示的相關權利歸原作者 huangder 所有，依 GNU GPLv3 授權條款開放使用；「忘言」的名稱、圖示與品牌標識由本項目維護者持有。捲曲翻頁實作改作自 GPLv3 項目 legado-E。第三方相依元件及改作程式碼的權利歸各自權利人所有，並繼續受其授權條款約束；具體歸屬見「開放源碼授權」頁面。應用程式名稱、圖示及品牌標識不因原始碼開源而授予額外商標授權。</p>
+<p>您透過本應用程式閱讀、編輯、解析、朗讀或同步的電子書及其內容權利歸原始權利人所有。本應用程式僅提供工具功能，不主張對您的閱讀內容享有權利。</p>
+
+<h2>五、免責聲明</h2>
+<ul>
+<li>本應用程式依「現狀」提供，不作任何明示或默示保證；我們不保證對所有檔案、裝置、系統版本與第三方介面都完全相容。</li>
+<li>因裝置故障、系統當機、誤操作、檔案損壞、權限撤銷、快取清理或解除安裝應用程式導致的資料遺失，由您自行承擔；建議定期備份重要書籍與閱讀資料。</li>
+<li>WebDAV 服務由您選擇的服務商或自建環境提供，本應用程式不保證其可用性、傳輸速度、儲存安全、衝突處理、資料完整性、刪除效果或政策穩定性。</li>
+<li>MinerU/OpenDataLab 由第三方獨立營運，本應用程式不保證其持續可用、解析準確、處理時效、資料保存期限、費用或服務政策不發生變化。</li>
+<li>第三方 TTS 的合成質素、回應速度、可用性、計費、限額、資料留存與合規要求由相應服務方決定，本應用程式不承擔第三方服務責任。</li>
+<li>AI 翻譯的準確性、回應速度、可用性、計費、限額、內容處理與資料留存由相應服務方決定，翻譯結果僅供參考。</li>
+<li>摘錄卡片由您主動儲存或分享；分享後，接收應用程式對圖片及其內容的處理由其自身條款與私隱政策約束。</li>
+<li>TXT 編輯會改變您授權儲存的檔案內容；如儲存錯誤、編碼不相容或覆寫原檔案，請以您的備份為準還原。</li>
+</ul>
+
+<h2>六、私隱權保護</h2>
+<p>本應用程式重視私隱權保護。閱讀資料預設儲存在本機；網絡封面搜尋、貢獻者／頭像顯示、遠端字體下載、詞典包下載、更新檢查，以及您主動設定或啟用的 WebDAV 同步、MinerU 雲端解析、第三方 TTS、AI 翻譯或外部連結存取會產生相應網絡請求。已安裝詞典的查詢與摘錄卡片產生在本機完成；只有在您主動分享卡片時，圖片才會交給所選接收應用程式。詳情請見<a href="privacy-zh-MO.html">私隱政策</a>。</p>
+
+<h2>七、第三方服務與用戶自選服務</h2>
+<ul>
+<li><strong>MinerU/OpenDataLab：</strong>用於雲端 PDF 解析。首次啟用前，您需要閱讀並同意 OpenDataLab 的<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/service.html">服務協議</a>與<a href="https://webpub.shlab.tech/dps/opendatalab-web/odl_v5.1690/privacy.html">個人資訊保護政策</a>，並確認檔案上載。</li>
+<li><strong>WebDAV：</strong>由您填寫伺服器資訊並決定手動或自動同步。同步資料可能包括電子書檔案、書籍清單、閱讀進度、書籤、筆記與選取文字。</li>
+<li><strong>第三方 TTS：</strong>由您選擇服務、填寫 Base URL／API Key 並確認風險。朗讀文字段與風格提示會傳送到相應服務。</li>
+<li><strong>AI 翻譯：</strong>由您選擇服務、填寫 Base URL／API Key 並啟用或手動觸發。當前選取文字、目標語言與模型參數會傳送到相應服務；開啟 HTTP 時可能發生明文傳輸。</li>
+<li><strong>GitHub 及其 CDN：</strong>用於更新、貢獻者清單、頭像與遠端字體下載；其網絡日誌與資料處理遵循 GitHub 及 CDN 自身政策。</li>
+<li><strong>封面搜尋服務：</strong>僅在您主動使用網絡封面搜尋時接收書名或搜尋關鍵字，具體處理遵循 Bing、百度或 Google 等服務的政策。</li>
+<li><strong>贊助／貢獻者頁面：</strong>開啟頁面時會請求 GitHub contributors API 並載入頭像，GitHub 及其 CDN 會接收正常網絡請求中介資料。</li>
+<li><strong>詞典下載：</strong>只有您在設定中確認下載或更新時，應用程式才會從設定的 GitHub Release 下載詞庫包；安裝後的查詢不呼叫線上詞典服務。</li>
+</ul>
+
+<h2>八、條款的變更</h2>
+<p>我們保留依功能變化、法令法規或第三方服務要求修改本條款的權利。修改後的條款將在應用程式內或網頁發布，並更新「最近更新」日期。涉及私隱、資料傳輸、核心功能或用戶義務的重大變更，將透過應用程式內版本提示要求您重新閱讀並確認；其他變更自公布之日起生效。</p>
+
+<h2>九、終止與終止後的處理</h2>
+<p>您可以隨時停止使用本應用程式並將其從裝置中解除安裝。解除安裝後，應用程式私有資料將由系統刪除且無法復原；您自行管理的電子書原始檔案、WebDAV 伺服器上的副本、第三方服務已經處理的資料不一定會隨應用程式解除安裝而刪除，請您自行管理或聯絡相應服務方處理。</p>
+
+<h2>十、適用法律</h2>
+<p>本條款的解釋與執行適用中華人民共和國法律。因本條款引起的或與本條款有關的爭議，應友好協商解決；協商不成的，任何一方均可向開發者所在地有管轄權的人民法院提起訴訟。</p>
+
+<h2>十一、其他條款</h2>
+<p>本條款中任何條款如因任何原因被認定為無效或不可執行，該條款應在允許的最大範圍內執行，其餘條款仍然有效。本條款構成您與開發者之間關於使用本應用程式的完整協議。</p>
+
+<h2>十二、聯絡我們</h2>
+<p>如果您對本使用條款有任何疑問、意見或建議，請透過以下方式聯絡我們：</p>
+<ul>
+<li>開發者：a1242691089-source</li>
+<li>聯絡方式：<a href="https://github.com/a1242691089-source/wangyan/issues">GitHub Issues</a></li>
+</ul>
+<p class="endnote">本使用條款最後更新於 2026年10月1日。</p>
+<p class="note">本頁面即為完整版本，隨應用程式離線提供，無需連網存取。</p>
+</div>
+
+<div class="doc-footer">
+    <span>© 2026 忘言 · 基於開源項目 Lumi (GPL-3.0)</span>
+    <span>
+        <a href="index.html">主頁</a>
+        <a href="privacy.html">私隱政策</a>
+    </span>
+    <span class="doc-langs">
+        <a href="terms.html" data-legal-lang="zh-CN">简体中文</a>
+        <a href="terms-en.html" data-legal-lang="en">English</a>
+        <a href="terms-ja.html" data-legal-lang="ja">日本語</a>
+        <a href="terms-ko.html" data-legal-lang="ko">한국어</a>
+        <a href="terms-zh-TW.html" data-legal-lang="zh-TW">繁體中文</a>
+        <a href="terms-zh-HK.html" data-legal-lang="zh-HK">繁體中文（香港）</a>
+        <a href="terms-zh-MO.html" data-legal-lang="zh-MO" aria-current="page">繁體中文（澳門）</a>
+    </span>
+</div>
+
+<script src="lumi-nav.js"></script>
+<script src="legal-lang.js"></script>
+</body>
+</html>
