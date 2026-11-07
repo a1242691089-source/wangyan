@@ -5,6 +5,50 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.huangder.lumibooks.domain.model.AnnotationTags
 
 object DatabaseMigrations {
+    val MIGRATION_22_23 = object : Migration(22, 23) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // Knowledge QA conversations: purely local (no syncId by design).
+            // Column names/order/defaults must stay byte-identical to
+            // ChatSessionEntity/ChatMessageEntity — exportSchema=false means
+            // nothing else verifies this; ChatMigrationTest asserts via PRAGMA.
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `chat_sessions` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`title` TEXT NOT NULL, " +
+                    "`entryBookId` TEXT, " +
+                    "`createdAt` INTEGER NOT NULL, " +
+                    "`updatedAt` INTEGER NOT NULL, " +
+                    "`lastMessageAt` INTEGER NOT NULL)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_chat_sessions_lastMessageAt` " +
+                    "ON `chat_sessions` (`lastMessageAt`)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_chat_sessions_entryBookId` " +
+                    "ON `chat_sessions` (`entryBookId`)"
+            )
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `chat_messages` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`sessionId` INTEGER NOT NULL, " +
+                    "`role` TEXT NOT NULL, " +
+                    "`content` TEXT NOT NULL, " +
+                    "`citationsJson` TEXT NOT NULL DEFAULT '[]', " +
+                    "`sourceCount` INTEGER NOT NULL DEFAULT 0, " +
+                    "`status` TEXT NOT NULL DEFAULT 'complete', " +
+                    "`errorCode` TEXT, " +
+                    "`createdAt` INTEGER NOT NULL, " +
+                    "FOREIGN KEY(`sessionId`) REFERENCES `chat_sessions`(`id`) " +
+                    "ON UPDATE NO ACTION ON DELETE CASCADE)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_chat_messages_sessionId_createdAt` " +
+                    "ON `chat_messages` (`sessionId`, `createdAt`)"
+            )
+        }
+    }
+
     val MIGRATION_21_22 = object : Migration(21, 22) {
         override fun migrate(db: SupportSQLiteDatabase) {
             // Knowledge relations: directed typed edges between nodes, CASCADE on

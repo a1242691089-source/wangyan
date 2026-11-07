@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qa_title">Ask Your Books</string>
+    <string name="qa_scope_all_books">Cross-book Q&amp;A · searches all books, notes and knowledge</string>
+    <string name="qa_entry_action">Ask</string>
+    <string name="qa_entry_row">Book Q&amp;A</string>
+    <string name="qa_entry_row_value">Answers grounded in your notes and knowledge</string>
+    <string name="qa_history">History</string>
+    <string name="qa_new_session">New chat</string>
+    <string name="qa_sessions_title">Chat history</string>
+    <string name="qa_session_default_title">New chat</string>
+    <string name="qa_empty_title">Ask something</string>
+    <string name="qa_empty_body">I search your notes, knowledge and book contents, and cite sources.</string>
+    <string name="qa_example_1">What are the key ideas across my books?</string>
+    <string name="qa_example_2">What have I highlighted on this topic?</string>
+    <string name="qa_example_3">How do these books relate?</string>
+    <string name="qa_privacy_hint">Asking sends relevant snippets to the AI service you configured.</string>
+    <string name="qa_unconfigured_title">AI service not configured</string>
+    <string name="qa_unconfigured_body">Set up a provider and key in Settings to start asking.</string>
+    <string name="qa_unconfigured_action">Set up</string>
+    <string name="qa_input_hint">Ask your library…</string>
+    <string name="qa_send">Send</string>
+    <string name="qa_thinking">Searching and thinking…</string>
+    <string name="qa_interrupted">The answer was interrupted. Try again.</string>
+    <string name="qa_no_sources">No matching snippets were found; the answer may be unreliable.</string>
+    <string name="qa_uncited">The answer has no citation numbers. Verify with care.</string>
+    <string name="qa_sources">Sources</string>
+    <string name="qa_view_source">View source</string>
+    <string name="qa_inference">Inference</string>
+    <string name="qa_delete_session">Delete chat</string>
+</resources>

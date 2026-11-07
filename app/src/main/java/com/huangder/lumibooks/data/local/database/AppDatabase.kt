@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.huangder.lumibooks.data.local.dao.BookDao
 import com.huangder.lumibooks.data.local.dao.BookmarkDao
+import com.huangder.lumibooks.data.local.dao.ChatDao
 import com.huangder.lumibooks.data.local.dao.FolderDao
 import com.huangder.lumibooks.data.local.dao.KnowledgeDao
 import com.huangder.lumibooks.data.local.dao.NoteDao
@@ -15,6 +16,8 @@ import com.huangder.lumibooks.data.local.entity.BookTagCrossRefEntity
 import com.huangder.lumibooks.data.local.entity.BookEntity
 import com.huangder.lumibooks.data.local.entity.BookmarkEntity
 import com.huangder.lumibooks.data.local.entity.BookFolderCrossRefEntity
+import com.huangder.lumibooks.data.local.entity.ChatMessageEntity
+import com.huangder.lumibooks.data.local.entity.ChatSessionEntity
 import com.huangder.lumibooks.data.local.entity.FolderEntity
 import com.huangder.lumibooks.data.local.entity.NoteEntity
 import com.huangder.lumibooks.data.local.entity.AnnotationTagEntity
@@ -50,9 +53,11 @@ import com.huangder.lumibooks.data.local.dao.HighlightRuleDao
         HighlightRuleExclusionEntity::class,
         KnowledgeNodeEntity::class,
         KnowledgeEvidenceEntity::class,
-        KnowledgeRelationEntity::class
+        KnowledgeRelationEntity::class,
+        ChatSessionEntity::class,
+        ChatMessageEntity::class
     ],
-    version = 22,
+    version = 23,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -66,4 +71,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun syncStateDao(): SyncStateDao
     abstract fun highlightRuleDao(): HighlightRuleDao
     abstract fun knowledgeDao(): KnowledgeDao
+    abstract fun chatDao(): ChatDao
 }

@@ -68,6 +68,7 @@ import com.huangder.lumibooks.R
 import com.huangder.lumibooks.ui.bookshelf.BookshelfScreen
 import com.huangder.lumibooks.ui.bookshelf.AnnotationFeedScreen
 import com.huangder.lumibooks.ui.knowledge.KnowledgeDetailScreen
+import com.huangder.lumibooks.ui.knowledge.KnowledgeQaScreen
 import com.huangder.lumibooks.ui.knowledge.KnowledgeScreen
 import com.huangder.lumibooks.ui.profile.ProfileScreen
 import com.huangder.lumibooks.ui.skills.SkillsPlaceholderScreen
@@ -307,9 +308,11 @@ fun MainNavGraph(
     requestedOpenBookDirect: Boolean = false,
     requestedOpenBookshelf: Boolean = false,
     requestedOpenFolderId: String? = null,
+    requestedQaBookId: String? = null,
     onBeforeOpenDifferentBook: () -> Unit = {},
     onOpenBookRequestConsumed: () -> Unit = {},
-    onOpenBookshelfRequestConsumed: () -> Unit = {}
+    onOpenBookshelfRequestConsumed: () -> Unit = {},
+    onQaRequestConsumed: () -> Unit = {}
 ) {
     // 五栏之后，书库管理与统计都是二级 destination：NavHost 永远从 pager 页起步，
     // 若用户在设置里把启动页设成这两个，首帧后再推送过去。
@@ -699,6 +702,14 @@ fun MainNavGraph(
         if (requestedOpenFolderId == null) onOpenBookshelfRequestConsumed()
     }
 
+    // 书详情页的「问答」入口走跨 Activity 通道：冷启动与 onNewIntent 都会
+    // 经 handleNavigationIntent 落到 requestedQaBookId，这里一次性消费导航。
+    LaunchedEffect(requestedQaBookId) {
+        val bookId = requestedQaBookId ?: return@LaunchedEffect
+        navController.navigate(Screen.KnowledgeQa.createRoute(bookId)) { launchSingleTop = true }
+        onQaRequestConsumed()
+    }
+
     // 监听路由变化，从阅读页/设置页返回时延迟显示 TabBar
     val currentEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentEntry?.destination?.route
@@ -1069,6 +1080,24 @@ fun MainNavGraph(
                         if (targetNodeId != nodeId) {
                             navController.navigate(Screen.KnowledgeDetail.createRoute(targetNodeId))
                         }
+                    }
+                )
+            }
+
+            composable(
+                route = Screen.KnowledgeQa.route,
+                arguments = listOf(
+                    navArgument("bookId") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) {
+                KnowledgeQaScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenSource = { bookId, chapterIndex, startPosition ->
+                        openEvidenceInReader(bookId, chapterIndex, startPosition)
                     }
                 )
             }

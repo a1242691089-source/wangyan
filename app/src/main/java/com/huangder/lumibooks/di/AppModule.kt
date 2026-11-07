@@ -78,7 +78,8 @@ object AppModule {
             DatabaseMigrations.MIGRATION_18_19,
             DatabaseMigrations.MIGRATION_19_20,
             DatabaseMigrations.MIGRATION_20_21,
-            DatabaseMigrations.MIGRATION_21_22
+            DatabaseMigrations.MIGRATION_21_22,
+            DatabaseMigrations.MIGRATION_22_23
         )
             .build()
     }
@@ -185,6 +186,37 @@ object AppModule {
     @Singleton
     fun provideKnowledgeDao(database: AppDatabase): com.huangder.lumibooks.data.local.dao.KnowledgeDao =
         database.knowledgeDao()
+
+    @Provides
+    @Singleton
+    fun provideChatDao(database: AppDatabase): com.huangder.lumibooks.data.local.dao.ChatDao =
+        database.chatDao()
+
+    @Provides
+    @Singleton
+    fun provideChatRepository(
+        chatDao: com.huangder.lumibooks.data.local.dao.ChatDao,
+        database: AppDatabase
+    ): com.huangder.lumibooks.domain.repository.ChatRepository =
+        com.huangder.lumibooks.data.repository.ChatRepositoryImpl(chatDao, database)
+
+    @Provides
+    @Singleton
+    fun provideQaSnippetSource(
+        loader: com.huangder.lumibooks.data.qa.QaSourceLoader
+    ): com.huangder.lumibooks.ai.qa.QaSnippetSource = loader
+
+    @Provides
+    @Singleton
+    fun provideQaAnswerer(
+        engine: com.huangder.lumibooks.ai.qa.QaEngine
+    ): com.huangder.lumibooks.ai.qa.QaAnswerer = engine
+
+    @Provides
+    @Singleton
+    fun provideAiConfigurationSource(
+        repository: com.huangder.lumibooks.ai.AiRepository
+    ): com.huangder.lumibooks.ai.AiConfigurationSource = repository
 
     @Provides
     @Singleton

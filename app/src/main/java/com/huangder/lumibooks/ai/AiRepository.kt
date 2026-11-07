@@ -17,14 +17,19 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
+/** Config-observation seam so UI code (and its tests) can avoid the concrete repository. */
+interface AiConfigurationSource {
+    val configuration: Flow<AiConfiguration>
+}
+
 @Singleton
 class AiRepository @Inject constructor(
     private val store: DataStoreManager,
     private val tokens: AiTokenStore,
     private val client: LlmClient
-) {
+) : AiConfigurationSource {
     private val mutex = Mutex()
-    val configuration: Flow<AiConfiguration> = store.aiSettings.map { settings ->
+    override val configuration: Flow<AiConfiguration> = store.aiSettings.map { settings ->
         mutex.withLock { AiConfiguration(settings, tokens.hasToken(settings.credentialScope)) }
     }.distinctUntilChanged().flowOn(Dispatchers.IO)
 

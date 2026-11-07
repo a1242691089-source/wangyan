@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qa_title">독서 Q&amp;A</string>
+    <string name="qa_scope_all_books">여러 책 가로지르는 Q&amp;A · 모든 책·메모·지식 검색</string>
+    <string name="qa_entry_action">Q&amp;A</string>
+    <string name="qa_entry_row">책 Q&amp;A</string>
+    <string name="qa_entry_row_value">내 메모와 지식을 바탕으로 답변</string>
+    <string name="qa_history">기록</string>
+    <string name="qa_new_session">새 대화</string>
+    <string name="qa_sessions_title">대화 기록</string>
+    <string name="qa_session_default_title">새 대화</string>
+    <string name="qa_empty_title">무엇이든 물어보세요</string>
+    <string name="qa_empty_body">메모·지식·책 내용을 검색해 출처와 함께 답변합니다.</string>
+    <string name="qa_example_1">이 책들의 핵심 관점은 무엇인가요?</string>
+    <string name="qa_example_2">관련해 표시해 둔 내용은?</string>
+    <string name="qa_example_3">이 책들은 어떻게 연결되나요?</string>
+    <string name="qa_privacy_hint">질문하면 관련 단편이 설정한 AI 서비스로 전송됩니다.</string>
+    <string name="qa_unconfigured_title">AI 서비스 미설정</string>
+    <string name="qa_unconfigured_body">설정에서 공급자와 키를 등록하면 질문할 수 있어요.</string>
+    <string name="qa_unconfigured_action">설정하기</string>
+    <string name="qa_input_hint">내 서재에 물어보기…</string>
+    <string name="qa_send">보내기</string>
+    <string name="qa_thinking">검색하고 생각 중…</string>
+    <string name="qa_interrupted">답변이 중단되었습니다. 다시 시도해 주세요.</string>
+    <string name="qa_no_sources">관련 단편을 찾지 못했습니다. 답변이 부정확할 수 있어요.</string>
+    <string name="qa_uncited">인용 번호가 없는 답변입니다. 신중히 확인하세요.</string>
+    <string name="qa_sources">출처</string>
+    <string name="qa_view_source">원문 보기</string>
+    <string name="qa_inference">추론</string>
+    <string name="qa_delete_session">대화 삭제</string>
+</resources>

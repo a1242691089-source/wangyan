@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qa_title">読書Q&amp;A</string>
+    <string name="qa_scope_all_books">複数書籍横断Q&amp;A · すべての本・メモ・ナレッジを検索</string>
+    <string name="qa_entry_action">Q&amp;A</string>
+    <string name="qa_entry_row">書籍Q&amp;A</string>
+    <string name="qa_entry_row_value">あなたのメモとナレッジに基づいて回答</string>
+    <string name="qa_history">履歴</string>
+    <string name="qa_new_session">新しいチャット</string>
+    <string name="qa_sessions_title">チャット履歴</string>
+    <string name="qa_session_default_title">新しいチャット</string>
+    <string name="qa_empty_title">聞いてみましょう</string>
+    <string name="qa_empty_body">メモ・ナレッジ・書籍の内容を検索して、出典付きで回答します。</string>
+    <string name="qa_example_1">これらの本の主な論点は？</string>
+    <string name="qa_example_2">関連してマークした箇所は？</string>
+    <string name="qa_example_3">これらの本の共通点は？</string>
+    <string name="qa_privacy_hint">質問すると、関連する断片が設定した AI サービスに送信されます。</string>
+    <string name="qa_unconfigured_title">AI サービス未設定</string>
+    <string name="qa_unconfigured_body">設定でプロバイダとキーを登録すると質問できます。</string>
+    <string name="qa_unconfigured_action">設定へ</string>
+    <string name="qa_input_hint">ライブラリに質問…</string>
+    <string name="qa_send">送信</string>
+    <string name="qa_thinking">検索と思考中…</string>
+    <string name="qa_interrupted">回答が中断しました。もう一度お試しください。</string>
+    <string name="qa_no_sources">関連する断片が見つかりませんでした。回答は不正確な可能性があります。</string>
+    <string name="qa_uncited">引用番号が付いていません。慎重に確認してください。</string>
+    <string name="qa_sources">出典</string>
+    <string name="qa_view_source">原文を見る</string>
+    <string name="qa_inference">推論</string>
+    <string name="qa_delete_session">チャットを削除</string>
+</resources>

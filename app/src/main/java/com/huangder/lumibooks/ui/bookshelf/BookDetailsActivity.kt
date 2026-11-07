@@ -185,6 +185,9 @@ class BookDetailsActivity : ComponentActivity() {
                             BookDetailsScreen(bookId = bookId, onBack = { finish() }, onOpenReader = { id ->
                                 startActivity(Intent(this@BookDetailsActivity, MainActivity::class.java).putExtra(MainActivity.EXTRA_OPEN_BOOK_ID, id))
                                 finish()
+                            }, onAsk = { id ->
+                                startActivity(Intent(this@BookDetailsActivity, MainActivity::class.java).putExtra(MainActivity.EXTRA_OPEN_QA_BOOK_ID, id))
+                                finish()
                             })
                         }
                     }
@@ -229,6 +232,7 @@ fun BookDetailsScreen(
     bookId: String,
     onBack: () -> Unit,
     onOpenReader: (String) -> Unit,
+    onAsk: (String) -> Unit = {},
     detailsViewModel: BookDetailsViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -313,7 +317,8 @@ fun BookDetailsScreen(
                     onEdit = { editing = true },
                     onTags = { tagsOpen = true },
                     onMove = { moveOpen = true },
-                    onReview = { BookReviewActivity.start(context, book.id, book.title, book.coverPath) }
+                    onReview = { BookReviewActivity.start(context, book.id, book.title, book.coverPath) },
+                    onAsk = { onAsk(book.id) }
                 )
             }
         }
@@ -321,6 +326,7 @@ fun BookDetailsScreen(
             modifier = Modifier.align(Alignment.BottomCenter).navigationBarsPadding().padding(bottom = 12.dp),
             onDelete = { deleteOpen = true }, onEdit = { editing = true }, onMove = { moveOpen = true },
             onNotes = { context.startActivity(Intent(context, BookNotesActivity::class.java).putExtra(BookNotesActivity.EXTRA_BOOK_ID, book.id)) },
+            onAsk = { onAsk(book.id) },
             onRead = { onOpenReader(book.id) }
         )
     }
@@ -395,7 +401,7 @@ fun BookDetailsScreen(
     }
 }
 
-@Composable private fun InfoCard(book: Book, folder: String, tags: String, onEdit: () -> Unit, onTags: () -> Unit, onMove: () -> Unit, onReview: () -> Unit) {
+@Composable private fun InfoCard(book: Book, folder: String, tags: String, onEdit: () -> Unit, onTags: () -> Unit, onMove: () -> Unit, onReview: () -> Unit, onAsk: () -> Unit) {
     val context = LocalContext.current
     LiquidGlassSurface(AppRoundedCornerShape(AppRadius.lg), AppColors.CardBg, Modifier.fillMaxWidth(), contentScrimColor = Color.Transparent) {
         Column {
@@ -412,6 +418,7 @@ fun BookDetailsScreen(
             DetailRow(stringResource(R.string.book_detail_folder), folder, true, onMove)
             DetailRow(stringResource(R.string.add_tag), tags.ifBlank { stringResource(R.string.book_detail_none) }, true, onTags)
             DetailRow(stringResource(R.string.book_review), stringResource(R.string.book_review_open), true, onReview, showChevron = true)
+            DetailRow(stringResource(R.string.qa_entry_row), stringResource(R.string.qa_entry_row_value), true, onAsk, showChevron = true)
             DetailRow(
                 stringResource(R.string.book_detail_storage),
                 when {
@@ -523,7 +530,7 @@ internal fun shouldStackDetailRow(
     gapWidthPx: Float
 ): Boolean = labelWidthPx + valueWidthPx + gapWidthPx > availableWidthPx
 
-@Composable private fun FloatingDetailTag(modifier: Modifier, onDelete: () -> Unit, onEdit: () -> Unit, onMove: () -> Unit, onNotes: () -> Unit, onRead: () -> Unit) {
+@Composable private fun FloatingDetailTag(modifier: Modifier, onDelete: () -> Unit, onEdit: () -> Unit, onMove: () -> Unit, onNotes: () -> Unit, onAsk: () -> Unit, onRead: () -> Unit) {
     val isDark = LocalIsDarkTheme.current
     val shape = AppRoundedCornerShape(32.dp)
     LiquidGlassSurface(
@@ -542,6 +549,7 @@ internal fun shouldStackDetailRow(
             TagIcon(AppIcons.PencilSimple, stringResource(R.string.book_detail_edit), onEdit)
             TagIcon(AppIcons.FolderSimple, stringResource(R.string.move_to_folder), onMove)
             TagIcon(AppIcons.Bookmark.regular, stringResource(R.string.bookmarks_notes), onNotes)
+            TagIcon(AppIcons.ChatCircle, stringResource(R.string.qa_entry_action), onAsk)
             ReadTagAction(onRead)
         }
     }

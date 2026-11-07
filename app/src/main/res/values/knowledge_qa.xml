@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qa_title">读书问答</string>
+    <string name="qa_scope_all_books">跨书问答 · 检索全部书籍、笔记与知识</string>
+    <string name="qa_entry_action">问答</string>
+    <string name="qa_entry_row">书籍问答</string>
+    <string name="qa_entry_row_value">基于你的笔记与知识作答</string>
+    <string name="qa_history">历史会话</string>
+    <string name="qa_new_session">新会话</string>
+    <string name="qa_sessions_title">问答历史</string>
+    <string name="qa_session_default_title">新的问答</string>
+    <string name="qa_empty_title">问点什么吧</string>
+    <string name="qa_empty_body">我会检索你的笔记、知识与书籍内容作答，并标注来源。</string>
+    <string name="qa_example_1">这些书的核心观点是什么？</string>
+    <string name="qa_example_2">我标记过哪些相关内容？</string>
+    <string name="qa_example_3">这些书之间有什么关联？</string>
+    <string name="qa_privacy_hint">提问会把相关片段发送到你配置的 AI 服务。</string>
+    <string name="qa_unconfigured_title">还没有配置 AI 服务</string>
+    <string name="qa_unconfigured_body">在设置中配置服务商与密钥后即可开始提问。</string>
+    <string name="qa_unconfigured_action">去配置</string>
+    <string name="qa_input_hint">向你的书架提问…</string>
+    <string name="qa_send">发送</string>
+    <string name="qa_thinking">正在检索与思考…</string>
+    <string name="qa_interrupted">回答中断，请重试。</string>
+    <string name="qa_no_sources">没有检索到相关片段，回答可能不可靠。</string>
+    <string name="qa_uncited">回答未附引用编号，请谨慎核对。</string>
+    <string name="qa_sources">来源</string>
+    <string name="qa_view_source">查看原文</string>
+    <string name="qa_inference">推断</string>
+    <string name="qa_delete_session">删除会话</string>
+</resources>

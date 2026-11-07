@@ -15,6 +15,12 @@ sealed class Screen(val route: String) {
         fun createRoute(nodeId: Long) = "knowledge/$nodeId"
     }
 
+    /** 跨书知识问答（带来源引用）；bookId 为空 = 通用入口。 */
+    object KnowledgeQa : Screen("qa?bookId={bookId}") {
+        fun createRoute(bookId: String? = null): String =
+            if (bookId.isNullOrBlank()) "qa" else "qa?bookId=${android.net.Uri.encode(bookId)}"
+    }
+
     /** 技能运行时，占位阶段只有空状态。 */
     object Skills : Screen("skills")
 

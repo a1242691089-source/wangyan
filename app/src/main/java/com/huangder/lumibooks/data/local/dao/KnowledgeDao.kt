@@ -29,6 +29,13 @@ data class KnowledgeRelationRow(
 /** How many relation edges a node participates in, as source or target. */
 data class KnowledgeRelationCountRow(val nodeId: Long, val count: Int)
 
+/** Evidence row with its node's title/thought resolved, for the QA retrieval pool. */
+data class KnowledgeEvidenceWithNode(
+    @Embedded val evidence: KnowledgeEvidenceEntity,
+    val nodeTitle: String,
+    val nodeThought: String
+)
+
 @Dao
 interface KnowledgeDao {
     @Transaction
@@ -46,6 +53,14 @@ interface KnowledgeDao {
 
     @Query("SELECT * FROM knowledge_nodes ORDER BY createdAt DESC, id DESC")
     suspend fun nodeSummaries(): List<KnowledgeNodeEntity>
+
+    /** QA retrieval snapshot: newest evidence rows joined with their node text. */
+    @Query(
+        "SELECT e.*, n.title AS nodeTitle, n.thought AS nodeThought " +
+            "FROM knowledge_evidence e JOIN knowledge_nodes n ON n.id = e.nodeId " +
+            "WHERE TRIM(e.selectedText) <> '' ORDER BY e.createdAt DESC, e.id DESC LIMIT :limit"
+    )
+    suspend fun evidenceSnapshotWithNode(limit: Int): List<KnowledgeEvidenceWithNode>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNode(node: KnowledgeNodeEntity): Long

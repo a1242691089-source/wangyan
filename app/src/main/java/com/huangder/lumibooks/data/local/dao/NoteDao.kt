@@ -26,6 +26,14 @@ interface NoteDao {
     )
     fun observeTextNotes(): Flow<List<NoteEntity>>
 
+    /** QA retrieval snapshot: newest text notes that carry at least a selection or a note body. */
+    @Query(
+        "SELECT * FROM notes WHERE (TRIM(selectedText) <> '' OR TRIM(note) <> '') " +
+            "AND type NOT LIKE 'pdf_ink_%' AND type NOT LIKE 'epub_comic_ink_%' " +
+            "ORDER BY createdAt DESC, id DESC LIMIT :limit"
+    )
+    suspend fun textNotesSnapshot(limit: Int): List<NoteEntity>
+
     @Query(
         "SELECT * FROM notes WHERE createdAt >= :startMs AND createdAt < :endMs " +
             "AND type NOT LIKE 'pdf_ink_%' AND type NOT LIKE 'epub_comic_ink_%'"

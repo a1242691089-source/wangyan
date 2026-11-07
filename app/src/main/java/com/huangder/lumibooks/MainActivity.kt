@@ -164,11 +164,13 @@ class MainActivity : ComponentActivity() {
         const val EXTRA_OPEN_BOOK_ID = "open_book_id"
         const val EXTRA_OPEN_DESTINATION = "open_destination"
         const val EXTRA_OPEN_FOLDER_ID = "open_folder_id"
+        const val EXTRA_OPEN_QA_BOOK_ID = "open_qa_book_id"
         const val DESTINATION_BOOKSHELF = "bookshelf"
     }
 
     private var systemDarkMode by mutableStateOf(false)
     private var requestedOpenBookId by mutableStateOf<String?>(null)
+    private var requestedQaBookId by mutableStateOf<String?>(null)
     /** 外部文件打开已匹配到本地书籍时，绕过首页和书籍过渡页直达阅读器。 */
     private var requestedOpenBookDirect by mutableStateOf(false)
     private var requestedOpenBookshelf by mutableStateOf(false)
@@ -255,6 +257,9 @@ class MainActivity : ComponentActivity() {
             ?.takeIf { it.isNotBlank() }
         requestedOpenBookId = requestedBookId
         requestedOpenBookDirect = false
+        requestedQaBookId = intent
+            ?.getStringExtra(EXTRA_OPEN_QA_BOOK_ID)
+            ?.takeIf { it.isNotBlank() }
         requestedOpenFolderId = intent
             ?.getStringExtra(EXTRA_OPEN_FOLDER_ID)
             ?.takeIf { it.isNotBlank() }
@@ -890,11 +895,13 @@ class MainActivity : ComponentActivity() {
                                     requestedOpenBookDirect = requestedOpenBookDirect,
                                     requestedOpenBookshelf = requestedOpenBookshelf,
                                     requestedOpenFolderId = requestedOpenFolderId,
+                                    requestedQaBookId = requestedQaBookId,
                                     onBeforeOpenDifferentBook = ttsController::stop,
                                     onOpenBookRequestConsumed = {
                                         requestedOpenBookId = null
                                         requestedOpenBookDirect = false
                                     },
+                                    onQaRequestConsumed = { requestedQaBookId = null },
                                     onOpenBookshelfRequestConsumed = {
                                         requestedOpenBookshelf = false
                                         requestedOpenFolderId = null
