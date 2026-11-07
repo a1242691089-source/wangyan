@@ -134,6 +134,7 @@ jobs:
           com.huangder.lumibooks.util.
           com.huangder.lumibooks.tts.
           com.huangder.lumibooks.translation.
+          com.huangder.lumibooks.ai.
           com.huangder.lumibooks.highlight.
           com.huangder.lumibooks.mineru.
           com.huangder.lumibooks.pdfconversion.
@@ -176,7 +177,7 @@ jobs:
           - shard: data
             tests: "com.huangder.lumibooks.data.**,com.huangder.lumibooks.dictionary.**,com.huangder.lumibooks.domain.**,com.huangder.lumibooks.service.**"
           - shard: util
-            tests: "com.huangder.lumibooks.util.**,com.huangder.lumibooks.tts.**,com.huangder.lumibooks.translation.**,com.huangder.lumibooks.highlight.**,com.huangder.lumibooks.mineru.**,com.huangder.lumibooks.pdfconversion.**"
+            tests: "com.huangder.lumibooks.util.**,com.huangder.lumibooks.tts.**,com.huangder.lumibooks.translation.**,com.huangder.lumibooks.ai.**,com.huangder.lumibooks.highlight.**,com.huangder.lumibooks.mineru.**,com.huangder.lumibooks.pdfconversion.**"
     steps:
       - uses: actions/checkout@v7
 
