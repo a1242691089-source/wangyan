@@ -56,6 +56,8 @@ class AnnotationEditTransactionTest {
 
     private fun note(id: Long, start: Int, end: Int, color: String) = NoteEntity(
         id = id,
+        // syncId 有唯一索引：三条全用默认 "" 会让 INSERT OR REPLACE 静默删行
+        syncId = "note-$id-$start",
         bookId = "book",
         chapterIndex = 0,
         startPosition = start,

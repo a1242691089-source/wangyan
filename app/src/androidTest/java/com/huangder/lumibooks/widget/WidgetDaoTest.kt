@@ -102,6 +102,8 @@ class WidgetDaoTest {
     ): NoteEntity {
         return NoteEntity(
             id = id,
+            // syncId 有唯一索引：留默认 "" 会让 REPLACE 静默吞掉前一行，用例偶然通过
+            syncId = "widget-note-$id",
             bookId = bookId,
             chapterIndex = 0,
             startPosition = 0,

@@ -25,7 +25,17 @@ class ReaderThemeSuiteCodecInstrumentedTest {
             ReaderThemeSuiteCodec.decode(ReaderThemeSuiteCodec.encode(source))
         )
 
-        assertEquals(source, decoded)
+        // codec 真实契约：encode 内部先 normalized；decode 把缺失的 light/dark
+        // 回填为 settings（冗余副本），故整表 equals 不可行，按身份+设置逐套件比对
+        assertEquals(
+            ReaderThemeSuites.normalized(source).map { it.copy(lightSettings = null, darkSettings = null) },
+            decoded.map { it.copy(lightSettings = null, darkSettings = null) }
+        )
+        // 文档化回填行为：源侧为 null 的 light/dark，往返后等于 settings
+        ReaderThemeSuites.normalized(source).zip(decoded).forEach { (s, d) ->
+            if (s.lightSettings == null) assertEquals(s.settings, d.lightSettings)
+            if (s.darkSettings == null) assertEquals(s.settings, d.darkSettings)
+        }
     }
 
     @Test

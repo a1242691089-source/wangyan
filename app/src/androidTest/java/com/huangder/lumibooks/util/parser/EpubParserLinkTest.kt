@@ -50,15 +50,17 @@ class EpubParserLinkTest {
             val content = EpubParser(context).parse(epub.absolutePath)
             val chapters = content.tocEntries.filterNot { it.isGroup }
 
-            assertEquals(listOf("第一章", "第一章"), chapters.map { it.title })
-            assertEquals(listOf(0, 1), chapters.map { it.chapterIndex })
+            // 现行语义：卷父项 href 指向真实章节文件，可解析到章节、保留为可点条目
+            // （UI 按 level 折叠，不再用「有子项=分组」规则）
+            assertEquals(listOf("第一卷", "第一章", "第二卷", "第一章"), chapters.map { it.title })
+            assertEquals(listOf(0, 0, 1, 1), chapters.map { it.chapterIndex })
         } finally {
             epub.delete()
         }
     }
 
     @Test
-    fun preservesTocAnchorsForChaptersInTheSameSpineFile() {
+    fun splitsLogicalChaptersWhenSameSpineFileHasMultipleTocAnchors() {
         val context = ApplicationProvider.getApplicationContext<android.content.Context>()
         val epub = File(context.cacheDir, "epub-toc-anchor-test.epub")
         createAnchorTocEpub(epub)
@@ -68,12 +70,16 @@ class EpubParserLinkTest {
             val content = parser.parse(epub.absolutePath)
             val entries = content.tocEntries.filterNot { it.isGroup }
 
-            assertEquals(listOf(0, 0), entries.map { it.chapterIndex })
-            assertEquals(listOf("volume-one", "volume-two"), entries.map { it.anchor })
+            // 现行语义：同一 spine 文件有 ≥2 个不同锚点时切分为多个逻辑章节，
+            // 各占一个 chapterIndex；成为章节边界的锚点在 TocEntry 中置空
+            assertEquals(listOf(0, 1), entries.map { it.chapterIndex })
+            assertEquals(listOf(null, null), entries.map { it.anchor })
 
-            val secondTarget = parser.resolveLink(0, "#${entries[1].anchor}")
+            val secondTarget = parser.resolveLink(0, "#volume-two")
             requireNotNull(secondTarget)
-            assertTrue(secondTarget.characterOffset > 0)
+            // 章节边界锚点按设计映射到该逻辑章节的 offset 0（EpubParser 约定），
+            // 此处验证锚点解析落入切分后的第二个逻辑章节
+            assertEquals(1, secondTarget.chapterIndex)
         } finally {
             epub.delete()
         }
