@@ -14,7 +14,7 @@
 | 4 | V0.3a knowledge 两表 + 列表视图 | ✅ 超额完成 | `KnowledgeNodeEntity`/`KnowledgeEvidenceEntity`/`KnowledgeDao`（提交 `7caea2e`）；`knowledge_relations` 九类关系 + 节点详情页 + 证据定位跳转也做了（`devdocs/v0.3a-knowledge-relations.md`） |
 | 5 | V0.4a 内置技能列表页 | ✗ 未开始 | `SkillsPlaceholderScreen.kt` 仍为占位页；两个候选技能代码已存在：`BookNotesExportBuilder`（划线导出 Markdown）、`ExcerptActivity`（摘录长图） |
 | 6 | V0.3b 按书筛选/关系计数/i18n 棘轮 | ✅ 完成 | `devdocs/v0.3b-knowledge-filter-i18n-ratchet.md` + V0.3c i18n 口径修订（`devdocs/i18n-coverage.md`） |
-| 7 | V0.3b/V0.5b 书籍问答（带来源） | ✅ 完成（未发版） | 持久化会话：`ChatSessionEntity`/`ChatMessageEntity` 两表 + `MIGRATION_22_23` + `ChatDao`/`ChatRepository`（beginTurn 事务双写 + pending 占位防中断丢答）；检索管线：`ai/qa` 包（QaTokenizer 中文 bigram 分词 / QaScorer BM25-lite / QaBudget 8k token 预算 / CitationParser 引用+推断句切分 / QaPromptBuilder 7 条引用协议硬约束）+ `data/qa`（QaSourceLoader 三层用户数据快照 + BookBodyReader 正文窗口，PDF/CBZ raster 跳过）；UI：`ui/knowledge/KnowledgeQaScreen`（角标点击走 V0.3a 证据跳转链路）+ 书详情页 FloatingDetailTag 第 6 动作与 InfoCard 入口；28 条 `qa_*` × 8 locale；11 个新测试类全绿（含 MockWebServer 端到端、迁移、ViewModel） |
+| 7 | V0.3b/V0.5b 书籍问答（带来源） | ✅ 完成（未发版） | 持久化会话：`ChatSessionEntity`/`ChatMessageEntity` 两表 + `MIGRATION_22_23` + `ChatDao`/`ChatRepository`（beginTurn 事务双写 + pending 占位防中断丢答）；检索管线：`ai/qa` 包（QaTokenizer 中文 bigram 分词 / QaScorer BM25-lite / QaBudget 8k token 预算 / CitationParser 引用+推断句切分 / QaPromptBuilder 7 条引用协议硬约束）+ `data/qa`（QaSourceLoader 三层用户数据快照 + BookBodyReader 正文窗口，PDF/CBZ raster 跳过）；UI：`ui/knowledge/KnowledgeQaScreen`（角标点击走 V0.3a 证据跳转链路）+ 书详情页 FloatingDetailTag 第 6 动作与 InfoCard 入口；28 条 `qa_*` × 8 locale；11 个新测试类全绿（含 MockWebServer 端到端、迁移、ViewModel）；完整交接见 `devdocs/v0.5b-knowledge-qa.md` |
 | 8 | V0.6 自进化 | ✗ 未开始 | 按报告建议：有真实使用数据后再评估 |
 
 ## 二、V0.3 遗留小账（不阻塞，随手清）
